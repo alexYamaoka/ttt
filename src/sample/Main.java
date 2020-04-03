@@ -5,6 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import javax.xml.crypto.Data;
 import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -22,17 +24,12 @@ public class Main extends Application {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
 
-        String url = "jdbc:mysql://localhost:3306/tictactoe?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST";
-        //String url = "jdbc:mysql://localhost:3306/tictactoe";
-        String username = "test";
-        String password = "test123password";
-        Connection myConn;
 
         //User newUser = new User("Firstname", "LastName", "Username", "Password");
         //DatabaseManager.getInstance().addUser(newUser);
-
+/*
         try{
             myConn = DriverManager.getConnection(url,username,password);
             Statement myStatement = myConn.createStatement();
@@ -52,6 +49,9 @@ public class Main extends Application {
         }
 
 
+ */
+
         launch(args);
+        DatabaseManager.getInstance().myConn.close();
     }
 }
