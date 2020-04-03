@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class Main extends Application {
 
@@ -19,39 +20,26 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("SignIn.fxml"));
         primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.setScene(new Scene(root, 600, 450));
         primaryStage.show();
     }
 
 
     public static void main(String[] args) throws SQLException {
 
+        ArrayList<User> user = new ArrayList<>();
+
+
+
 
         //User newUser = new User("Firstname", "LastName", "Username", "Password");
         //DatabaseManager.getInstance().addUser(newUser);
-/*
-        try{
-            myConn = DriverManager.getConnection(url,username,password);
-            Statement myStatement = myConn.createStatement();
-            System.out.println("JDBC Database Connected");
 
-            String sql = "select * from tictactoe.user";
-            ResultSet rs = myStatement.executeQuery(sql);
+        DatabaseManager.getInstance();
+        User newUser = new User("Bjackson","Pass","Blair","Jackson");
 
-            while(rs.next()){
-                System.out.println(rs.getString("username"));
-            }
-
-            myConn.close();
-        } catch (SQLException e) {
-
-            e.printStackTrace();
-        }
-
-
- */
-
-        launch(args);
-        DatabaseManager.getInstance().myConn.close();
+        DatabaseManager.getInstance().addUser(newUser);
+        //launch(args);
+        DatabaseManager.getInstance().disconnect();
     }
 }
