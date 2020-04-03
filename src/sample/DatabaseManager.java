@@ -62,6 +62,8 @@ public class DatabaseManager {
         ps.setString(4,user.getLastName());
         ps.executeUpdate();
 
+        System.out.println("Added user " + user.getUserName());
+
         ResultSet keys = ps.getGeneratedKeys();
         if(keys.next()){
             user.setId(keys.getInt(1));
@@ -79,12 +81,20 @@ public class DatabaseManager {
         return true;
     }
 
-    public boolean deleteUser(String username){
+    public boolean deleteUser(String username) throws SQLException {
 
+        PreparedStatement ps = myConn.prepareStatement("Delete FROM user Where username = ?");
+        ps.setString(1,username);
+        ps.executeUpdate();
+        System.out.println("Removed User : " + username);
         return true;
     }
 
-    public boolean deleteUser(int userID){
+    public boolean deleteUser(int userID) throws SQLException {
+        PreparedStatement ps = myConn.prepareStatement("Delete FROM user Where id = ?");
+        ps.setInt(1,userID);
+        ps.executeUpdate();
+        System.out.println("Removed User with id : " + userID);
         return true;
     }
 

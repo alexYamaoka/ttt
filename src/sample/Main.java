@@ -29,17 +29,18 @@ public class Main extends Application {
 
         ArrayList<User> user = new ArrayList<>();
 
-
-
-
         //User newUser = new User("Firstname", "LastName", "Username", "Password");
         //DatabaseManager.getInstance().addUser(newUser);
 
         DatabaseManager.getInstance();
-        User newUser = new User("Bjackson","Pass","Blair","Jackson");
+        //User newUser = new User("Hcorupe","Pass","Harrison","Corupe");
 
-        DatabaseManager.getInstance().addUser(newUser);
+
+        //DatabaseManager.getInstance().addUser(newUser);
+        //DatabaseManager.getInstance().deleteUser(14);
+
         //launch(args);
         DatabaseManager.getInstance().disconnect();
+        System.out.println("After disconnect");
     }
 }
