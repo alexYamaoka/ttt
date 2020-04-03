@@ -1,6 +1,5 @@
 package sample;
 
-import com.mysql.cj.protocol.Resultset;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,7 +15,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("SignIn.fxml"));
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
@@ -31,8 +30,8 @@ public class Main extends Application {
         String password = "test123password";
         Connection myConn;
 
-        User newUser = new User("Firstname", "LastName", "Username", "Password");
-        DatabaseManager.getInstance().addUser(newUser);
+        //User newUser = new User("Firstname", "LastName", "Username", "Password");
+        //DatabaseManager.getInstance().addUser(newUser);
 
         try{
             myConn = DriverManager.getConnection(url,username,password);
