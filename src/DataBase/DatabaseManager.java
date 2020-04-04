@@ -1,17 +1,13 @@
 package DataBase;
-
 import Client.User;
-
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
-public class DatabaseManager {
+public class DatabaseManager{  // subscribing to sign in for sign in info
 
     private static DatabaseManager instance = null;
     public Connection myConn;
     private Statement myState;
-    public ArrayList<User> user = new ArrayList<>();
+
 
     private DatabaseManager(){
         String url = "jdbc:mysql://localhost:3306/tictactoe?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST";
@@ -47,7 +43,6 @@ public class DatabaseManager {
     }
 
     public boolean addUser(User user) throws SQLException {
-
         String sql = "INSERT INTO user ("
                 + "id,"
                 +"username,"
@@ -61,9 +56,7 @@ public class DatabaseManager {
         ps.setString(3,user.getFirstName());
         ps.setString(4,user.getLastName());
         ps.executeUpdate();
-
         System.out.println("Added user " + user.getUserName());
-
         ResultSet keys = ps.getGeneratedKeys();
         if(keys.next()){
             user.setId(keys.getInt(1));
@@ -73,13 +66,13 @@ public class DatabaseManager {
     }
 
 
-    public boolean getUser(String password) throws SQLException {
+    public boolean getUser(String password,String UserName) throws SQLException { //for sign in
         ResultSet rs;
         PreparedStatement ps;
-        ps = myConn.prepareStatement("SELECT id,username,password,FirstName,LastName Where password = ? FROM user");
+        ps = myConn.prepareStatement("SELECT FROM user WHERE password = ? , id,username,password,FirstName,LastName");
         ps.setString(1,password);
-        rs = ps.executeQuery();
-
+        //ps.setString(1,UserName);
+        /*rs = ps.executeQuery();
         while(rs.next()){
             int id = rs.getInt(1);
             String username = rs.getString(2);
@@ -88,6 +81,8 @@ public class DatabaseManager {
             String LastName = rs.getString(5);
             System.out.println(username + " " + Password + " " + FirstName + " " + LastName);
         }
+        
+         */
 
         System.out.println("User retrieved");
 
@@ -116,6 +111,7 @@ public class DatabaseManager {
 
         return true;
     }
+
 
     /*
     public List<User> getAllUsers(){

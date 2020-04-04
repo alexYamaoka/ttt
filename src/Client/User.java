@@ -1,5 +1,10 @@
 package Client;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+
 public class User {
 
     int id;
@@ -7,7 +12,22 @@ public class User {
     String Password;
     String firstName;
     String lastName;
+    private Socket socket;
+    ObjectInputStream in;
+    ObjectOutputStream out;
 
+    public User(){
+
+    }
+
+    /*
+    public User(Socket socket) throws IOException {
+        this.socket = socket;
+        out = new ObjectOutputStream(socket.getOutputStream());
+        out.flush();
+        in = new ObjectInputStream(socket.getInputStream());
+    }
+    /*
     public User(String userName, String password) {
         UserName = userName;
         Password = password;
@@ -20,10 +40,13 @@ public class User {
         this.lastName = lastName;
     }
 
+     */
+
     public int getId() {
 
         return id;
     }
+
 
     public void setId(int id) {
         this.id = id;

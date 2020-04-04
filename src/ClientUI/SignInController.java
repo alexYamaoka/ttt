@@ -1,17 +1,22 @@
 package ClientUI;
 
 import Client.Client;
+import Client.*;
+
+import DataBase.DatabaseManager;
+import Pub_Sub.Sub;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
+
 import java.net.Socket;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.*;
 
-public class SignInController {
+public class SignInController {  // publishing sign in into
 
         @FXML
         private TextField txtF_UserName;
@@ -27,11 +32,13 @@ public class SignInController {
 
         @FXML
         private Button btn_SignUp;
+        //Socket userSocket = userSocket = new Socket("localhost",800);
+        ArrayList<Sub> subs = new ArrayList<>();
+
 
 
         public SignInController() throws IOException {
-                Socket clientSocket = new Socket("localhost",8000);
-                Client client = new Client(clientSocket);
+
         }
 
 
@@ -39,8 +46,19 @@ public class SignInController {
                 btn_LogIn = (Button) event.getTarget();
                 userName = txtF_UserName.getText();
                 password = txtF_Password.getText();
+                User user = new User();
+                new Thread( () -> {
+                        try {
+                                DatabaseManager.getInstance().getUser(userName,password);
+                        } catch (SQLException e) {
+                                e.printStackTrace();
+                        }
+                }).start();
+
+
 
         }
+
 
         public void SignUp(ActionEvent event){
 

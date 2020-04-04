@@ -10,7 +10,7 @@ public class Client implements Runnable{
     private Socket socket;
     ObjectInputStream in;
     ObjectOutputStream out;
-
+/*
     public Client(Socket socket) throws IOException {
         System.out.println("Before socket ");
         this.socket = socket;
@@ -24,6 +24,8 @@ public class Client implements Runnable{
         System.out.println("after thread ");
     }
 
+
+ */
     @Override
     public void run() {
         while(true){
@@ -32,4 +34,6 @@ public class Client implements Runnable{
         }
 
     }
+
+
 }
