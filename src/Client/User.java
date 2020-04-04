@@ -27,7 +27,7 @@ public class User {
         out.flush();
         in = new ObjectInputStream(socket.getInputStream());
     }
-    /*
+    */
     public User(String userName, String password) {
         UserName = userName;
         Password = password;
@@ -40,7 +40,7 @@ public class User {
         this.lastName = lastName;
     }
 
-     */
+
 
     public int getId() {
 

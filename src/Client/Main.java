@@ -1,5 +1,6 @@
 package Client;
 
+import DataBase.DatabaseManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,15 +26,16 @@ public class Main extends Application {
         //User newUser = new User("Firstname", "LastName", "Username", "Password");
         //DatabaseManager.getInstance().addUser(newUser);
 
-        //DatabaseManager.getInstance();
-        //User newUser = new User("Hcorupe","Pass","Harrison","Corupe");
-
+        DatabaseManager.getInstance();
+        User newUser = new User("Hcorupe","Pass","Harrison","Corupe");
 
         //DatabaseManager.getInstance().addUser(newUser);
-        //DatabaseManager.getInstance().deleteUser(14);
+        //DatabaseManager.getInstance().deleteUser(15);
+        //DatabaseManager.getInstance().deleteUser(16);
+
 
         launch(args);
-        //DatabaseManager.getInstance().disconnect();
+        DatabaseManager.getInstance().disconnect();
         //System.out.println("After disconnect");
     }
 }
