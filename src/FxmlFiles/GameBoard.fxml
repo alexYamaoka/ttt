@@ -14,7 +14,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="561.0" prefWidth="846.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="561.0" prefWidth="846.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GameBoardController">
    <children>
       <ImageView fitHeight="561.0" fitWidth="846.0">
          <image>
@@ -33,28 +33,28 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label alignment="CENTER" prefHeight="151.0" prefWidth="137.0" style="-fx-background-color: #72B5B7 #72B5B7;" text="Label" />
-            <Label alignment="CENTER" prefHeight="140.0" prefWidth="156.0" style="-fx-background-color: #72B5B7 #72B5B7;" text="Label" GridPane.columnIndex="1" />
-            <Label alignment="CENTER" prefHeight="143.0" prefWidth="188.0" style="-fx-background-color: #72B5B7 #72B5B7;" text="Label" GridPane.columnIndex="2" />
-            <Label alignment="CENTER" prefHeight="150.0" prefWidth="188.0" style="-fx-background-color: #72B5B7 #72B5B7;" text="Label" GridPane.rowIndex="1" />
-            <Label alignment="CENTER" prefHeight="173.0" prefWidth="206.0" style="-fx-background-color: #72B5B7 #72B5B7;" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label alignment="CENTER" prefHeight="186.0" prefWidth="224.0" style="-fx-background-color: #72B5B7 #72B5B7;" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <Label alignment="CENTER" prefHeight="152.0" prefWidth="173.0" style="-fx-background-color: #72B5B7 #72B5B7;" text="Label" GridPane.rowIndex="2" />
-            <Label alignment="CENTER" prefHeight="149.0" prefWidth="181.0" style="-fx-background-color: #72B5B7 #72B5B7;" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label alignment="CENTER" prefHeight="223.0" prefWidth="232.0" style="-fx-background-color: #72B5B7 #72B5B7;" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Label fx:id="panel1" alignment="CENTER" prefHeight="151.0" prefWidth="137.0" style="-fx-background-color: #72B5B7 #72B5B7;" text="Label" />
+            <Label fx:id="panel2" alignment="CENTER" prefHeight="140.0" prefWidth="156.0" style="-fx-background-color: #72B5B7 #72B5B7;" text="Label" GridPane.columnIndex="1" />
+            <Label fx:id="panel3" alignment="CENTER" prefHeight="143.0" prefWidth="188.0" style="-fx-background-color: #72B5B7 #72B5B7;" text="Label" GridPane.columnIndex="2" />
+            <Label fx:id="panel4" alignment="CENTER" prefHeight="150.0" prefWidth="188.0" style="-fx-background-color: #72B5B7 #72B5B7;" text="Label" GridPane.rowIndex="1" />
+            <Label fx:id="panel5" alignment="CENTER" prefHeight="173.0" prefWidth="206.0" style="-fx-background-color: #72B5B7 #72B5B7;" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="panel6" alignment="CENTER" prefHeight="186.0" prefWidth="224.0" style="-fx-background-color: #72B5B7 #72B5B7;" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Label fx:id="panel7" alignment="CENTER" prefHeight="152.0" prefWidth="173.0" style="-fx-background-color: #72B5B7 #72B5B7;" text="Label" GridPane.rowIndex="2" />
+            <Label fx:id="panel8" alignment="CENTER" prefHeight="149.0" prefWidth="181.0" style="-fx-background-color: #72B5B7 #72B5B7;" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label fx:id="panel9" alignment="CENTER" prefHeight="223.0" prefWidth="232.0" style="-fx-background-color: #72B5B7 #72B5B7;" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="2" />
          </children>
       </GridPane>
       <AnchorPane layoutX="466.0" prefHeight="561.0" prefWidth="380.0" style="-fx-background-color: #00918E #00918E;">
          <children>
             <HBox layoutX="10.0" layoutY="14.0" prefHeight="80.0" prefWidth="360.0" style="-fx-background-color: #23374D#23374D #23374D#23374D;">
                <children>
-                  <Label alignment="CENTER" prefHeight="80.0" prefWidth="175.0" text="Player 1" textFill="WHITE">
+                  <Label fx:id="player1Name" alignment="CENTER" prefHeight="80.0" prefWidth="175.0" text="Player 1" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="80.0" stroke="BLACK" strokeType="INSIDE" width="9.0" />
-                  <Label alignment="CENTER" prefHeight="80.0" prefWidth="179.0" text="Player 2" textFill="WHITE">
+                  <Label fx:id="player2Name" alignment="CENTER" prefHeight="80.0" prefWidth="179.0" text="Player 2" textFill="WHITE">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -68,9 +68,9 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER_RIGHT" prefHeight="55.0" prefWidth="65.0" text="W" textFill="WHITE" />
-                  <Label alignment="CENTER_RIGHT" prefHeight="59.0" prefWidth="65.0" text="L" textFill="WHITE" />
-                  <Label alignment="CENTER_RIGHT" prefHeight="62.0" prefWidth="65.0" text="T" textFill="WHITE" />
+                  <Label fx:id="playerOverallStatsWins" alignment="CENTER_RIGHT" prefHeight="55.0" prefWidth="65.0" text="W" textFill="WHITE" />
+                  <Label fx:id="playerOverallStatsLosses" alignment="CENTER_RIGHT" prefHeight="59.0" prefWidth="65.0" text="L" textFill="WHITE" />
+                  <Label fx:id="playerOverallStatsTies" alignment="CENTER_RIGHT" prefHeight="62.0" prefWidth="65.0" text="T" textFill="WHITE" />
                </children>
             </HBox>
             <HBox layoutX="10.0" layoutY="176.0" prefHeight="55.0" prefWidth="360.0" style="-fx-background-color: #23374D#23374D #23374D#23374D #23374D#23374D #23374D#23374D;">
@@ -80,24 +80,24 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER_RIGHT" prefHeight="55.0" prefWidth="65.0" text="W" textFill="WHITE" />
-                  <Label alignment="CENTER_RIGHT" layoutX="160.0" layoutY="10.0" prefHeight="55.0" prefWidth="65.0" text="L" textFill="WHITE" />
-                  <Label alignment="CENTER_RIGHT" layoutX="225.0" layoutY="10.0" prefHeight="55.0" prefWidth="65.0" text="T" textFill="WHITE" />
+                  <Label fx:id="currentGameStatsWins" alignment="CENTER_RIGHT" prefHeight="55.0" prefWidth="65.0" text="W" textFill="WHITE" />
+                  <Label fx:id="currentGameStatsLosses" alignment="CENTER_RIGHT" layoutX="160.0" layoutY="10.0" prefHeight="55.0" prefWidth="65.0" text="L" textFill="WHITE" />
+                  <Label fx:id="currentGameStatsTies" alignment="CENTER_RIGHT" layoutX="225.0" layoutY="10.0" prefHeight="55.0" prefWidth="65.0" text="T" textFill="WHITE" />
                </children>
             </HBox>
             <ScrollPane layoutX="14.0" layoutY="250.0" prefHeight="211.0" prefWidth="360.0">
                <content>
-                  <Label alignment="TOP_LEFT" prefHeight="333.0" prefWidth="341.0" style="-fx-background-color: #23374D#23374D #23374D#23374D #23374D#23374D #23374D#23374D #23374D#23374D #23374D#23374D #23374D#23374D #23374D#23374D;" text="Welcome to Tic Tac Toe by SegFault !" textFill="WHITE" />
+                  <Label fx:id="showChatHistory" alignment="TOP_LEFT" prefHeight="333.0" prefWidth="341.0" style="-fx-background-color: #23374D#23374D #23374D#23374D #23374D#23374D #23374D#23374D #23374D#23374D #23374D#23374D #23374D#23374D #23374D#23374D;" text="Welcome to Tic Tac Toe by SegFault !" textFill="WHITE" />
                </content>
             </ScrollPane>
             <HBox layoutX="14.0" layoutY="481.0" prefHeight="30.0" prefWidth="360.0">
                <children>
                   <ScrollPane prefHeight="36.0" prefWidth="292.0">
                      <content>
-                        <TextArea prefHeight="231.0" prefWidth="273.0" />
+                        <TextArea fx:id="userChatInput" prefHeight="231.0" prefWidth="273.0" />
                      </content>
                   </ScrollPane>
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="65.0" text="Enter" />
+                  <Button fx:id="userChatEnter" mnemonicParsing="false" prefHeight="26.0" prefWidth="65.0" text="Enter" />
                </children>
             </HBox>
          </children>
@@ -105,11 +105,11 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="561.0" layoutX="459.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
       <HBox layoutX="49.0" layoutY="493.0" prefHeight="27.0" prefWidth="380.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="99.0" text="Main Menu" />
+            <Button fx:id="mainMenu" mnemonicParsing="false" prefHeight="27.0" prefWidth="99.0" text="Main Menu" />
             <Label prefHeight="25.0" prefWidth="52.0" />
-            <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="108.0" text="New Game" />
+            <Button fx:id="newGame" mnemonicParsing="false" prefHeight="27.0" prefWidth="108.0" text="New Game" />
             <Label layoutX="97.0" layoutY="10.0" prefHeight="25.0" prefWidth="37.0" />
-            <Button layoutX="135.0" layoutY="10.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="114.0" text="Start New Chat" />
+            <Button fx:id="startNewChat" layoutX="135.0" layoutY="10.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="114.0" text="Start New Chat" />
          </children>
       </HBox>
    </children>
