@@ -1,5 +1,7 @@
 package sample;
 
+import java.util.ArrayList;
+
 public class DatabaseManager {
 
     private static DatabaseManager instance = null;
@@ -40,6 +42,6 @@ public class DatabaseManager {
 
 
     public List<User> getUsers(String filter){
-        List<User> users = new ArrayList<>;
+        List<User> users = new ArrayList<>();
     }
 }
