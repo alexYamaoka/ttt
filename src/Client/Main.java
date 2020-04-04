@@ -1,4 +1,4 @@
-package sample;
+package Client;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -6,41 +6,34 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import javax.xml.crypto.Data;
-import java.sql.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("SignIn.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../ClientUI/SignIn.fxml"));
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 600, 450));
         primaryStage.show();
     }
 
-
     public static void main(String[] args) throws SQLException {
 
-        ArrayList<User> user = new ArrayList<>();
+        //ArrayList<User> user = new ArrayList<>();
 
         //User newUser = new User("Firstname", "LastName", "Username", "Password");
         //DatabaseManager.getInstance().addUser(newUser);
 
-        DatabaseManager.getInstance();
+        //DatabaseManager.getInstance();
         //User newUser = new User("Hcorupe","Pass","Harrison","Corupe");
 
 
         //DatabaseManager.getInstance().addUser(newUser);
         //DatabaseManager.getInstance().deleteUser(14);
 
-        //launch(args);
-        DatabaseManager.getInstance().disconnect();
-        System.out.println("After disconnect");
+        launch(args);
+        //DatabaseManager.getInstance().disconnect();
+        //System.out.println("After disconnect");
     }
 }

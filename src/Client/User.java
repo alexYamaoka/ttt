@@ -1,4 +1,4 @@
-package sample;
+package Client;
 
 public class User {
 
@@ -7,6 +7,11 @@ public class User {
     String Password;
     String firstName;
     String lastName;
+
+    public User(String userName, String password) {
+        UserName = userName;
+        Password = password;
+    }
 
     public User(String userName, String password, String firstName, String lastName) {
         UserName = userName;

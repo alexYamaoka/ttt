@@ -1,4 +1,6 @@
-package sample;
+package DataBase;
+
+import Client.User;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,7 +11,7 @@ public class DatabaseManager {
     private static DatabaseManager instance = null;
     public Connection myConn;
     private Statement myState;
-
+    public ArrayList<User> user = new ArrayList<>();
 
     private DatabaseManager(){
         String url = "jdbc:mysql://localhost:3306/tictactoe?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST";
@@ -44,8 +46,6 @@ public class DatabaseManager {
         }
     }
 
-
-
     public boolean addUser(User user) throws SQLException {
 
         String sql = "INSERT INTO user ("
@@ -73,16 +73,28 @@ public class DatabaseManager {
     }
 
 
-    public boolean updateUser(User user){
+    public boolean getUser(String password) throws SQLException {
+        ResultSet rs;
+        PreparedStatement ps;
+        ps = myConn.prepareStatement("SELECT id,username,password,FirstName,LastName Where password = ? FROM user");
+        ps.setString(1,password);
+        rs = ps.executeQuery();
 
-        //String sql = " UPDATE user SET username = ?, password = ? WHERE id = ?"
+        while(rs.next()){
+            int id = rs.getInt(1);
+            String username = rs.getString(2);
+            String Password = rs.getString(3);
+            String FirstName = rs.getString(4);
+            String LastName = rs.getString(5);
+            System.out.println(username + " " + Password + " " + FirstName + " " + LastName);
+        }
 
+        System.out.println("User retrieved");
 
         return true;
     }
 
     public boolean deleteUser(String username) throws SQLException {
-
         PreparedStatement ps = myConn.prepareStatement("Delete FROM user Where username = ?");
         ps.setString(1,username);
         ps.executeUpdate();
@@ -95,6 +107,13 @@ public class DatabaseManager {
         ps.setInt(1,userID);
         ps.executeUpdate();
         System.out.println("Removed User with id : " + userID);
+        return true;
+    }
+
+    public boolean updateUser(User user){
+
+        //String sql = " UPDATE user SET username = ?, password = ? WHERE id = ?"
+
         return true;
     }
 

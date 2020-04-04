@@ -6,8 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #204060#204060;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #204060#204060;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientUI.SignInController">
    <children>
       <TextField fx:id="txtF_UserName" layoutX="220.0" layoutY="187.0" style="-fx-background-color: #204060#204060 #204060#204060; -fx-border-color: #19334d#19334d; -fx-text-fill: #9fbfdf#9fbfdf;" text="UserName" />
       <TextField fx:id="txtF_Password" layoutX="220.0" layoutY="223.0" style="-fx-background-color: #204060#204060 #204060#204060 #204060#204060 #204060#204060; -fx-border-color: #19334d#19334d #19334d#19334d; -fx-text-fill: #9fbfdf#9fbfdf;" text="Password">
@@ -15,8 +14,8 @@
             <Font name="System Font" size="13.0" />
          </font>
       </TextField>
-      <Button fx:id="btn_LogIn" layoutX="231.0" layoutY="258.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="130.0" style="-fx-background-color: #132639#132639; -fx-text-fill: #9fbfdf#9fbfdf;" text="Log In" />
-      <Button fx:id="btn_SignUp" layoutX="521.0" layoutY="21.0" mnemonicParsing="false" style="-fx-text-fill: #9fbfdf#9fbfdf; -fx-background-color: #132639#132639 #132639#132639;" text="Sign Up" />
+      <Button fx:id="btn_LogIn" layoutX="231.0" layoutY="258.0" mnemonicParsing="false" onAction="#setLogIn" prefHeight="32.0" prefWidth="130.0" style="-fx-background-color: #132639#132639; -fx-text-fill: #9fbfdf#9fbfdf;" text="Log In" />
+      <Button fx:id="btn_SignUp" layoutX="521.0" layoutY="21.0" mnemonicParsing="false" onAction="#SignUp" style="-fx-text-fill: #9fbfdf#9fbfdf; -fx-background-color: #132639#132639 #132639#132639;" text="Sign Up" />
       <Label layoutX="413.0" layoutY="29.0" prefHeight="18.0" prefWidth="95.0" style="-fx-text-fill: #9fbfdf#9fbfdf;" text="Not a Member?" />
    </children>
 </AnchorPane>
