@@ -16,6 +16,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("../ClientUI/SignIn.fxml"));
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 600, 450));
+        //root.getStylesheets().add("Desktop/style.css");
         primaryStage.show();
     }
 
@@ -26,8 +27,8 @@ public class Main extends Application {
         //User newUser = new User("Firstname", "LastName", "Username", "Password");
         //DatabaseManager.getInstance().addUser(newUser);
 
-        DatabaseManager.getInstance();
-        User newUser = new User("Hcorupe","Pass","Harrison","Corupe");
+        //DatabaseManager.getInstance();
+        //User newUser = new User("Hcorupe","Pass","Harrison","Corupe");
 
         //DatabaseManager.getInstance().addUser(newUser);
         //DatabaseManager.getInstance().deleteUser(15);
