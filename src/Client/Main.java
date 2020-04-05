@@ -13,14 +13,13 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("../ClientUI/SignIn.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../ClientUI/MainMenu.fxml"));
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 600, 450));
         primaryStage.show();
     }
 
-    public static void main(String[] args) throws SQLException {
-
+    public void testDatabase() {
         //ArrayList<User> user = new ArrayList<>();
 
         //User newUser = new User("Firstname", "LastName", "Username", "Password");
@@ -32,10 +31,9 @@ public class Main extends Application {
         //DatabaseManager.getInstance().addUser(newUser);
         //DatabaseManager.getInstance().deleteUser(15);
         //DatabaseManager.getInstance().deleteUser(16);
+    }
 
-
+    public static void main(String[] args) throws SQLException {
         launch(args);
-        DatabaseManager.getInstance().disconnect();
-        //System.out.println("After disconnect");
     }
 }
