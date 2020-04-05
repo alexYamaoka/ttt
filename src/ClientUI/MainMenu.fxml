@@ -17,28 +17,30 @@
                   <Font size="31.0" />
                </font>
             </Text>
+            <!--Main Menu Buttons -->
             <Button fx:id="playButton" layoutX="235.0" layoutY="120.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="130.0" style="-fx-background-color: #132639; -fx-text-fill: #9fbfdf;" text="Play" />
             <Button fx:id="playButton1" layoutX="235.0" layoutY="247.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="130.0" style="-fx-background-color: #132639; -fx-text-fill: #9fbfdf;" text="Options" />
             <Button fx:id="playButton2" layoutX="235.0" layoutY="308.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="130.0" style="-fx-background-color: #132639; -fx-text-fill: #9fbfdf;" text="Exit" />
+            <Button fx:id="playButton3" layoutX="235.0" layoutY="184.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="130.0" style="-fx-background-color: #132639; -fx-text-fill: #9fbfdf;" text="Watch Matches" />
+            <!-- Icons of the Buttons for use in side navigation bar -->
+            <ImageView accessibleRole="BUTTON" layoutX="186.0" layoutY="119.0">
+               <image>
+                  <Image url="@../Resources/Icons/2x/baseline_play_arrow_black_18dp.png" />
+               </image>
+            </ImageView>
+            <ImageView accessibleRole="BUTTON" layoutX="187.0" layoutY="183.0">
+               <image>
+                  <Image url="@../Resources/Icons/2x/baseline_tv_black_18dp.png" />
+               </image>
+            </ImageView>
             <ImageView accessibleRole="BUTTON" layoutX="188.0" layoutY="245.0">
                <image>
                   <Image url="@../Resources/Icons/2x/baseline_settings_black_18dp.png" />
                </image>
             </ImageView>
-            <ImageView layoutX="186.0" layoutY="119.0">
-               <image>
-                  <Image url="@../Resources/Icons/2x/baseline_play_arrow_black_18dp.png" />
-               </image>
-            </ImageView>
-            <ImageView layoutX="189.0" layoutY="306.0">
+            <ImageView accessibleRole="BUTTON" layoutX="189.0" layoutY="306.0">
                <image>
                   <Image url="@../Resources/Icons/2x/baseline_exit_to_app_black_18dp.png" />
-               </image>
-            </ImageView>
-            <Button fx:id="playButton3" layoutX="235.0" layoutY="184.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="130.0" style="-fx-background-color: #132639; -fx-text-fill: #9fbfdf;" text="Watch Matches" />
-            <ImageView layoutX="187.0" layoutY="183.0">
-               <image>
-                  <Image url="@../Resources/Icons/2x/baseline_tv_black_18dp.png" />
                </image>
             </ImageView>
          </children></AnchorPane>
