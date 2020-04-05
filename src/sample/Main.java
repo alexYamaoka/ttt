@@ -1,6 +1,5 @@
 package sample;
 
-import com.mysql.cj.protocol.Resultset;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,43 +15,14 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Registration.fxml"));
         primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
 
 
     public static void main(String[] args) {
-
-        String url = "jdbc:mysql://localhost:3306/tictactoe?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST";
-        //String url = "jdbc:mysql://localhost:3306/tictactoe";
-        String username = "test";
-        String password = "test123password";
-        Connection myConn;
-
-        User newUser = new User("Firstname", "LastName", "Username", "Password");
-        DatabaseManager.getInstance().addUser(newUser);
-
-        try{
-            myConn = DriverManager.getConnection(url,username,password);
-            Statement myStatement = myConn.createStatement();
-            System.out.println("JDBC Database Connected");
-
-            String sql = "select * from tictactoe.user";
-            ResultSet rs = myStatement.executeQuery(sql);
-
-            while(rs.next()){
-                System.out.println(rs.getString("username"));
-            }
-
-            myConn.close();
-        } catch (SQLException e) {
-
-            e.printStackTrace();
-        }
-
-
         launch(args);
     }
 }
