@@ -13,9 +13,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("../ClientUI/SignIn.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../ClientUI/Registration.fxml"));
         primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 600, 450));
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
 
@@ -26,8 +26,8 @@ public class Main extends Application {
         //User newUser = new User("Firstname", "LastName", "Username", "Password");
         //DatabaseManager.getInstance().addUser(newUser);
 
-        DatabaseManager.getInstance();
-        User newUser = new User("Hcorupe","Pass","Harrison","Corupe");
+        //DatabaseManager.getInstance();
+        //User newUser = new User("Hcorupe","Pass","Harrison","Corupe");
 
         //DatabaseManager.getInstance().addUser(newUser);
         //DatabaseManager.getInstance().deleteUser(15);
@@ -35,7 +35,7 @@ public class Main extends Application {
 
 
         launch(args);
-        DatabaseManager.getInstance().disconnect();
+        //DatabaseManager.getInstance().disconnect();
         //System.out.println("After disconnect");
     }
 }
