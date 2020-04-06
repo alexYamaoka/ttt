@@ -5,7 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class User {
+public class User /*implements Runnable*/{
 
     int id;
     String UserName;
@@ -16,32 +16,27 @@ public class User {
     ObjectInputStream in;
     ObjectOutputStream out;
 
-    public User(){
-
-    }
-
-    /*
+/*
     public User(Socket socket) throws IOException {
         this.socket = socket;
         out = new ObjectOutputStream(socket.getOutputStream());
         out.flush();
         in = new ObjectInputStream(socket.getInputStream());
-    }
-    */
-    public User(String userName, String password) {
-        UserName = userName;
-        Password = password;
-    }
-
-    public User(String userName, String password, String firstName, String lastName) {
-        UserName = userName;
-        Password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        Thread t2 = new Thread(this);
+        t2.start();
     }
 
 
 
+    @Override
+    public void run() {
+
+
+    }
+
+
+
+ */
     public int getId() {
 
         return id;
