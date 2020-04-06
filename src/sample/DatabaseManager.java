@@ -1,6 +1,9 @@
 package sample;
 
+import Client.User;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseManager {
 
@@ -38,10 +41,12 @@ public class DatabaseManager {
     }
 
     public List<User> getAllUsers(){
+        return null;
     }
 
 
     public List<User> getUsers(String filter){
         List<User> users = new ArrayList<>();
+        return null;
     }
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientUI.RegistrationController">
+   <children>
+      <TextField fx:id="firstName" layoutX="229.0" layoutY="149.0" onAction="#clickedFirstName" prefHeight="29.0" prefWidth="80.0" style="-fx-background-color: #204060#204060; -fx-border-color: #19334d#19334d; -fx-text-fill: #9fbfdf#9fbfdf;" text="First Name" />
+       <TextField fx:id="lastName" layoutX="314.0" layoutY="149.0" onAction="#clickedLastNam" prefHeight="29.0" prefWidth="80.0" style="-fx-background-color: #204060#204060; -fx-border-color: #19334d#19334d; -fx-text-fill: #9fbfdf#9fbfdf;" text="Last Name" />
+       <TextField fx:id="username" layoutX="229.0" layoutY="183.0" onAction="#clickedUsernam" prefHeight="29.0" prefWidth="165.0" style="-fx-background-color: #204060#204060; -fx-border-color: #19334d#19334d; -fx-text-fill: #9fbfdf#9fbfdf;" text="Username" />
+       <TextField fx:id="password" layoutX="229.0" layoutY="217.0" onAction="#clickedPassword" prefHeight="29.0" prefWidth="165.0" style="-fx-background-color: #204060#204060; -fx-border-color: #19334d#19334d; -fx-text-fill: #9fbfdf#9fbfdf;" text="Password" />
+       <TextField fx:id="confirmPassword" layoutX="229.0" layoutY="251.0" onAction="#clickedConfirmPassword" prefHeight="29.0" prefWidth="165.0" style="-fx-background-color: #204060#204060; -fx-border-color: #19334d#19334d; -fx-text-fill: #9fbfdf#9fbfdf;" text="Confirm Password">
+          <font>
+              <Font name="System Font" size="13.0" />
+          </font>
+       </TextField>
+       <Button fx:id="register" layoutX="247.0" layoutY="290.0" mnemonicParsing="false" onAction="#register" prefHeight="32.0" prefWidth="130.0" style="-fx-background-color: #132639#132639; -fx-text-fill: #9fbfdf#9fbfdf;" text="Register" />
+       <Label layoutX="272.0" layoutY="114.0" prefHeight="29.0" prefWidth="85.0" style="-fx-text-fill: #9fbfdf#9fbfdf;" text="Register">
+           <font>
+               <Font size="24.0" />
+           </font>
+       </Label>
+   </children>
+</AnchorPane>
