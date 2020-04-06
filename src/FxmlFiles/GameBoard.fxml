@@ -22,7 +22,7 @@
             <Image url="@../Resources/abstract-background.jpg" />
          </image>
       </ImageView>
-      <GridPane layoutX="180.0" layoutY="49.0" prefHeight="411.0" prefWidth="411.0" style="-fx-border-color: black; -fx-grid-lines-visible: true;">
+      <GridPane layoutX="154.0" layoutY="49.0" prefHeight="411.0" prefWidth="411.0" style="-fx-border-color: black; -fx-grid-lines-visible: true;">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -104,19 +104,20 @@
          </children>
       </AnchorPane>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="570.0" layoutX="610.0" stroke="BLACK" strokeType="INSIDE" width="9.0" />
-      <HBox layoutX="211.0" layoutY="486.0" prefHeight="27.0" prefWidth="380.0">
+      <HBox layoutX="170.0" layoutY="486.0" prefHeight="27.0" prefWidth="380.0">
          <children>
             <Button fx:id="mainMenu" mnemonicParsing="false" prefHeight="27.0" prefWidth="99.0" text="Main Menu" />
-            <Label prefHeight="25.0" prefWidth="52.0" />
-            <Button fx:id="newGame" mnemonicParsing="false" prefHeight="27.0" prefWidth="108.0" text="New Game" />
             <Label layoutX="97.0" layoutY="10.0" prefHeight="25.0" prefWidth="37.0" />
+            <Button fx:id="newGame" mnemonicParsing="false" prefHeight="27.0" prefWidth="108.0" text="New Game" />
+            <Label layoutX="109.0" layoutY="10.0" prefHeight="25.0" prefWidth="37.0" />
             <Button fx:id="startNewChat" layoutX="135.0" layoutY="10.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="114.0" text="Start New Chat" />
          </children>
       </HBox>
-      <ScrollPane layoutY="176.0" prefHeight="366.0" prefWidth="150.0">
+      <ScrollPane layoutY="60.0" prefHeight="510.0" prefWidth="115.0">
          <content>
-            <VBox prefHeight="692.0" prefWidth="132.0" />
+            <VBox fx:id="myGamesContainer" prefHeight="516.0" prefWidth="94.0" style="-fx-background-color: #23374D#23374D #23374D#23374D #23374D#23374D #23374D#23374D #23374D#23374D #23374D#23374D #23374D#23374D #23374D#23374D #23374D#23374D #23374D#23374D #23374D#23374D #23374D#23374D #23374D#23374D #23374D#23374D #23374D#23374D #23374D#23374D;" />
          </content>
       </ScrollPane>
+      <Label alignment="CENTER" layoutY="24.0" prefHeight="36.0" prefWidth="114.0" text="My Games" textFill="WHITE" />
    </children>
 </AnchorPane>
