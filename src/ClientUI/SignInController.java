@@ -80,8 +80,6 @@ public class SignInController {
                         } catch (IOException e) {
                                 e.printStackTrace();
                         }
-
-
         }
 
 
