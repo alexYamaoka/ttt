@@ -1,4 +1,4 @@
-package sql;
+package DataBase;
 
 public interface IdGenerator {
     String getNewId();

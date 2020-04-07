@@ -1,10 +1,13 @@
-package sql;
+package DataBase;
 
 import Models.BaseModel;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 public interface DataSource {
+
 
     BaseModel insert (BaseModel obj);
     BaseModel delete (BaseModel obj);
@@ -12,6 +15,6 @@ public interface DataSource {
     BaseModel get (String id);
 
     List<BaseModel> list(Class obj);
-    List<BaseModel> query(Class obj,String filter);
+    List<BaseModel> query(Class obj,String filter) throws SQLException;
 
 }

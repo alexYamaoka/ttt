@@ -1,9 +1,9 @@
 package DataBase;
 import Models.BaseModel;
 import Models.User;
-import sql.DataSource;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseManager implements DataSource {  // subscribing to sign in for sign in info
@@ -11,7 +11,6 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
     private static DatabaseManager instance = null;
     public Connection myConn;
     private Statement myState;
-
 
     private DatabaseManager(){
         String url = "jdbc:mysql://localhost:3306/tictactoe?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST";
@@ -23,6 +22,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
             e.printStackTrace();
         }
     }
+
 
     public static DatabaseManager getInstance(){
         if(instance == null){
@@ -45,6 +45,8 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
             }
         }
     }
+
+
 
     @Override
     public BaseModel insert(BaseModel obj) {
@@ -72,7 +74,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
     }
 
     @Override
-    public List<BaseModel> query(Class obj, String filter) {
+    public List<BaseModel> query(Class obj, String filter) throws SQLException {
         StringBuilder query = new StringBuilder();
         query.append("SELECT * FROM ");
 
@@ -86,23 +88,34 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
             query.append(" WHERE " + filter);
         }
 
-        ResultSet rs = instance.
+       ResultSet rs = myState.executeQuery(query.toString());
 
+        List<BaseModel> items = new ArrayList<>();
 
+        while(rs.next()){
+            if(obj.getCanonicalName().equals("User")){
+                User u = new User();
+                u.setId(rs.getString(1));
+                u.setUserName(rs.getString(2));
+                u.setFirstName(rs.getString(3));
+                u.setLastName(rs.getString(4));
+                items.add(u);
+            }
+        }
         return null;
     }
 
     /*
 
     public boolean addUser(User user) throws SQLException {
-        String sql = "INSERT INTO user ("
+        String DataBase.sql = "INSERT INTO user ("
                 + "id,"
                 +"username,"
                 +"password ,"
                 +"FirstName,"
                 +"LastName ) VALUES ("
                 +"null, ?, ?, ?, ?)"; //null is userID its autoincrement
-        PreparedStatement ps =  myConn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement ps =  myConn.prepareStatement(DataBase.sql,Statement.RETURN_GENERATED_KEYS);
         ps.setString(1,user.getUserName());
         ps.setString(2, user.getPassword());
         ps.setString(3,user.getFirstName());
@@ -159,7 +172,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
 
     public boolean updateUser(User user){
 
-        //String sql = " UPDATE user SET username = ?, password = ? WHERE id = ?"
+        //String DataBase.sql = " UPDATE user SET username = ?, password = ? WHERE id = ?"
 
         return true;
     }

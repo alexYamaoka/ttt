@@ -1,13 +1,6 @@
-package Server;
+package app;
 
-import javafx.application.Platform;
-
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.util.ArrayList;
-import java.util.Date;
-
-public class ServerClass {
+public class Main {
 
 
     public static void main(String[] args) {

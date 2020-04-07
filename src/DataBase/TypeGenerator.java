@@ -1,6 +1,6 @@
-package sql;
+package DataBase;
 
-import sql.IdGenerator;
+import DataBase.IdGenerator;
 
 public class TypeGenerator implements IdGenerator {
     @Override

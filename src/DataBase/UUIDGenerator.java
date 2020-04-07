@@ -1,6 +1,6 @@
-package sql;
+package DataBase;
 
-import sql.IdGenerator;
+import DataBase.IdGenerator;
 
 import java.util.UUID;
 
