@@ -1,11 +1,10 @@
 package app;
 
-import DataBase.DataSource;
-import DataBase.DatabaseManager;
+import DataBase.sql.DataSource;
+import DataBase.sql.DatabaseManager;
 import Models.BaseModel;
 import Models.User;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 public class Server {

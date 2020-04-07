@@ -1,4 +1,4 @@
-package DataBase;
+package DataBase.sql;
 import Models.BaseModel;
 import Models.User;
 

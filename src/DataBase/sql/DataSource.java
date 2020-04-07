@@ -1,4 +1,4 @@
-package DataBase;
+package DataBase.sql;
 
 import Models.BaseModel;
 
@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface DataSource {
-
 
     BaseModel insert (BaseModel obj);
     BaseModel delete (BaseModel obj);

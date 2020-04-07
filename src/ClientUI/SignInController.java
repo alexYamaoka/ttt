@@ -1,6 +1,6 @@
 package ClientUI;
 
-import DataBase.DatabaseManager;
+import DataBase.sql.DatabaseManager;
 import Models.User;
 import Pub_Sub.Sub;
 import javafx.event.ActionEvent;
