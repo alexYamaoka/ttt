@@ -1,7 +1,7 @@
 package ClientUI;
-import Client.*;
 
 import DataBase.DatabaseManager;
+import Models.User;
 import Pub_Sub.Sub;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,18 +10,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 
-import java.awt.*;
 import java.io.IOException;
 
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class SignInController {
          // publishing sign in into

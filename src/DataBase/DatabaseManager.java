@@ -1,5 +1,5 @@
 package DataBase;
-import Client.User;
+import Models.User;
 import java.sql.*;
 
 public class DatabaseManager{  // subscribing to sign in for sign in info
