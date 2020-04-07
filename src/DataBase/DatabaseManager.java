@@ -1,8 +1,12 @@
 package DataBase;
+import Models.BaseModel;
 import Models.User;
-import java.sql.*;
+import sql.DataSource;
 
-public class DatabaseManager{  // subscribing to sign in for sign in info
+import java.sql.*;
+import java.util.List;
+
+public class DatabaseManager implements DataSource {  // subscribing to sign in for sign in info
 
     private static DatabaseManager instance = null;
     public Connection myConn;
@@ -42,6 +46,54 @@ public class DatabaseManager{  // subscribing to sign in for sign in info
         }
     }
 
+    @Override
+    public BaseModel insert(BaseModel obj) {
+        return null;
+    }
+
+    @Override
+    public BaseModel delete(BaseModel obj) {
+        return null;
+    }
+
+    @Override
+    public BaseModel update(BaseModel obj) {
+        return null;
+    }
+
+    @Override
+    public BaseModel get(String id) {
+        return null;
+    }
+
+    @Override
+    public List<BaseModel> list(Class obj) {
+        return null;
+    }
+
+    @Override
+    public List<BaseModel> query(Class obj, String filter) {
+        StringBuilder query = new StringBuilder();
+        query.append("SELECT * FROM ");
+
+        if(obj.getCanonicalName().equalsIgnoreCase("user")){
+            query.append("USERS");
+        }
+        else if(obj.getCanonicalName().equalsIgnoreCase("Game")){
+            query.append("GAMES");
+        }
+        if(!filter.trim().equals("")){
+            query.append(" WHERE " + filter);
+        }
+
+        ResultSet rs = instance.
+
+
+        return null;
+    }
+
+    /*
+
     public boolean addUser(User user) throws SQLException {
         String sql = "INSERT INTO user ("
                 + "id,"
@@ -59,7 +111,7 @@ public class DatabaseManager{  // subscribing to sign in for sign in info
         System.out.println("Added user " + user.getUserName());
         ResultSet keys = ps.getGeneratedKeys();
         if(keys.next()){
-            user.setId(keys.getInt(1));
+            //user.setId(keys.getInt(1));
         }
         ps.close();
         return true;
@@ -82,7 +134,7 @@ public class DatabaseManager{  // subscribing to sign in for sign in info
             System.out.println(username + " " + Password + " " + FirstName + " " + LastName);
         }
         
-         */
+
 
         System.out.println("User retrieved");
 
@@ -113,7 +165,7 @@ public class DatabaseManager{  // subscribing to sign in for sign in info
     }
 
 
-    /*
+
     public List<User> getAllUsers(){
 
         return User;
@@ -125,7 +177,8 @@ public class DatabaseManager{  // subscribing to sign in for sign in info
         List<User> users = new ArrayList<>();
     }
 
-     */
 
+
+    */
 
 }

@@ -5,7 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class User{
+public class User extends BaseModel{
 
     String userName;
     String password;
