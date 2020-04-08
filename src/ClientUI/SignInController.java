@@ -2,7 +2,6 @@ package ClientUI;
 
 import DataBase.sql.DatabaseManager;
 import Models.User;
-import Pub_Sub.Sub;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -36,7 +35,7 @@ public class SignInController {
         @FXML
         private Button btn_SignUp;
         SignInController controller;
-        ArrayList<Sub> subs = new ArrayList<>();
+        //ArrayList<Sub> subs = new ArrayList<>();
         PreparedStatement pr = null;
         ResultSet rs = null;
         Socket userSocket;
