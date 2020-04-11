@@ -37,7 +37,7 @@ public class AccountService implements Service, Runnable {
             // Create a server socket for listening for requests
             ServerSocket serverSocket = new ServerSocket(8000, 0, InetAddress.getByName("localhost"));
             var pool = Executors.newFixedThreadPool(100);
-
+            System.out.println("Server started");
             while (running.get()) {
                 Socket socket = serverSocket.accept();
                 ClientConnection connection = new ClientConnection(socket, this);

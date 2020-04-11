@@ -1,5 +1,8 @@
 package Server;
 
+import Shared.Packet;
+
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -27,11 +30,19 @@ public class ClientConnection implements Runnable {
     public void run() {
         running.set(true);
         try {
+            output = new ObjectOutputStream(socket.getOutputStream());
+            input = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
+
             while(running.get()) {
-                output = new ObjectOutputStream(socket.getOutputStream());
-                input = new ObjectInputStream(socket.getInputStream());
+               Packet packet = (Packet) input.readObject();
+                System.out.println("test");
+               if(packet == null) {
+                    System.out.println("test");
+               }
             }
         } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         }
     }
