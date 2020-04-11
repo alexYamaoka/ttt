@@ -3,18 +3,18 @@ package Shared;
 import java.io.Serializable;
 
 public class Packet implements Serializable {
-    private String type;
+    private String request;
     private UserInformation information;
     Serializable data;
 
-    public Packet(String type, UserInformation information, Serializable data) {
-        this.type = type;
+    public Packet(String request, UserInformation information, Serializable data) {
+        this.request = request;
         this.information = information;
         this.data = data;
     }
 
-    public String getType() {
-        return type;
+    public String getRequest() {
+        return request;
     }
 
     public Serializable getData() {
