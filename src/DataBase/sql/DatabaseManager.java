@@ -23,7 +23,6 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         }
     }
 
-
     public static DatabaseManager getInstance(){
         if(instance == null){
             synchronized (DatabaseManager.class){
@@ -45,7 +44,6 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
             }
         }
     }
-
 
 
     @Override
@@ -106,7 +104,6 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
     }
 
     /*
-
     public boolean addUser(User user) throws SQLException {
         String DataBase.sql = "INSERT INTO user ("
                 + "id,"

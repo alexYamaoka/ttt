@@ -10,10 +10,13 @@ import java.sql.SQLException;
 
 public class Main extends Application {
 
+    public Stage primaryStage;
+
     @Override
     public void start(Stage primaryStage) throws Exception{
-        //Parent root = FXMLLoader.load(getClass().getResource("../ClientUI/MainMenu.fxml"));
+        
         Parent root = FXMLLoader.load(getClass().getResource("../ClientUI/SignIn.fxml"));
+        //Parent root = FXMLLoader.load(getClass().getResource("../ClientUI/Options.fxml"));
         primaryStage.setTitle("EndFrame TicTacToe");
         primaryStage.setScene(new Scene(root, 600, 450));
         //root.getStylesheets().add("Desktop/style.css");
