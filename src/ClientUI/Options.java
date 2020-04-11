@@ -35,16 +35,16 @@ public class Options {
 
 
     public void UserDetailButton(ActionEvent event){
-        Pane1.setVisible(false);
-        Pane2.managedProperty().bind(Pane2.visibleProperty());
-        Pane2.setVisible(true);
+        Pane2.setVisible(false);
+        Pane1.managedProperty().bind(Pane1.visibleProperty());
+        Pane1.setVisible(true);
 
     }
 
     public void ChangePassword(ActionEvent event){
-        Pane2.setVisible(false);
-        Pane1.managedProperty().bind(Pane1.visibleProperty());
-        Pane1.setVisible(true);
+        Pane1.setVisible(false);
+        Pane2.managedProperty().bind(Pane2.visibleProperty());
+        Pane2.setVisible(true);
     }
 
     public void MainMenu(ActionEvent event) throws IOException {

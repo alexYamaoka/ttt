@@ -48,6 +48,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
 
     @Override
     public BaseModel insert(BaseModel obj) {
+        StringBuilder qurey;
         return null;
     }
 
