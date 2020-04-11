@@ -2,8 +2,10 @@ package AccountService;
 
 import Server.ClientConnection;
 import Server.Service;
+import Shared.Packet;
 
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -18,7 +20,6 @@ public class AccountService implements Service, Runnable {
     private final AtomicBoolean running = new AtomicBoolean(false);
 
     public AccountService() {
-
     }
 
     public void start() {
@@ -28,6 +29,7 @@ public class AccountService implements Service, Runnable {
 
     public void stop() {
         running.set(false);
+        System.out.println("Account Service Has Stopped!");
     }
 
     @Override
@@ -46,5 +48,10 @@ public class AccountService implements Service, Runnable {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public void handle(Packet packet, ObjectOutputStream outputStream) {
+        AccountHandler handler = new AccountHandler(packet, outputStream);
+        handler.start();
     }
 }

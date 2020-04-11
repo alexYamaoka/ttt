@@ -1,5 +1,6 @@
 package Server;
 
+import AccountService.AccountService;
 import Shared.Packet;
 
 import java.io.BufferedInputStream;
@@ -24,6 +25,7 @@ public class ClientConnection implements Runnable {
 
     public void stop() {
         running.set(false);
+        System.out.println("Client Connection has stopped!");
     }
 
     @Override
@@ -35,10 +37,7 @@ public class ClientConnection implements Runnable {
 
             while(running.get()) {
                Packet packet = (Packet) input.readObject();
-                System.out.println("test");
-               if(packet == null) {
-                    System.out.println("test");
-               }
+               service.handle(packet, output);
             }
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -55,7 +54,7 @@ public class ClientConnection implements Runnable {
         return service;
     }
 
-    public ObjectOutputStream getOutput() {
+    public ObjectOutputStream getOutputStream() {
         return output;
     }
 }
