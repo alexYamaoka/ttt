@@ -7,33 +7,45 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="410.0" prefWidth="447.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientUI.RegistrationController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="400.0" prefWidth="590.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496);"
+            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientUI.RegistrationController">
    <children>
-      <TextField fx:id="firstName" layoutX="131.0" layoutY="198.0" prefHeight="29.0" prefWidth="89.0" promptText="First Name" style="-fx-background-color: #204060#204060; -fx-border-color: #19334d#19334d; -fx-prompt-text-fill: #9fbfdf#9fbfdf; -fx-text-fill: #9fbfdf#9fbfdf #9fbfdf#9fbfdf #9fbfdf#9fbfdf #9fbfdf#9fbfdf;" />
-       <TextField fx:id="lastName" layoutX="225.0" layoutY="198.0" onAction="#clickedLastNam" prefHeight="29.0" prefWidth="86.0" promptText="Last Name" style="-fx-background-color: #204060#204060; -fx-border-color: #19334d#19334d; -fx-prompt-text-fill: #9fbfdf#9fbfdf; -fx-text-fill: #9fbfdf#9fbfdf #9fbfdf#9fbfdf #9fbfdf#9fbfdf #9fbfdf#9fbfdf;" />
-       <TextField fx:id="username" layoutX="132.0" layoutY="232.0" onAction="#clickedUsernam" prefHeight="29.0" prefWidth="178.0" promptText="UserName" style="-fx-background-color: #204060#204060; -fx-border-color: #19334d#19334d; -fx-prompt-text-fill: #9fbfdf#9fbfdf; -fx-text-fill: #9fbfdf#9fbfdf #9fbfdf#9fbfdf #9fbfdf#9fbfdf #9fbfdf#9fbfdf;" />
-       <PasswordField fx:id="password" accessibleRole="PASSWORD_FIELD" layoutX="132.0" layoutY="263.0" onAction="#clickedPassword" prefHeight="29.0" prefWidth="178.0" promptText="Password" style="-fx-background-color: #204060#204060; -fx-border-color: #19334d#19334d; -fx-prompt-text-fill: #9fbfdf#9fbfdf; -fx-text-fill: #9fbfdf#9fbfdf #9fbfdf#9fbfdf #9fbfdf#9fbfdf #9fbfdf#9fbfdf;" />
-       <PasswordField fx:id="confirmPassword" accessibleRole="PASSWORD_FIELD" layoutX="132.0" layoutY="295.0" onAction="#clickedConfirmPassword" prefHeight="29.0" prefWidth="178.0" promptText="Confirm Password" style="-fx-background-color: #204060#204060; -fx-border-color: #19334d#19334d; -fx-prompt-text-fill: #9fbfdf#9fbfdf; -fx-text-fill: #9fbfdf#9fbfdf #9fbfdf#9fbfdf;">
+      <TextField fx:id="firstName" layoutX="212.5" layoutY="198.0" prefHeight="29.0" prefWidth="81.0" promptText="First Name"
+                 style="-fx-background-color: #204060#204060; -fx-border-color: #19334d#19334d;
+                 -fx-prompt-text-fill: #9fbfdf#9fbfdf; -fx-text-fill: #9fbfdf#9fbfdf #9fbfdf#9fbfdf #9fbfdf#9fbfdf #9fbfdf#9fbfdf;" />
+       <TextField fx:id="lastName" layoutX="296.5" layoutY="198.0" prefHeight="29.0" prefWidth="81.0" promptText="Last Name"
+                  onAction="#clickedLastNam" style="-fx-background-color: #204060#204060; -fx-border-color: #19334d#19334d;
+                  -fx-prompt-text-fill: #9fbfdf#9fbfdf; -fx-text-fill: #9fbfdf#9fbfdf #9fbfdf#9fbfdf #9fbfdf#9fbfdf #9fbfdf#9fbfdf;" />
+       <TextField fx:id="username" layoutX="212.5" layoutY="230.0" prefHeight="29.0" prefWidth="165.0" promptText="Username"
+                  onAction="#clickedUsernam" style="-fx-background-color: #204060#204060; -fx-border-color: #19334d#19334d;
+                  -fx-prompt-text-fill: #9fbfdf#9fbfdf; -fx-text-fill: #9fbfdf#9fbfdf #9fbfdf#9fbfdf #9fbfdf#9fbfdf #9fbfdf#9fbfdf;" />
+       <PasswordField fx:id="password" accessibleRole="PASSWORD_FIELD"
+                      layoutX="212.5" layoutY="262.0" prefHeight="29.0" prefWidth="165.0" promptText="Password"
+                      onAction="#clickedPassword" style="-fx-background-color: #204060#204060; -fx-border-color: #19334d#19334d;
+                      -fx-prompt-text-fill: #9fbfdf#9fbfdf; -fx-text-fill: #9fbfdf#9fbfdf #9fbfdf#9fbfdf #9fbfdf#9fbfdf #9fbfdf#9fbfdf;" />
+       <PasswordField fx:id="confirmPassword" accessibleRole="PASSWORD_FIELD"
+                      layoutX="212.5" layoutY="294.0" prefHeight="29.0" prefWidth="165.0" promptText="Confirm Password"
+                      onAction="#clickedConfirmPassword" style="-fx-background-color: #204060#204060; -fx-border-color: #19334d#19334d;
+                      -fx-prompt-text-fill: #9fbfdf#9fbfdf; -fx-text-fill: #9fbfdf#9fbfdf #9fbfdf#9fbfdf;">
           <font>
               <Font name="System Font" size="13.0" />
           </font>
        </PasswordField>
-       <Button fx:id="register" layoutX="148.0" layoutY="328.0" mnemonicParsing="false" onAction="#register" prefHeight="32.0" prefWidth="151.0" style="-fx-background-color: #132639#132639; -fx-text-fill: #9fbfdf#9fbfdf;" text="Register" />
-       <Label layoutX="137.0" layoutY="165.0" prefHeight="29.0" prefWidth="165.0" style="-fx-text-fill: #9fbfdf#9fbfdf;" text="Create Account">
+       <Button fx:id="register" layoutX="230.0" layoutY="326.0" prefHeight="32.0" prefWidth="130.0"
+               mnemonicParsing="false" onAction="#register"
+               style="-fx-background-color: #132639#132639; -fx-text-fill: #9fbfdf#9fbfdf;" text="Register" />
+       <Label layoutX="216.25" layoutY="169.0" prefHeight="29.0" prefWidth="157.5"
+              style="-fx-text-fill: #9fbfdf#9fbfdf;" text="Create Account">
            <font>
                <Font size="24.0" />
            </font>
        </Label>
       <Label fx:id="lbl_Error" layoutX="144.0" layoutY="370.0" prefHeight="17.0" prefWidth="165.0" textAlignment="CENTER" />
-      <Label layoutX="87.0" layoutY="13.0" prefHeight="17.0" prefWidth="120.0" style="-fx-text-fill: #9fbfdf#9fbfdf #9fbfdf#9fbfdf;" text=" Already have an Account? ">
-         <font>
-            <Font size="10.0" />
-         </font>
-      </Label>
-      <Button fx:id="btn_Login" layoutX="15.0" layoutY="7.0" mnemonicParsing="false" onAction="#BackClicked" prefHeight="27.0" prefWidth="66.0" style="-fx-background-color: #132639#132639 #132639#132639; -fx-text-fill: #9fbfdf#9fbfdf #9fbfdf#9fbfdf;" text="LogIn">
-         <font>
-            <Font size="12.0" />
-         </font>
-      </Button>
+      <Label layoutX="24.5" layoutY="29" prefHeight="18.0" prefWidth="147.0"
+             style="-fx-text-fill: #9fbfdf#9fbfdf #9fbfdf#9fbfdf;" text=" Already have an Account? " />
+      <Button fx:id="btn_Login" layoutX="178.5" layoutY="24.5" prefHeight="27.0" prefWidth="61.5"
+              mnemonicParsing="false" onAction="#BackClicked"
+              style="-fx-background-color: #132639#132639 #132639#132639; -fx-text-fill: #9fbfdf#9fbfdf #9fbfdf#9fbfdf;" text="LogIn" />
    </children>
 </AnchorPane>

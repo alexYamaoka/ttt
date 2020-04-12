@@ -34,7 +34,7 @@ public class SignInController implements Initializable {
         public Label lblError;
         public AnchorPane rootPane;
         @FXML
-        private TextField txtF_UserName;
+        private TextField txtF_Username;
         String userName;
         boolean enteredUserName;
         @FXML
@@ -52,9 +52,9 @@ public class SignInController implements Initializable {
         Socket userSocket;
         UserInformation user;
 
-        public void setLogIn(ActionEvent event) throws SQLException {
+        public void logIn(ActionEvent event) throws SQLException {
                 btn_LogIn = (Button) event.getTarget();
-                userName = txtF_UserName.getText();
+                userName = txtF_Username.getText();
                 password = txtF_Password.getText();
                 try {
                         String sql = "SELECT * FROM user WHERE username = ? and password = ?";
@@ -107,8 +107,6 @@ public class SignInController implements Initializable {
                 stage.setScene(scene);
                 stage.show();
         }
-
-
 
         @Override
         public void initialize(URL url, ResourceBundle resourceBundle) {

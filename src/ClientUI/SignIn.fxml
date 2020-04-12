@@ -9,33 +9,46 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="590.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientUI.SignInController">
+<AnchorPane fx:id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="400.0" prefWidth="590.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496);"
+            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientUI.SignInController">
    <children>
-      <TextField fx:id="txtF_UserName" layoutX="219.0" layoutY="234.0" style="-fx-background-color: #204060#204060 #204060#204060; -fx-border-color: #19334d#19334d; -fx-text-fill: #9fbfdf#9fbfdf;" text="UserName" />
-      <PasswordField fx:id="txtF_Password" accessibleRole="PASSWORD_FIELD" layoutX="219.0" layoutY="286.0" prefHeight="29.0" prefWidth="165.0" promptText="Password" style="-fx-prompt-text-fill: #9fbfdf#9fbfdf #9fbfdf#9fbfdf; -fx-background-color: #204060#204060 #204060#204060 #204060#204060 #204060#204060; -fx-border-color: #19334d#19334d #19334d#19334d; -fx-text-fill: #9fbfdf#9fbfdf;">
+      <TextField fx:id="txtF_Username" layoutX="219.0" layoutY="198.0" prefHeight="29.0" prefWidth="165.0"
+                 style="-fx-background-color: #204060#204060 #204060#204060; -fx-border-color: #19334d#19334d;
+                 -fx-text-fill: #9fbfdf#9fbfdf;" text="Username" />
+      <PasswordField fx:id="txtF_Password" accessibleRole="PASSWORD_FIELD"
+                     layoutX="219.0" layoutY="230.0" prefHeight="29.0" prefWidth="165.0" promptText="Password"
+                     style="-fx-prompt-text-fill: #9fbfdf#9fbfdf #9fbfdf#9fbfdf;
+                     -fx-background-color: #204060#204060 #204060#204060 #204060#204060 #204060#204060;
+                     -fx-border-color: #19334d#19334d #19334d#19334d; -fx-text-fill: #9fbfdf#9fbfdf;">
          <font>
             <Font name="System Font" size="13.0" />
          </font>
       </PasswordField>
-      <Button fx:id="btn_LogIn" layoutX="237.0" layoutY="346.0" mnemonicParsing="false" onAction="#setLogIn" prefHeight="32.0" prefWidth="130.0" style="-fx-background-color: #132639#132639; -fx-text-fill: #9fbfdf#9fbfdf;" text="Log In" />
-      <Button fx:id="btn_SignUp" layoutX="521.0" layoutY="21.0" mnemonicParsing="false" onAction="#SignUp" style="-fx-text-fill: #9fbfdf#9fbfdf; -fx-background-color: #132639#132639 #132639#132639;" text="Sign Up" />
-      <Label layoutX="413.0" layoutY="29.0" prefHeight="18.0" prefWidth="95.0" style="-fx-text-fill: #9fbfdf#9fbfdf;" text="Not a Member?" />
-      <ImageView fitHeight="34.0" fitWidth="37.0" layoutX="177.0" layoutY="231.0" pickOnBounds="true" preserveRatio="true">
+      <Button fx:id="btn_LogIn" layoutX="230.0" layoutY="262.0" prefHeight="32.0" prefWidth="130.0"
+              mnemonicParsing="false" onAction="#logIn"
+              style="-fx-background-color: #132639#132639; -fx-text-fill: #9fbfdf#9fbfdf;" text="Log In" />
+      <Button fx:id="btn_SignUp" layoutX="504.0" layoutY="24.5" prefHeight="27.0" prefWidth="61.5"
+              mnemonicParsing="false" onAction="#SignUp"
+              style="-fx-text-fill: #9fbfdf#9fbfdf; -fx-background-color: #132639#132639 #132639#132639;" text="Sign Up" />
+      <Label layoutX="413.0" layoutY="29.0" prefHeight="18.0" prefWidth="84.0"
+             style="-fx-text-fill: #9fbfdf#9fbfdf;" text="Not a Member?" />
+      <ImageView layoutX="177.0" layoutY="231.0" fitHeight="34.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="file:/Users/harrison/Downloads/pngguru.com-2.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="41.0" fitWidth="35.0" layoutX="177.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView layoutX="177.0" layoutY="283.0" fitHeight="41.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="file:/Users/harrison/Downloads/pngguru.com.png" />
          </image>
       </ImageView>
-      <Label layoutX="263.0" layoutY="202.0" prefHeight="29.0" prefWidth="75.0" style="-fx-text-fill: #9fbfdf#9fbfdf;" text="Sign In">
+      <Label layoutX="261.0" layoutY="169.0" prefHeight="29.0" prefWidth="68.0" style="-fx-text-fill: #9fbfdf#9fbfdf;" text="Sign In">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="220.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView layoutX="220.0" layoutY="38.0" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="file:/Users/harrison/Downloads/a3e4732b-9163-4381-9772-865c04b211fc_200x200.png" />
          </image>

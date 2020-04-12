@@ -13,7 +13,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("../ClientUI/SignIn.fxml"));
         primaryStage.setTitle("EndFrame TicTacToe");
-        primaryStage.setScene(new Scene(root, 600, 450));
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
     public void testDatabase() {
