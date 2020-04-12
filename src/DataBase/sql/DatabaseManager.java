@@ -1,6 +1,6 @@
 package DataBase.sql;
 import Models.BaseModel;
-import Models.User;
+import Shared.UserInformation;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -93,7 +93,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
 
         while(rs.next()){
             if(obj.getCanonicalName().equals("User")){
-                User u = new User();
+                UserInformation u = new UserInformation();
                 u.setId(rs.getString(1));
                 u.setUserName(rs.getString(2));
                 u.setFirstName(rs.getString(3));

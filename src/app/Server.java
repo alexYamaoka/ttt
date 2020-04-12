@@ -3,7 +3,7 @@ package app;
 import DataBase.sql.DataSource;
 import DataBase.sql.DatabaseManager;
 import Models.BaseModel;
-import Models.User;
+import Shared.UserInformation;
 
 import java.sql.SQLException;
 
@@ -20,12 +20,12 @@ public class Server {
     }
 
     public boolean login(String username, String password) throws SQLException {
-        ds.query(Models.User.class, " username = ' " + username + " ' AND password = ' " + password + " ' ");
+        ds.query(Shared.UserInformation.class, " username = ' " + username + " ' AND password = ' " + password + " ' ");
         return true;
     }
 
-    public boolean registerUser(String username, String firstname, String lastname, String password) {
-        BaseModel user = new User();
+    public boolean registerUser(String username, String firstname, String lastname, String email, String password) {
+        BaseModel user = new UserInformation(username, firstname, lastname, email, password);
         ds.insert(user);
         return true;
     }

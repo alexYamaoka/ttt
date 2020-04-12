@@ -1,6 +1,6 @@
 package sample;
 
-import Client.User;
+import Shared.UserInformation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,11 +24,11 @@ public class DatabaseManager {
         return instance;
     }
 
-    public boolean addUser(User user){
+    public boolean addUser(UserInformation user){
         return true;
     }
 
-    public boolean updateUser(User user){
+    public boolean updateUser(UserInformation user){
         return true;
     }
 
@@ -40,13 +40,13 @@ public class DatabaseManager {
         return true;
     }
 
-    public List<User> getAllUsers(){
+    public List<UserInformation> getAllUsers(){
         return null;
     }
 
 
-    public List<User> getUsers(String filter){
-        List<User> users = new ArrayList<>();
+    public List<UserInformation> getUsers(String filter){
+        List<UserInformation> users = new ArrayList<>();
         return null;
     }
 }
