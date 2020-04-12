@@ -1,4 +1,4 @@
-package ClientUI;
+package UI.Client;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -56,7 +56,7 @@ public class MainMenuController implements Initializable {
 
         if (event.getSource() == optionsButton) {
             stage = (Stage) optionsButton.getScene().getWindow();
-            root = FXMLLoader.load(getClass().getResource("Options.fxml"));
+            root = FXMLLoader.load(getClass().getResource("Client/Options.fxml"));
         }
         Scene scene = new Scene(root);
         stage.setScene(scene);

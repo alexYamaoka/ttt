@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="410.0" prefWidth="447.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientUI.RegistrationController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="410.0" prefWidth="447.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.Client.RegistrationController">
    <children>
       <TextField fx:id="firstName" layoutX="131.0" layoutY="198.0" prefHeight="29.0" prefWidth="89.0" promptText="First Name" style="-fx-background-color: #204060#204060; -fx-border-color: #19334d#19334d; -fx-prompt-text-fill: #9fbfdf#9fbfdf; -fx-text-fill: #9fbfdf#9fbfdf #9fbfdf#9fbfdf #9fbfdf#9fbfdf #9fbfdf#9fbfdf;" />
        <TextField fx:id="lastName" layoutX="225.0" layoutY="198.0" onAction="#clickedLastNam" prefHeight="29.0" prefWidth="86.0" promptText="Last Name" style="-fx-background-color: #204060#204060; -fx-border-color: #19334d#19334d; -fx-prompt-text-fill: #9fbfdf#9fbfdf; -fx-text-fill: #9fbfdf#9fbfdf #9fbfdf#9fbfdf #9fbfdf#9fbfdf #9fbfdf#9fbfdf;" />

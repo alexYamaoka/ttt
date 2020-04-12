@@ -1,4 +1,4 @@
-package ServerUI;
+package UI.ServerUI;
 
 public class ServerDisplay {
 }

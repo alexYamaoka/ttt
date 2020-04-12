@@ -1,4 +1,4 @@
-package ClientUI;
+package UI.Client;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,9 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -78,7 +75,7 @@ public class RegistrationController {
                 && checkPasswords(pass_word,confirm_Password)){
             if(event.getSource() == register ){
                 stage = (Stage) register.getScene().getWindow();
-                root = FXMLLoader.load(getClass().getResource("SignIn.fxml"));
+                root = FXMLLoader.load(getClass().getResource("Client/SignIn.fxml"));
             }
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -92,7 +89,7 @@ public class RegistrationController {
         btn_Login = (Button) event.getSource();
         if(event.getSource() == btn_Login ){
             stage = (Stage) register.getScene().getWindow();
-            root = FXMLLoader.load(getClass().getResource("SignIn.fxml"));
+            root = FXMLLoader.load(getClass().getResource("Client/SignIn.fxml"));
         }
         Scene scene = new Scene(root);
         stage.setScene(scene);

@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="590.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientUI.SignInController">
+<AnchorPane fx:id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="590.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.Client.SignInController">
    <children>
       <TextField fx:id="txtF_UserName" layoutX="219.0" layoutY="234.0" style="-fx-background-color: #204060#204060 #204060#204060; -fx-border-color: #19334d#19334d; -fx-text-fill: #9fbfdf#9fbfdf;" text="UserName" />
       <PasswordField fx:id="txtF_Password" accessibleRole="PASSWORD_FIELD" layoutX="219.0" layoutY="286.0" prefHeight="29.0" prefWidth="165.0" promptText="Password" style="-fx-prompt-text-fill: #9fbfdf#9fbfdf #9fbfdf#9fbfdf; -fx-background-color: #204060#204060 #204060#204060 #204060#204060 #204060#204060; -fx-border-color: #19334d#19334d #19334d#19334d; -fx-text-fill: #9fbfdf#9fbfdf;">

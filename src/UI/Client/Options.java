@@ -1,6 +1,5 @@
-package ClientUI;
+package UI.Client;
 
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,8 +10,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 
-import javax.swing.*;
-import javax.xml.crypto.dsig.keyinfo.KeyValue;
 import java.io.IOException;
 
 public class Options {

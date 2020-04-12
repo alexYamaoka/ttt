@@ -58,6 +58,10 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
 
     @Override
     public BaseModel get(String id) {
+        StringBuilder query = new StringBuilder();
+        query.append("SELECT * FROM ");
+
+
         return null;
     }
 
@@ -69,6 +73,8 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
     @Override
     public BaseModel insert(BaseModel obj) {
         StringBuilder query = new StringBuilder();
+        query.append("INSERT into ");
+
 
         return null;
     }
@@ -78,20 +84,19 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         StringBuilder query = new StringBuilder();
         query.append("SELECT * FROM ");
 
-        if(obj.getCanonicalName().equalsIgnoreCase("UserInformation")){
+        System.out.println("Class obj = "+obj.toString());
+
+        if(obj.getCanonicalName().equalsIgnoreCase("Shared.UserInformation")){
             query.append("user");
         }else if(obj.getCanonicalName().equalsIgnoreCase("Game")){
             query.append("GAMES");
-        }
-        System.out.println(query.toString());
-        if(!filter.trim().equals("")){
+        }if(!filter.trim().equals("")){
             query.append(" WHERE " + filter);
         }
         System.out.println(query.toString());
         PreparedStatement ps;
-        //ResultSet rs = (ResultSet) myConn.prepareStatement(query.toString());
-        ResultSet rs = myState.executeQuery(query.toString());
-
+        ps = myConn.prepareStatement(query.toString());
+        ResultSet rs = ps.executeQuery(query.toString());
         System.out.println( "RS = "+ rs.toString());
         List<BaseModel> items = new ArrayList<>();
 

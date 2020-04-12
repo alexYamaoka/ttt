@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<AnchorPane fx:controller="ClientUI.MainMenuController" minHeight="0.0" minWidth="0.0" prefHeight="400" prefWidth="600"
+<AnchorPane fx:controller="UI.Client.MainMenuController" minHeight="0.0" minWidth="0.0" prefHeight="400" prefWidth="600"
             xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
             style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496);">
     <children>
@@ -35,22 +35,22 @@
         <!-- Icons of the Buttons for use in side navigation bar -->
         <ImageView accessibleRole="BUTTON" layoutX="186.0" layoutY="119.0">
             <image>
-                <Image url="@../Resources/Icons/2x/baseline_play_arrow_black_18dp.png"/>
+                <Image url="@../../Resources/Icons/2x/baseline_play_arrow_black_18dp.png"/>
             </image>
         </ImageView>
         <ImageView accessibleRole="BUTTON" layoutX="187.0" layoutY="183.0">
             <image>
-                <Image url="@../Resources/Icons/2x/baseline_tv_black_18dp.png"/>
+                <Image url="@../../Resources/Icons/2x/baseline_tv_black_18dp.png"/>
             </image>
         </ImageView>
         <ImageView accessibleRole="BUTTON" layoutX="188.0" layoutY="245.0">
             <image>
-                <Image url="@../Resources/Icons/2x/baseline_settings_black_18dp.png"/>
+                <Image url="@../../Resources/Icons/2x/baseline_settings_black_18dp.png"/>
             </image>
         </ImageView>
         <ImageView accessibleRole="BUTTON" layoutX="189.0" layoutY="306.0">
             <image>
-                <Image url="@../Resources/Icons/2x/baseline_exit_to_app_black_18dp.png"/>
+                <Image url="@../../Resources/Icons/2x/baseline_exit_to_app_black_18dp.png"/>
             </image>
         </ImageView>
     </children>
