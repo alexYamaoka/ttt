@@ -1,7 +1,7 @@
 package ClientUI;
 
 import DataBase.sql.DatabaseManager;
-import Models.User;
+import Shared.UserInformation;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -50,7 +50,7 @@ public class SignInController implements Initializable {
         PreparedStatement pr = null;
         ResultSet rs = null;
         Socket userSocket;
-        User user;
+        UserInformation user;
 
         public void setLogIn(ActionEvent event) throws SQLException {
                 btn_LogIn = (Button) event.getTarget();
