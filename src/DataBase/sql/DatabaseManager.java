@@ -1,13 +1,16 @@
-package DataBase;
-import Client.User;
-import java.sql.*;
+package DataBase.sql;
+import Models.BaseModel;
+import Models.User;
 
-public class DatabaseManager{  // subscribing to sign in for sign in info
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class DatabaseManager implements DataSource {  // subscribing to sign in for sign in info
 
     private static DatabaseManager instance = null;
     public Connection myConn;
     private Statement myState;
-
 
     private DatabaseManager(){
         String url = "jdbc:mysql://localhost:3306/tictactoe?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST";
@@ -42,15 +45,75 @@ public class DatabaseManager{  // subscribing to sign in for sign in info
         }
     }
 
+
+    @Override
+    public BaseModel insert(BaseModel obj) {
+        StringBuilder qurey;
+        return null;
+    }
+
+    @Override
+    public BaseModel delete(BaseModel obj) {
+        return null;
+    }
+
+    @Override
+    public BaseModel update(BaseModel obj) {
+        return null;
+    }
+
+    @Override
+    public BaseModel get(String id) {
+        return null;
+    }
+
+    @Override
+    public List<BaseModel> list(Class obj) {
+        return null;
+    }
+
+    @Override
+    public List<BaseModel> query(Class obj, String filter) throws SQLException {
+        StringBuilder query = new StringBuilder();
+        query.append("SELECT * FROM ");
+
+        if(obj.getCanonicalName().equalsIgnoreCase("user")){
+            query.append("USERS");
+        }
+        else if(obj.getCanonicalName().equalsIgnoreCase("Game")){
+            query.append("GAMES");
+        }
+        if(!filter.trim().equals("")){
+            query.append(" WHERE " + filter);
+        }
+
+       ResultSet rs = myState.executeQuery(query.toString());
+
+        List<BaseModel> items = new ArrayList<>();
+
+        while(rs.next()){
+            if(obj.getCanonicalName().equals("User")){
+                User u = new User();
+                u.setId(rs.getString(1));
+                u.setUserName(rs.getString(2));
+                u.setFirstName(rs.getString(3));
+                u.setLastName(rs.getString(4));
+                items.add(u);
+            }
+        }
+        return null;
+    }
+
+    /*
     public boolean addUser(User user) throws SQLException {
-        String sql = "INSERT INTO user ("
+        String DataBase.sql = "INSERT INTO user ("
                 + "id,"
                 +"username,"
                 +"password ,"
                 +"FirstName,"
                 +"LastName ) VALUES ("
                 +"null, ?, ?, ?, ?)"; //null is userID its autoincrement
-        PreparedStatement ps =  myConn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement ps =  myConn.prepareStatement(DataBase.sql,Statement.RETURN_GENERATED_KEYS);
         ps.setString(1,user.getUserName());
         ps.setString(2, user.getPassword());
         ps.setString(3,user.getFirstName());
@@ -59,7 +122,7 @@ public class DatabaseManager{  // subscribing to sign in for sign in info
         System.out.println("Added user " + user.getUserName());
         ResultSet keys = ps.getGeneratedKeys();
         if(keys.next()){
-            user.setId(keys.getInt(1));
+            //user.setId(keys.getInt(1));
         }
         ps.close();
         return true;
@@ -82,7 +145,7 @@ public class DatabaseManager{  // subscribing to sign in for sign in info
             System.out.println(username + " " + Password + " " + FirstName + " " + LastName);
         }
         
-         */
+
 
         System.out.println("User retrieved");
 
@@ -107,13 +170,13 @@ public class DatabaseManager{  // subscribing to sign in for sign in info
 
     public boolean updateUser(User user){
 
-        //String sql = " UPDATE user SET username = ?, password = ? WHERE id = ?"
+        //String DataBase.sql = " UPDATE user SET username = ?, password = ? WHERE id = ?"
 
         return true;
     }
 
 
-    /*
+
     public List<User> getAllUsers(){
 
         return User;
@@ -125,7 +188,8 @@ public class DatabaseManager{  // subscribing to sign in for sign in info
         List<User> users = new ArrayList<>();
     }
 
-     */
 
+
+    */
 
 }
