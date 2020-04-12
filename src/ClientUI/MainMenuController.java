@@ -31,7 +31,18 @@ public class MainMenuController implements Initializable {
 
     }
 
-    public void playButtonClicked(ActionEvent event) {
+    public void playButtonClicked(ActionEvent event) throws IOException {
+        Stage stage = null;
+        Parent root = null;
+
+        if (event.getSource() == playButton) {
+            stage = (Stage) playButton.getScene().getWindow();
+            root = FXMLLoader.load(getClass().getResource("GameLobby.fxml"));
+        }
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        System.out.println("Options Button Clicked!");
         System.out.println("Play Button Clicked!");
     }
 
