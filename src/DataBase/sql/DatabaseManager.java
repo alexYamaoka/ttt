@@ -2,6 +2,7 @@ package DataBase.sql;
 import Models.BaseModel;
 import Shared.UserInformation;
 
+import javax.swing.plaf.synth.SynthMenuBarUI;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,13 +46,6 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         }
     }
 
-
-    @Override
-    public BaseModel insert(BaseModel obj) {
-        StringBuilder qurey;
-        return null;
-    }
-
     @Override
     public BaseModel delete(BaseModel obj) {
         return null;
@@ -73,26 +67,36 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
     }
 
     @Override
+    public BaseModel insert(BaseModel obj) {
+        StringBuilder query = new StringBuilder();
+
+        return null;
+    }
+
+    @Override
     public List<BaseModel> query(Class obj, String filter) throws SQLException {
         StringBuilder query = new StringBuilder();
         query.append("SELECT * FROM ");
 
-        if(obj.getCanonicalName().equalsIgnoreCase("user")){
-            query.append("USERS");
-        }
-        else if(obj.getCanonicalName().equalsIgnoreCase("Game")){
+        if(obj.getCanonicalName().equalsIgnoreCase("UserInformation")){
+            query.append("user");
+        }else if(obj.getCanonicalName().equalsIgnoreCase("Game")){
             query.append("GAMES");
         }
+        System.out.println(query.toString());
         if(!filter.trim().equals("")){
             query.append(" WHERE " + filter);
         }
+        System.out.println(query.toString());
+        PreparedStatement ps;
+        //ResultSet rs = (ResultSet) myConn.prepareStatement(query.toString());
+        ResultSet rs = myState.executeQuery(query.toString());
 
-       ResultSet rs = myState.executeQuery(query.toString());
-
+        System.out.println( "RS = "+ rs.toString());
         List<BaseModel> items = new ArrayList<>();
 
         while(rs.next()){
-            if(obj.getCanonicalName().equals("User")){
+            if(obj.getCanonicalName().equalsIgnoreCase("UserInformation")){
                 UserInformation u = new UserInformation();
                 u.setId(rs.getString(1));
                 u.setUserName(rs.getString(2));

@@ -1,5 +1,7 @@
 package ClientUI;
+import Shared.UserInformation;
 
+import DataBase.sql.DataSource;
 import DataBase.sql.DatabaseManager;
 import Shared.UserInformation;
 import javafx.application.Platform;
@@ -51,11 +53,14 @@ public class SignInController implements Initializable {
         ResultSet rs = null;
         Socket userSocket;
         UserInformation user;
+        private DataSource ds = DatabaseManager.getInstance();
 
         public void setLogIn(ActionEvent event) throws SQLException {
                 btn_LogIn = (Button) event.getTarget();
                 userName = txtF_UserName.getText();
                 password = txtF_Password.getText();
+                ds.query(Shared.UserInformation.class, " username = ' " + userName + " ' AND password = ' " + password + " ' ");
+                /*
                 try {
                         String sql = "SELECT * FROM user WHERE username = ? and password = ?";
                         pr = DatabaseManager.getInstance().myConn.prepareStatement(sql);
@@ -69,9 +74,7 @@ public class SignInController implements Initializable {
                                 System.out.println("Enter Correct Username/Password");
                         } else {
                                 MainMenuScene();
-                                //lblError.setTextFill(Color.GREEN);
-                                //lblError.setText("Login Successful");
-                                //userSocket = new Socket("localhost", 800);
+
                                 //User newUser = new User(userSocket);
                         }
                 } catch (SQLException e) {
@@ -81,6 +84,8 @@ public class SignInController implements Initializable {
                 } catch (IOException e) {
                         e.printStackTrace();
                 }
+
+                 */
         }
 
 
