@@ -1,25 +1,25 @@
 package Shared;
 
+import Models.BaseModel;
+
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.UUID;
 
-public class UserInformation implements Serializable {
+public class UserInformation extends BaseModel implements Serializable {
     private String firstName, lastName;
-    private String userName, userId;
+    private String userName;
     private String email;
-    private ArrayList<String> chatRooms = new ArrayList<>();
+    private String password;
 
-    public UserInformation(String username) {
-        this("", "", username, "");
+    public UserInformation() {
+
     }
 
-    public UserInformation(String firstName, String lastName, String userName, String email) {
+    public UserInformation(String firstName, String lastName, String userName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
         this.email = email;
-        this.userId = UUID.randomUUID().toString();
     }
 
     public String getFirstName() {
@@ -42,7 +42,7 @@ public class UserInformation implements Serializable {
         return userName;
     }
 
-    public String getUserId() {
-        return userId;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

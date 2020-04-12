@@ -1,6 +1,4 @@
 package Server;
-
-import AccountService.AccountService;
 import Shared.Packet;
 
 import java.io.BufferedInputStream;
@@ -12,7 +10,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ClientConnection implements Runnable {
     private Socket socket;
-    private Service service;
+    private Server.Service service;
 
     private final AtomicBoolean running = new AtomicBoolean(false);
     private ObjectOutputStream output;

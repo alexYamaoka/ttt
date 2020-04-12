@@ -1,10 +1,7 @@
 package AccountService;
-
-import Client.User;
 import Shared.Packet;
 import Shared.UserInformation;
 
-import java.io.BufferedOutputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
@@ -14,7 +11,7 @@ public class Main {
        service.start();
        try {
            Socket socket = new Socket("localhost", 8000);
-           UserInformation information = new UserInformation("illogical", "test", "test", "test");
+           UserInformation information = new UserInformation("illogical", "test", "test", "test", "1234");
            Packet packet = new Packet("REGISTER", information, "Hello World");
            ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
            objectOutputStream.writeObject(packet);
