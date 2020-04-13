@@ -2,6 +2,10 @@ package ClientUI;
 
 import DataBase.sql.DatabaseManager;
 import Shared.UserInformation;
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,8 +19,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 
@@ -32,20 +38,22 @@ public class SignInController implements Initializable {
         // publishing sign in into
 
         public Label lblError;
-        public AnchorPane rootPane;
+
+        @FXML
+        StackPane parentContainer;
+        @FXML
+        private AnchorPane anchorPane;
         @FXML
         private TextField txtF_Username;
-        String userName;
-        boolean enteredUserName;
         @FXML
         private PasswordField txtF_Password;
-        String password;
-        boolean enteredPassword;
         @FXML
         private Button btn_LogIn;
         @FXML
         private Button btn_SignUp;
-        SignInController controller;
+        String userName;
+        String password;
+
         //ArrayList<Sub> subs = new ArrayList<>();
         PreparedStatement pr = null;
         ResultSet rs = null;
@@ -85,17 +93,20 @@ public class SignInController implements Initializable {
 
 
         public void SignUp(ActionEvent event) throws IOException {
-                Stage stage = null;
-                Parent root = null;
+                Parent root = FXMLLoader.load(getClass().getResource("Registration.fxml"));
+                Scene scene = btn_SignUp.getScene();
 
-                if (event.getSource() == btn_SignUp) {
-                        stage = (Stage) btn_SignUp.getScene().getWindow();
-                        root = FXMLLoader.load(getClass().getResource("Registration.fxml"));
-                }
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
+                root.translateXProperty().set(scene.getWidth());
+                parentContainer.getChildren().add(root);
 
+                Timeline timeline = new Timeline();
+                KeyValue keyValue = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
+                KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.3), keyValue);
+                timeline.getKeyFrames().add(keyFrame);
+                timeline.setOnFinished(event1 -> {
+                        parentContainer.getChildren().remove(anchorPane);
+                });
+                timeline.play();
         }
 
         public void MainMenuScene() throws IOException {
