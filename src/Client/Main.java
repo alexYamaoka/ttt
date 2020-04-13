@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("../ClientUI/SignIn.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../ClientUI/SignInUp.fxml"));
         primaryStage.setTitle("EndFrame TicTacToe");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();

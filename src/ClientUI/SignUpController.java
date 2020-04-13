@@ -13,18 +13,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
 
-public class RegistrationController {
+public class SignUpController {
+    @FXML
+    StackPane parentContainer;
     @FXML
     AnchorPane anchorPane;
     @FXML
@@ -107,8 +105,6 @@ public class RegistrationController {
             Scene scene = btn_SignIn.getScene();
 
             root.translateXProperty().set(scene.getWidth());
-
-            StackPane parentContainer = (StackPane) scene.getRoot();
             parentContainer.getChildren().add(root);
 
             Timeline timeline = new Timeline();
@@ -127,13 +123,11 @@ public class RegistrationController {
         Scene scene = btn_SignIn.getScene();
 
         root.translateXProperty().set(scene.getWidth() * -1);
-
-        StackPane parentContainer = (StackPane) scene.getRoot();
         parentContainer.getChildren().add(root);
 
         Timeline timeline = new Timeline();
         KeyValue keyValue = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
-        KeyFrame keyFrame = new KeyFrame(Duration.seconds(2.0), keyValue);
+        KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.3), keyValue);
         timeline.getKeyFrames().add(keyFrame);
         timeline.setOnFinished(event1 -> {
             parentContainer.getChildren().remove(anchorPane);
