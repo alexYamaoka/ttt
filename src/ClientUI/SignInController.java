@@ -107,14 +107,20 @@ public class SignInController implements Initializable {
     public void signUp(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../ClientUI/SignUp.fxml"));
         Scene scene = btn_SignUp.getScene();
+        Parent root1 = anchorPane;
 
-        root.translateXProperty().set(scene.getWidth());
+        root.translateXProperty().set(scene.getWidth() / 2);
+        root1.translateXProperty().set(0);
+
         parentContainer.getChildren().add(root);
 
         Timeline timeline = new Timeline();
         KeyValue keyValue = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
         KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.3), keyValue);
+        KeyValue keyValue1 = new KeyValue(root1.translateXProperty(), -300, Interpolator.EASE_IN);
+        KeyFrame keyFrame1 = new KeyFrame(Duration.seconds(0.3), keyValue1);
         timeline.getKeyFrames().add(keyFrame);
+        timeline.getKeyFrames().add(keyFrame1);
         timeline.setOnFinished(event1 -> {
             parentContainer.getChildren().remove(anchorPane);
         });
