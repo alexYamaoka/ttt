@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane prefHeight="417.0" prefWidth="651.0" style="-fx-background-color: radial-gradient(radius 200%,#003566,#002E59)radial-gradient(radius 200%,#003566,#002E59);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.ServerUI.ServerDisplay">
    <children>
       <SplitPane dividerPositions="0.3974151857835218" layoutX="14.0" layoutY="97.0" prefHeight="306.0" prefWidth="621.0" style="-fx-background-color: #00325F#00325F;">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="304.0" prefWidth="179.0" style="-fx-background-color: #002C54#002C54;" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="304.0" prefWidth="179.0" style="-fx-background-color: #002C54#002C54;">
+               <children>
+                  <TextField fx:id="txt_output" layoutX="14.0" layoutY="14.0" prefHeight="268.0" prefWidth="219.0" />
+               </children></AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="299.0" prefWidth="370.0" style="-fx-background-color: #002C54#002C54;" />
         </items>
       </SplitPane>

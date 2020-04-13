@@ -1,5 +1,7 @@
 package UI.Client;
 
+import DataBase.sql.DataSource;
+import DataBase.sql.DatabaseManager;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -29,6 +31,7 @@ public class Options {
     public AnchorPane Pane1; // Change Password pane
     public Button btn2;
     public Button btn_MainMenu;
+    private DataSource ds = DatabaseManager.getInstance();
 
 
     public void UserDetailButton(ActionEvent event){
@@ -39,6 +42,7 @@ public class Options {
     }
 
     public void ChangePassword(ActionEvent event){
+
         Pane1.setVisible(false);
         Pane2.managedProperty().bind(Pane2.visibleProperty());
         Pane2.setVisible(true);

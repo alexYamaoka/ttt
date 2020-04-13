@@ -71,8 +71,7 @@ public class RegistrationController {
         user_name = username.getText();
         pass_word = password.getText();
         confirm_Password = confirmPassword.getText();
-        if(checkField(first_Name,last_Name,user_name,pass_word,confirm_Password)
-                && checkPasswords(pass_word,confirm_Password)){
+        if(checkField(first_Name,last_Name,user_name,pass_word,confirm_Password) && checkPasswords(pass_word,confirm_Password)){
             if(event.getSource() == register ){
                 stage = (Stage) register.getScene().getWindow();
                 root = FXMLLoader.load(getClass().getResource("Client/SignIn.fxml"));
