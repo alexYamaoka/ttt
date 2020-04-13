@@ -25,80 +25,107 @@ import javafx.util.Duration;
 import java.io.IOException;
 
 public class RegistrationController {
-    public Label lbl_Error;
-
-    public Button btn_Login;
     @FXML
     AnchorPane anchorPane;
     @FXML
-    private TextField firstName, lastName, username;
+    private TextField txtF_FirstName, txtF_LastName, txtF_Username;
     @FXML
-    private PasswordField password, confirmPassword;
+    private PasswordField txtF_Password, txtF_ConfirmPassword;
     @FXML
-    private Button register;
-    private String first_Name, last_Name, user_name, pass_word, confirm_Password;
+    private Button btn_SignIn, btn_SignUp;
+    @FXML
+    private Label firstNameError, lastNameError, usernameError, passwordError, confirmPasswordError;
 
-    public boolean checkPasswords(String password,String confirmPassword){
+    public boolean checkPasswords(String password, String confirmPassword){
         if (!password.equals(confirmPassword)){
-            lbl_Error.setTextFill(Color.RED);
-            lbl_Error.setText("Passwords Do not Match");
+            usernameError.setTextFill(Color.RED);
+            passwordError.setText("Passwords do not match");
             return false;
         }
         else
             return true;
     }
-    public boolean checkField(String first,String last,String user,String pass,String confirm){
+    public boolean checkField(String firstName,String lastName,String username,String password,String confirmPassword){
         boolean value_entered = true;
-        if(first.isBlank()){
-            lbl_Error.setTextFill(Color.RED);
-            lbl_Error.setText("Enter FirstName");
+        if (firstName.isBlank()) {
+            txtF_FirstName.setStyle("-fx-border-color: red;");
+            firstNameError.setStyle("-fx-text-fill: red;");
             value_entered = false;
-        }if (last.isBlank()) {
-            lbl_Error.setTextFill(Color.RED);
-            lbl_Error.setText("Enter LastName");
-            value_entered = false;
-        }if (user.isBlank()) {
-            lbl_Error.setTextFill(Color.RED);
-            lbl_Error.setText("Enter UserName");
-            value_entered = false;
-        }if (pass.isBlank()){
-            lbl_Error.setTextFill(Color.RED);
-            lbl_Error.setText("Enter Password");
+        } else{
+            txtF_FirstName.setStyle("");
+            firstNameError.setStyle("-fx-text-fill: white;");
             value_entered = false;
         }
-        if (confirm.isBlank()) {
-            lbl_Error.setTextFill(Color.RED);
-            lbl_Error.setText("Enter Confirmation Password");
+        if (lastName.isBlank()) {
+            txtF_LastName.setStyle("-fx-border-color: red;");
+            lastNameError.setStyle("-fx-text-fill: red;");
+            value_entered = false;
+        } else{
+            txtF_LastName.setStyle("");
+            lastNameError.setStyle("-fx-text-fill: white;");
             value_entered = false;
         }
+        if (username.isBlank()) {
+            txtF_Username.setStyle("-fx-border-color: red;");
+            usernameError.setStyle("-fx-text-fill: red;");
+            value_entered = false;
+        } else{
+            txtF_Username.setStyle("");
+            usernameError.setStyle("-fx-text-fill: white;");
+            value_entered = false;
+        }
+        if (password.isBlank()) {
+            txtF_Password.setStyle("-fx-border-color: red;");
+            passwordError.setStyle("-fx-text-fill: red;");
+            value_entered = false;
+        } else{
+            txtF_Password.setStyle("");
+            passwordError.setStyle("-fx-text-fill: white;");
+            value_entered = false;
+        }
+        if (confirmPassword.isBlank()) {
+            txtF_ConfirmPassword.setStyle("-fx-border-color: red;");
+            confirmPasswordError.setStyle("-fx-text-fill: red;");
+            value_entered = false;
+        } else{
+            txtF_ConfirmPassword.setStyle("");
+            confirmPasswordError.setStyle("-fx-text-fill: white;");
+            value_entered = false;
+        }
+
         return value_entered;
     }
 
 
-    public void register(ActionEvent event) throws IOException {
-        Stage stage = null;
-        Parent root = null;
-        register = (Button) event.getTarget();
-        first_Name = firstName.getText();
-        last_Name = lastName.getText();
-        user_name = username.getText();
-        pass_word = password.getText();
-        confirm_Password = confirmPassword.getText();
-        if(checkField(first_Name, last_Name, user_name, pass_word, confirm_Password)
-                && checkPasswords(pass_word, confirm_Password)){
-            if(event.getSource() == register ){
-                stage = (Stage) register.getScene().getWindow();
-                root = FXMLLoader.load(getClass().getResource("SignIn.fxml"));
-            }
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+    public void signUp(ActionEvent event) throws IOException {
+        String first_Name = txtF_FirstName.getText();
+        String last_Name = txtF_LastName.getText();
+        String username = txtF_Username.getText();
+        String password = txtF_Password.getText();
+        String confirm_Password = txtF_ConfirmPassword.getText();
+        if(checkField(first_Name, last_Name, username, password, confirm_Password) && checkPasswords(password, confirm_Password)){
+            Parent root = FXMLLoader.load(getClass().getResource("../ClientUI/SignIn.fxml"));
+            Scene scene = btn_SignIn.getScene();
+
+            root.translateXProperty().set(scene.getWidth());
+
+            StackPane parentContainer = (StackPane) scene.getRoot();
+            parentContainer.getChildren().add(root);
+
+            Timeline timeline = new Timeline();
+            KeyValue keyValue = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
+            KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.3), keyValue);
+            timeline.getKeyFrames().add(keyFrame);
+            timeline.setOnFinished(event1 -> {
+                parentContainer.getChildren().remove(anchorPane);
+            });
+            timeline.play();
         }
     }
 
-    public void BackClicked(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("SignIn.fxml"));
-        Scene scene = btn_Login.getScene();
+    public void signIn(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("../ClientUI/SignIn.fxml"));
+        Scene scene = btn_SignIn.getScene();
 
         root.translateXProperty().set(scene.getWidth() * -1);
 

@@ -37,8 +37,6 @@ import java.util.ResourceBundle;
 public class SignInController implements Initializable {
         // publishing sign in into
 
-        public Label lblError;
-
         @FXML
         StackPane parentContainer;
         @FXML
@@ -48,11 +46,9 @@ public class SignInController implements Initializable {
         @FXML
         private PasswordField txtF_Password;
         @FXML
-        private Button btn_LogIn;
+        private Button btn_LogIn, btn_SignUp;
         @FXML
-        private Button btn_SignUp;
-        String userName;
-        String password;
+        private Label usernameError, passwordError;
 
         //ArrayList<Sub> subs = new ArrayList<>();
         PreparedStatement pr = null;
@@ -60,40 +56,59 @@ public class SignInController implements Initializable {
         Socket userSocket;
         UserInformation user;
 
-        public void logIn(ActionEvent event) throws SQLException {
-                btn_LogIn = (Button) event.getTarget();
-                userName = txtF_Username.getText();
-                password = txtF_Password.getText();
-                try {
-                        String sql = "SELECT * FROM user WHERE username = ? and password = ?";
-                        pr = DatabaseManager.getInstance().myConn.prepareStatement(sql);
-                        pr.setString(1, userName);
-                        pr.setString(2, password);
-                        rs = pr.executeQuery();
-                        if (!rs.next()) {
-                                //System.out.println(rs.getString(1));
-                                lblError.setTextFill(Color.RED);
-                                lblError.setText("Enter Correct Username/Password");
-                                System.out.println("Enter Correct Username/Password");
-                        } else {
-                                MainMenuScene();
-                                //lblError.setTextFill(Color.GREEN);
-                                //lblError.setText("Login Successful");
-                                //userSocket = new Socket("localhost", 800);
-                                //User newUser = new User(userSocket);
+        public boolean checkField(String username,String password){
+                boolean value_entered = true;
+                if (username.isBlank()) {
+                        txtF_Username.setStyle("-fx-border-color: red;");
+                        usernameError.setStyle("-fx-text-fill: red;");
+                        value_entered = false;
+                } else{
+                        txtF_Username.setStyle("");
+                        usernameError.setStyle("-fx-text-fill: white;");
+                        value_entered = false;
+                }
+                if (password.isBlank()){
+                        txtF_Password.setStyle("-fx-border-color: red;");
+                        passwordError.setStyle("-fx-text-fill: red;");
+                        value_entered = false;
+                } else{
+                        txtF_Password.setStyle("");
+                        passwordError.setStyle("-fx-text-fill: white;");
+                        value_entered = false;
+                }
+
+                return value_entered;
+        }
+
+        public void signIn(ActionEvent event) throws SQLException {
+                String username = txtF_Username.getText();
+                String password = txtF_Password.getText();
+                if (checkField(username, password)){
+                        try {
+                                String sql = "SELECT * FROM user WHERE username = ? and password = ?";
+                                pr = DatabaseManager.getInstance().myConn.prepareStatement(sql);
+                                pr.setString(1, username);
+                                pr.setString(2, password);
+                                rs = pr.executeQuery();
+                                if (!rs.next()) {
+                                        //System.out.println(rs.getString(1));
+                                } else {
+                                        MainMenuScene();
+                                        //userSocket = new Socket("localhost", 800);
+                                        //User newUser = new User(userSocket);
+                                }
+                        } catch (SQLException e) {
+                                e.printStackTrace();
+                        } catch (UnknownHostException e) {
+                                e.printStackTrace();
+                        } catch (IOException e) {
+                                e.printStackTrace();
                         }
-                } catch (SQLException e) {
-                        e.printStackTrace();
-                } catch (UnknownHostException e) {
-                        e.printStackTrace();
-                } catch (IOException e) {
-                        e.printStackTrace();
                 }
         }
 
-
-        public void SignUp(ActionEvent event) throws IOException {
-                Parent root = FXMLLoader.load(getClass().getResource("Registration.fxml"));
+        public void signUp(ActionEvent event) throws IOException {
+                Parent root = FXMLLoader.load(getClass().getResource("../ClientUI/Registration.fxml"));
                 Scene scene = btn_SignUp.getScene();
 
                 root.translateXProperty().set(scene.getWidth());
