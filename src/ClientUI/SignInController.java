@@ -116,7 +116,7 @@ public class SignInController implements Initializable {
 
                 Timeline timeline = new Timeline();
                 KeyValue keyValue = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
-                KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.3), keyValue);
+                KeyFrame keyFrame = new KeyFrame(Duration.seconds(2.0), keyValue);
                 timeline.getKeyFrames().add(keyFrame);
                 timeline.setOnFinished(event1 -> {
                         parentContainer.getChildren().remove(anchorPane);

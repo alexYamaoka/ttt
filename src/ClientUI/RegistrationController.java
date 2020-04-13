@@ -96,7 +96,6 @@ public class RegistrationController {
         return value_entered;
     }
 
-
     public void signUp(ActionEvent event) throws IOException {
         String first_Name = txtF_FirstName.getText();
         String last_Name = txtF_LastName.getText();
@@ -134,7 +133,7 @@ public class RegistrationController {
 
         Timeline timeline = new Timeline();
         KeyValue keyValue = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
-        KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.3), keyValue);
+        KeyFrame keyFrame = new KeyFrame(Duration.seconds(2.0), keyValue);
         timeline.getKeyFrames().add(keyFrame);
         timeline.setOnFinished(event1 -> {
             parentContainer.getChildren().remove(anchorPane);
