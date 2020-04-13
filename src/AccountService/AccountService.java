@@ -11,12 +11,13 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class AccountService implements Service, Runnable {
     private Thread worker;
-    private HashMap<String, ClientConnection> clientConnections = new HashMap<>();
+    private HashSet<ClientConnection> clientConnections;
     private final AtomicBoolean running = new AtomicBoolean(false);
 
     public AccountService() {
@@ -43,6 +44,7 @@ public class AccountService implements Service, Runnable {
             while (running.get()) {
                 Socket socket = serverSocket.accept();
                 ClientConnection connection = new ClientConnection(socket, this);
+                clientConnections.add(connection);
                 pool.execute(connection);
             }
         } catch (IOException ex) {
