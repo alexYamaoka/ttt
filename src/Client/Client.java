@@ -35,7 +35,6 @@ public class Client
 
 
 
-
             Thread readThread = new Thread(readTask);
             readThread.start();
 
@@ -44,6 +43,7 @@ public class Client
             ex.printStackTrace();
         }
     }
+
 
 
 
@@ -57,10 +57,6 @@ public class Client
         responseFromServer.add(packet);
     }
 
-    public UserInformation getUserInformation()
-    {
-        return userInformation;
-    }
 
     public Packet getNextRequestToServer()
     {
@@ -82,7 +78,10 @@ public class Client
         return null;
     }
 
-
+    public UserInformation getUserInformation()
+    {
+        return userInformation;
+    }
 
 
 }

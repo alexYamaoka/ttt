@@ -13,7 +13,7 @@ public class WriteToServerTask implements Runnable
     private Socket socket;
     private Client client;
     private Thread thread;
-    private boolean isRunning;
+    private boolean isRunning = true;
 
     public WriteToServerTask(Socket socket, Client client)
     {
@@ -25,13 +25,39 @@ public class WriteToServerTask implements Runnable
         {
             objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
 
+            Packet packet = new Packet(Packet.CONNECT, client.getUserInformation(), client.getUserInformation());
+            objectOutputStream.writeObject(packet);
 
 
-
-
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             e.printStackTrace();
         }
     }
+
+
+
+    @Override
+    public void run()
+    {
+        while (isRunning)
+        {
+            try
+            {
+                Packet packet = client.getNextRequestToServer();
+
+                if (packet != null)
+                {
+                    objectOutputStream.writeObject(packet);
+                    objectOutputStream.flush();
+                }
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+                isRunning = false;
+            }
+        }
+    }
+    
 }
