@@ -38,9 +38,9 @@ public class ClientController
             Scene scene = new Scene(root);
 
             stage.setScene(scene);
-
             mainMenuController = fxmlLoader.getController();
             mainMenuController.setClientController(this);
+
             readMessageBus = new ReadMessageBus(this);
             readMessageBus.start();
         }

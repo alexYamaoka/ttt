@@ -33,12 +33,12 @@ public class ReadMessageBus implements Runnable
             {
                 if (response.getRequest().equals(Packet.REGISTER_CLIENT))
                 {
-                    // registration successful
+                    // for registration packet
                     System.out.println("You have been registered");
                 }
                 else
                 {
-                    // registration was not successful
+                    // to update ui with other packets
                 }
             }
         }
