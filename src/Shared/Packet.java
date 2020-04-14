@@ -7,6 +7,11 @@ public class Packet implements Serializable {
     private UserInformation information;
     Serializable data;
 
+    public static final String CONNECT = "CONNECT";
+
+
+
+
     public Packet(String request, UserInformation information, Serializable data) {
         this.request = request;
         this.information = information;

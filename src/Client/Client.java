@@ -12,9 +12,9 @@ public class Client
     private String hostName;
     private int port;
     private UserInformation userInformation;
-    private ArrayDeque<Packet> requests = new ArrayDeque<>();
-    private ArrayDeque<Packet> response = new ArrayDeque<>();
-    WriteThread writeThread;
+    private ArrayDeque<Packet> requestsToServer = new ArrayDeque<>();
+    private ArrayDeque<Packet> responseFromServer = new ArrayDeque<>();
+    WriteToServerTask writeThread;
 
 
     public Client(String hostName, int port, UserInformation userInformation)
@@ -31,9 +31,11 @@ public class Client
         {
             Socket socket = new Socket(hostName, port);
 
+            ReadFromServerTask readTask = new ReadFromServerTask(socket, this);
 
 
-            ReadTask readTask = new ReadTask(socket, this);
+
+
             Thread readThread = new Thread(readTask);
             readThread.start();
 
@@ -42,6 +44,44 @@ public class Client
             ex.printStackTrace();
         }
     }
+
+
+
+    public void addRequestToServer(Packet packet)
+    {
+        requestsToServer.add(packet);
+    }
+
+    public void addResponseFromServer(Packet packet)
+    {
+        responseFromServer.add(packet);
+    }
+
+    public UserInformation getUserInformation()
+    {
+        return userInformation;
+    }
+
+    public Packet getNextRequestToServer()
+    {
+        if (! requestsToServer.isEmpty())
+        {
+            return requestsToServer.pop();
+        }
+
+        return null;
+    }
+
+    public Packet getNextResponseFromServer()
+    {
+        if (! responseFromServer.isEmpty())
+        {
+            return responseFromServer.pop();
+        }
+
+        return null;
+    }
+
 
 
 

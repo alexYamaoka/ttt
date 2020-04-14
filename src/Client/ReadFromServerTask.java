@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 
-public class ReadTask implements Runnable
+public class ReadFromServerTask implements Runnable
 {
     private ObjectInputStream objectInputStream;
     private Socket socket;
@@ -15,7 +15,7 @@ public class ReadTask implements Runnable
     private boolean isRunning = true;
 
 
-    public ReadTask(Socket socket, Client client)
+    public ReadFromServerTask(Socket socket, Client client)
     {
         this.socket = socket;
         this.client = client;
@@ -42,13 +42,12 @@ public class ReadTask implements Runnable
                 Packet response = (Packet) objectInputStream.readObject();
 
 
-
-
             }
-            catch (IOException ex)
+            catch (Exception ex)
             {
                 ex.printStackTrace();
             }
+
         }
     }
 }
