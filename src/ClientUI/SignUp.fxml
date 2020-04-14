@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+
+<StackPane fx:id="parentContainer" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientUI.SignUpController">
+   <children>
+      <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0">
+          <children>
+              <Label layoutX="48.25" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="29.0" prefWidth="203.5" text="Create your account">
+                  <font>
+                      <Font size="24.0" />
+                  </font>
+              </Label>
+              <TextField fx:id="txtF_FirstName" layoutX="67.5" layoutY="90.0" prefHeight="29.0" prefWidth="81.0" promptText="First name" />
+              <Label fx:id="firstNameError" layoutX="67.5" layoutY="120.0" prefHeight="17.0" prefWidth="234.0" style="-fx-text-fill: white;" text="Enter first name">
+                  <font>
+                      <Font size="10.0" />
+                  </font>
+              </Label>
+              <TextField fx:id="txtF_LastName" layoutX="151.5" layoutY="90.0" prefHeight="29.0" prefWidth="81.0" promptText="Last name" />
+              <Label fx:id="lastNameError" layoutX="151.5" layoutY="120.0" prefHeight="17.0" prefWidth="234.0" style="-fx-text-fill: white;" text="Enter last name">
+                  <font>
+                      <Font size="10.0" />
+                  </font>
+              </Label>
+              <TextField fx:id="txtF_Username" layoutX="67.5" layoutY="138.0" prefHeight="29.0" prefWidth="165.0" promptText="Username" />
+              <Label fx:id="usernameError" layoutX="67.5" layoutY="168.0" prefHeight="17.0" prefWidth="234.0" style="-fx-text-fill: white;" text="Enter an username">
+                  <font>
+                      <Font size="10.0" />
+                  </font>
+              </Label>
+              <PasswordField fx:id="txtF_Password" accessibleRole="PASSWORD_FIELD" layoutX="67.5" layoutY="186.0" prefHeight="29.0" prefWidth="81.0" promptText="Password">
+                  <font>
+                      <Font name="System Font" size="13.0" />
+                  </font>
+              </PasswordField>
+              <Label fx:id="passwordError" layoutX="67.5" layoutY="216.0" prefHeight="17.0" prefWidth="234.0" style="-fx-text-fill: white;" text="Enter a password">
+                  <font>
+                      <Font size="10.0" />
+                  </font>
+              </Label>
+              <PasswordField fx:id="txtF_ConfirmPassword" accessibleRole="PASSWORD_FIELD" layoutX="151.5" layoutY="186.0" prefHeight="29.0" prefWidth="81.0" promptText="Confirm">
+                  <font>
+                      <Font name="System Font" size="13.0" />
+                  </font>
+              </PasswordField>
+              <Label fx:id="confirmPasswordError" layoutX="151.5" layoutY="216.0" prefHeight="17.0" prefWidth="234.0" style="-fx-text-fill: white;" text="Confirm your password">
+                  <font>
+                      <Font size="10.0" />
+                  </font>
+              </Label>
+              <Button fx:id="btn_SignIn" layoutX="57.0" layoutY="252.0" mnemonicParsing="false" onAction="#signIn" prefHeight="27.0" prefWidth="57.0" style="-fx-background-color: white; -fx-text-fill: #204060; -fx-border-color: white;" text="Sign in" />
+              <Button fx:id="btn_SignUp" layoutX="131.0" layoutY="252.0" mnemonicParsing="false" onAction="#signUp" prefHeight="32.0" prefWidth="101.5" style="-fx-background-color: #204060; -fx-text-fill: white;" text="Create account" />
+          </children>
+      </AnchorPane>
+   </children>
+</StackPane>
