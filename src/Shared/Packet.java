@@ -8,6 +8,7 @@ public class Packet implements Serializable {
     Serializable data;
 
     public static final String CONNECT = "CONNECT";
+    public static final String REGISTER_CLIENT = "REG-CLI";
 
 
 
