@@ -1,5 +1,7 @@
 package AccountService;
 
+import DataBase.sql.DataSource;
+import DataBase.sql.DatabaseManager;
 import Server.ClientConnection;
 import Server.Service;
 import Shared.Packet;
@@ -18,7 +20,7 @@ public class AccountService implements Service, Runnable {
     private Thread worker;
     private HashMap<String, ClientConnection> clientConnections = new HashMap<>();
     private final AtomicBoolean running = new AtomicBoolean(false);
-
+    private DataSource ds = DatabaseManager.getInstance();
     public AccountService() {
     }
 

@@ -57,7 +57,6 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
             UserStatement.setInt(1,userObj.getIsDeleted());
             UserStatement.setString(2, userObj.getId());
             UserStatement.executeUpdate(query.toString());
-
         }
         return null;
     }
@@ -90,7 +89,6 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
 
     @Override
     public List<BaseModel> list(Class obj) {
-
         return null;
     }
 

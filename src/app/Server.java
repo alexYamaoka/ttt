@@ -35,7 +35,4 @@ public class Server {
         ds.insert(user);
         return true;
     }
-
-
-
 }
