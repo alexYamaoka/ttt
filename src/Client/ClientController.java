@@ -40,7 +40,7 @@ public class ClientController
             stage.setScene(scene);
 
             mainMenuController = fxmlLoader.getController();
-            // mainMenuController.setClientController(this);
+            mainMenuController.setClientController(this);
             readMessageBus = new ReadMessageBus(this);
             readMessageBus.start();
         }

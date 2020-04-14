@@ -20,7 +20,7 @@ public class ReadMessageBus implements Runnable
         workerThread.start();
     }
 
-    
+
 
     @Override
     public void run()
