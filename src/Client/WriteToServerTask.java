@@ -12,7 +12,7 @@ public class WriteToServerTask implements Runnable
     private ObjectOutputStream objectOutputStream;
     private Socket socket;
     private Client client;
-    private Thread thread;
+    //private Thread thread;
     private boolean isRunning = true;
 
     public WriteToServerTask(Socket socket, Client client)
@@ -27,8 +27,6 @@ public class WriteToServerTask implements Runnable
 
             Packet packet = new Packet(Packet.CONNECT, client.getUserInformation(), client.getUserInformation());
             objectOutputStream.writeObject(packet);
-
-
         }
         catch (IOException e)
         {
@@ -59,5 +57,5 @@ public class WriteToServerTask implements Runnable
             }
         }
     }
-    
+
 }

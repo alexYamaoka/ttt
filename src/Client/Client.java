@@ -14,7 +14,7 @@ public class Client
     private UserInformation userInformation;
     private ArrayDeque<Packet> requestsToServer = new ArrayDeque<>();
     private ArrayDeque<Packet> responseFromServer = new ArrayDeque<>();
-    WriteToServerTask writeThread;
+
 
 
     public Client(String hostName, int port, UserInformation userInformation)
@@ -31,14 +31,18 @@ public class Client
         {
             Socket socket = new Socket(hostName, port);
 
+            WriteToServerTask writeToServerTask = new WriteToServerTask(socket, this);
             ReadFromServerTask readTask = new ReadFromServerTask(socket, this);
 
 
-
+            Thread writeThread = new Thread(writeToServerTask);
             Thread readThread = new Thread(readTask);
+
+            writeThread.start();
             readThread.start();
 
-        } catch (IOException ex)
+        }
+        catch (IOException ex)
         {
             ex.printStackTrace();
         }
@@ -82,6 +86,5 @@ public class Client
     {
         return userInformation;
     }
-
 
 }

@@ -11,7 +11,7 @@ public class ReadFromServerTask implements Runnable
     private ObjectInputStream objectInputStream;
     private Socket socket;
     private Client client;
-    private Thread thread;
+    //private Thread thread;
     private boolean isRunning = true;
 
 
@@ -40,14 +40,13 @@ public class ReadFromServerTask implements Runnable
             try
             {
                 Packet response = (Packet) objectInputStream.readObject();
-
-
+                client.addResponseFromServer(response);
             }
             catch (Exception ex)
             {
                 ex.printStackTrace();
+                isRunning = false;
             }
-
         }
     }
 }
