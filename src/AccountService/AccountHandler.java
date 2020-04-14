@@ -36,19 +36,28 @@ public class AccountHandler implements Runnable {
         UserInformation userInformation = packet.getInformation();
         Serializable data = packet.getData();
 
-        switch(request) {
-            case "SIGN-IN":
+
+
+
+        switch(request)
+        {
+            case Packet.SIGN_IN:
                 break;
-            case "SIGN-OUT":
+
+            case Packet.SIGN_OUT:
                 break;
-            case "REGISTER":
+
+            case Packet.REGISTER_CLIENT:
                 System.out.println(data.toString());
                 break;
-            case "UPDATE-USER":
+
+            case Packet.UPDATE_USER:
                 break;
-            case "DELETE-ACCOUNT":
+
+            case Packet.DELETE_ACCOUNT:
                 break;
         }
+
         stop();
     }
 

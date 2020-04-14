@@ -1,5 +1,6 @@
 package ClientUI;
 
+import Client.ClientController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,16 +16,13 @@ import java.util.ResourceBundle;
 
 public class MainMenuController implements Initializable {
     @FXML
-    private Button playButton;
+    private Button playButton, watchMatchesButton, exitButton, optionsButton;
 
-    @FXML
-    private Button watchMatchesButton;
 
-    @FXML
-    private Button optionsButton;
 
-    @FXML
-    private Button exitButton;
+    private ClientController clientController;
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -67,5 +65,15 @@ public class MainMenuController implements Initializable {
     public void exitButtonClicked(ActionEvent event) {
         System.out.println("Exit Button Clicked!");
         ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+    }
+
+
+
+
+
+
+    public void setClientController(ClientController clientController)
+    {
+        this.clientController = clientController;
     }
 }
