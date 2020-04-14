@@ -33,11 +33,24 @@ public class ClientController
     {
         try
         {
+            // starting scene = login / register
+            // if successful -> main menu scene
+
+            // packet register to server
+            
+
+            // when sign in button is clicked, send register client packet
+
+
+
+
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ClientUI/MainMenu.fxml"));
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
 
             stage.setScene(scene);
+
+
             mainMenuController = fxmlLoader.getController();
             mainMenuController.setClientController(this);
 

@@ -25,8 +25,9 @@ public class WriteToServerTask implements Runnable
         {
             objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
 
-            Packet packet = new Packet(Packet.CONNECT, client.getUserInformation(), client.getUserInformation());
-            objectOutputStream.writeObject(packet);
+
+            //Packet packet = new Packet(Packet.REGISTER_CLIENT, client.getUserInformation(), client.getUserInformation());
+            //objectOutputStream.writeObject(packet);
         }
         catch (IOException e)
         {

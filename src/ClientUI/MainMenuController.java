@@ -70,7 +70,7 @@ public class MainMenuController implements Initializable {
 
 
 
-    
+
 
     public void setClientController(ClientController clientController)
     {
