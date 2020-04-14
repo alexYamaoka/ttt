@@ -14,7 +14,13 @@ public class ReadMessageBus implements Runnable
         this.clientController = clientController;
     }
 
+    public void start()
+    {
+        workerThread = new Thread(this);
+        workerThread.start();
+    }
 
+    
 
     @Override
     public void run()

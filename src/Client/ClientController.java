@@ -18,7 +18,7 @@ public class ClientController
 
     // online list
     // server list
-    // read messageBus
+    private ReadMessageBus readMessageBus;
 
 
     public ClientController(UserInformation userInformation, Stage stage)
@@ -41,8 +41,8 @@ public class ClientController
 
             mainMenuController = fxmlLoader.getController();
             // mainMenuController.setClientController(this);
-            // readMessageBus = new ReadMessageBus(this);
-            // readMessageBus.start();
+            readMessageBus = new ReadMessageBus(this);
+            readMessageBus.start();
         }
         catch (Exception ex)
         {

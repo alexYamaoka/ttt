@@ -48,5 +48,18 @@ public class ReadFromServerTask implements Runnable
                 isRunning = false;
             }
         }
+
+        try
+        {
+            socket.close();
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+        finally
+        {
+            isRunning = false;
+        }
     }
 }
