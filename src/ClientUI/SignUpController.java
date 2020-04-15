@@ -118,7 +118,7 @@ public class SignUpController {
     {
         // register new user and go to main menu scene
     }
-    
+
 
     @FXML
     public void onSignInButtonClicked(ActionEvent event) throws IOException {
