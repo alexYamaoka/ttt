@@ -7,6 +7,7 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +19,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -48,11 +51,84 @@ public class SignInController implements Initializable {
     @FXML
     private Label usernameError, passwordError;
 
+
+
     //ArrayList<Sub> subs = new ArrayList<>();
     PreparedStatement pr = null;
     ResultSet rs = null;
 
     private ClientController controller;
+
+
+
+
+    @FXML
+    public void onEnterKeyPressed(KeyEvent keyEvent)
+    {
+        if (keyEvent.getCode().equals(KeyCode.ENTER))
+        {
+            String username = txtF_Username.getText().trim();
+            String password = txtF_Password.getText().trim();
+
+            if (! checkField(username, password))
+            {
+                Platform.runLater(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        // notify user that login failed
+                    }
+                });
+            }
+            else
+            {
+                // sign in user function
+                // notify listener
+            }
+        }
+    }
+
+
+
+
+    @FXML
+    public void onSignInButtonClicked(ActionEvent event) throws SQLException {
+        String username = txtF_Username.getText();
+        String password = txtF_Password.getText();
+
+        if (checkField(username, password)){
+            try {
+                String sql = "SELECT * FROM user WHERE username = ? and password = ?";
+                pr = DatabaseManager.getInstance().myConn.prepareStatement(sql);
+                pr.setString(1, username);
+                pr.setString(2, password);
+                rs = pr.executeQuery();
+                if (!rs.next()) {
+                    //System.out.println(rs.getString(1));
+                } else {
+                    MainMenuScene();
+                    //userSocket = new Socket("localhost", 800);
+                    //User newUser = new User(userSocket);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+
+    
+
+
+
+
+
 
     public boolean checkField(String username,String password){
         boolean value_entered = true;
@@ -78,32 +154,8 @@ public class SignInController implements Initializable {
         return value_entered;
     }
 
-    public void signIn(ActionEvent event) throws SQLException {
-        String username = txtF_Username.getText();
-        String password = txtF_Password.getText();
-        if (checkField(username, password)){
-            try {
-                String sql = "SELECT * FROM user WHERE username = ? and password = ?";
-                pr = DatabaseManager.getInstance().myConn.prepareStatement(sql);
-                pr.setString(1, username);
-                pr.setString(2, password);
-                rs = pr.executeQuery();
-                if (!rs.next()) {
-                    //System.out.println(rs.getString(1));
-                } else {
-                    MainMenuScene();
-                    //userSocket = new Socket("localhost", 800);
-                    //User newUser = new User(userSocket);
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } catch (UnknownHostException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+
+
 
     public void signUp(ActionEvent event) throws IOException {
         Parent root = controller.getSignUpPane();
