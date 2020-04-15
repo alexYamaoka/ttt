@@ -50,15 +50,15 @@ public class ClientController
     // initializes controllers
     private void initialize() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../ClientUI/MainMenu.fxml"));
-            mainMenuPain = loader.load();
-            mainMenuController = loader.getController();
-            mainMenuController.setClientController(this);
-
-            loader = new FXMLLoader(getClass().getResource("../ClientUI/SignInUp.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../ClientUI/SignIn.fxml"));
             signInPane = loader.load();
             signInController = loader.getController();
             signInController.setClientController(this);
+
+            loader = new FXMLLoader(getClass().getResource("../ClientUI/MainMenu.fxml"));
+            mainMenuPain = loader.load();
+            mainMenuController = loader.getController();
+            mainMenuController.setClientController(this);
 
             loader = new FXMLLoader(getClass().getResource("../ClientUI/SignUp.fxml"));
             signUpPane = loader.load();
@@ -94,6 +94,10 @@ public class ClientController
     public Client getClient()
     {
         return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     public Pane getSignInPane() {

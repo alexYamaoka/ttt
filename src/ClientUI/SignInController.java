@@ -107,7 +107,6 @@ public class SignInController implements Initializable {
 
     public void signUp(ActionEvent event) throws IOException {
         Parent root = controller.getSignUpPane();
-        System.out.println(root);
         Scene scene = btn_SignUp.getScene();
         Parent root1 = anchorPane;
 
@@ -146,5 +145,9 @@ public class SignInController implements Initializable {
 
     public void setClientController(ClientController controller) {
         this.controller = controller;
+    }
+
+    public ClientController getClientController() {
+        return this.controller;
     }
 }
