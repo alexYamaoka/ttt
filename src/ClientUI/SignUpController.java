@@ -37,6 +37,8 @@ public class SignUpController {
 
     private ClientController controller;
 
+
+
     public boolean checkPasswords(String password, String confirmPassword){
         if (!password.equals(confirmPassword)){
             usernameError.setTextFill(Color.RED);
@@ -103,6 +105,8 @@ public class SignUpController {
         String username = txtF_Username.getText();
         String password = txtF_Password.getText();
         String confirm_Password = txtF_ConfirmPassword.getText();
+
+
         if(checkField(first_Name, last_Name, username, password, confirm_Password) && checkPasswords(password, confirm_Password)){
             Parent root = FXMLLoader.load(getClass().getResource("../ClientUI/SignIn.fxml"));
             Scene scene = btn_SignIn.getScene();
@@ -124,6 +128,15 @@ public class SignUpController {
             });
             timeline.play();
         }
+        else
+        {
+
+        }
+
+
+
+
+
     }
 
     public void signIn(ActionEvent event) throws IOException {
