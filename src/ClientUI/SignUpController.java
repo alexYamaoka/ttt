@@ -57,6 +57,10 @@ public class SignUpController {
             if (! checkPasswords(password, confirmPassword) && checkField(firstName, lastName, username, password, confirmPassword))
             {
                 // notify user that text fields need to be fixed
+
+                System.out.println("Fields were not entered correctly");
+
+
                 Platform.runLater(new Runnable()
                 {
                     @Override
@@ -68,6 +72,7 @@ public class SignUpController {
             }
             else
             {
+                System.out.println("Registering new user");
                 registerNewUser(firstName, lastName, username, password);
             }
         }
@@ -108,6 +113,7 @@ public class SignUpController {
         }
         else
         {
+            System.out.println("Registering new user");
             registerNewUser(first_Name, last_Name, username, password);
         }
 

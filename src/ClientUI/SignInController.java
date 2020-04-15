@@ -85,6 +85,7 @@ public class SignInController implements Initializable {
             {
                 // sign in user function
                 // notify listener
+
             }
         }
     }
@@ -97,7 +98,8 @@ public class SignInController implements Initializable {
         String username = txtF_Username.getText();
         String password = txtF_Password.getText();
 
-        if (checkField(username, password)){
+        if (checkField(username, password))
+        {
             try {
                 String sql = "SELECT * FROM user WHERE username = ? and password = ?";
                 pr = DatabaseManager.getInstance().myConn.prepareStatement(sql);
@@ -121,6 +123,8 @@ public class SignInController implements Initializable {
         }
     }
 
+
+    
 
 
 
