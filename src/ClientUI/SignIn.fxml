@@ -49,7 +49,7 @@
                                     <Font size="10.0" />
                                 </font>
                             </Label>
-                            <Button fx:id="btn_SignUp" layoutX="54.0" layoutY="204.0" mnemonicParsing="false" onAction="#signUp" prefHeight="27.0" prefWidth="110.0" style="-fx-background-color: white; -fx-text-fill: #204060; -fx-border-color: white;" text="Create account" />
+                            <Button fx:id="btn_SignUp" layoutX="54.0" layoutY="204.0" mnemonicParsing="false" onAction="#onSignUpButtonClicked" prefHeight="27.0" prefWidth="110.0" style="-fx-background-color: white; -fx-text-fill: #204060; -fx-border-color: white;" text="Create account" />
                             <Button fx:id="btn_LogIn" layoutX="181.0" layoutY="204.0" mnemonicParsing="false" onAction="#onSignInButtonClicked" onKeyPressed="#onEnterKeyPressed" prefHeight="32.0" prefWidth="51.5" style="-fx-background-color: #204060; -fx-text-fill: white;" text="Log In" />
                         </children>
                     </AnchorPane>

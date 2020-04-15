@@ -123,7 +123,7 @@ public class SignInController implements Initializable {
 
 
 
-    
+
 
 
 
@@ -156,8 +156,8 @@ public class SignInController implements Initializable {
 
 
 
-
-    public void signUp(ActionEvent event) throws IOException {
+    @FXML
+    public void onSignUpButtonClicked(ActionEvent event) throws IOException {
         Parent root = controller.getSignUpPane();
         Scene scene = btn_SignUp.getScene();
         Parent root1 = anchorPane;
