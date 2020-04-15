@@ -1,5 +1,6 @@
 package ClientUI;
 
+import Client.ClientController;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -33,6 +34,8 @@ public class SignUpController {
     private Button btn_SignIn, btn_SignUp;
     @FXML
     private Label firstNameError, lastNameError, usernameError, passwordError, confirmPasswordError;
+
+    private ClientController controller;
 
     public boolean checkPasswords(String password, String confirmPassword){
         if (!password.equals(confirmPassword)){
@@ -144,5 +147,9 @@ public class SignUpController {
             parentContainer.getChildren().remove(anchorPane);
         });
         timeline.play();
+    }
+
+    public void setClientController(ClientController controller) {
+        this.controller = controller;
     }
 }

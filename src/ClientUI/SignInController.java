@@ -1,5 +1,6 @@
 package ClientUI;
 
+import Client.ClientController;
 import DataBase.sql.DatabaseManager;
 import Shared.UserInformation;
 import javafx.animation.Interpolator;
@@ -50,8 +51,8 @@ public class SignInController implements Initializable {
     //ArrayList<Sub> subs = new ArrayList<>();
     PreparedStatement pr = null;
     ResultSet rs = null;
-    Socket userSocket;
-    UserInformation user;
+
+    private ClientController controller;
 
     public boolean checkField(String username,String password){
         boolean value_entered = true;
@@ -140,5 +141,9 @@ public class SignInController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+    }
+
+    public void setClientController(ClientController controller) {
+        this.controller = controller;
     }
 }
