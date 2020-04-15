@@ -29,7 +29,8 @@ public class MainMenuController implements Initializable {
 
     }
 
-    public void playButtonClicked(ActionEvent event) throws IOException {
+    @FXML
+    public void onPlayButtonClicked(ActionEvent event) throws IOException {
         Stage stage = null;
         Parent root = null;
 
@@ -44,11 +45,15 @@ public class MainMenuController implements Initializable {
         System.out.println("Play Button Clicked!");
     }
 
-    public void watchMatchesButtonClicked(ActionEvent event) {
+
+    @FXML
+    public void onWatchMatchesButtonClicked(ActionEvent event) {
         System.out.println("Watch Matches Button Clicked!");
     }
 
-    public void optionsButtonClicked(ActionEvent event) throws IOException {
+
+    @FXML
+    public void onOptionsButtonClicked(ActionEvent event) throws IOException {
         Stage stage = null;
         Parent root = null;
 
@@ -62,13 +67,12 @@ public class MainMenuController implements Initializable {
         System.out.println("Options Button Clicked!");
     }
 
-    public void exitButtonClicked(ActionEvent event) {
+
+    @FXML
+    public void onExitButtonClicked(ActionEvent event) {
         System.out.println("Exit Button Clicked!");
         ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
     }
-
-
-
 
 
 
