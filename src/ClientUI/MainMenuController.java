@@ -31,16 +31,17 @@ public class MainMenuController implements Initializable {
 
     @FXML
     public void onPlayButtonClicked(ActionEvent event) throws IOException {
-        Stage stage = null;
-        Parent root = null;
+//        Stage stage = null;
+//        Parent root = null;
+//        if (event.getSource() == playButton) {
+//            stage = (Stage) playButton.getScene().getWindow();
+//            root = FXMLLoader.load(getClass().getResource("GameLobby.fxml"));
+//        }
+//        Scene scene = new Scene(root);
+//        stage.setScene(scene);
+//        stage.show();
 
-        if (event.getSource() == playButton) {
-            stage = (Stage) playButton.getScene().getWindow();
-            root = FXMLLoader.load(getClass().getResource("GameLobby.fxml"));
-        }
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+
         System.out.println("Options Button Clicked!");
         System.out.println("Play Button Clicked!");
     }
@@ -54,16 +55,16 @@ public class MainMenuController implements Initializable {
 
     @FXML
     public void onOptionsButtonClicked(ActionEvent event) throws IOException {
-        Stage stage = null;
-        Parent root = null;
-
-        if (event.getSource() == optionsButton) {
-            stage = (Stage) optionsButton.getScene().getWindow();
-            root = FXMLLoader.load(getClass().getResource("Options.fxml"));
-        }
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+//        Stage stage = null;
+//        Parent root = null;
+//
+//        if (event.getSource() == optionsButton) {
+//            stage = (Stage) optionsButton.getScene().getWindow();
+//            root = FXMLLoader.load(getClass().getResource("Options.fxml"));
+//        }
+//        Scene scene = new Scene(root);
+//        stage.setScene(scene);
+//        stage.show();
         System.out.println("Options Button Clicked!");
     }
 
@@ -71,7 +72,7 @@ public class MainMenuController implements Initializable {
     @FXML
     public void onExitButtonClicked(ActionEvent event) {
         System.out.println("Exit Button Clicked!");
-        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+        //((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
     }
 
 
