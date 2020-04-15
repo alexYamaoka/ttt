@@ -7,6 +7,7 @@ import ClientUI.Options;
 
 import Shared.UserInformation;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -16,7 +17,9 @@ import javafx.stage.Stage;
 
 import java.awt.*;
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashSet;
+import java.util.ResourceBundle;
 
 public class ClientController
 {
@@ -93,4 +96,19 @@ public class ClientController
         return client;
     }
 
+    public Pane getSignInPane() {
+        return signInPane;
+    }
+
+    public Pane getSignUpPane() {
+        return signUpPane;
+    }
+
+    public Pane getMainMenuPain() {
+        return mainMenuPain;
+    }
+
+    public Pane getOptionsPane() {
+        return optionsPane;
+    }
 }

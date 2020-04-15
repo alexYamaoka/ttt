@@ -106,7 +106,8 @@ public class SignInController implements Initializable {
     }
 
     public void signUp(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("../ClientUI/SignUp.fxml"));
+        Parent root = controller.getSignUpPane();
+        System.out.println(root);
         Scene scene = btn_SignUp.getScene();
         Parent root1 = anchorPane;
 
