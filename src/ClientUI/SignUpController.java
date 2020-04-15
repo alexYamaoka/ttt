@@ -68,7 +68,6 @@ public class SignUpController {
             }
             else
             {
-                // register new user
                 registerNewUser(firstName, lastName, username, password);
             }
         }
@@ -109,7 +108,7 @@ public class SignUpController {
         }
         else
         {
-
+            registerNewUser(first_Name, last_Name, username, password);
         }
 
     }
@@ -117,11 +116,33 @@ public class SignUpController {
 
     private void registerNewUser(String firstName, String lastName, String username, String password)
     {
-        // register new user and go to main menu scene 
+        // register new user and go to main menu scene
     }
+    
 
+    @FXML
+    public void onSignInButtonClicked(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("../ClientUI/SignIn.fxml"));
+        Scene scene = btn_SignIn.getScene();
+        Parent root1 = anchorPane;
 
+        root.translateXProperty().set(scene.getWidth() * -0.5);
+        root1.translateXProperty().set(0);
 
+        parentContainer.getChildren().add(root);
+
+        Timeline timeline = new Timeline();
+        KeyValue keyValue = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
+        KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.3), keyValue);
+        KeyValue keyValue1 = new KeyValue(root1.translateXProperty(), 300, Interpolator.EASE_IN);
+        KeyFrame keyFrame1 = new KeyFrame(Duration.seconds(0.3), keyValue1);
+        timeline.getKeyFrames().add(keyFrame);
+        timeline.getKeyFrames().add(keyFrame1);
+        timeline.setOnFinished(event1 -> {
+            parentContainer.getChildren().remove(anchorPane);
+        });
+        timeline.play();
+    }
 
     public boolean checkPasswords(String password, String confirmPassword){
         if (!password.equals(confirmPassword)){
@@ -181,31 +202,6 @@ public class SignUpController {
         }
 
         return value_entered;
-    }
-
-
-
-    public void signIn(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("../ClientUI/SignIn.fxml"));
-        Scene scene = btn_SignIn.getScene();
-        Parent root1 = anchorPane;
-
-        root.translateXProperty().set(scene.getWidth() * -0.5);
-        root1.translateXProperty().set(0);
-
-        parentContainer.getChildren().add(root);
-
-        Timeline timeline = new Timeline();
-        KeyValue keyValue = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
-        KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.3), keyValue);
-        KeyValue keyValue1 = new KeyValue(root1.translateXProperty(), 300, Interpolator.EASE_IN);
-        KeyFrame keyFrame1 = new KeyFrame(Duration.seconds(0.3), keyValue1);
-        timeline.getKeyFrames().add(keyFrame);
-        timeline.getKeyFrames().add(keyFrame1);
-        timeline.setOnFinished(event1 -> {
-            parentContainer.getChildren().remove(anchorPane);
-        });
-        timeline.play();
     }
 
     public void setClientController(ClientController controller) {
