@@ -1,5 +1,6 @@
 package ClientUI;
 
+import Client.ClientController;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,22 +18,23 @@ import java.io.IOException;
 
 public class Options {
 
-    public AnchorPane Ach_pane3;
-    public AnchorPane Ach_Pane1;
-    public Button btn_UserDetails;
-    public Button btn_ChangePassword;
+    private AnchorPane Ach_pane3;
+    private AnchorPane Ach_Pane1;
+    private Button btn_UserDetails;
+    private Button btn_ChangePassword;
 
 
-    public AnchorPane Ach_Pane2;
-    public Button btn_button;
-    public SplitPane splitPane; //BackGround Split Pane
-    public AnchorPane split1; //BackGround left SplitPane  User detail and change password are on it
-    public AnchorPane split2; // BackGround right split pane. one i want to update visable
-    public AnchorPane Pane2; // User detail pane
-    public AnchorPane Pane1; // Change Password pane
-    public Button btn2;
-    public Button btn_MainMenu;
+    private AnchorPane Ach_Pane2;
+    private Button btn_button;
+    private SplitPane splitPane; //BackGround Split Pane
+    private AnchorPane split1; //BackGround left SplitPane  User detail and change password are on it
+    private AnchorPane split2; // BackGround right split pane. one i want to update visable
+    private AnchorPane Pane2; // User detail pane
+    private AnchorPane Pane1; // Change Password pane
+    private Button btn2;
+    private Button btn_MainMenu;
 
+    private ClientController controller;
 
     public void UserDetailButton(ActionEvent event){
         Pane2.setVisible(false);
@@ -60,5 +62,11 @@ public class Options {
         stage.show();
 
     }
+
+    public void setClientController(ClientController controller) {
+        this.controller = controller;
+    }
+
+
 
 }
