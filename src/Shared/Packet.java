@@ -18,7 +18,6 @@ public class Packet implements Serializable {
 
 
 
-
     public Packet(String request, UserInformation information, Serializable data) {
         this.request = request;
         this.information = information;

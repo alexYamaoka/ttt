@@ -83,7 +83,6 @@ public class ClientController
             Scene scene = new Scene(signInParent);
             stage.setScene(scene);
             stage.show();
-
             readMessageBus = new ReadMessageBus(this);
             readMessageBus.start();
         }
