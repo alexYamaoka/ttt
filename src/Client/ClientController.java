@@ -24,7 +24,6 @@ public class ClientController
     private Stage stage;
 
     // Controllers to be initialized
-    private SignInParentController signInParentController;
     private SignInController signInController;
     private MainMenuController mainMenuController;
     private SignUpController signUpController;
@@ -49,13 +48,10 @@ public class ClientController
     // initializes controllers
     private void initialize() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../ClientUI/SignInParent.fxml"));
-            signInParent = loader.load();
-            signInParentController = loader.getController();
-            signInParentController.setClientController(this);
-            signInPane = (Pane) signInParent.getCenter();
-            signInController = signInParentController.getSignInController();
-//            signInController.setClientController(this);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../ClientUI/SignIn.fxml"));
+            signInPane = loader.load();
+            signInController = loader.getController();
+            signInController.setClientController(this);
 
             loader = new FXMLLoader(getClass().getResource("../ClientUI/MainMenu.fxml"));
             mainMenuPain = loader.load();

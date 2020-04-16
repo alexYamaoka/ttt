@@ -27,7 +27,7 @@ import java.io.IOException;
 
 public class SignUpController {
     @FXML
-    StackPane parentContainer;
+    StackPane parentContainerSignUp;
     @FXML
     AnchorPane anchorPane;
     @FXML
@@ -98,7 +98,7 @@ public class SignUpController {
 
             root.translateXProperty().set(scene.getWidth() / 2);
             root1.translateXProperty().set(0);
-            parentContainer.getChildren().add(root);
+            parentContainerSignUp.getChildren().add(root);
 
             Timeline timeline = new Timeline();
             KeyValue keyValue = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
@@ -108,7 +108,7 @@ public class SignUpController {
             timeline.getKeyFrames().add(keyFrame);
             timeline.getKeyFrames().add(keyFrame1);
             timeline.setOnFinished(event1 -> {
-                parentContainer.getChildren().remove(anchorPane);
+                parentContainerSignUp.getChildren().remove(anchorPane);
             });
             timeline.play();
         }
@@ -129,14 +129,14 @@ public class SignUpController {
 
     @FXML
     public void onSignInButtonClicked(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("../ClientUI/SignIn.fxml"));
+        Parent root = controller.getSignInPane();
         Scene scene = btn_SignIn.getScene();
         Parent root1 = anchorPane;
 
         root.translateXProperty().set(scene.getWidth() * -0.5);
         root1.translateXProperty().set(0);
 
-        parentContainer.getChildren().add(root);
+        parentContainerSignUp.getChildren().add(root);
 
         Timeline timeline = new Timeline();
         KeyValue keyValue = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
@@ -146,7 +146,7 @@ public class SignUpController {
         timeline.getKeyFrames().add(keyFrame);
         timeline.getKeyFrames().add(keyFrame1);
         timeline.setOnFinished(event1 -> {
-            parentContainer.getChildren().remove(anchorPane);
+            parentContainerSignUp.getChildren().remove(anchorPane);
         });
         timeline.play();
     }
@@ -224,7 +224,7 @@ public class SignUpController {
 
             root.translateXProperty().set(scene.getWidth() / 2);
             root1.translateXProperty().set(0);
-            parentContainer.getChildren().add(root);
+            parentContainerSignUp.getChildren().add(root);
 
             Timeline timeline = new Timeline();
             KeyValue keyValue = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
@@ -234,7 +234,7 @@ public class SignUpController {
             timeline.getKeyFrames().add(keyFrame);
             timeline.getKeyFrames().add(keyFrame1);
             timeline.setOnFinished(event1 -> {
-                parentContainer.getChildren().remove(anchorPane);
+                parentContainerSignUp.getChildren().remove(anchorPane);
             });
             timeline.play();
         }
@@ -248,7 +248,7 @@ public class SignUpController {
         root.translateXProperty().set(scene.getWidth() * -0.5);
         root1.translateXProperty().set(0);
 
-        parentContainer.getChildren().add(root);
+        parentContainerSignUp.getChildren().add(root);
 
         Timeline timeline = new Timeline();
         KeyValue keyValue = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
@@ -258,7 +258,7 @@ public class SignUpController {
         timeline.getKeyFrames().add(keyFrame);
         timeline.getKeyFrames().add(keyFrame1);
         timeline.setOnFinished(event1 -> {
-            parentContainer.getChildren().remove(anchorPane);
+            parentContainerSignUp.getChildren().remove(anchorPane);
         });
         timeline.play();
     }

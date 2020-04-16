@@ -2,7 +2,6 @@ package ClientUI;
 
 import Client.ClientController;
 import DataBase.sql.DatabaseManager;
-import Shared.UserInformation;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -12,7 +11,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -27,7 +25,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
-import java.net.Socket;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.sql.PreparedStatement;
@@ -39,7 +36,10 @@ public class SignInController implements Initializable {
 
     // publishing sign in into
     @FXML
-    StackPane parentContainer;
+    StackPane parentContainerSignIn;
+    //ArrayList<Sub> subs = new ArrayList<>();
+    PreparedStatement pr = null;
+    ResultSet rs = null;
     @FXML
     private AnchorPane anchorPane;
     @FXML
@@ -50,39 +50,23 @@ public class SignInController implements Initializable {
     private Button btn_LogIn, btn_SignUp;
     @FXML
     private Label usernameError, passwordError;
-
-
-
-    //ArrayList<Sub> subs = new ArrayList<>();
-    PreparedStatement pr = null;
-    ResultSet rs = null;
-
     private ClientController controller;
 
 
-
-
     @FXML
-    public void onEnterKeyPressed(KeyEvent keyEvent)
-    {
-        if (keyEvent.getCode().equals(KeyCode.ENTER))
-        {
+    public void onEnterKeyPressed(KeyEvent keyEvent) {
+        if (keyEvent.getCode().equals(KeyCode.ENTER)) {
             String username = txtF_Username.getText().trim();
             String password = txtF_Password.getText().trim();
 
-            if (! checkField(username, password))
-            {
-                Platform.runLater(new Runnable()
-                {
+            if (!checkField(username, password)) {
+                Platform.runLater(new Runnable() {
                     @Override
-                    public void run()
-                    {
+                    public void run() {
                         // notify user that login failed
                     }
                 });
-            }
-            else
-            {
+            } else {
                 // sign in user function
                 // notify listener
 
@@ -91,15 +75,12 @@ public class SignInController implements Initializable {
     }
 
 
-
-
     @FXML
-    public void onSignInButtonClicked(ActionEvent event) throws SQLException {
+    public void signIn(ActionEvent event) throws SQLException {
         String username = txtF_Username.getText();
         String password = txtF_Password.getText();
 
-        if (checkField(username, password))
-        {
+        if (checkField(username, password)) {
             try {
                 String sql = "SELECT * FROM user WHERE username = ? and password = ?";
                 pr = DatabaseManager.getInstance().myConn.prepareStatement(sql);
@@ -123,33 +104,22 @@ public class SignInController implements Initializable {
         }
     }
 
-
-    
-
-
-
-
-
-
-
-
-
-    public boolean checkField(String username,String password){
+    public boolean checkField(String username, String password) {
         boolean value_entered = true;
         if (username.isBlank()) {
             txtF_Username.setStyle("-fx-border-color: red;");
             usernameError.setStyle("-fx-text-fill: red;");
             value_entered = false;
-        } else{
+        } else {
             txtF_Username.setStyle("");
             usernameError.setStyle("-fx-text-fill: white;");
             value_entered = false;
         }
-        if (password.isBlank()){
+        if (password.isBlank()) {
             txtF_Password.setStyle("-fx-border-color: red;");
             passwordError.setStyle("-fx-text-fill: red;");
             value_entered = false;
-        } else{
+        } else {
             txtF_Password.setStyle("");
             passwordError.setStyle("-fx-text-fill: white;");
             value_entered = false;
@@ -159,9 +129,8 @@ public class SignInController implements Initializable {
     }
 
 
-
     @FXML
-    public void onSignUpButtonClicked(ActionEvent event) throws IOException {
+    public void signUp(ActionEvent event) throws IOException {
         Parent root = controller.getSignUpPane();
         Scene scene = btn_SignUp.getScene();
         Parent root1 = anchorPane;
@@ -169,7 +138,7 @@ public class SignInController implements Initializable {
         root.translateXProperty().set(scene.getWidth() / 2);
         root1.translateXProperty().set(0);
 
-        parentContainer.getChildren().add(root);
+        parentContainerSignIn.getChildren().add(root);
 
         Timeline timeline = new Timeline();
         KeyValue keyValue = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
@@ -179,7 +148,7 @@ public class SignInController implements Initializable {
         timeline.getKeyFrames().add(keyFrame);
         timeline.getKeyFrames().add(keyFrame1);
         timeline.setOnFinished(event1 -> {
-            parentContainer.getChildren().remove(anchorPane);
+            parentContainerSignIn.getChildren().remove(anchorPane);
         });
         timeline.play();
     }
@@ -196,14 +165,14 @@ public class SignInController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
-
-    public void setClientController(ClientController controller) {
-        this.controller = controller;
+        System.out.println("Sign In initialized");
     }
 
     public ClientController getClientController() {
         return this.controller;
+    }
+
+    public void setClientController(ClientController controller) {
+        this.controller = controller;
     }
 }
