@@ -24,14 +24,12 @@ public class ClientController
     private Stage stage;
 
     // Controllers to be initialized
-    private SignInParentController signInParentController;
     private SignInController signInController;
     private MainMenuController mainMenuController;
     private SignUpController signUpController;
     private Options options;
 
     // Scenes
-    private BorderPane signInParent;
     private Pane signInPane;
     private Pane signUpPane;
     private Pane mainMenuPain;
@@ -49,13 +47,10 @@ public class ClientController
     // initializes controllers
     private void initialize() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../ClientUI/SignInParent.fxml"));
-            signInParent = loader.load();
-            signInParentController = loader.getController();
-            signInParentController.setClientController(this);
-            signInPane = (Pane) signInParent.getCenter();
-            signInController = signInParentController.getSignInController();
-//            signInController.setClientController(this);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../ClientUI/SignIn.fxml"));
+            signInPane = loader.load();
+            signInController = loader.getController();
+            signInController.setClientController(this);
 
             loader = new FXMLLoader(getClass().getResource("../ClientUI/MainMenu.fxml"));
             mainMenuPain = loader.load();
@@ -66,6 +61,7 @@ public class ClientController
             signUpPane = loader.load();
             signUpController = loader.getController();
             signUpController.setClientController(this);
+            signUpController.setSignInController(signInController);
 
             loader = new FXMLLoader(getClass().getResource("../ClientUI/Options.fxml"));
             optionsPane = loader.load();
@@ -80,7 +76,7 @@ public class ClientController
     {
         try
         {
-            Scene scene = new Scene(signInParent);
+            Scene scene = new Scene(signInPane);
             stage.setScene(scene);
             stage.show();
             readMessageBus = new ReadMessageBus(this);
