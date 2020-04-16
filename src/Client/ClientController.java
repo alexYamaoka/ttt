@@ -61,6 +61,7 @@ public class ClientController
             signUpPane = loader.load();
             signUpController = loader.getController();
             signUpController.setClientController(this);
+            signUpController.setSignInController(signInController);
 
             loader = new FXMLLoader(getClass().getResource("../ClientUI/Options.fxml"));
             optionsPane = loader.load();

@@ -41,8 +41,7 @@ public class SignUpController {
 
     private ClientController controller;
 
-
-
+    private SignInController signInController;
 
     @FXML
     public void OnEnterKeyPressed(KeyEvent keyEvent)
@@ -241,14 +240,15 @@ public class SignUpController {
     }
 
     public void signIn(ActionEvent event) throws IOException {
-        Pane root = controller.getSignInPane();
+        AnchorPane middleAnchorPane = signInController.getMiddleAnchorPane();
+        Pane root = signInController.getSignInPane();
         Scene scene = btn_SignIn.getScene();
-        Parent root1 = anchorPane;
+        Parent root1 = parentContainerSignUp;
 
         root.translateXProperty().set(scene.getWidth() * -0.5);
         root1.translateXProperty().set(0);
 
-        parentContainerSignUp.getChildren().add(root);
+        middleAnchorPane.getChildren().add(root);
 
         Timeline timeline = new Timeline();
         KeyValue keyValue = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
@@ -258,12 +258,16 @@ public class SignUpController {
         timeline.getKeyFrames().add(keyFrame);
         timeline.getKeyFrames().add(keyFrame1);
         timeline.setOnFinished(event1 -> {
-            parentContainerSignUp.getChildren().remove(anchorPane);
+            middleAnchorPane.getChildren().remove(parentContainerSignUp);
         });
         timeline.play();
     }
 
     public void setClientController(ClientController controller) {
         this.controller = controller;
+    }
+
+    public void setSignInController(SignInController signInController) {
+        this.signInController = signInController;
     }
 }

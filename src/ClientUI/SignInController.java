@@ -178,4 +178,12 @@ public class SignInController implements Initializable {
     public void setClientController(ClientController controller) {
         this.controller = controller;
     }
+
+    public AnchorPane getMiddleAnchorPane() {
+        return middleAnchorPane;
+    }
+
+    public StackPane getSignInPane() {
+        return signInPane;
+    }
 }
