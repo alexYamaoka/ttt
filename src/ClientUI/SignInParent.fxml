@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="590.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496) radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientUI.SignInParentController">
+    <top>
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="590.0" BorderPane.alignment="CENTER" />
+    </top>
+    <left>
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="145.0" BorderPane.alignment="CENTER" />
+    </left>
+    <right>
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="145.0" BorderPane.alignment="CENTER" />
+    </right>
+    <bottom>
+        <AnchorPane prefHeight="50.0" prefWidth="590.0" BorderPane.alignment="CENTER" />
+    </bottom>
+    <center>
+        <AnchorPane layoutX="145.0" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+            <fx:include maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" source="SignIn.fxml" />
+        </AnchorPane>
+    </center>
+</BorderPane>

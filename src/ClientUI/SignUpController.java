@@ -18,6 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
@@ -208,6 +209,58 @@ public class SignUpController {
         }
 
         return value_entered;
+    }
+
+    public void signUp(ActionEvent event) throws IOException {
+        String first_Name = txtF_FirstName.getText();
+        String last_Name = txtF_LastName.getText();
+        String username = txtF_Username.getText();
+        String password = txtF_Password.getText();
+        String confirm_Password = txtF_ConfirmPassword.getText();
+        if(checkField(first_Name, last_Name, username, password, confirm_Password) && checkPasswords(password, confirm_Password)){
+            Parent root = FXMLLoader.load(getClass().getResource("../ClientUI/SignIn.fxml"));
+            Scene scene = btn_SignIn.getScene();
+            Parent root1 = anchorPane;
+
+            root.translateXProperty().set(scene.getWidth() / 2);
+            root1.translateXProperty().set(0);
+            parentContainer.getChildren().add(root);
+
+            Timeline timeline = new Timeline();
+            KeyValue keyValue = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
+            KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.3), keyValue);
+            KeyValue keyValue1 = new KeyValue(root1.translateXProperty(), -300, Interpolator.EASE_IN);
+            KeyFrame keyFrame1 = new KeyFrame(Duration.seconds(0.3), keyValue1);
+            timeline.getKeyFrames().add(keyFrame);
+            timeline.getKeyFrames().add(keyFrame1);
+            timeline.setOnFinished(event1 -> {
+                parentContainer.getChildren().remove(anchorPane);
+            });
+            timeline.play();
+        }
+    }
+
+    public void signIn(ActionEvent event) throws IOException {
+        Pane root = controller.getSignInPane();
+        Scene scene = btn_SignIn.getScene();
+        Parent root1 = anchorPane;
+
+        root.translateXProperty().set(scene.getWidth() * -0.5);
+        root1.translateXProperty().set(0);
+
+        parentContainer.getChildren().add(root);
+
+        Timeline timeline = new Timeline();
+        KeyValue keyValue = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
+        KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.3), keyValue);
+        KeyValue keyValue1 = new KeyValue(root1.translateXProperty(), 300, Interpolator.EASE_IN);
+        KeyFrame keyFrame1 = new KeyFrame(Duration.seconds(0.3), keyValue1);
+        timeline.getKeyFrames().add(keyFrame);
+        timeline.getKeyFrames().add(keyFrame1);
+        timeline.setOnFinished(event1 -> {
+            parentContainer.getChildren().remove(anchorPane);
+        });
+        timeline.play();
     }
 
     public void setClientController(ClientController controller) {

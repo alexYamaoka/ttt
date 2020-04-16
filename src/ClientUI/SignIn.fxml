@@ -5,56 +5,38 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="590.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496) radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientUI.SignInController">
-    <top>
-        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="590.0" BorderPane.alignment="CENTER" />
-    </top>
-    <left>
-        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="145.0" BorderPane.alignment="CENTER" />
-    </left>
-    <right>
-        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="145.0" BorderPane.alignment="CENTER" />
-    </right>
-    <bottom>
-        <AnchorPane prefHeight="50.0" prefWidth="590.0" BorderPane.alignment="CENTER" />
-    </bottom>
-    <center>
-        <AnchorPane layoutX="145.0" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
-            <StackPane fx:id="parentContainer">
-                <children>
-                    <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0">
-                        <children>
-                            <Label layoutX="116.0" layoutY="50.0" prefHeight="29.0" prefWidth="68.0" text="Sign in">
-                                <font>
-                                    <Font size="24.0" />
-                                </font>
-                            </Label>
-                            <TextField fx:id="txtF_Username" layoutX="67.5" layoutY="90.0" prefHeight="29.0" prefWidth="165.0" promptText="Username" />
-                            <Label fx:id="usernameError" layoutX="67.5" layoutY="120.0" prefHeight="17.0" prefWidth="234.0" style="-fx-text-fill: white;" text="Enter an username">
-                                <font>
-                                    <Font size="10.0" />
-                                </font>
-                            </Label>
-                            <PasswordField fx:id="txtF_Password" accessibleRole="PASSWORD_FIELD" layoutX="67.5" layoutY="138.0" prefHeight="29.0" prefWidth="165.0" promptText="Password">
-                                <font>
-                                    <Font name="System Font" size="13.0" />
-                                </font>
-                            </PasswordField>
-                            <Label fx:id="passwordError" layoutX="67.5" layoutY="168.0" prefHeight="17.0" prefWidth="234.0" style="-fx-text-fill: white;" text="Enter a password">
-                                <font>
-                                    <Font size="10.0" />
-                                </font>
-                            </Label>
-                            <Button fx:id="btn_SignUp" layoutX="54.0" layoutY="204.0" mnemonicParsing="false" onAction="#onSignUpButtonClicked" prefHeight="27.0" prefWidth="110.0" style="-fx-background-color: white; -fx-text-fill: #204060; -fx-border-color: white;" text="Create account" />
-                            <Button fx:id="btn_LogIn" layoutX="181.0" layoutY="204.0" mnemonicParsing="false" onAction="#onSignInButtonClicked" onKeyPressed="#onEnterKeyPressed" prefHeight="32.0" prefWidth="51.5" style="-fx-background-color: #204060; -fx-text-fill: white;" text="Log In" />
-                        </children>
-                    </AnchorPane>
-                </children>
-            </StackPane>
+
+<StackPane fx:id="parentContainer" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientUI.SignInController">
+    <children>
+        <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0">
+            <children>
+                <Label layoutX="116.0" layoutY="50.0" prefHeight="29.0" prefWidth="68.0" text="Sign in">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="txtF_Username" layoutX="67.5" layoutY="90.0" prefHeight="29.0" prefWidth="165.0" promptText="Username" />
+                <Label fx:id="usernameError" layoutX="67.5" layoutY="120.0" prefHeight="17.0" prefWidth="234.0" style="-fx-text-fill: white;" text="Enter an username">
+                    <font>
+                        <Font size="10.0" />
+                    </font>
+                </Label>
+                <PasswordField fx:id="txtF_Password" accessibleRole="PASSWORD_FIELD" layoutX="67.5" layoutY="138.0" prefHeight="29.0" prefWidth="165.0" promptText="Password">
+                    <font>
+                        <Font name="System Font" size="13.0" />
+                    </font>
+                </PasswordField>
+                <Label fx:id="passwordError" layoutX="67.5" layoutY="168.0" prefHeight="17.0" prefWidth="234.0" style="-fx-text-fill: white;" text="Enter a password">
+                    <font>
+                        <Font size="10.0" />
+                    </font>
+                </Label>
+                <Button fx:id="btn_SignUp" layoutX="54.0" layoutY="204.0" mnemonicParsing="false" onAction="#signUp" prefHeight="27.0" prefWidth="110.0" style="-fx-background-color: white; -fx-text-fill: #204060; -fx-border-color: white;" text="Create account" />
+                <Button fx:id="btn_LogIn" layoutX="181.0" layoutY="204.0" mnemonicParsing="false" onAction="#signIn" prefHeight="32.0" prefWidth="51.5" style="-fx-background-color: #204060; -fx-text-fill: white;" text="Log In" />
+            </children>
         </AnchorPane>
-    </center>
-</BorderPane>
+    </children>
+</StackPane>
