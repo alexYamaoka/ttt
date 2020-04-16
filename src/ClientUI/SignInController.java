@@ -20,6 +20,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -30,14 +31,10 @@ import java.net.UnknownHostException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.ResourceBundle;
 
 public class SignInController implements Initializable {
-
-    // publishing sign in into
-    @FXML
-    StackPane parentContainerSignIn;
-    //ArrayList<Sub> subs = new ArrayList<>();
     PreparedStatement pr = null;
     ResultSet rs = null;
     @FXML
@@ -50,6 +47,13 @@ public class SignInController implements Initializable {
     private Button btn_LogIn, btn_SignUp;
     @FXML
     private Label usernameError, passwordError;
+    @FXML
+    private BorderPane parentContainerSignIn;
+    @FXML
+    private AnchorPane middleAnchorPane;
+    @FXML
+    private StackPane signInPane;
+
     private ClientController controller;
 
 
@@ -131,24 +135,23 @@ public class SignInController implements Initializable {
 
     @FXML
     public void signUp(ActionEvent event) throws IOException {
+        // The new pane that is being added to middleAnchorPane
         Parent root = controller.getSignUpPane();
         Scene scene = btn_SignUp.getScene();
-        Parent root1 = anchorPane;
-
-        root.translateXProperty().set(scene.getWidth() / 2);
-        root1.translateXProperty().set(0);
-
-        parentContainerSignIn.getChildren().add(root);
+        Parent root1 = signInPane;
+        root.translateXProperty().set(scene.getWidth() * -0.5);
+        // Add second scene. Now both first and second scene is present
+        middleAnchorPane.getChildren().add(root);
 
         Timeline timeline = new Timeline();
         KeyValue keyValue = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
         KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.3), keyValue);
-        KeyValue keyValue1 = new KeyValue(root1.translateXProperty(), -300, Interpolator.EASE_IN);
+        KeyValue keyValue1 = new KeyValue(root1.translateXProperty(), 300, Interpolator.EASE_IN);
         KeyFrame keyFrame1 = new KeyFrame(Duration.seconds(0.3), keyValue1);
         timeline.getKeyFrames().add(keyFrame);
         timeline.getKeyFrames().add(keyFrame1);
         timeline.setOnFinished(event1 -> {
-            parentContainerSignIn.getChildren().remove(anchorPane);
+            middleAnchorPane.getChildren().remove(signInPane);
         });
         timeline.play();
     }

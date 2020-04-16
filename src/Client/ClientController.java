@@ -30,7 +30,6 @@ public class ClientController
     private Options options;
 
     // Scenes
-    private BorderPane signInParent;
     private Pane signInPane;
     private Pane signUpPane;
     private Pane mainMenuPain;
@@ -76,7 +75,7 @@ public class ClientController
     {
         try
         {
-            Scene scene = new Scene(signInParent);
+            Scene scene = new Scene(signInPane);
             stage.setScene(scene);
             stage.show();
             readMessageBus = new ReadMessageBus(this);

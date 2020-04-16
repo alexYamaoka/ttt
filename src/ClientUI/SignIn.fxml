@@ -7,7 +7,8 @@
             prefWidth="590.0"
             style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496) radial-gradient(radius 200%,#204060,#1d9496);"
             xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="ClientUI.SignInController">
+            fx:controller="ClientUI.SignInController"
+            fx:id="parentContainerSignIn">
     <top>
         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
                     prefHeight="50.0" prefWidth="590.0" BorderPane.alignment="CENTER"/>
@@ -27,8 +28,9 @@
         <!-- The Middle Anchor Pane -->
         <AnchorPane layoutX="145.0" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
                     minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0" style="-fx-background-color: white;"
-                    BorderPane.alignment="CENTER">
-            <StackPane fx:id="signIn">
+                    BorderPane.alignment="CENTER"
+                    fx:id="middleAnchorPane">
+            <StackPane fx:id="signInPane">
                 <children>
                     <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
                                 minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0">
