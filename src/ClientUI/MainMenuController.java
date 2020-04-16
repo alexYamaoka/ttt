@@ -29,46 +29,51 @@ public class MainMenuController implements Initializable {
 
     }
 
-    public void playButtonClicked(ActionEvent event) throws IOException {
-        Stage stage = null;
-        Parent root = null;
+    @FXML
+    public void onPlayButtonClicked(ActionEvent event) throws IOException {
+//        Stage stage = null;
+//        Parent root = null;
+//        if (event.getSource() == playButton) {
+//            stage = (Stage) playButton.getScene().getWindow();
+//            root = FXMLLoader.load(getClass().getResource("GameLobby.fxml"));
+//        }
+//        Scene scene = new Scene(root);
+//        stage.setScene(scene);
+//        stage.show();
 
-        if (event.getSource() == playButton) {
-            stage = (Stage) playButton.getScene().getWindow();
-            root = FXMLLoader.load(getClass().getResource("GameLobby.fxml"));
-        }
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+
         System.out.println("Options Button Clicked!");
         System.out.println("Play Button Clicked!");
     }
 
-    public void watchMatchesButtonClicked(ActionEvent event) {
+
+    @FXML
+    public void onWatchMatchesButtonClicked(ActionEvent event) {
         System.out.println("Watch Matches Button Clicked!");
     }
 
-    public void optionsButtonClicked(ActionEvent event) throws IOException {
-        Stage stage = null;
-        Parent root = null;
 
-        if (event.getSource() == optionsButton) {
-            stage = (Stage) optionsButton.getScene().getWindow();
-            root = FXMLLoader.load(getClass().getResource("Options.fxml"));
-        }
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    @FXML
+    public void onOptionsButtonClicked(ActionEvent event) throws IOException {
+//        Stage stage = null;
+//        Parent root = null;
+//
+//        if (event.getSource() == optionsButton) {
+//            stage = (Stage) optionsButton.getScene().getWindow();
+//            root = FXMLLoader.load(getClass().getResource("Options.fxml"));
+//        }
+//        Scene scene = new Scene(root);
+//        stage.setScene(scene);
+//        stage.show();
         System.out.println("Options Button Clicked!");
     }
 
-    public void exitButtonClicked(ActionEvent event) {
+
+    @FXML
+    public void onExitButtonClicked(ActionEvent event) {
         System.out.println("Exit Button Clicked!");
-        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+        //((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
     }
-
-
-
 
 
 
