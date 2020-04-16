@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
@@ -127,7 +128,7 @@ public class SignUpController {
     }
 
     public void signIn(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("../ClientUI/SignIn.fxml"));
+        Pane root = controller.getSignInPane();
         Scene scene = btn_SignIn.getScene();
         Parent root1 = anchorPane;
 

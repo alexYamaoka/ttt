@@ -1,9 +1,6 @@
 package Client;
 
-import ClientUI.MainMenuController;
-import ClientUI.SignInController;
-import ClientUI.SignUpController;
-import ClientUI.Options;
+import ClientUI.*;
 
 import Shared.UserInformation;
 import javafx.fxml.FXMLLoader;
@@ -27,12 +24,14 @@ public class ClientController
     private Stage stage;
 
     // Controllers to be initialized
+    private SignInParentController signInParentController;
     private SignInController signInController;
     private MainMenuController mainMenuController;
     private SignUpController signUpController;
     private Options options;
 
     // Scenes
+    private BorderPane signInParent;
     private Pane signInPane;
     private Pane signUpPane;
     private Pane mainMenuPain;
@@ -50,10 +49,13 @@ public class ClientController
     // initializes controllers
     private void initialize() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../ClientUI/SignIn.fxml"));
-            signInPane = loader.load();
-            signInController = loader.getController();
-            signInController.setClientController(this);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../ClientUI/SignInParent.fxml"));
+            signInParent = loader.load();
+            signInParentController = loader.getController();
+            signInParentController.setClientController(this);
+            signInPane = (Pane) signInParent.getCenter();
+            signInController = signInParentController.getSignInController();
+//            signInController.setClientController(this);
 
             loader = new FXMLLoader(getClass().getResource("../ClientUI/MainMenu.fxml"));
             mainMenuPain = loader.load();
@@ -78,7 +80,7 @@ public class ClientController
     {
         try
         {
-            Scene scene = new Scene(signInPane);
+            Scene scene = new Scene(signInParent);
             stage.setScene(scene);
             stage.show();
 
