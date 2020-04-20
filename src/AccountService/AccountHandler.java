@@ -37,8 +37,6 @@ public class AccountHandler implements Runnable {
         Serializable data = packet.getData();
 
 
-
-
         switch(request)
         {
             case Packet.SIGN_IN:

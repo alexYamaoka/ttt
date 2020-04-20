@@ -2,6 +2,8 @@ package Client;
 
 import ClientUI.*;
 
+import ObserverPatterns.SignInListener;
+import Shared.Packet;
 import Shared.UserInformation;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -112,4 +114,5 @@ public class ClientController
     public Pane getOptionsPane() {
         return optionsPane;
     }
+
 }

@@ -1,6 +1,7 @@
 package ClientUI;
 
 import Client.ClientController;
+import Shared.Packet;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -126,6 +127,10 @@ public class SignUpController implements Initializable {
     private void registerNewUser(String firstName, String lastName, String username, String password)
     {
         // register new user and go to main menu scene
+        String registerInfo = firstName + " " + lastName + " " + username + " " + password;
+
+        Packet packet = new Packet(Packet.REGISTER_CLIENT, controller.getClient().getUserInformation(), registerInfo);
+        controller.getClient().addRequestToServer(packet);
     }
 
 

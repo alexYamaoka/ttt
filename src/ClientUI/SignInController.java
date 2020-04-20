@@ -2,6 +2,9 @@ package ClientUI;
 
 import Client.ClientController;
 import DataBase.sql.DatabaseManager;
+import ObserverPatterns.SignInListener;
+import Shared.Packet;
+import Shared.UserInformation;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -57,6 +60,9 @@ public class SignInController implements Initializable {
     private ClientController controller;
 
 
+
+
+
     @FXML
     public void onEnterKeyPressed(KeyEvent keyEvent) {
         if (keyEvent.getCode().equals(KeyCode.ENTER)) {
@@ -74,9 +80,16 @@ public class SignInController implements Initializable {
                 // sign in user function
                 // notify listener
 
+
+
+                Packet packet = new Packet(Packet.SIGN_IN, controller.getClient().getUserInformation(), username + " " + password);
+                controller.getClient().addRequestToServer(packet);
+
             }
         }
     }
+
+
 
 
     @FXML
