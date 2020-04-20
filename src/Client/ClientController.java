@@ -2,23 +2,12 @@ package Client;
 
 import ClientUI.*;
 
-import ObserverPatterns.SignInListener;
-import Shared.Packet;
-import Shared.UserInformation;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.IOException;
-import java.net.URL;
-import java.util.HashSet;
-import java.util.ResourceBundle;
 
 public class ClientController
 {
@@ -113,6 +102,16 @@ public class ClientController
 
     public Pane getOptionsPane() {
         return optionsPane;
+    }
+
+    public SignInController getSignInController()
+    {
+        return signInController;
+    }
+
+    public SignUpController getSignUpController()
+    {
+        return signUpController;
     }
 
 }

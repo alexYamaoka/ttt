@@ -1,6 +1,7 @@
 package ClientUI;
 
 import Client.ClientController;
+import ObserverPatterns.SignUpResultListener;
 import Shared.Packet;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
@@ -29,7 +30,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class SignUpController implements Initializable {
+public class SignUpController implements Initializable, SignUpResultListener
+{
     @FXML
     StackPane parentContainerSignUp;
     @FXML
@@ -234,5 +236,18 @@ public class SignUpController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Sign up Initialized");
+    }
+
+    @Override
+    public void updateSignInResult(String message)
+    {
+        Platform.runLater(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                System.out.println("message: " + message);
+            }
+        });
     }
 }

@@ -1,5 +1,7 @@
 package Client;
 
+import ObserverPatterns.SignInResultListener;
+import ObserverPatterns.SignUpResultListener;
 import Shared.Packet;
 
 public class ReadMessageBus implements Runnable
@@ -7,6 +9,10 @@ public class ReadMessageBus implements Runnable
     private ClientController clientController;
     private Thread workerThread;
     private boolean isRunning = false;
+
+    private SignInResultListener signInResultListener = clientController.getSignInController();
+    private SignUpResultListener signUpResultListener = clientController.getSignUpController();
+
 
 
     public ReadMessageBus(ClientController clientController)
@@ -31,17 +37,20 @@ public class ReadMessageBus implements Runnable
 
             if (response != null)
             {
-                if (response.getRequest().equals(Packet.REGISTER_CLIENT))
+                switch (response.getRequest())
                 {
-                    // for registration packet
-                    System.out.println("You have been registered");
-                }
-                else
-                {
-                    // to update ui with other packets
+                    case Packet.REGISTER_CLIENT:
+                        signUpResultListener.updateSignInResult(response.getData().toString());
+                        break;
 
+                    case Packet.SIGN_IN:
+                        signInResultListener.updateSignInResult(response.getData().toString());
+                        break;
 
+                    case Packet.SIGN_OUT:
+                        break;
                 }
+
             }
         }
     }
