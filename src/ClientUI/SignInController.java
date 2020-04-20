@@ -2,6 +2,8 @@ package ClientUI;
 
 import Client.ClientController;
 import DataBase.sql.DatabaseManager;
+import ObserverPatterns.SignInResultListener;
+import Shared.Packet;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -31,10 +33,10 @@ import java.net.UnknownHostException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.util.ResourceBundle;
 
-public class SignInController implements Initializable {
+public class SignInController implements Initializable, SignInResultListener
+{
     PreparedStatement pr = null;
     ResultSet rs = null;
     @FXML
@@ -57,6 +59,9 @@ public class SignInController implements Initializable {
     private ClientController controller;
 
 
+
+
+
     @FXML
     public void onEnterKeyPressed(KeyEvent keyEvent) {
         if (keyEvent.getCode().equals(KeyCode.ENTER)) {
@@ -74,9 +79,16 @@ public class SignInController implements Initializable {
                 // sign in user function
                 // notify listener
 
+
+
+                Packet packet = new Packet(Packet.SIGN_IN, controller.getClient().getUserInformation(), username + " " + password);
+                controller.getClient().addRequestToServer(packet);
+
             }
         }
     }
+
+
 
 
     @FXML
@@ -185,5 +197,18 @@ public class SignInController implements Initializable {
 
     public StackPane getSignInPane() {
         return signInPane;
+    }
+
+    @Override
+    public void updateSignInResult(String message)
+    {
+        Platform.runLater(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                System.out.println(message);
+            }
+        });
     }
 }

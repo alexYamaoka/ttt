@@ -1,6 +1,8 @@
 package ClientUI;
 
 import Client.ClientController;
+import ObserverPatterns.SignUpResultListener;
+import Shared.Packet;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -28,7 +30,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class SignUpController implements Initializable {
+public class SignUpController implements Initializable, SignUpResultListener
+{
     @FXML
     StackPane parentContainerSignUp;
     @FXML
@@ -126,6 +129,10 @@ public class SignUpController implements Initializable {
     private void registerNewUser(String firstName, String lastName, String username, String password)
     {
         // register new user and go to main menu scene
+        String registerInfo = firstName + " " + lastName + " " + username + " " + password;
+
+        Packet packet = new Packet(Packet.REGISTER_CLIENT, controller.getClient().getUserInformation(), registerInfo);
+        controller.getClient().addRequestToServer(packet);
     }
 
 
@@ -229,5 +236,18 @@ public class SignUpController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Sign up Initialized");
+    }
+
+    @Override
+    public void updateSignInResult(String message)
+    {
+        Platform.runLater(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                System.out.println("message: " + message);
+            }
+        });
     }
 }
