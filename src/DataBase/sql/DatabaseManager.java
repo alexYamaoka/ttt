@@ -4,8 +4,7 @@ import Models.Game;
 import Shared.UserInformation;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class DatabaseManager implements DataSource {  // subscribing to sign in for sign in info
 
@@ -87,8 +86,17 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         return null;
     }
 
+
+    public List<UserInformation> userInfo_List(UserInformation obj){
+        List<UserInformation> users = new ArrayList<>();
+        users.add(obj);
+
+        return users;
+    }
+
     @Override
     public List<BaseModel> list(Class obj) {
+
         return null;
     }
 
