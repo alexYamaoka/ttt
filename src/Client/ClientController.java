@@ -1,6 +1,6 @@
 package Client;
 
-import ClientUI.*;
+import UI.Client.*;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,10 +15,10 @@ public class ClientController
     private Stage stage;
 
     // Controllers to be initialized
-    private SignInController signInController;
-    private MainMenuController mainMenuController;
-    private SignUpController signUpController;
-    private Options options;
+    private ClientUI.SignInController signInController;
+    private ClientUI.MainMenuController mainMenuController;
+    private ClientUI.SignUpController signUpController;
+    private ClientUI.Options options;
 
     // Scenes
     private Pane signInPane;
@@ -38,23 +38,23 @@ public class ClientController
     // initializes controllers
     private void initialize() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../ClientUI/SignIn.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../UI/Client/SignIn.fxml"));
             signInPane = loader.load();
             signInController = loader.getController();
             signInController.setClientController(this);
 
-            loader = new FXMLLoader(getClass().getResource("../ClientUI/MainMenu.fxml"));
+            loader = new FXMLLoader(getClass().getResource("../UI/Client/MainMenu.fxml"));
             mainMenuPain = loader.load();
             mainMenuController = loader.getController();
             mainMenuController.setClientController(this);
 
-            loader = new FXMLLoader(getClass().getResource("../ClientUI/SignUp.fxml"));
+            loader = new FXMLLoader(getClass().getResource("../UI/Client/SignUp.fxml"));
             signUpPane = loader.load();
             signUpController = loader.getController();
             signUpController.setClientController(this);
             signUpController.setSignInController(signInController);
 
-            loader = new FXMLLoader(getClass().getResource("../ClientUI/Options.fxml"));
+            loader = new FXMLLoader(getClass().getResource("../UI/Client/Options.fxml"));
             optionsPane = loader.load();
             options = loader.getController();
             options.setClientController(this);
@@ -104,12 +104,12 @@ public class ClientController
         return optionsPane;
     }
 
-    public SignInController getSignInController()
+    public ClientUI.SignInController getSignInController()
     {
         return signInController;
     }
 
-    public SignUpController getSignUpController()
+    public ClientUI.SignUpController getSignUpController()
     {
         return signUpController;
     }

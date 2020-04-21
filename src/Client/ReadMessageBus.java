@@ -10,14 +10,16 @@ public class ReadMessageBus implements Runnable
     private Thread workerThread;
     private boolean isRunning = false;
 
-    private SignInResultListener signInResultListener = clientController.getSignInController();
-    private SignUpResultListener signUpResultListener = clientController.getSignUpController();
+    private SignInResultListener signInResultListener;
+    private SignUpResultListener signUpResultListener;
 
 
 
     public ReadMessageBus(ClientController clientController)
     {
         this.clientController = clientController;
+        signInResultListener = clientController.getSignInController();
+        signUpResultListener = clientController.getSignUpController();
     }
 
     public void start()
