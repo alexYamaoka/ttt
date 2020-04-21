@@ -18,7 +18,7 @@ public class ClientController
     private ClientUI.SignInController signInController;
     private ClientUI.MainMenuController mainMenuController;
     private ClientUI.SignUpController signUpController;
-    private ClientUI.Options options;
+    private UI.Client.Options options;
 
     // Scenes
     private Pane signInPane;
