@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="576.0" prefWidth="606.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496)radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientUI.Options">
+<AnchorPane prefHeight="576.0" prefWidth="606.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496)radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.Client.Options">
    <children>
       <SplitPane fx:id="splitPane" dividerPositions="0.2736842105263158" layoutX="17.0" layoutY="82.0" prefHeight="481.0" prefWidth="572.0" style="-fx-border-color: #000000#000000; -fx-border-insets: 0,0; -fx-padding: 0; -fx-split-pane-divider: 0;">
         <items>
@@ -47,7 +47,7 @@
                         <TextField fx:id="txt_f_UserDetails_FirstNametxt_f_UserDetails_LastName" layoutX="115.0" layoutY="316.0" promptText="LastName" style="-fx-background-color: #204060#204060; -fx-prompt-text-fill: #9fbfdf#9fbfdf;" />
                         <ImageView fitHeight="102.0" fitWidth="94.0" layoutX="142.0" layoutY="113.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../Resources/Icons/pngguru.com-6.png" />
+                              <Image url="@../../Resources/Icons/pngguru.com-6.png" />
                            </image>
                         </ImageView>
                         <TextField layoutX="115.0" layoutY="234.0" promptText="UserName" style="-fx-prompt-text-fill: #9fbfdf#9fbfdf; -fx-background-color: #204060#204060;" />

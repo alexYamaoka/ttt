@@ -15,8 +15,9 @@ public class Server {
         //ds.delete();
     }
 
-    public void f2() {
-        //ds.delete(User);
+    public boolean DeleteUser(String username, String password) throws SQLException {
+        //ds.delete(user);
+        return true;
     }
 
     public boolean login(String username, String password) throws SQLException {
@@ -24,12 +25,14 @@ public class Server {
         return true;
     }
 
-    public boolean registerUser(String username, String firstname, String lastname, String email, String password) {
+    public boolean updateUser(UserInformation user) throws SQLException {
+        ds.update(user);
+        return true;
+    }
+
+    public boolean registerUser(String username, String firstname, String lastname, String email, String password) throws SQLException {
         BaseModel user = new UserInformation(username, firstname, lastname, email, password);
         ds.insert(user);
         return true;
     }
-
-
-
 }

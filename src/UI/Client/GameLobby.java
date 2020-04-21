@@ -1,4 +1,4 @@
-package ClientUI;
+package UI.Client;
 
 public class GameLobby {
 

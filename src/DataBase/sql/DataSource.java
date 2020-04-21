@@ -8,10 +8,10 @@ import java.util.List;
 
 public interface DataSource {
 
-    BaseModel insert (BaseModel obj);
-    BaseModel delete (BaseModel obj);
-    BaseModel update (BaseModel obj);
-    BaseModel get (String id);
+    BaseModel insert (BaseModel obj) throws SQLException;
+    BaseModel delete (BaseModel obj) throws SQLException;
+    BaseModel update (BaseModel obj) throws SQLException;
+    BaseModel get (String id) throws SQLException;
 
     List<BaseModel> list(Class obj);
     List<BaseModel> query(Class obj,String filter) throws SQLException;

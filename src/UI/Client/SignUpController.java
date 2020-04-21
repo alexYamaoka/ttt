@@ -47,7 +47,7 @@ public class SignUpController implements Initializable, SignUpResultListener
 
     private ClientController controller;
 
-    private SignInController signInController;
+    private ClientUI.SignInController signInController;
 
     @FXML
     public void OnEnterKeyPressed(KeyEvent keyEvent)
@@ -223,7 +223,7 @@ public class SignUpController implements Initializable, SignUpResultListener
         this.controller = controller;
     }
 
-    public void setSignInController(SignInController signInController) {
+    public void setSignInController(ClientUI.SignInController signInController) {
         this.signInController = signInController;
     }
 
