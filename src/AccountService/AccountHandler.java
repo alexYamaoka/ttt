@@ -5,7 +5,7 @@ import DataBase.sql.DatabaseManager;
 import Shared.Packet;
 import Shared.UserInformation;
 import app.Server;
-import com.mysql.cj.protocol.Resultset;
+//import com.mysql.cj.protocol.Resultset;
 
 import javax.imageio.IIOException;
 import java.io.IOException;

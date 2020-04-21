@@ -15,8 +15,8 @@ public class ClientController
     private Stage stage;
 
     // Controllers to be initialized
-    private ClientUI.SignInController signInController;
-    private ClientUI.MainMenuController mainMenuController;
+    private SignInController signInController;
+    private MainMenuController mainMenuController;
     private UI.Client.SignUpController signUpController;
     private UI.Client.Options options;
 
@@ -104,12 +104,12 @@ public class ClientController
         return optionsPane;
     }
 
-    public ClientUI.SignInController getSignInController()
+    public SignInController getSignInController()
     {
         return signInController;
     }
 
-    public UI.Client.SignUpController getSignUpController()
+    public SignUpController getSignUpController()
     {
         return signUpController;
     }

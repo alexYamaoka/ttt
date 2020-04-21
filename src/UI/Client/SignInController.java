@@ -1,4 +1,4 @@
-package ClientUI;
+package UI.Client;
 
 import Client.ClientController;
 import DataBase.sql.DatabaseManager;
