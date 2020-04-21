@@ -5,14 +5,15 @@ import Shared.Packet;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ReadFromServerTask implements Runnable
 {
     private ObjectInputStream objectInputStream;
     private Socket socket;
     private Client client;
-    //private Thread thread;
-    private boolean isRunning = true;
+    private Thread thread;
+    private AtomicBoolean running = new AtomicBoolean(false);
 
 
     public ReadFromServerTask(Socket socket, Client client)
@@ -30,12 +31,20 @@ public class ReadFromServerTask implements Runnable
         }
     }
 
+    public void start() {
+        thread = new Thread(this);
+        thread.start();
+    }
 
+    public void stop() {
+        running.set(false);
+    }
 
     @Override
     public void run()
     {
-        while (isRunning)
+        running.set(true);
+        while (running.get())
         {
             try
             {
@@ -45,7 +54,7 @@ public class ReadFromServerTask implements Runnable
             catch (Exception ex)
             {
                 ex.printStackTrace();
-                isRunning = false;
+                running.set(false);
             }
         }
 
@@ -59,7 +68,7 @@ public class ReadFromServerTask implements Runnable
         }
         finally
         {
-            isRunning = false;
+            running.set(false);
         }
     }
 }

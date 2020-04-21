@@ -40,7 +40,6 @@ public class Client
 
             writeThread.start();
             readThread.start();
-
         }
         catch (IOException ex)
         {
