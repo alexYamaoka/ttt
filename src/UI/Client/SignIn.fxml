@@ -7,7 +7,7 @@
             prefWidth="590.0"
             style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496) radial-gradient(radius 200%,#204060,#1d9496);"
             xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="ClientUI.SignInController"
+            fx:controller="UI.Client.SignInController"
             fx:id="parentContainerSignIn">
     <top>
         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
