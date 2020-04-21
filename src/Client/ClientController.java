@@ -17,7 +17,7 @@ public class ClientController
     // Controllers to be initialized
     private ClientUI.SignInController signInController;
     private ClientUI.MainMenuController mainMenuController;
-    private ClientUI.SignUpController signUpController;
+    private UI.Client.SignUpController signUpController;
     private UI.Client.Options options;
 
     // Scenes
@@ -109,7 +109,7 @@ public class ClientController
         return signInController;
     }
 
-    public ClientUI.SignUpController getSignUpController()
+    public UI.Client.SignUpController getSignUpController()
     {
         return signUpController;
     }
