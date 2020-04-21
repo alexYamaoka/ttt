@@ -32,7 +32,7 @@ public class ClientController
 
     public ClientController(Stage stage) {
         this.stage = stage;
-        client = new Client("localhost,", 8000, new UserInformation("NA", "NA", "Anonymous", "NA", "NA"));
+        client = new Client("localhost", 8000, new UserInformation("NA", "NA", "Anonymous", "NA", "NA"));
         initialize();
         setUpClientToUI();
     }
@@ -79,6 +79,10 @@ public class ClientController
         {
             ex.printStackTrace();
         }
+    }
+
+    public void run() {
+        client.execute();
     }
 
     public Client getClient()

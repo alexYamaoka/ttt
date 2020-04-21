@@ -17,11 +17,12 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
     private PreparedStatement GameStatement;
 
     private DatabaseManager(){
-        String url = "jdbc:mysql://localhost:3306/tictactoe?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST";
-        String username = "test";
-        String password = "test123password";
+        String url = "jdbc:mysql://localhost:3306/tictactoe";
+        Properties info = new Properties();
+        info.put("user", "test");
+        info.put("password", "test123987!");
         try{
-            myConn = DriverManager.getConnection(url,username,password);
+            myConn = DriverManager.getConnection(url, info);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -32,7 +33,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
             synchronized (DatabaseManager.class){
                 if(instance == null){
                     instance = new DatabaseManager();
-                    System.out.println("Connection made");
+                    System.out.println("DatabaseManager: Connection made");
                 }
             }
         }

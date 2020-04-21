@@ -13,12 +13,13 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        // start client
-        ClientController clientController = new ClientController(stage);
-        stage.setTitle("EndFrame TicTacToe");
-
         // start AccountService
         AccountService service = new AccountService();
         service.start();
+
+        // start client
+        ClientController clientController = new ClientController(stage);
+        stage.setTitle("EndFrame TicTacToe");
+        clientController.run();
     }
 }

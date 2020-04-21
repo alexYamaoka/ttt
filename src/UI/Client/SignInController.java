@@ -105,18 +105,10 @@ public class SignInController implements Initializable, SignInResultListener
             txtF_Username.setStyle("-fx-border-color: red;");
             usernameError.setStyle("-fx-text-fill: red;");
             value_entered = false;
-        } else {
-            txtF_Username.setStyle("");
-            usernameError.setStyle("-fx-text-fill: white;");
-            value_entered = false;
         }
         if (password.isBlank()) {
             txtF_Password.setStyle("-fx-border-color: red;");
             passwordError.setStyle("-fx-text-fill: red;");
-            value_entered = false;
-        } else {
-            txtF_Password.setStyle("");
-            passwordError.setStyle("-fx-text-fill: white;");
             value_entered = false;
         }
 
