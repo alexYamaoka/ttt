@@ -20,7 +20,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         String url = "jdbc:mysql://localhost:3306/tictactoe";
         Properties info = new Properties();
         info.put("user", "test");
-        info.put("password", "test123987!");
+        info.put("password", "test");
         try{
             myConn = DriverManager.getConnection(url, info);
         } catch (SQLException e) {

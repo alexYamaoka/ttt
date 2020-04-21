@@ -41,6 +41,7 @@ public class AccountHandler implements Runnable {
     @Override
     public void run() {
         running.set(true);
+        System.out.println("AccountHandler has started!");
         String request = packet.getRequest();
         UserInformation userInformation = packet.getInformation();
         Serializable data = packet.getData();
@@ -51,20 +52,21 @@ public class AccountHandler implements Runnable {
             case Packet.SIGN_IN:
                 String SignInStr = data.toString();
                 String[] str = SignInStr.trim().split("\\s+");
-                String firstName = str[0];
-                String lastName = str[1];
-                String userName = str[2];
-                String email = str[3];
-                String password = str[4];
+                String userName = str[0];
+                String password = str[1];
+
+                // packet to return
+                Packet packet;
+
                 try {
                     if(server.login(userName,password)){ //if true the DB found user record
-                        outputStream.writeObject(new UserInformation(firstName, lastName, userName, email, password));
+                        System.out.println("Successfully Logged In!");
+                        // new Packet (PACKET.SIGN_IN, userinformation, retrievedInformation)
+                        // output
                     }
 
                 } catch (SQLException e) {
                     e.printStackTrace();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
                 }
                 break;
             case Packet.SIGN_OUT:
