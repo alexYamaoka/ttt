@@ -97,25 +97,19 @@ public class SignUpController implements Initializable, SignUpResultListener
 
 
         if(checkField(first_Name, last_Name, username, password, confirm_Password) && checkPasswords(password, confirm_Password)){
-            Parent root = FXMLLoader.load(getClass().getResource("../ClientUI/SignIn.fxml"));
-            Scene scene = btn_SignIn.getScene();
-            Parent root1 = anchorPane;
+            // notify user that text fields need to be fixed
 
-            root.translateXProperty().set(scene.getWidth() / 2);
-            root1.translateXProperty().set(0);
-            parentContainerSignUp.getChildren().add(root);
+            System.out.println("Fields were not entered correctly");
 
-            Timeline timeline = new Timeline();
-            KeyValue keyValue = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
-            KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.3), keyValue);
-            KeyValue keyValue1 = new KeyValue(root1.translateXProperty(), -300, Interpolator.EASE_IN);
-            KeyFrame keyFrame1 = new KeyFrame(Duration.seconds(0.3), keyValue1);
-            timeline.getKeyFrames().add(keyFrame);
-            timeline.getKeyFrames().add(keyFrame1);
-            timeline.setOnFinished(event1 -> {
-                parentContainerSignUp.getChildren().remove(anchorPane);
+            Platform.runLater(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+
+                }
             });
-            timeline.play();
+
         }
         else
         {
