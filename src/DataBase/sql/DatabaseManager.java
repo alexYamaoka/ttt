@@ -1,4 +1,6 @@
 package DataBase.sql;
+import DataBase.TypeGenerator;
+import DataBase.UUIDGenerator;
 import Models.BaseModel;
 import Models.Game;
 import Shared.UserInformation;
@@ -53,7 +55,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         UserStatement = myConn.prepareStatement("UPDATE user SET " + "isDeleted = ? " +"WHERE id = ?");
         if(obj instanceof UserInformation){
             UserInformation userObj = (UserInformation) obj;
-            UserStatement.setInt(1,userObj.getIsDeleted());
+            UserStatement.setInt(1,userObj.getIsDeleted()); // set idDeleted to 1 somewhere else before passing message request
             UserStatement.setString(2, userObj.getId());
             UserStatement.executeUpdate(query.toString());
         }
@@ -62,19 +64,20 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
 
     @Override
     public BaseModel update(BaseModel obj) throws SQLException {
+
         StringBuilder query = new StringBuilder();
-        UserStatement = myConn.prepareStatement("UPDATE user SET " + "username = ?" + " password = ?" + "FirstName = ?" + "LastName = ?" + "WHERE id = ?");
-        System.out.println( "Query to string update "+query.toString());
+        query.append("UPDATE ");
         if(obj instanceof UserInformation){
             UserInformation userObj = (UserInformation) obj;
-            UserStatement.setString(1, userObj.getUserName());
-            UserStatement.setString(2, userObj.getPassword());
-            UserStatement.setString(3, userObj.getFirstName());
-            UserStatement.setString(4, userObj.getLastName());
-            UserStatement.setString(5, userObj.getId());
-            UserStatement.executeUpdate();
-            //UserStatement.executeUpdate(query.toString());
-            System.out.println( "Query to string update "+query.toString());
+            query.append("user SET username = ? WHERE id = ? ");
+            UserStatement = myConn.prepareStatement(query.toString());
+            System.out.println(query.toString());
+            UserStatement.setString(1,userObj.getUserName());
+            UserStatement.setString(2,userObj.getId());
+            System.out.println(query.toString());
+            int row = UserStatement.executeUpdate();
+            System.out.println(row);
+
         }
         return null;
     }
@@ -90,7 +93,6 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
     public List<UserInformation> userInfo_List(UserInformation obj){
         List<UserInformation> users = new ArrayList<>();
         users.add(obj);
-
         return users;
     }
 
@@ -105,19 +107,22 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         StringBuilder query = new StringBuilder();
         query.append("INSERT INTO ");
         if(obj instanceof UserInformation){
+            UserInformation userObj = (UserInformation) obj;
+            UUIDGenerator newID = new UUIDGenerator();
             query.append("user ");
-            query.append("id = ?, username = ?, password = ?, FirstName = ?, LastName = ?");
+            query.append("(id, username, password, FirstName, LastName, isDeleted)");
+            query.append("values (?,?,?,?,?,?)");
             UserStatement = myConn.prepareStatement(query.toString());
-            ResultSet rs = UserStatement.executeQuery(query.toString());
-            System.out.println("Insert" +query.toString());
-            while (rs.next()){
-                UserInformation userObj = (UserInformation) obj;
-                rs.getString(userObj.getId());
-                rs.getString(userObj.getUserName());
-                rs.getString(userObj.getPassword());
-                rs.getString(userObj.getFirstName());
-                rs.getString(userObj.getLastName());
-            }
+            System.out.println(query.toString());
+            UserStatement.setString(1,newID.getNewId());
+            UserStatement.setString(2,userObj.getUserName());
+            UserStatement.setString(3,userObj.getPassword());
+            UserStatement.setString(4,userObj.getFirstName());
+            UserStatement.setString(5,userObj.getLastName());
+            UserStatement.setInt(6,userObj.getIsDeleted());
+            System.out.println(query.toString());
+            int row = UserStatement.executeUpdate();
+            System.out.println(row);
         }
         return null;
     }
@@ -128,20 +133,20 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         query.append("SELECT * FROM ");
         System.out.println("Class obj = "+obj.toString());
         if(obj.getCanonicalName().equalsIgnoreCase("Shared.UserInformation")){
-            query.append("user");
+            query.append("user ");
         }else if(obj.getCanonicalName().equalsIgnoreCase("Models.Game")){
             query.append("games");
         }if(!filter.trim().equals("")){
-            query.append(" WHERE " + filter);
+            query.append("WHERE" + filter);
         }
         System.out.println(query.toString());
         PreparedStatement ps;
         ps = myConn.prepareStatement(query.toString());
         ResultSet rs = ps.executeQuery(query.toString());
-        System.out.println( "RS = "+ rs.toString());
+
         List<BaseModel> items = new ArrayList<>();
         while(rs.next()){
-            if(obj.getCanonicalName().equalsIgnoreCase("UserInformation")){
+            if(obj.getCanonicalName().equalsIgnoreCase("Shared.UserInformation")){
                 UserInformation u = new UserInformation();
                 u.setId(rs.getString(1));
                 u.setUserName(rs.getString(2));
