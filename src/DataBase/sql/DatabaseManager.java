@@ -1,16 +1,18 @@
 package DataBase.sql;
 import Models.BaseModel;
+import Models.Game;
 import Shared.UserInformation;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class DatabaseManager implements DataSource {  // subscribing to sign in for sign in info
 
     private static DatabaseManager instance = null;
     public Connection myConn;
     private Statement myState;
+    private PreparedStatement UserStatement;
+    private PreparedStatement GameStatement;
 
     private DatabaseManager(){
         String url = "jdbc:mysql://localhost:3306/tictactoe?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST";
@@ -45,30 +47,78 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         }
     }
 
-
     @Override
-    public BaseModel insert(BaseModel obj) {
-        StringBuilder qurey;
+    public BaseModel delete(BaseModel obj) throws SQLException {
+        StringBuilder query = new StringBuilder();
+        UserStatement = myConn.prepareStatement("UPDATE user SET " + "isDeleted = ? " +"WHERE id = ?");
+        if(obj instanceof UserInformation){
+            UserInformation userObj = (UserInformation) obj;
+            UserStatement.setInt(1,userObj.getIsDeleted());
+            UserStatement.setString(2, userObj.getId());
+            UserStatement.executeUpdate(query.toString());
+        }
         return null;
     }
 
     @Override
-    public BaseModel delete(BaseModel obj) {
+    public BaseModel update(BaseModel obj) throws SQLException {
+        StringBuilder query = new StringBuilder();
+        UserStatement = myConn.prepareStatement("UPDATE user SET " + "username = ?" + " password = ?" + "FirstName = ?" + "LastName = ?" + "WHERE id = ?");
+        System.out.println( "Query to string update "+query.toString());
+        if(obj instanceof UserInformation){
+            UserInformation userObj = (UserInformation) obj;
+            UserStatement.setString(1, userObj.getUserName());
+            UserStatement.setString(2, userObj.getPassword());
+            UserStatement.setString(3, userObj.getFirstName());
+            UserStatement.setString(4, userObj.getLastName());
+            UserStatement.setString(5, userObj.getId());
+            UserStatement.executeUpdate();
+            //UserStatement.executeUpdate(query.toString());
+            System.out.println( "Query to string update "+query.toString());
+        }
         return null;
     }
 
     @Override
-    public BaseModel update(BaseModel obj) {
+    public BaseModel get(String id) throws SQLException {
+        StringBuilder query = new StringBuilder();
+        //UserStatement = myConn.prepareStatement("SELECT * FROM user" + " username, password, FirstName, LastName" + "WHERE id = ?");
         return null;
     }
 
-    @Override
-    public BaseModel get(String id) {
-        return null;
+
+    public List<UserInformation> userInfo_List(UserInformation obj){
+        List<UserInformation> users = new ArrayList<>();
+        users.add(obj);
+
+        return users;
     }
 
     @Override
     public List<BaseModel> list(Class obj) {
+
+        return null;
+    }
+
+    @Override
+    public BaseModel insert(BaseModel obj) throws SQLException {
+        StringBuilder query = new StringBuilder();
+        query.append("INSERT INTO ");
+        if(obj instanceof UserInformation){
+            query.append("user ");
+            query.append("id = ?, username = ?, password = ?, FirstName = ?, LastName = ?");
+            UserStatement = myConn.prepareStatement(query.toString());
+            ResultSet rs = UserStatement.executeQuery(query.toString());
+            System.out.println("Insert" +query.toString());
+            while (rs.next()){
+                UserInformation userObj = (UserInformation) obj;
+                rs.getString(userObj.getId());
+                rs.getString(userObj.getUserName());
+                rs.getString(userObj.getPassword());
+                rs.getString(userObj.getFirstName());
+                rs.getString(userObj.getLastName());
+            }
+        }
         return null;
     }
 
@@ -76,23 +126,22 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
     public List<BaseModel> query(Class obj, String filter) throws SQLException {
         StringBuilder query = new StringBuilder();
         query.append("SELECT * FROM ");
-
-        if(obj.getCanonicalName().equalsIgnoreCase("user")){
-            query.append("USERS");
-        }
-        else if(obj.getCanonicalName().equalsIgnoreCase("Game")){
-            query.append("GAMES");
-        }
-        if(!filter.trim().equals("")){
+        System.out.println("Class obj = "+obj.toString());
+        if(obj.getCanonicalName().equalsIgnoreCase("Shared.UserInformation")){
+            query.append("user");
+        }else if(obj.getCanonicalName().equalsIgnoreCase("Models.Game")){
+            query.append("games");
+        }if(!filter.trim().equals("")){
             query.append(" WHERE " + filter);
         }
-
-       ResultSet rs = myState.executeQuery(query.toString());
-
+        System.out.println(query.toString());
+        PreparedStatement ps;
+        ps = myConn.prepareStatement(query.toString());
+        ResultSet rs = ps.executeQuery(query.toString());
+        System.out.println( "RS = "+ rs.toString());
         List<BaseModel> items = new ArrayList<>();
-
         while(rs.next()){
-            if(obj.getCanonicalName().equals("User")){
+            if(obj.getCanonicalName().equalsIgnoreCase("UserInformation")){
                 UserInformation u = new UserInformation();
                 u.setId(rs.getString(1));
                 u.setUserName(rs.getString(2));
@@ -101,7 +150,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
                 items.add(u);
             }
         }
-        return null;
+        return items;
     }
 
     /*
