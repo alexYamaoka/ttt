@@ -79,10 +79,7 @@ public class SignInController implements Initializable, SignInResultListener
                 // sign in user function
                 // notify listener
 
-
-
-                Packet packet = new Packet(Packet.SIGN_IN, controller.getClient().getUserInformation(), username + " " + password);
-                controller.getClient().addRequestToServer(packet);
+                signInUser(username, password);
 
             }
         }
@@ -97,28 +94,27 @@ public class SignInController implements Initializable, SignInResultListener
         String password = txtF_Password.getText();
 
         if (checkField(username, password)) {
-            try {
-                String sql = "SELECT * FROM user WHERE username = ? and password = ?";
-                pr = DatabaseManager.getInstance().myConn.prepareStatement(sql);
-                pr.setString(1, username);
-                pr.setString(2, password);
-                rs = pr.executeQuery();
-                if (!rs.next()) {
-                    //System.out.println(rs.getString(1));
-                } else {
-                    MainMenuScene();
-                    //userSocket = new Socket("localhost", 800);
-                    //User newUser = new User(userSocket);
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    // notify user that login failed
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } catch (UnknownHostException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            });
+        }
+        else
+        {
+            // sign in user function
+            signInUser(username, password);
         }
     }
+
+
+    private void signInUser(String username, String password)
+    {
+        Packet packet = new Packet(Packet.SIGN_IN, controller.getClient().getUserInformation(), username + " " + password);
+        controller.getClient().addRequestToServer(packet);
+    }
+
 
     public boolean checkField(String username, String password) {
         boolean value_entered = true;
