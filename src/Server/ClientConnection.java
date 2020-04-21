@@ -1,5 +1,6 @@
 package Server;
 import Shared.Packet;
+import Shared.UserInformation;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -15,6 +16,8 @@ public class ClientConnection implements Runnable {
     private final AtomicBoolean running = new AtomicBoolean(false);
     private ObjectOutputStream output;
     private ObjectInputStream input;
+
+    private UserInformation information;
 
     public ClientConnection(Socket socket, Service service) {
         this.socket = socket;
@@ -35,6 +38,7 @@ public class ClientConnection implements Runnable {
 
             while(running.get()) {
                Packet packet = (Packet) input.readObject();
+               information = packet.getInformation();
                service.handle(packet, output);
             }
         } catch (IOException ex) {
@@ -54,5 +58,9 @@ public class ClientConnection implements Runnable {
 
     public ObjectOutputStream getOutputStream() {
         return output;
+    }
+
+    public UserInformation getInformation() {
+        return information;
     }
 }

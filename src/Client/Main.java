@@ -11,10 +11,8 @@ import java.sql.SQLException;
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("../UI/Client/SignIn.fxml"));
+        ClientController clientController = new ClientController(primaryStage);
         primaryStage.setTitle("EndFrame TicTacToe");
-        primaryStage.setScene(new Scene(root, 600, 450));
-        primaryStage.show();
     }
     public void testDatabase() {
         //ArrayList<User> user = new ArrayList<>();

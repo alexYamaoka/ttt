@@ -1,46 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
-<AnchorPane fx:id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="590.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.Client.SignInController">
-   <children>
-      <TextField fx:id="txtF_UserName" layoutX="219.0" layoutY="234.0" style="-fx-background-color: #204060#204060 #204060#204060; -fx-border-color: #19334d#19334d; -fx-text-fill: #9fbfdf#9fbfdf;" text="UserName" />
-      <PasswordField fx:id="txtF_Password" accessibleRole="PASSWORD_FIELD" layoutX="219.0" layoutY="286.0" prefHeight="29.0" prefWidth="165.0" promptText="Password" style="-fx-prompt-text-fill: #9fbfdf#9fbfdf #9fbfdf#9fbfdf; -fx-background-color: #204060#204060 #204060#204060 #204060#204060 #204060#204060; -fx-border-color: #19334d#19334d #19334d#19334d; -fx-text-fill: #9fbfdf#9fbfdf;">
-         <font>
-            <Font name="System Font" size="13.0" />
-         </font>
-      </PasswordField>
-      <Button fx:id="btn_LogIn" layoutX="237.0" layoutY="346.0" mnemonicParsing="false" onAction="#setLogIn" prefHeight="32.0" prefWidth="130.0" style="-fx-background-color: #132639#132639; -fx-text-fill: #9fbfdf#9fbfdf;" text="Log In" />
-      <Button fx:id="btn_SignUp" layoutX="521.0" layoutY="21.0" mnemonicParsing="false" onAction="#SignUp" style="-fx-text-fill: #9fbfdf#9fbfdf; -fx-background-color: #132639#132639 #132639#132639;" text="Sign Up" />
-      <Label layoutX="413.0" layoutY="29.0" prefHeight="18.0" prefWidth="95.0" style="-fx-text-fill: #9fbfdf#9fbfdf;" text="Not a Member?" />
-      <ImageView fitHeight="34.0" fitWidth="37.0" layoutX="177.0" layoutY="231.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="file:/Users/harrison/Downloads/pngguru.com-2.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="41.0" fitWidth="35.0" layoutX="177.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="file:/Users/harrison/Downloads/pngguru.com.png" />
-         </image>
-      </ImageView>
-      <Label layoutX="263.0" layoutY="202.0" prefHeight="29.0" prefWidth="75.0" style="-fx-text-fill: #9fbfdf#9fbfdf;" text="Sign In">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="220.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="file:/Users/harrison/Downloads/a3e4732b-9163-4381-9772-865c04b211fc_200x200.png" />
-         </image>
-      </ImageView>
-      <Label layoutX="552.0" layoutY="378.0" style="-fx-text-fill: #9fbfdf;" text="V 1.0" />
-      <Label fx:id="lblError" layoutX="221.0" layoutY="318.0" prefHeight="17.0" prefWidth="234.0" />
-   </children>
-</AnchorPane>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+            prefWidth="590.0"
+            style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496) radial-gradient(radius 200%,#204060,#1d9496);"
+            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ClientUI.SignInController"
+            fx:id="parentContainerSignIn">
+    <top>
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+                    prefHeight="50.0" prefWidth="590.0" BorderPane.alignment="CENTER"/>
+    </top>
+    <left>
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+                    prefHeight="300.0" prefWidth="145.0" BorderPane.alignment="CENTER"/>
+    </left>
+    <right>
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+                    prefHeight="300.0" prefWidth="145.0" BorderPane.alignment="CENTER"/>
+    </right>
+    <bottom>
+        <AnchorPane prefHeight="50.0" prefWidth="590.0" BorderPane.alignment="CENTER"/>
+    </bottom>
+    <center>
+        <!-- The Middle Anchor Pane -->
+        <AnchorPane layoutX="145.0" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+                    minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0" style="-fx-background-color: white;"
+                    BorderPane.alignment="CENTER"
+                    fx:id="middleAnchorPane">
+            <StackPane fx:id="signInPane">
+                <children>
+                    <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+                                minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0">
+                        <children>
+                            <Label layoutX="116.0" layoutY="50.0" prefHeight="29.0" prefWidth="68.0" text="Sign in">
+                                <font>
+                                    <Font size="24.0"/>
+                                </font>
+                            </Label>
+                            <TextField fx:id="txtF_Username" layoutX="67.5" layoutY="90.0" prefHeight="29.0"
+                                       prefWidth="165.0" promptText="Username"/>
+                            <Label fx:id="usernameError" layoutX="67.5" layoutY="120.0" prefHeight="17.0"
+                                   prefWidth="234.0" style="-fx-text-fill: white;" text="Enter an username">
+                                <font>
+                                    <Font size="10.0"/>
+                                </font>
+                            </Label>
+                            <PasswordField fx:id="txtF_Password" accessibleRole="PASSWORD_FIELD" layoutX="67.5"
+                                           layoutY="138.0" prefHeight="29.0" prefWidth="165.0" promptText="Password">
+                                <font>
+                                    <Font name="System Font" size="13.0"/>
+                                </font>
+                            </PasswordField>
+                            <Label fx:id="passwordError" layoutX="67.5" layoutY="168.0" prefHeight="17.0"
+                                   prefWidth="234.0" style="-fx-text-fill: white;" text="Enter a password">
+                                <font>
+                                    <Font size="10.0"/>
+                                </font>
+                            </Label>
+                            <Button fx:id="btn_SignUp" layoutX="54.0" layoutY="204.0" mnemonicParsing="false"
+                                    onAction="#signUp" prefHeight="27.0" prefWidth="110.0"
+                                    style="-fx-background-color: white; -fx-text-fill: #204060; -fx-border-color: white;"
+                                    text="Create account"/>
+                            <Button fx:id="btn_LogIn" layoutX="181.0" layoutY="204.0" mnemonicParsing="false"
+                                    onAction="#signIn" prefHeight="32.0" prefWidth="51.5"
+                                    style="-fx-background-color: #204060; -fx-text-fill: white;" text="Log In"/>
+                        </children>
+                    </AnchorPane>
+                </children>
+            </StackPane>
+        </AnchorPane>
+    </center>
+</BorderPane>
