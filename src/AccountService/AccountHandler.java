@@ -6,6 +6,8 @@ import Shared.Packet;
 import Shared.UserInformation;
 import app.Server;
 
+import javax.imageio.IIOException;
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -49,17 +51,19 @@ public class AccountHandler implements Runnable {
                 String SignInStr = data.toString();
                 String[] str = SignInStr.trim().split("\\s+");
                 String firstName = str[0];
-                String LastName = str[1];
+                String lastName = str[1];
                 String userName = str[2];
                 String email = str[3];
                 String password = str[4];
                 try {
                     if(server.login(userName,password)){ //if true the DB found user record
-
+                        outputStream.writeObject(new UserInformation(firstName, lastName, userName, email, password));
                     }
 
                 } catch (SQLException e) {
                     e.printStackTrace();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
                 }
                 break;
             case Packet.SIGN_OUT:
@@ -74,8 +78,11 @@ public class AccountHandler implements Runnable {
                 String newPassword = str2[4];
                 try {
                     server.registerUser(newFirstName,newLastName,newUserName,newEmail,newPassword);
+                    outputStream.writeObject(new UserInformation(newFirstName, newLastName, newUserName, newEmail, newPassword));
                 } catch (SQLException e) {
                     e.printStackTrace();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
                 }
 
                 break;
@@ -88,6 +95,11 @@ public class AccountHandler implements Runnable {
                 String UpdateEmail = str3[3];
                 String UpdatePassword = str3[4];
                 //server.updateUser()
+                try {
+                    outputStream.writeObject(new UserInformation(UpdateFirstName, UpdateLastName, UpdateUserName, UpdateEmail, UpdatePassword));
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
                 break;
 
             case Packet.DELETE_ACCOUNT:
