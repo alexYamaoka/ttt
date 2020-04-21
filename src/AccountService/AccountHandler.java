@@ -4,17 +4,19 @@ import DataBase.sql.DataSource;
 import DataBase.sql.DatabaseManager;
 import Shared.Packet;
 import Shared.UserInformation;
+import app.Server;
 
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class AccountHandler implements Runnable {
     private Packet packet;
     private ObjectOutputStream outputStream;
     private Thread worker;
-
-
+    private DataSource ds = DatabaseManager.getInstance();
+    private Server server = new Server();
 
     private final AtomicBoolean running = new AtomicBoolean(false);
 
@@ -44,16 +46,48 @@ public class AccountHandler implements Runnable {
         switch(request)
         {
             case Packet.SIGN_IN:
-                break;
+                String SignInStr = data.toString();
+                String[] str = SignInStr.trim().split("\\s+");
+                String firstName = str[0];
+                String LastName = str[1];
+                String userName = str[2];
+                String email = str[3];
+                String password = str[4];
+                try {
+                    if(server.login(userName,password)){ //if true the DB found user record
 
+                    }
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                break;
             case Packet.SIGN_OUT:
                 break;
-
             case Packet.REGISTER_CLIENT:
-                System.out.println(data.toString());
-                break;
+                String registerString = data.toString();
+                String[] str2 = registerString.trim().split("\\s+");
+                String newFirstName = str2[0];
+                String newLastName = str2[1];
+                String newUserName = str2[2];
+                String newEmail = str2[3];
+                String newPassword = str2[4];
+                try {
+                    server.registerUser(newFirstName,newLastName,newUserName,newEmail,newPassword);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
 
+                break;
             case Packet.UPDATE_USER:
+                String UpdateString = data.toString();
+                String[] str3 = UpdateString.trim().split("\\s+");
+                String UpdateFirstName = str3[0];
+                String UpdateLastName = str3[1];
+                String UpdateUserName = str3[2];
+                String UpdateEmail = str3[3];
+                String UpdatePassword = str3[4];
+                //server.updateUser()
                 break;
 
             case Packet.DELETE_ACCOUNT:
