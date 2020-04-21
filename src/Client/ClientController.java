@@ -1,5 +1,6 @@
 package Client;
 
+import Shared.UserInformation;
 import UI.Client.*;
 
 import javafx.fxml.FXMLLoader;
@@ -31,6 +32,7 @@ public class ClientController
 
     public ClientController(Stage stage) {
         this.stage = stage;
+        client = new Client("localhost,", 8000, new UserInformation("NA", "NA", "Anonymous", "NA", "NA"));
         initialize();
         setUpClientToUI();
     }
