@@ -67,21 +67,7 @@ public class SignInController implements Initializable, SignInResultListener
         if (keyEvent.getCode().equals(KeyCode.ENTER)) {
             String username = txtF_Username.getText().trim();
             String password = txtF_Password.getText().trim();
-
-            if (!checkField(username, password)) {
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        // notify user that login failed
-                    }
-                });
-            } else {
-                // sign in user function
-                // notify listener
-
-                signInUser(username, password);
-
-            }
+            signInUser(username, password);
         }
     }
 
@@ -92,27 +78,24 @@ public class SignInController implements Initializable, SignInResultListener
     public void signIn(ActionEvent event) throws SQLException {
         String username = txtF_Username.getText();
         String password = txtF_Password.getText();
+        signInUser(username, password);
+    }
 
-        if (checkField(username, password)) {
+
+    private void signInUser(String username, String password)
+    {
+        if (!checkField(username, password)) {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
                     // notify user that login failed
                 }
             });
-        }
-        else
-        {
-            // sign in user function
-            signInUser(username, password);
-        }
-    }
+        } else {
+            Packet packet = new Packet(Packet.SIGN_IN, controller.getClient().getUserInformation(), username + " " + password);
+            controller.getClient().addRequestToServer(packet);
 
-
-    private void signInUser(String username, String password)
-    {
-        Packet packet = new Packet(Packet.SIGN_IN, controller.getClient().getUserInformation(), username + " " + password);
-        controller.getClient().addRequestToServer(packet);
+        }
     }
 
 
