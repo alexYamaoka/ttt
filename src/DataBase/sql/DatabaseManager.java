@@ -107,15 +107,18 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
     }
 
     @Override
-    public BaseModel insert(BaseModel obj) throws SQLException {
+    public boolean insert(BaseModel obj) throws SQLException {
         StringBuilder query = new StringBuilder();
         query.append("INSERT INTO ");
+        int row = 0;
         if(obj instanceof UserInformation){
             UserInformation userObj = (UserInformation) obj;
             UUIDGenerator newID = new UUIDGenerator();
+            System.out.println("Name "+userObj.getUserName());
             query.append("user ");
             query.append("(id, username, password, FirstName, LastName, isDeleted)");
             query.append("values (?,?,?,?,?,?)");
+
             UserStatement = myConn.prepareStatement(query.toString());
             System.out.println(query.toString());
             UserStatement.setString(1,newID.getNewId());
@@ -124,11 +127,15 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
             UserStatement.setString(4,userObj.getFirstName());
             UserStatement.setString(5,userObj.getLastName());
             UserStatement.setInt(6,userObj.getIsDeleted());
+            System.out.println(UserStatement.toString());
             System.out.println(query.toString());
-            int row = UserStatement.executeUpdate();
-            System.out.println(row);
+            row = UserStatement.executeUpdate();
         }
-        return null;
+
+        if(row == 0){
+            return false;
+        }else
+        return true;
     }
 
     @Override

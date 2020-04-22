@@ -25,13 +25,16 @@ public class Main extends Application {
         stage.setTitle("EndFrame TicTacToe");
         clientController.run();
 
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../UI/ServerUI/ServerDisplay.fxml"));
+/*
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../UI/Client/SignIn.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
         stage.show();
+
+
+ */
 
     }
 }

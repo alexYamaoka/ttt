@@ -75,15 +75,19 @@ public class AccountHandler implements Runnable {
                 break;
             case Packet.REGISTER_CLIENT:
                 String registerString = data.toString();
+                System.out.println("data = " + data.toString());
                 String[] str2 = registerString.trim().split("\\s+");
                 String newFirstName = str2[0];
                 String newLastName = str2[1];
                 String newUserName = str2[2];
-                String newEmail = str2[3];
-                String newPassword = str2[4];
+                String newPassword = str2[3];
+                Packet regPacket;
                 try {
-                    server.registerUser(newFirstName,newLastName,newUserName,newEmail,newPassword);
-                    outputStream.writeObject(new UserInformation(newFirstName, newLastName, newUserName, newEmail, newPassword));
+                    if(server.registerUser(newFirstName,newLastName,newUserName,newPassword)) {
+                        regPacket = new Packet(Packet.REGISTER_CLIENT, userInformation, data);
+                        outputStream.writeObject(regPacket);
+                    }
+
                 } catch (SQLException e) {
                     e.printStackTrace();
                 } catch (IOException ex) {

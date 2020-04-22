@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface DataSource {
 
-    BaseModel insert (BaseModel obj) throws SQLException;
+    boolean insert (BaseModel obj) throws SQLException;
     BaseModel delete (BaseModel obj) throws SQLException;
     BaseModel update (BaseModel obj) throws SQLException;
     ArrayList<UserInformation> get (String id) throws SQLException;

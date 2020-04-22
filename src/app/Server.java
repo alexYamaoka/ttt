@@ -38,9 +38,12 @@ public class Server {
         return true;
     }
 
-    public boolean registerUser(String username, String firstname, String lastname, String email, String password) throws SQLException {
-        BaseModel user = new UserInformation(username, firstname, lastname, email, password);
+    public boolean registerUser(String username, String firstname, String lastname,String password) throws SQLException {
+
+        BaseModel user = new UserInformation(username, firstname, lastname,null, password);
         ds.insert(user);
-        return true;
+
+            return true;
+
     }
 }

@@ -58,10 +58,6 @@ public class SignInController implements Initializable, SignInResultListener
 
     private ClientController controller;
 
-
-
-
-
     @FXML
     public void onEnterKeyPressed(KeyEvent keyEvent) {
         if (keyEvent.getCode().equals(KeyCode.ENTER)) {
@@ -70,8 +66,6 @@ public class SignInController implements Initializable, SignInResultListener
             signInUser(username, password);
         }
     }
-
-
 
 
     @FXML
