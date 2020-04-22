@@ -20,6 +20,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class AccountService implements Service, Runnable {
     private Thread worker;
     private HashSet<ClientConnection> clientConnections = new HashSet<>();
+    private HashSet<Service> serviceListeners = new HashSet<>();
     private final AtomicBoolean running = new AtomicBoolean(false);
     private DataSource ds = DatabaseManager.getInstance();
 
@@ -58,5 +59,26 @@ public class AccountService implements Service, Runnable {
     public void handle(Packet packet, ObjectOutputStream outputStream) {
         AccountHandler handler = new AccountHandler(packet, outputStream);
         handler.start();
+    }
+
+    public void addServiceListener(Service service) {
+        serviceListeners.add(service);
+    }
+
+    public void broadcast(Packet packet) {
+        for(ClientConnection connection : clientConnections) {
+            try {
+                connection.getOutputStream().writeObject(packet);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        for (Service service : serviceListeners) {
+            service.update(packet);
+        }
+    }
+
+    public void update(Packet packet) {
+
     }
 }
