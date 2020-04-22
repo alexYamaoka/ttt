@@ -175,7 +175,7 @@ public class SignInController implements Initializable, SignInResultListener
                     stage.show();
                 }
                 else{
-                    loginError.setText("The username or password provided is \nincorrect.");
+                    loginError.setText("The username or password provided is incorrect.");
                 }
             }
         });
