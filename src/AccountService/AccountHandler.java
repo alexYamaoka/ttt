@@ -8,13 +8,10 @@ import Shared.UserInformation;
 import app.Server;
 //import com.mysql.cj.protocol.Resultset;
 
-import javax.imageio.IIOException;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.sql.Array;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -24,6 +21,7 @@ public class AccountHandler implements Runnable {
     private Thread worker;
     private DataSource ds = DatabaseManager.getInstance();
     private Server server = new Server();
+
 
 
     private final AtomicBoolean running = new AtomicBoolean(false);
