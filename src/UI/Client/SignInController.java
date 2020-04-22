@@ -139,16 +139,6 @@ public class SignInController implements Initializable, SignInResultListener
         timeline.play();
     }
 
-    public void MainMenuScene() throws IOException {
-        Stage stage = null;
-        Parent root = null;
-        stage = (Stage) btn_LogIn.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Sign In initialized");
@@ -178,7 +168,13 @@ public class SignInController implements Initializable, SignInResultListener
             @Override
             public void run()
             {
-                System.out.println("In sign In Controller!");
+                if(!message.equalsIgnoreCase("FAIL")) {
+                    Stage stage = (Stage) btn_LogIn.getScene().getWindow();
+                    Parent root = controller.getMainMenuPain();
+                    Scene scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.show();
+                }
             }
         });
     }
