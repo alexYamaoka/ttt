@@ -1,8 +1,6 @@
 package DataBase.sql;
-import DataBase.TypeGenerator;
 import DataBase.UUIDGenerator;
 import Models.BaseModel;
-import Models.Game;
 import Shared.UserInformation;
 
 import java.sql.*;
@@ -17,7 +15,20 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
     private PreparedStatement GameStatement;
 
     private DatabaseManager(){
-        String url = "jdbc:mysql://localhost:3306/tictactoe";
+
+
+        String url = "jdbc:mysql://localhost:3306/tictactoe?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST";
+        String username = "test";
+        String password = "test123password";
+        try{
+            myConn = DriverManager.getConnection(url,username,password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+/*
+    String url = "jdbc:mysql://localhost:3306/tictactoe";
         Properties info = new Properties();
         info.put("user", "test");
         info.put("password", "test");
@@ -28,6 +39,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         }
     }
 
+ */
     public static DatabaseManager getInstance(){
         if(instance == null){
             synchronized (DatabaseManager.class){
@@ -84,22 +96,28 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
     }
 
     @Override
-    public BaseModel get(String id) throws SQLException {
+    public ArrayList<UserInformation> get(String password) throws SQLException {
         StringBuilder query = new StringBuilder();
-        //UserStatement = myConn.prepareStatement("SELECT * FROM user" + " username, password, FirstName, LastName" + "WHERE id = ?");
-        return null;
-    }
+        query.append("SELECT * FROM user WHERE password = ").append(password);
+        System.out.println("Print out "+query.toString());
 
-
-    public List<UserInformation> userInfo_List(UserInformation obj){
-        List<UserInformation> users = new ArrayList<>();
-        users.add(obj);
-        return users;
+        UserStatement = myConn.prepareStatement(query.toString());
+        ResultSet rs;
+        rs = UserStatement.executeQuery(query.toString());
+        ArrayList<UserInformation> items = new ArrayList<>();
+        while(rs.next()) {
+            UserInformation u = new UserInformation();
+            u.setId(rs.getString(1));
+            u.setUserName(rs.getString(2));
+            u.setFirstName(rs.getString(3));
+            u.setLastName(rs.getString(4));
+            items.add(u);
+        }
+        return items;
     }
 
     @Override
     public List<BaseModel> list(Class obj) {
-
         return null;
     }
 
@@ -138,7 +156,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         }else if(obj.getCanonicalName().equalsIgnoreCase("Models.Game")){
             query.append("games");
         }if(!filter.trim().equals("")){
-            query.append("WHERE" + filter);
+            query.append("WHERE " + filter);
         }
         System.out.println(query.toString());
         PreparedStatement ps;
@@ -149,7 +167,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         while(rs.next()){
             if(obj.getCanonicalName().equalsIgnoreCase("Shared.UserInformation")){
                 UserInformation u = new UserInformation();
-                u.setId(rs.getString(1));
+                System.out.println(rs.getString(1));
                 u.setUserName(rs.getString(2));
                 u.setFirstName(rs.getString(3));
                 u.setLastName(rs.getString(4));
@@ -158,93 +176,5 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         }
         return items;
     }
-
-    /*
-    public boolean addUser(User user) throws SQLException {
-        String DataBase.sql = "INSERT INTO user ("
-                + "id,"
-                +"username,"
-                +"password ,"
-                +"FirstName,"
-                +"LastName ) VALUES ("
-                +"null, ?, ?, ?, ?)"; //null is userID its autoincrement
-        PreparedStatement ps =  myConn.prepareStatement(DataBase.sql,Statement.RETURN_GENERATED_KEYS);
-        ps.setString(1,user.getUserName());
-        ps.setString(2, user.getPassword());
-        ps.setString(3,user.getFirstName());
-        ps.setString(4,user.getLastName());
-        ps.executeUpdate();
-        System.out.println("Added user " + user.getUserName());
-        ResultSet keys = ps.getGeneratedKeys();
-        if(keys.next()){
-            //user.setId(keys.getInt(1));
-        }
-        ps.close();
-        return true;
-    }
-
-
-    public boolean getUser(String password,String UserName) throws SQLException { //for sign in
-        ResultSet rs;
-        PreparedStatement ps;
-        ps = myConn.prepareStatement("SELECT FROM user WHERE password = ? , id,username,password,FirstName,LastName");
-        ps.setString(1,password);
-        //ps.setString(1,UserName);
-        /*rs = ps.executeQuery();
-        while(rs.next()){
-            int id = rs.getInt(1);
-            String username = rs.getString(2);
-            String Password = rs.getString(3);
-            String FirstName = rs.getString(4);
-            String LastName = rs.getString(5);
-            System.out.println(username + " " + Password + " " + FirstName + " " + LastName);
-        }
-        
-
-
-        System.out.println("User retrieved");
-
-        return true;
-    }
-
-    public boolean deleteUser(String username) throws SQLException {
-        PreparedStatement ps = myConn.prepareStatement("Delete FROM user Where username = ?");
-        ps.setString(1,username);
-        ps.executeUpdate();
-        System.out.println("Removed User : " + username);
-        return true;
-    }
-
-    public boolean deleteUser(int userID) throws SQLException {
-        PreparedStatement ps = myConn.prepareStatement("Delete FROM user Where id = ?");
-        ps.setInt(1,userID);
-        ps.executeUpdate();
-        System.out.println("Removed User with id : " + userID);
-        return true;
-    }
-
-    public boolean updateUser(User user){
-
-        //String DataBase.sql = " UPDATE user SET username = ?, password = ? WHERE id = ?"
-
-        return true;
-    }
-
-
-
-    public List<User> getAllUsers(){
-
-        return User;
-    }
-
-
-    public List<User> getUsers(String filter){
-
-        List<User> users = new ArrayList<>();
-    }
-
-
-
-    */
 
 }

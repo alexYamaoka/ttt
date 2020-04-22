@@ -2,6 +2,7 @@ package AccountService;
 
 import DataBase.sql.DataSource;
 import DataBase.sql.DatabaseManager;
+import Models.BaseModel;
 import Shared.Packet;
 import Shared.UserInformation;
 import app.Server;
@@ -11,7 +12,10 @@ import javax.imageio.IIOException;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.sql.Array;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class AccountHandler implements Runnable {
@@ -20,6 +24,7 @@ public class AccountHandler implements Runnable {
     private Thread worker;
     private DataSource ds = DatabaseManager.getInstance();
     private Server server = new Server();
+
 
     private final AtomicBoolean running = new AtomicBoolean(false);
 
@@ -47,6 +52,7 @@ public class AccountHandler implements Runnable {
         Serializable data = packet.getData();
 
 
+
         switch(request)
         {
             case Packet.SIGN_IN:
@@ -55,17 +61,17 @@ public class AccountHandler implements Runnable {
                 String userName = str[0];
                 String password = str[1];
 
-                // packet to return
                 Packet packet;
-
                 try {
                     if(server.login(userName,password)){ //if true the DB found user record
                         System.out.println("Successfully Logged In!");
-                        // new Packet (PACKET.SIGN_IN, userinformation, retrievedInformation)
-                        // output
+                        List<BaseModel> items;
+                        items = ds.query(UserInformation.class," username = '" + userName + "' AND password = '" + password + "'");
+                        packet = new Packet(Packet.SIGN_IN,userInformation, (UserInformation) items.get(0));
+                        outputStream.writeObject(packet);
                     }
 
-                } catch (SQLException e) {
+                } catch (SQLException | IOException e) {
                     e.printStackTrace();
                 }
                 break;

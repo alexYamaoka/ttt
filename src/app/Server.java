@@ -21,7 +21,7 @@ public class Server {
     }
 
     public boolean login(String username, String password) throws SQLException {
-        ds.query(Shared.UserInformation.class, " username = ' " + username + " ' AND password = ' " + password + " ' ");
+        ds.query(Shared.UserInformation.class, " username = '" + username + "' AND password = '" + password + "'");
         return true;
     }
 

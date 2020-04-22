@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 public class UserInformation extends BaseModel implements Serializable {
+
     private String firstName, lastName;
     private String userName;
     private String email;
