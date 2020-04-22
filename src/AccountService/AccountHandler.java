@@ -51,8 +51,6 @@ public class AccountHandler implements Runnable {
         UserInformation userInformation = packet.getInformation();
         Serializable data = packet.getData();
 
-
-
         switch(request)
         {
             case Packet.SIGN_IN:

@@ -6,6 +6,9 @@ import Models.BaseModel;
 import Shared.UserInformation;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Server {
 
@@ -21,8 +24,13 @@ public class Server {
     }
 
     public boolean login(String username, String password) throws SQLException {
-        ds.query(Shared.UserInformation.class, " username = '" + username + "' AND password = '" + password + "'");
-        return true;
+        List flag = new ArrayList<>();
+        flag = ds.query(Shared.UserInformation.class, " username = '" + username + "' AND password = '" + password + "'");
+
+        if(flag.isEmpty()){
+            return false;
+        }else return true;
+
     }
 
     public boolean updateUser(UserInformation user) throws SQLException {
