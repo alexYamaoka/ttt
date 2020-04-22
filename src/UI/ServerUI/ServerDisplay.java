@@ -1,18 +1,28 @@
 package UI.ServerUI;
 
-import app.Server;
+import ObserverPatterns.ServiceListener;
+import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
 import java.awt.event.ActionEvent;
 
-public class ServerDisplay {
+public class ServerDisplay  implements ServiceListener
+{
 
 
-    public TextField txt_output;
+//    @FXML
+//    private TextField txt_output;
 
     public void display(ActionEvent event){
 
 
         //txt_output.setText();
+    }
+
+
+    @Override
+    public void updateServer(String info)
+    {
+
     }
 }
