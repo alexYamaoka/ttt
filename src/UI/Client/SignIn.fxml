@@ -37,7 +37,7 @@
                                 </font>
                             </Label>
                             <TextField fx:id="txtF_Username" layoutX="67.5" layoutY="90.0" prefHeight="29.0" prefWidth="165.0" promptText="Username" />
-                            <Label fx:id="usernameError" layoutX="67.5" layoutY="120.0" prefHeight="17.0" prefWidth="234.0" style="-fx-text-fill: white;" text="Enter an username">
+                            <Label fx:id="usernameError" layoutX="67.5" layoutY="120.0" prefHeight="17.0" prefWidth="234.0" style="-fx-text-fill: red;">
                                 <font>
                                     <Font size="10.0" />
                                 </font>
@@ -47,13 +47,18 @@
                                     <Font name="System Font" size="13.0" />
                                 </font>
                             </PasswordField>
-                            <Label fx:id="passwordError" layoutX="67.5" layoutY="168.0" prefHeight="17.0" prefWidth="234.0" style="-fx-text-fill: white;" text="Enter a password">
+                            <Label fx:id="passwordError" layoutX="67.5" layoutY="168.0" prefHeight="17.0" prefWidth="234.0" style="-fx-text-fill: red;">
                                 <font>
                                     <Font size="10.0" />
                                 </font>
                             </Label>
                             <Button fx:id="btn_SignUp" layoutX="54.0" layoutY="204.0" mnemonicParsing="false" onAction="#signUp" prefHeight="27.0" prefWidth="110.0" style="-fx-background-color: white; -fx-text-fill: #204060; -fx-border-color: white;" text="Create account" />
                             <Button fx:id="btn_LogIn" layoutX="181.0" layoutY="204.0" mnemonicParsing="false" onAction="#signIn" prefHeight="32.0" prefWidth="51.5" style="-fx-background-color: #204060; -fx-text-fill: white;" text="Log In" />
+                            <Label fx:id="logInError" layoutX="67.5" layoutY="185.0" prefHeight="17.0" prefWidth="234.0" style="-fx-text-fill: red;">
+                                <font>
+                                    <Font size="10.0" />
+                                </font>
+                            </Label>
                         </children>
                     </AnchorPane>
                 </children>

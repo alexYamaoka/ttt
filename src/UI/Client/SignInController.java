@@ -48,7 +48,7 @@ public class SignInController implements Initializable, SignInResultListener
     @FXML
     private Button btn_LogIn, btn_SignUp;
     @FXML
-    private Label usernameError, passwordError;
+    private Label usernameError, passwordError, loginError;
     @FXML
     private BorderPane parentContainerSignIn;
     @FXML
@@ -97,13 +97,19 @@ public class SignInController implements Initializable, SignInResultListener
         boolean value_entered = true;
         if (username.isBlank()) {
             txtF_Username.setStyle("-fx-border-color: red;");
-            usernameError.setStyle("-fx-text-fill: red;");
+            usernameError.setText("Enter an username");
             value_entered = false;
+        }
+        else{
+            usernameError.setText("");
         }
         if (password.isBlank()) {
             txtF_Password.setStyle("-fx-border-color: red;");
-            passwordError.setStyle("-fx-text-fill: red;");
+            passwordError.setText("Enter a password");
             value_entered = false;
+        }
+        else{
+            passwordError.setText("");
         }
 
         return value_entered;
@@ -160,14 +166,16 @@ public class SignInController implements Initializable, SignInResultListener
         Platform.runLater(new Runnable()
         {
             @Override
-            public void run()
-            {
-                if(!message.equalsIgnoreCase("FAIL")) {
+            public void run() {
+                if (!message.equalsIgnoreCase("FAIL")) {
                     Stage stage = (Stage) btn_LogIn.getScene().getWindow();
                     Parent root = controller.getMainMenuPain();
                     Scene scene = new Scene(root);
                     stage.setScene(scene);
                     stage.show();
+                }
+                else{
+                    loginError.setText("The username or password provided is \nincorrect.");
                 }
             }
         });
