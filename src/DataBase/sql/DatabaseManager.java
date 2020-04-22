@@ -15,8 +15,6 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
     private PreparedStatement GameStatement;
 
     private DatabaseManager(){
-
-
         String url = "jdbc:mysql://localhost:3306/tictactoe?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST";
         String username = "test";
         String password = "test123password";
@@ -27,19 +25,6 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         }
     }
 
-/*
-    String url = "jdbc:mysql://localhost:3306/tictactoe";
-        Properties info = new Properties();
-        info.put("user", "test");
-        info.put("password", "test");
-        try{
-            myConn = DriverManager.getConnection(url, info);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
- */
     public static DatabaseManager getInstance(){
         if(instance == null){
             synchronized (DatabaseManager.class){
