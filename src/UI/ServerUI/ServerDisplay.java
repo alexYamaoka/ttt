@@ -1,6 +1,7 @@
 package UI.ServerUI;
 
 import ObserverPatterns.ServiceListener;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
@@ -21,8 +22,15 @@ public class ServerDisplay  implements ServiceListener
 
 
     @Override
-    public void updateServer(String info)
+    public void onDataChanged(String info)
     {
-
+        Platform.runLater(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                // update label
+            }
+        });
     }
 }
