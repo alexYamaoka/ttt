@@ -178,7 +178,7 @@ public class SignInController implements Initializable, SignInResultListener
             @Override
             public void run()
             {
-                System.out.println(message);
+                System.out.println("In sign In Controller!");
             }
         });
     }

@@ -4,11 +4,13 @@ import ObserverPatterns.SignInResultListener;
 import ObserverPatterns.SignUpResultListener;
 import Shared.Packet;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 public class ReadMessageBus implements Runnable
 {
     private ClientController clientController;
-    private Thread workerThread;
-    private boolean isRunning = false;
+    private Thread thread;
+    private AtomicBoolean running = new AtomicBoolean(false);
 
     private SignInResultListener signInResultListener;
     private SignUpResultListener signUpResultListener;
@@ -24,8 +26,12 @@ public class ReadMessageBus implements Runnable
 
     public void start()
     {
-        workerThread = new Thread(this);
-        workerThread.start();
+        thread = new Thread(this);
+        thread.start();
+    }
+
+    public void stop() {
+        running.set(false);
     }
 
 
@@ -33,7 +39,8 @@ public class ReadMessageBus implements Runnable
     @Override
     public void run()
     {
-        while (isRunning)
+        running.set(true);
+        while (running.get())
         {
             Packet response = clientController.getClient().getNextResponseFromServer();
 
@@ -46,6 +53,7 @@ public class ReadMessageBus implements Runnable
                         break;
 
                     case Packet.SIGN_IN:
+                        System.out.println("SIGN-IN Received");
                         signInResultListener.updateSignInResult(response.getData().toString());
                         break;
 
