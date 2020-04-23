@@ -3,6 +3,7 @@ package UI.Client;
 import Client.ClientController;
 import ObserverPatterns.SignUpResultListener;
 import Shared.Packet;
+import Shared.UserInformation;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -244,11 +245,31 @@ public class SignUpController implements Initializable, SignUpResultListener
             public void run()
             {
                 if(!message.contains("FAIL")) {
-                    Stage stage = (Stage) btn_SignIn.getScene().getWindow();
-                    Parent root = controller.getMainMenuPain();
-                    Scene scene = new Scene(root);
-                    stage.setScene(scene);
-                    stage.show();
+                    // The middle anchorpane of the borderpane
+                    AnchorPane middleAnchorPane = signInController.getMiddleAnchorPane();
+
+                    // The stackpane of the anchorpane
+                    Pane root = signInController.getSignInPane();
+                    Scene scene = btn_SignIn.getScene();
+
+                    Pane root1 = parentContainerSignUp;
+
+                    root.translateXProperty().set(scene.getWidth() * -0.5);
+                    root1.translateXProperty().set(0);
+
+                    middleAnchorPane.getChildren().add(root);
+
+                    Timeline timeline = new Timeline();
+                    KeyValue keyValue = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
+                    KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.3), keyValue);
+                    KeyValue keyValue1 = new KeyValue(root1.translateXProperty(), 300, Interpolator.EASE_IN);
+                    KeyFrame keyFrame1 = new KeyFrame(Duration.seconds(0.3), keyValue1);
+                    timeline.getKeyFrames().add(keyFrame);
+                    timeline.getKeyFrames().add(keyFrame1);
+                    timeline.setOnFinished(event1 -> {
+                        middleAnchorPane.getChildren().remove(parentContainerSignUp);
+                    });
+                    timeline.play();
                 }
             }
         });
