@@ -60,6 +60,7 @@ public class ClientController
             optionsPane = loader.load();
             options = loader.getController();
             options.setClientController(this);
+            Scene optionsScene = new Scene(optionsPane);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
