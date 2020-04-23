@@ -157,10 +157,18 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         while(rs.next()){
             if(obj.getCanonicalName().equalsIgnoreCase("Shared.UserInformation")){
                 UserInformation u = new UserInformation();
-                System.out.println(rs.getString(1));
+//                System.out.println(rs.getString(1));
+//                System.out.println(rs.getString(2));
+//                System.out.println(rs.getString(3));
+//                System.out.println(rs.getString(4));
+//                System.out.println(rs.getString(5));
+//                System.out.println(rs.getString(6));
+                u.setId(rs.getString(1));
                 u.setUserName(rs.getString(2));
-                u.setFirstName(rs.getString(3));
-                u.setLastName(rs.getString(4));
+                u.setPassword(rs.getString(3));
+                u.setFirstName(rs.getString(4));
+                u.setLastName(rs.getString(5));
+                u.setIsDeleted(rs.getInt(6));
                 items.add(u);
             }
         }

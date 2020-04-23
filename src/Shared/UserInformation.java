@@ -9,7 +9,7 @@ public class UserInformation extends BaseModel implements Serializable {
 
     private String firstName, lastName;
     private String userName;
-    private String email;
+    private String email = "email";
     private String password;
     private int isDeleted;
 
@@ -65,5 +65,12 @@ public class UserInformation extends BaseModel implements Serializable {
     @Override
     public void setIsDeleted(int isDeleted) {
         this.isDeleted = isDeleted;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(getId() + " " + firstName + " " + lastName + " " + userName + " " + email + " " + password);
+        return builder.toString();
     }
 }
