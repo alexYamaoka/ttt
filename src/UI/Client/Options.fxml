@@ -43,14 +43,14 @@
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="txt_f_UserDetails_FirstName" layoutX="115.0" layoutY="274.0" promptText="FirstName" style="-fx-background-color: #204060#204060; -fx-prompt-text-fill: #9fbfdf#9fbfdf;" />
-                        <TextField fx:id="txt_f_UserDetails_FirstNametxt_f_UserDetails_LastName" layoutX="115.0" layoutY="316.0" promptText="LastName" style="-fx-background-color: #204060#204060; -fx-prompt-text-fill: #9fbfdf#9fbfdf;" />
+                        <TextField fx:id="firstName" layoutX="115.0" layoutY="274.0" promptText="FirstName" style="-fx-background-color: #204060#204060; -fx-prompt-text-fill: #9fbfdf#9fbfdf;" />
+                        <TextField fx:id="lastName" layoutX="115.0" layoutY="316.0" promptText="LastName" style="-fx-background-color: #204060#204060; -fx-prompt-text-fill: #9fbfdf#9fbfdf;" />
                         <ImageView fitHeight="102.0" fitWidth="94.0" layoutX="142.0" layoutY="113.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../Resources/Icons/pngguru.com-6.png" />
                            </image>
                         </ImageView>
-                        <TextField layoutX="115.0" layoutY="234.0" promptText="UserName" style="-fx-prompt-text-fill: #9fbfdf#9fbfdf; -fx-background-color: #204060#204060;" />
+                        <TextField fx:id="userName" layoutX="115.0" layoutY="234.0" promptText="UserName" style="-fx-prompt-text-fill: #9fbfdf#9fbfdf; -fx-background-color: #204060#204060;" />
                      </children>
                   </AnchorPane>
                </children>

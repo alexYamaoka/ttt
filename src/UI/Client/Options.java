@@ -1,24 +1,30 @@
 package UI.Client;
 
 import Client.ClientController;
+import Shared.UserInformation;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
 import javafx.event.ActionEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import javax.swing.*;
 import javax.xml.crypto.dsig.keyinfo.KeyValue;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class Options {
+public class Options implements Initializable {
     @FXML
     private AnchorPane Ach_pane3;
     @FXML
@@ -45,6 +51,12 @@ public class Options {
     private Button btn2;
     @FXML
     private Button btn_MainMenu;
+    @FXML
+    private TextField firstName;
+    @FXML
+    private TextField lastName;
+    @FXML
+    private TextField userName;
 
     private ClientController controller;
 
@@ -78,6 +90,15 @@ public class Options {
         this.controller = controller;
     }
 
+    public void updateInfo() {
+        UserInformation information = controller.getClient().getUserInformation();
+        firstName.setPromptText(information.getFirstName());
+        lastName.setPromptText(information.getLastName());
+        userName.setPromptText(information.getUserName());
+    }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
 
+    }
 }

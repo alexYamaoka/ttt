@@ -184,6 +184,7 @@ public class SignInController implements Initializable, SignInResultListener
                     Scene scene = new Scene(root);
                     stage.setScene(scene);
                     stage.show();
+                    controller.getOptions().updateInfo();
                 }
                 else{
                     loginError.setText("The username or password provided is incorrect.");
