@@ -1,4 +1,5 @@
-package AccountService;
+package UI.Client;
+import AccountService.AccountService;
 import Shared.Packet;
 import Shared.UserInformation;
 
