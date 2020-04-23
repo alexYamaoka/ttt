@@ -65,7 +65,7 @@ public class AccountHandler implements Runnable {
                         items = ds.query(UserInformation.class," username = '" + userName + "' AND password = '" + password + "'");
                         packet = new Packet(Packet.SIGN_IN,userInformation, (UserInformation) items.get(0));
                         outputStream.writeObject(packet);
-                    }
+                    }//else handle log in error
 
                 } catch (SQLException | IOException e) {
                     e.printStackTrace();
@@ -86,7 +86,7 @@ public class AccountHandler implements Runnable {
                     if(server.registerUser(newFirstName,newLastName,newUserName,newPassword)) {
                         regPacket = new Packet(Packet.REGISTER_CLIENT, userInformation, data);
                         outputStream.writeObject(regPacket);
-                    }
+                    }//else handle register error
 
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -103,8 +103,8 @@ public class AccountHandler implements Runnable {
                 String UpdateUserName = str3[2];
                 String UpdateEmail = str3[3];
                 String UpdatePassword = str3[4];
-                //server.updateUser()
                 try {
+                    //if(server.updateUser()))
                     outputStream.writeObject(new UserInformation(UpdateFirstName, UpdateLastName, UpdateUserName, UpdateEmail, UpdatePassword));
                 } catch (IOException ex) {
                     ex.printStackTrace();
@@ -112,6 +112,23 @@ public class AccountHandler implements Runnable {
                 break;
 
             case Packet.DELETE_ACCOUNT:
+                String DeleteUserString = data.toString();
+                String[] str4 = DeleteUserString.trim().split("\\s+");
+                String DeleteFirstName = str4[0];
+                String DeleteLastName = str4[1];
+                String DeleteUserName = str4[2];
+                String DeleteEmail = str4[3];
+                String DeletePassword = str4[4];
+                Packet deletePacket;
+                try {
+                    if(server.DeleteUser(DeleteUserName,DeleteFirstName,DeleteLastName,DeletePassword)){
+                        deletePacket = new Packet(Packet.DELETE_ACCOUNT, userInformation, data );
+                        outputStream.writeObject(deletePacket);
+                    }
+                } catch (SQLException | IOException e) {
+                    e.printStackTrace();
+                }
+
                 break;
         }
 

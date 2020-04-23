@@ -18,13 +18,13 @@ public class Server {
         //ds.delete();
     }
 
-    public boolean DeleteUser(String username, String password) throws SQLException {
-        //ds.delete(user);
+    public boolean DeleteUser(String username, String firstname, String lastname,String password) throws SQLException {
+        ds.delete(username,firstname,lastname,password);
         return true;
     }
 
     public boolean login(String username, String password) throws SQLException {
-        List flag = new ArrayList<>();
+        List flag;
         flag = ds.query(Shared.UserInformation.class, " username = '" + username + "' AND password = '" + password + "'");
 
         if(flag.isEmpty()){
@@ -39,7 +39,6 @@ public class Server {
     }
 
     public boolean registerUser(String username, String firstname, String lastname,String password) throws SQLException {
-
         BaseModel user = new UserInformation(username, firstname, lastname,null, password);
         ds.insert(user);
 

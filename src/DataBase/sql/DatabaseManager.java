@@ -48,34 +48,30 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
     }
 
     @Override
-    public BaseModel delete(BaseModel obj) throws SQLException {
-        StringBuilder query = new StringBuilder();
-        UserStatement = myConn.prepareStatement("UPDATE user SET " + "isDeleted = ? " +"WHERE id = ?");
-        if(obj instanceof UserInformation){
-            UserInformation userObj = (UserInformation) obj;
-            UserStatement.setInt(1,userObj.getIsDeleted()); // set idDeleted to 1 somewhere else before passing message request
-            UserStatement.setString(2, userObj.getId());
+    public boolean delete(String username, String firstname, String lastname,String password) throws SQLException {
+            StringBuilder query = new StringBuilder();
+            query.append("UPDATE user SET");
+            query.append("isDeleted = 1");
+            query.append("WHERE ");
+            query.append("username = '" + username + "' AND password = '" + password + "'");
+            UserStatement = myConn.prepareStatement(query.toString());
             UserStatement.executeUpdate(query.toString());
-        }
-        return null;
+            System.out.println(query.toString());
+
+        return true;
     }
 
     @Override
     public BaseModel update(BaseModel obj) throws SQLException {
-
         StringBuilder query = new StringBuilder();
-        query.append("UPDATE ");
-        if(obj instanceof UserInformation){
-            UserInformation userObj = (UserInformation) obj;
+        if (obj instanceof UserInformation) {
+            UserInformation user = (UserInformation) obj;
+            query.append("UPDATE ");
             query.append("user SET username = ? WHERE id = ? ");
             UserStatement = myConn.prepareStatement(query.toString());
             System.out.println(query.toString());
-            UserStatement.setString(1,userObj.getUserName());
-            UserStatement.setString(2,userObj.getId());
-            System.out.println(query.toString());
-            int row = UserStatement.executeUpdate();
-            System.out.println(row);
-
+            UserStatement.setString(1, user.getUserName());
+            UserStatement.executeQuery(query.toString());
         }
         return null;
     }
@@ -130,6 +126,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
             System.out.println(UserStatement.toString());
             System.out.println(query.toString());
             row = UserStatement.executeUpdate();
+            System.out.println("Row = " + row);
         }
 
         if(row == 0){
@@ -154,6 +151,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         PreparedStatement ps;
         ps = myConn.prepareStatement(query.toString());
         ResultSet rs = ps.executeQuery(query.toString());
+        System.out.println(" RS = " + rs.toString());
 
         List<BaseModel> items = new ArrayList<>();
         while(rs.next()){
