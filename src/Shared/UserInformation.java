@@ -9,7 +9,7 @@ public class UserInformation extends BaseModel implements Serializable {
 
     private String firstName, lastName;
     private String userName;
-    private String email;
+    private String email = "email";
     private String password;
     private int isDeleted;
 
