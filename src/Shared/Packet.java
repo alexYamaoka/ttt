@@ -24,6 +24,10 @@ public class Packet implements Serializable {
         this.data = data;
     }
 
+    public Packet() {
+
+    }
+
     public String getRequest() {
         return request;
     }

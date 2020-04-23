@@ -63,7 +63,7 @@ public class AccountHandler implements Runnable {
                         System.out.println("Successfully Logged In!");
                         List<BaseModel> items;
                         items = ds.query(UserInformation.class," username = '" + userName + "' AND password = '" + password + "'");
-                        packet = new Packet(Packet.SIGN_IN,userInformation, (UserInformation) items.get(0));
+                        packet = new Packet(Packet.SIGN_IN,userInformation, items.get(0));
                         outputStream.writeObject(packet);
                     } else {
                         packet = new Packet(Packet.SIGN_IN, userInformation, "FAIL");
@@ -84,18 +84,16 @@ public class AccountHandler implements Runnable {
                 String newLastName = str2[1];
                 String newUserName = str2[2];
                 String newPassword = str2[3];
-                Packet regPacket;
+                Packet regPacket = new Packet();
                 try {
                     if(server.registerUser(newFirstName,newLastName,newUserName,newPassword)) {
                         regPacket = new Packet(Packet.REGISTER_CLIENT, userInformation, data);
-                        outputStream.writeObject(regPacket);
-                    } else {
-                        regPacket = new Packet(Packet.REGISTER_CLIENT, userInformation, "FAIL");
-                        outputStream.writeObject(regPacket);
                     }
-
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    regPacket = new Packet(Packet.REGISTER_CLIENT, userInformation, "FAIL");
+                }
+                try {
+                    outputStream.writeObject(regPacket);
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
