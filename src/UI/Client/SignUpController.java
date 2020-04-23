@@ -24,6 +24,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -242,7 +243,13 @@ public class SignUpController implements Initializable, SignUpResultListener
             @Override
             public void run()
             {
-                System.out.println("message: " + message);
+                if(!message.contains("FAIL")) {
+                    Stage stage = (Stage) btn_SignIn.getScene().getWindow();
+                    Parent root = controller.getMainMenuPain();
+                    Scene scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.show();
+                }
             }
         });
     }
