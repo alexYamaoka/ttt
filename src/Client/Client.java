@@ -86,4 +86,8 @@ public class Client
         return userInformation;
     }
 
+    public void setUserInformation(UserInformation userInformation) {
+        this.userInformation = userInformation;
+    }
+
 }

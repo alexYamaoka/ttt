@@ -3,6 +3,7 @@ package Client;
 import ObserverPatterns.SignInResultListener;
 import ObserverPatterns.SignUpResultListener;
 import Shared.Packet;
+import Shared.UserInformation;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -54,7 +55,7 @@ public class ReadMessageBus implements Runnable
 
                     case Packet.SIGN_IN:
                         System.out.println("SIGN-IN Received");
-                        signInResultListener.updateSignInResult(response.getData().toString());
+                        signInResultListener.updateSignInResult(response.getData().toString(), (UserInformation)response.getData());
                         break;
 
                     case Packet.SIGN_OUT:

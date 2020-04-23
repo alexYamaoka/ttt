@@ -4,6 +4,7 @@ import Client.ClientController;
 import DataBase.sql.DatabaseManager;
 import ObserverPatterns.SignInResultListener;
 import Shared.Packet;
+import Shared.UserInformation;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -161,13 +162,14 @@ public class SignInController implements Initializable, SignInResultListener
     }
 
     @Override
-    public void updateSignInResult(String message)
+    public void updateSignInResult(String message, UserInformation userInformation)
     {
         Platform.runLater(new Runnable()
         {
             @Override
             public void run() {
                 if (!message.equalsIgnoreCase("FAIL")) {
+                    controller.getClient().setUserInformation(userInformation);
                     Stage stage = (Stage) btn_LogIn.getScene().getWindow();
                     Parent root = controller.getMainMenuPain();
                     Scene scene = new Scene(root);
