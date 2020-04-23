@@ -14,6 +14,7 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import Server.ClientConnection;
 
 public class AccountHandler implements Runnable {
     private Packet packet;
@@ -21,14 +22,16 @@ public class AccountHandler implements Runnable {
     private Thread worker;
     private DataSource ds = DatabaseManager.getInstance();
     private Server server = new Server();
+    private ClientConnection clientConnection;
 
 
 
     private final AtomicBoolean running = new AtomicBoolean(false);
 
-    public AccountHandler(Packet packet, ObjectOutputStream outputStream) {
+    public AccountHandler(ClientConnection clientConnection, Packet packet, ObjectOutputStream outputStream) {
         this.packet = packet;
         this.outputStream = outputStream;
+        this.clientConnection = clientConnection;
     }
 
     public void start() {
@@ -65,6 +68,7 @@ public class AccountHandler implements Runnable {
                         items = ds.query(UserInformation.class," username = '" + userName + "' AND password = '" + password + "'");
                         packet = new Packet(Packet.SIGN_IN,userInformation, items.get(0));
                         outputStream.writeObject(packet);
+                        clientConnection.setInformation((UserInformation)items.get(0));
                     } else {
                         packet = new Packet(Packet.SIGN_IN, userInformation, "FAIL");
                         outputStream.writeObject(packet);
