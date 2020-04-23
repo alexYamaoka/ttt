@@ -55,17 +55,16 @@ public class MainMenuController implements Initializable {
 
     @FXML
     public void onOptionsButtonClicked(ActionEvent event) throws IOException {
-//        Stage stage = null;
-//        Parent root = null;
-//
-//        if (event.getSource() == optionsButton) {
-//            stage = (Stage) optionsButton.getScene().getWindow();
-//            root = FXMLLoader.load(getClass().getResource("Options.fxml"));
-//        }
-//        Scene scene = new Scene(root);
-//        stage.setScene(scene);
-//        stage.show();
-        System.out.println("Options Button Clicked!");
+        Stage stage = null;
+        Parent root = null;
+
+        if (event.getSource() == optionsButton) {
+            stage = (Stage) optionsButton.getScene().getWindow();
+            root = clientController.getOptionsPane();
+        }
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
 
