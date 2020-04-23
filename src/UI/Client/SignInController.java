@@ -162,14 +162,20 @@ public class SignInController implements Initializable, SignInResultListener
     }
 
     @Override
-    public void updateSignInResult(String message, UserInformation userInformation)
+    public void updateSignInResult(String message)
     {
         Platform.runLater(new Runnable()
         {
             @Override
             public void run() {
                 if (!message.equalsIgnoreCase("FAIL")) {
-                    controller.getClient().setUserInformation(userInformation);
+//                    String[] str = message.trim().split("\\s+");
+//                    String newFirstName = str[0];
+//                    String newLastName = str[1];
+//                    String newUserName = str[2];
+//                    String newPassword = str[3];
+//                    UserInformation userInformation = new UserInformation()
+//                    controller.getClient().setUserInformation();
                     Stage stage = (Stage) btn_LogIn.getScene().getWindow();
                     Parent root = controller.getMainMenuPain();
                     Scene scene = new Scene(root);

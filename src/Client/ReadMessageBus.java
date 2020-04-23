@@ -55,7 +55,8 @@ public class ReadMessageBus implements Runnable
 
                     case Packet.SIGN_IN:
                         System.out.println("SIGN-IN Received");
-                        signInResultListener.updateSignInResult(response.getData().toString(), (UserInformation)response.getData());
+                        System.out.println(response.getData().toString());
+                        signInResultListener.updateSignInResult(response.getData().toString());
                         break;
 
                     case Packet.SIGN_OUT:

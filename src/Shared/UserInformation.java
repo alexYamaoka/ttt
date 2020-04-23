@@ -66,4 +66,11 @@ public class UserInformation extends BaseModel implements Serializable {
     public void setIsDeleted(int isDeleted) {
         this.isDeleted = isDeleted;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(getId() + " " + firstName + " " + lastName + " " + userName + " " + email + " " + password);
+        return builder.toString();
+    }
 }
