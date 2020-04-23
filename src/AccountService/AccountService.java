@@ -56,8 +56,8 @@ public class AccountService implements Service, Runnable {
         }
     }
 
-    public void handle(Packet packet, ObjectOutputStream outputStream) {
-        AccountHandler handler = new AccountHandler(packet, outputStream);
+    public void handle(ClientConnection clientConnection, Packet packet, ObjectOutputStream outputStream) {
+        AccountHandler handler = new AccountHandler(clientConnection, packet, outputStream);
         handler.start();
     }
 

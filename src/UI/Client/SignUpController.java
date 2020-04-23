@@ -45,7 +45,7 @@ public class SignUpController implements Initializable, SignUpResultListener
     @FXML
     private Button btn_SignIn, btn_SignUp;
     @FXML
-    private Label firstNameError, lastNameError, usernameError, passwordError, confirmPasswordError;
+    private Label firstNameError, lastNameError, usernameError, passwordError, confirmPasswordError, registrationError;
 
     private ClientController controller;
 
@@ -270,6 +270,8 @@ public class SignUpController implements Initializable, SignUpResultListener
                         middleAnchorPane.getChildren().remove(parentContainerSignUp);
                     });
                     timeline.play();
+                } else {
+                    registrationError.setText("Username is already taken!");
                 }
             }
         });

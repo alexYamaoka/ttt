@@ -39,7 +39,7 @@ public class ClientConnection implements Runnable {
             while(running.get()) {
                Packet packet = (Packet) input.readObject();
                information = packet.getInformation();
-               service.handle(packet, output);
+               service.handle(this, packet, output);
             }
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -62,5 +62,9 @@ public class ClientConnection implements Runnable {
 
     public UserInformation getInformation() {
         return information;
+    }
+
+    public void setInformation(UserInformation information) {
+        this.information = information;
     }
 }
