@@ -62,8 +62,7 @@ public class MainMenuController implements Initializable {
             stage = (Stage) optionsButton.getScene().getWindow();
             root = clientController.getOptionsPane();
         }
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
+        stage.setScene(root.getScene());
         stage.show();
     }
 
