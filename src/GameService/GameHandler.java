@@ -24,7 +24,7 @@ public class GameHandler implements Runnable
     private DataSource ds = DatabaseManager.getInstance();
     private Server server = new Server();
 
-    private Queue<ClientConnection> gameWaitingList = new LinkedList<>();
+    private Queue<UserInformation> gameWaitingList = new LinkedList<>();
 
 
     private final AtomicBoolean running = new AtomicBoolean(false);
@@ -55,7 +55,7 @@ public class GameHandler implements Runnable
         switch(request)
         {
             case Packet.JOIN_WAITING_LIST:
-
+                addPlayerToWaitingList();
                 break;
         }
 
@@ -67,12 +67,12 @@ public class GameHandler implements Runnable
     }
 
 
-    public void addPlayerToWaitingList(ClientConnection clientConnection)
+    public void addPlayerToWaitingList(UserInformation userInformation)
     {
-        gameWaitingList.add(clientConnection);
+        gameWaitingList.add(userInformation);
     }
 
-    public ClientConnection getNextPlayerInLine()
+    public UserInformation getNextPlayerInLine()
     {
         if (! gameWaitingList.isEmpty())
         {
