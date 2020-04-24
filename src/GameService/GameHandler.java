@@ -51,7 +51,9 @@ public class GameHandler implements Runnable
 
         switch(request)
         {
+            case Packet.JOIN_WAITING_LIST:
 
+                break;
         }
 
         stop();

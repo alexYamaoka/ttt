@@ -14,7 +14,7 @@ public class Packet implements Serializable {
     public static final String UPDATE_USER = "UPDATE-USER";
     public static final String DELETE_ACCOUNT = "DELETE-ACCOUNT";
 
-
+    public static final String JOIN_WAITING_LIST = "JOIN-WAITING-LIST";
 
 
 
