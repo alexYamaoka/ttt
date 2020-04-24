@@ -29,7 +29,7 @@ public class GameService implements Runnable, Service
     private DataSource ds = DatabaseManager.getInstance();
 
     private final int PORT_NUMBER = 8080;
-    private Queue<ClientConnection> gameWaitingList = new LinkedList<>();
+
 
     public GameService() {
     }
@@ -91,18 +91,7 @@ public class GameService implements Runnable, Service
 
 
 
-    public void addPlayerToWaitingList(ClientConnection clientConnection)
-    {
-        gameWaitingList.add(clientConnection);
-    }
 
-    public ClientConnection getNextPlayerInLine()
-    {
-        if (! gameWaitingList.isEmpty())
-        {
-            return gameWaitingList.remove();
-        }
 
-        return null;
-    }
+
 }

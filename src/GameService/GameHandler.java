@@ -6,12 +6,14 @@ import Models.BaseModel;
 import Shared.Packet;
 import Shared.UserInformation;
 import app.Server;
-
+import Server.ClientConnection;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GameHandler implements Runnable
@@ -22,6 +24,7 @@ public class GameHandler implements Runnable
     private DataSource ds = DatabaseManager.getInstance();
     private Server server = new Server();
 
+    private Queue<ClientConnection> gameWaitingList = new LinkedList<>();
 
 
     private final AtomicBoolean running = new AtomicBoolean(false);
@@ -61,5 +64,21 @@ public class GameHandler implements Runnable
 
     public boolean getRunning() {
         return running.get();
+    }
+
+
+    public void addPlayerToWaitingList(ClientConnection clientConnection)
+    {
+        gameWaitingList.add(clientConnection);
+    }
+
+    public ClientConnection getNextPlayerInLine()
+    {
+        if (! gameWaitingList.isEmpty())
+        {
+            return gameWaitingList.remove();
+        }
+
+        return null;
     }
 }
