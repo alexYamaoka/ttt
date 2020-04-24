@@ -55,8 +55,15 @@ public class GameHandler implements Runnable
         switch(request)
         {
             case Packet.JOIN_WAITING_LIST:
-                addPlayerToWaitingList();
+                addPlayerToWaitingList(userInformation);
                 break;
+
+            case Packet.OBSERVE_GAME:
+                break;
+
+            case Packet.NEXT_MOVE:
+                break;
+
         }
 
         stop();

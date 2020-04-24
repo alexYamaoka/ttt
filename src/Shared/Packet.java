@@ -15,7 +15,8 @@ public class Packet implements Serializable {
     public static final String DELETE_ACCOUNT = "DELETE-ACCOUNT";
 
     public static final String JOIN_WAITING_LIST = "JOIN-WAITING-LIST";
-
+    public static final String NEXT_MOVE = "NEXT-MOVE";
+    public static final String OBSERVE_GAME = "OBSERVE-GAME";
 
 
     public Packet(String request, UserInformation information, Serializable data) {
