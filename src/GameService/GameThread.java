@@ -11,7 +11,7 @@ public class GameThread implements Runnable
     ClientConnection player1;
     ClientConnection player2;
     Thread thread;
-    AtomicBoolean running = new AtomicBoolean(false);
+    AtomicBoolean isRunning = new AtomicBoolean(false);
 
 
 
@@ -31,16 +31,16 @@ public class GameThread implements Runnable
 
     public void stop()
     {
-        running.set(false);
+        isRunning.set(false);
     }
 
 
     @Override
     public void run()
     {
-        running.set(true);
+        isRunning.set(true);
 
-        while (running.get())
+        while (isRunning.get())
         {
 
         }
