@@ -49,6 +49,7 @@ public class CreateGameThread implements Runnable
             // start game thread with the 2 players
 
             // TODO: add check if 2 people are in the queue - and make it multi-thread safe
+
             ClientConnection player1 = gameService.getNextPlayerInLine();
             ClientConnection player2 = gameService.getNextPlayerInLine();
 

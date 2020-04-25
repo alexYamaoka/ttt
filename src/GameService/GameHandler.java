@@ -19,7 +19,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class GameHandler implements Runnable
 {
     private Packet packet;
-    private ObjectOutputStream outputStream;
     private Thread worker;
     private DataSource ds = DatabaseManager.getInstance();
     private Server server = new Server();
@@ -29,9 +28,8 @@ public class GameHandler implements Runnable
 
 
 
-    public GameHandler(ClientConnection clientConnection, Packet packet, ObjectOutputStream outputStream) {
+    public GameHandler(ClientConnection clientConnection, Packet packet) {
         this.packet = packet;
-        this.outputStream = outputStream;
         this.clientConnection = clientConnection;
     }
 

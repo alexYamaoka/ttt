@@ -74,8 +74,8 @@ public class GameService implements Runnable, Service
             }
     }
 
-    public void handle(ClientConnection clientConnection, Packet packet, ObjectOutputStream outputStream) {
-        GameHandler handler = new GameHandler(clientConnection, packet, outputStream);
+    public void handle(ClientConnection clientConnection, Packet packet) {
+        GameHandler handler = new GameHandler(clientConnection, packet);
         handler.start();
     }
 
