@@ -16,7 +16,6 @@ public class ClientConnection implements Runnable {
     private final AtomicBoolean running = new AtomicBoolean(false);
     private ObjectOutputStream output;
     private ObjectInputStream input;
-
     private UserInformation information;
 
     public ClientConnection(Socket socket, Service service) {
@@ -37,7 +36,7 @@ public class ClientConnection implements Runnable {
             input = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
 
             while(running.get()) {
-               Packet packet = (Packet) input.readObject();
+               Packet packet = (Packet) input.readObject();     // retrieves userinformation thats updated from account service
                information = packet.getInformation();
                service.handle(packet, output);
             }
