@@ -1,13 +1,10 @@
 package GameService;
 
-import AccountService.AccountHandler;
-import Client.Client;
 import DataBase.sql.DataSource;
 import DataBase.sql.DatabaseManager;
 import Server.ClientConnection;
 import Server.Service;
 import Shared.Packet;
-import Shared.UserInformation;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -21,6 +18,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class GameService implements Runnable, Service
 {
     private Thread worker;
+    private CreateGameThread createGameThread;
     private HashSet<Service> serviceListeners = new HashSet<>();
     private final AtomicBoolean running = new AtomicBoolean(false);
     private DataSource ds = DatabaseManager.getInstance();
@@ -40,6 +38,10 @@ public class GameService implements Runnable, Service
     public void start() {
         worker = new Thread(this);
         worker.start();
+
+
+        createGameThread = new CreateGameThread();
+
     }
 
     public void stop() {
@@ -58,10 +60,6 @@ public class GameService implements Runnable, Service
                 while (running.get()) {
                     Socket socket = serverSocket.accept();
                     ClientConnection connection = new ClientConnection(socket, this);
-
-                    // need a way to connect the client connection with the users information who is signed in
-                    //clientConnections.add(connection);
-
                     pool.execute(connection);
                 }
             } catch (IOException ex) {

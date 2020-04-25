@@ -2,7 +2,7 @@ package GameService;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class CreateGame implements Runnable
+public class CreateGameThread implements Runnable
 {
     // if theres two people in the queue
     // creates new thread and pulls people from the queue
@@ -14,8 +14,10 @@ public class CreateGame implements Runnable
     private Thread thread;
 
 
-    public CreateGame()
+    public CreateGameThread()
     {
+        // needs access to the queue for game
+        // need to make retrieving 2 players from the queue synchronized
 
     }
 
@@ -39,6 +41,18 @@ public class CreateGame implements Runnable
     @Override
     public void run()
     {
-        // if theres two players in the queue, start a new thread with the two players
+
+
+        isRunning.set(true);
+
+        while (isRunning.get())
+        {
+            // if theres two players in the queue, pop the two and start a new thread with the two players
+
+
+
+
+
+        }
     }
 }

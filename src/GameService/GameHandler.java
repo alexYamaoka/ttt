@@ -58,9 +58,6 @@ public class GameHandler implements Runnable
         {
             case Packet.JOIN_WAITING_LIST:
                 ((GameService) clientConnection.getService()).addPlayerToWaitingList(clientConnection);
-
-
-                        // getnextplayer()
                 break;
 
             case Packet.OBSERVE_GAME:

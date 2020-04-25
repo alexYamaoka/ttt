@@ -38,7 +38,7 @@ public class ClientConnection implements Runnable {
             while(running.get()) {
                Packet packet = (Packet) input.readObject();     // retrieves userinformation thats updated from account service
                information = packet.getInformation();
-               service.handle(packet, output);
+               service.handle(this, packet, output);
             }
         } catch (IOException ex) {
             ex.printStackTrace();

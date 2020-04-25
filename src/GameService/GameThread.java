@@ -42,7 +42,12 @@ public class GameThread implements Runnable
 
         while (isRunning.get())
         {
+            // play ttt game
+            player1.getOutputStream();
+            player2.getOutputStream();
 
+            // while game has not ended
+            // send and receive packet with game inside
         }
 
 
