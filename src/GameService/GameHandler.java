@@ -25,10 +25,9 @@ public class GameHandler implements Runnable
     private Server server = new Server();
 
     private ClientConnection clientConnection;
-
-
-
     private final AtomicBoolean running = new AtomicBoolean(false);
+
+
 
     public GameHandler(ClientConnection clientConnection, Packet packet, ObjectOutputStream outputStream) {
         this.packet = packet;
@@ -41,7 +40,7 @@ public class GameHandler implements Runnable
         worker.start();
     }
 
-    public void stop(){
+    public void stop() {
         running.set(false);
         System.out.println("GameHandler has stopped!");
     }
@@ -50,6 +49,7 @@ public class GameHandler implements Runnable
     public void run() {
         running.set(true);
         System.out.println("GameHandler has started!");
+
         String request = packet.getRequest();
         UserInformation userInformation = packet.getInformation();
         Serializable data = packet.getData();
@@ -61,9 +61,6 @@ public class GameHandler implements Runnable
                 break;
 
             case Packet.OBSERVE_GAME:
-                break;
-
-            case Packet.MAKE_NEXT_MOVE:
                 break;
 
         }

@@ -1,5 +1,7 @@
 package GameService;
 
+import Server.ClientConnection;
+
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CreateGameThread implements Runnable
@@ -49,6 +51,11 @@ public class CreateGameThread implements Runnable
         {
             // if there's two players in the queue, pop the two and start a new thread with the two players
 
+            // start game thread with the 2 players
+            ClientConnection player1;
+            ClientConnection player2;
+
+            //GameThread gameThread = new GameThread(player1, player2);
 
         }
     }
