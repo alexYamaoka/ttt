@@ -14,13 +14,14 @@ public class CreateGameThread implements Runnable
 
     private AtomicBoolean isRunning = new AtomicBoolean(false);
     private Thread thread;
+    private GameService gameService;
 
 
-    public CreateGameThread()
+    public CreateGameThread(GameService gameService)
     {
         // needs access to the queue for game
         // need to make retrieving 2 players from the queue synchronized
-
+        this.gameService = gameService;
     }
 
 
@@ -37,26 +38,21 @@ public class CreateGameThread implements Runnable
     }
 
 
-
-
-
     @Override
     public void run()
     {
-
-
         isRunning.set(true);
 
         while (isRunning.get())
         {
             // if there's two players in the queue, pop the two and start a new thread with the two players
-
             // start game thread with the 2 players
-            ClientConnection player1;
-            ClientConnection player2;
 
-            //GameThread gameThread = new GameThread(player1, player2);
+            // TODO: add check if 2 people are in the queue - and make it multi-thread safe
+            ClientConnection player1 = gameService.getNextPlayerInLine();
+            ClientConnection player2 = gameService.getNextPlayerInLine();
 
+            GameThread gameThread = new GameThread(player1, player2);
         }
     }
 }

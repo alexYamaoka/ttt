@@ -47,7 +47,7 @@ public class GameService implements Runnable, Service
         worker.start();
 
 
-        createGameThread = new CreateGameThread();
+        createGameThread = new CreateGameThread(this);
 
     }
 
@@ -105,6 +105,8 @@ public class GameService implements Runnable, Service
     {
         gameWaitingList.add(clientConnection);
     }
+
+
 
     public ClientConnection getNextPlayerInLine()
     {
