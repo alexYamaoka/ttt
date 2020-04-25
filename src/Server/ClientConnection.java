@@ -59,6 +59,11 @@ public class ClientConnection implements Runnable {
         return output;
     }
 
+    public ObjectInputStream getInputStream()
+    {
+        return input;
+    }
+
     public UserInformation getInformation() {
         return information;
     }
