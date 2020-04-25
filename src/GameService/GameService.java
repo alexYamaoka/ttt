@@ -14,6 +14,8 @@ import java.net.Socket;
 import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class GameService implements Runnable, Service
 {
@@ -24,11 +26,16 @@ public class GameService implements Runnable, Service
     private DataSource ds = DatabaseManager.getInstance();
     private final int PORT_NUMBER = 8080;
 
+
+    private static Lock lock = new ReentrantLock();
+
     // socket
     // packet (userinformation is provided)
 
     private HashSet<ClientConnection> clientConnections = new HashSet<>();
-    private final Queue<ClientConnection> gameWaitingList = new LinkedList<>();
+
+    private final Queue<ClientConnection> gameWaitingList = new LinkedList<>();     // need to make checking size and deque-ing synchronized
+
     private final HashMap<String, GameRoomInformation> ongoingGameRooms = new HashMap<>();
 
 
@@ -101,9 +108,22 @@ public class GameService implements Runnable, Service
 
     public ClientConnection getNextPlayerInLine()
     {
-        if (! gameWaitingList.isEmpty())
+        lock.lock();
+
+        try
         {
-            return gameWaitingList.remove();
+            if (! gameWaitingList.isEmpty())
+            {
+                return gameWaitingList.remove();
+            }
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+        finally
+        {
+            lock.unlock();
         }
 
         return null;

@@ -47,7 +47,7 @@ public class CreateGameThread implements Runnable
 
         while (isRunning.get())
         {
-            // if theres two players in the queue, pop the two and start a new thread with the two players
+            // if there's two players in the queue, pop the two and start a new thread with the two players
 
 
 
