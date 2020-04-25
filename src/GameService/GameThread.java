@@ -85,6 +85,8 @@ public class GameThread implements Runnable
                 gameReceived = (Packet) inputFromPlayer2.readObject();
                 outputToPlayer1.writeObject(gameReceived);
 
+                // if game ends, break out of loop and end the task
+
             }
             catch (IOException | ClassNotFoundException ex)
             {

@@ -7,8 +7,6 @@ import Server.Service;
 import Shared.Packet;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -21,7 +19,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class GameService implements Runnable, Service
 {
     private Thread worker;
-    private CreateGameThread createGameThread;
+    private Match2PlayersThread match2PlayersThread;
     private HashSet<Service> serviceListeners = new HashSet<>();
     private final AtomicBoolean running = new AtomicBoolean(false);
     private DataSource ds = DatabaseManager.getInstance();
@@ -48,7 +46,7 @@ public class GameService implements Runnable, Service
         worker.start();
 
 
-        createGameThread = new CreateGameThread(this);
+        match2PlayersThread = new Match2PlayersThread(this);
 
     }
 

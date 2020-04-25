@@ -4,7 +4,7 @@ import Server.ClientConnection;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class CreateGameThread implements Runnable
+public class Match2PlayersThread implements Runnable
 {
     // if theres two people in the queue
     // creates new thread and pulls people from the queue
@@ -17,7 +17,7 @@ public class CreateGameThread implements Runnable
     private GameService gameService;
 
 
-    public CreateGameThread(GameService gameService)
+    public Match2PlayersThread(GameService gameService)
     {
         // needs access to the queue for game
         // need to make retrieving 2 players from the queue synchronized
