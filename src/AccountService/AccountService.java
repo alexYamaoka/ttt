@@ -61,6 +61,11 @@ public class AccountService implements Service, Runnable {
         handler.start();
     }
 
+    @Override
+    public void handle(ClientConnection clientConnection, Packet packet) {
+
+    }
+
     public void addServiceListener(Service service) {
         serviceListeners.add(service);
     }
@@ -77,6 +82,8 @@ public class AccountService implements Service, Runnable {
             service.update(packet);
         }
     }
+
+
 
     public void update(Packet packet) {
 
