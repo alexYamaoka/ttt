@@ -5,26 +5,18 @@ import ObserverPatterns.UpdateUserinformationListener;
 import Shared.Packet;
 import Shared.UserInformation;
 import javafx.application.Platform;
-import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-
-import javafx.event.ActionEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import javax.swing.*;
-import javax.xml.crypto.dsig.keyinfo.KeyValue;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Properties;
@@ -65,17 +57,19 @@ public class Options implements Initializable, UpdateUserinformationListener {
     private TextField userName;
     @FXML
     private Label updateError;
+    @FXML
+    private TextField oldPassword, newPassword, confirmPassword;
 
     private ClientController controller;
 
-    public void UserDetailButton(ActionEvent event){
+    public void UserDetailButton(ActionEvent event) {
         Pane2.setVisible(false);
         Pane1.managedProperty().bind(Pane1.visibleProperty());
         Pane1.setVisible(true);
 
     }
 
-    public void ChangePassword(ActionEvent event){
+    public void ChangePassword(ActionEvent event) {
         Pane1.setVisible(false);
         Pane2.managedProperty().bind(Pane2.visibleProperty());
         Pane2.setVisible(true);
@@ -120,7 +114,22 @@ public class Options implements Initializable, UpdateUserinformationListener {
     }
 
     public void passwordSaved(ActionEvent event) {
+        String oldPassword = this.oldPassword.getText();
+        String newPassword = this.newPassword.getText();
+        String confirmPassword = this.confirmPassword.getText();
 
+        if(oldPassword.equals(controller.getClient().getUserInformation().getPassword())) {
+            if (newPassword.equals(confirmPassword)) {
+                Packet packet = new Packet(Packet.UPDATE_USER, controller.getClient().getUserInformation(), newPassword);
+                controller.getClient().addRequestToServer(packet);
+            } else {
+                updateError.setTextFill(Color.RED);
+                updateError.setText("New passwords do not match!");
+            }
+        } else {
+            updateError.setTextFill(Color.RED);
+            updateError.setText("You did not enter the correct old password!");
+        }
     }
 
     @Override
@@ -130,8 +139,7 @@ public class Options implements Initializable, UpdateUserinformationListener {
 
     @Override
     public void updateUserinformation(String message) {
-        Platform.runLater(new Runnable()
-        {
+        Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 if (!message.equalsIgnoreCase("FAIL")) {
@@ -148,8 +156,7 @@ public class Options implements Initializable, UpdateUserinformationListener {
                     controller.getOptions().updateInfo();
                     updateError.setTextFill(Color.LIMEGREEN);
                     updateError.setText("Information Has Been Updated!");
-                }
-                else{
+                } else {
                     updateError.setTextFill(Color.RED);
                     updateError.setText("Username has already been taken!");
                 }

@@ -22,9 +22,9 @@
                   <AnchorPane fx:id="Pane2" prefHeight="479.0" prefWidth="410.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496)radial-gradient(radius 200%,#204060,#1d9496) radial-gradient(radius 200%,#204060,#1d9496)radial-gradient(radius 200%,#204060,#1d9496); -fx-border-color: #000000#000000;" visible="false">
                      <children>
                         <Button fx:id="btn_button" layoutX="114.0" layoutY="325.0" mnemonicParsing="false" onAction="#passwordSaved" prefHeight="42.0" prefWidth="167.0" style="-fx-background-color: #132639#132639; -fx-text-fill: #9fbfdf#9fbfdf;" text="Save" />
-                        <TextField layoutX="116.0" layoutY="271.0" promptText="Confirm Password" style="-fx-background-color: #204060#204060;" />
-                        <TextField layoutX="116.0" layoutY="226.0" promptText="New Password" style="-fx-background-color: #204060#204060;" />
-                        <TextField layoutX="116.0" layoutY="180.0" promptText="Old Password" style="-fx-background-color: #204060#204060;" />
+                        <TextField fx:id="confirmPassword" layoutX="116.0" layoutY="271.0" promptText="Confirm Password" style="-fx-background-color: #204060#204060;" />
+                        <TextField fx:id="newPassword" layoutX="116.0" layoutY="226.0" promptText="New Password" style="-fx-background-color: #204060#204060;" />
+                        <TextField fx:id="oldPassword" layoutX="116.0" layoutY="180.0" promptText="Old Password" style="-fx-background-color: #204060#204060;" />
                      </children>
                   </AnchorPane>
                   <AnchorPane fx:id="Pane1" prefHeight="481.0" prefWidth="410.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496)radial-gradient(radius 200%,#204060,#1d9496) radial-gradient(radius 200%,#204060,#1d9496)radial-gradient(radius 200%,#204060,#1d9496); -fx-border-color: #000000#000000;">
