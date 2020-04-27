@@ -20,6 +20,7 @@ public class GameRoomInformation {
         UUIDGenerator gameId = new UUIDGenerator();
         this.Id = gameId.getNewId();
         this.gameName = gameName;
+        this.player1 = player1;
 
     }
 

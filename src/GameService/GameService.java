@@ -26,10 +26,6 @@ public class GameService implements Runnable, Service
     private final int PORT_NUMBER = 8080;
 
     private static Lock lock = new ReentrantLock();
-
-    // socket
-    // packet (userinformation is provided)
-
     private HashSet<ClientConnection> clientConnections = new HashSet<>();
 
     private final HashMap<String, GameRoomInformation> ongoingGameRooms = new HashMap<>();

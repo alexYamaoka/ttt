@@ -59,7 +59,6 @@ public class GameHandler implements Runnable
                 game.join(clientConnection);
                 //Database call
                 game.start();
-
                 break;
 
             case Packet.OBSERVE_GAME:
@@ -72,7 +71,6 @@ public class GameHandler implements Runnable
                 break;
 
             case Packet.GET_GAMES:
-
                 try {
                     clientConnection.getOutputStream().writeObject(new Packet(Packet.GET_GAMES, userInformation, (Serializable) service.getGames())); // list of current games
                 } catch (IOException e) {
