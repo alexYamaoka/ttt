@@ -1,5 +1,6 @@
 package GameService;
 
+import Models.Game;
 import Server.ClientConnection;
 import Shared.Packet;
 import javafx.scene.chart.ScatterChart;
@@ -24,9 +25,11 @@ public class GameThread implements Runnable
     private ObjectInputStream inputFromPlayer1;
     private ObjectInputStream inputFromPlayer2;
     private ArrayList<ClientConnection> GameObservers;
+    private Game game;
 
     public GameThread(ClientConnection player1, ClientConnection player2, ArrayList<ClientConnection> GameObservers)
     {
+        game = new Game();
         this.player1 = player1;
         this.player2 = player2;
         this.GameObservers = GameObservers;
@@ -53,7 +56,7 @@ public class GameThread implements Runnable
     {
         isRunning.set(true);
 
-        Packet gameReceived; // rename to move
+        Packet playerMove; // rename to move
         // passing moves to each other.  not the game
         // create a class called game move.
 
@@ -78,26 +81,22 @@ public class GameThread implements Runnable
 
             try
             {
-                gameReceived = (Packet) inputFromPlayer1.readObject();
-
                 // check if valid move,
                 // checks the game model
-
                 // if its a valid move, send it to both players.
+                // notify observers
                 // want to update UI from the server side.
-
-
-
-
-
-                outputToPlayer2.writeObject(gameReceived);
-
-                // if move is valid, return packet to both players of the move
-
-                gameReceived = (Packet) inputFromPlayer2.readObject();
-                outputToPlayer1.writeObject(gameReceived);
-
                 // if game ends, break out of loop and end the task
+
+
+                playerMove = (Packet) inputFromPlayer1.readObject();
+                outputToPlayer2.writeObject(playerMove);
+                outputToPlayer1.writeObject(playerMove);
+
+
+                playerMove = (Packet) inputFromPlayer2.readObject();
+                outputToPlayer2.writeObject(playerMove);
+                outputToPlayer1.writeObject(playerMove);
 
             }
             catch (IOException | ClassNotFoundException ex)
