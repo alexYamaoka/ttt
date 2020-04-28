@@ -43,11 +43,13 @@ public class TTTBoard
     public void setX(int row, int col)
     {
         board[row][col] = X;
+        numOfMovesLeft--;
     }
 
     public void setO(int row, int col)
     {
         board[row][col] = O;
+        numOfMovesLeft--;
     }
 
     public boolean isMoveValid(int row, int col)
@@ -55,4 +57,32 @@ public class TTTBoard
         return board[row][col] == emptyCell;
     }
 
+    // function to check if there is a winner
+    public boolean isWinner(int x, int y, char symbol)
+    {
+        int countRow = 0;
+        int countCol = 0;
+        int countLDiag = 0;
+        int countRDiag = 0;
+
+        for(int i = 0; i < board.length; i++)
+        {
+            if(board[x][i] == symbol)
+                countRow++;
+
+            if(board[i][y] == symbol)
+                countCol++;
+
+            if(board[i][i] == symbol)
+                countRDiag++;
+
+            if(board[board.length-1-i][i] == symbol)
+                countLDiag++;
+        }
+
+        if(countCol == board.length || countRow == board.length || countLDiag == board.length || countRDiag == board.length)
+            return true;
+
+        return false;
+    }
 }
