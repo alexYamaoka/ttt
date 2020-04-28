@@ -35,4 +35,23 @@ public class Move extends BaseModel {
     }
 
 
+    public int getRow()
+    {
+        return row;
+    }
+
+    public int getColumn()
+    {
+        return column;
+    }
+
+    public String getDateAndTime()
+    {
+        return dateAndTime;
+    }
+
+    public UserInformation getUserInformation()
+    {
+        return userInformation;
+    }
 }
