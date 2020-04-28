@@ -24,8 +24,6 @@ public class AccountHandler implements Runnable {
     private Server server = new Server();
     private ClientConnection clientConnection;
 
-
-
     private final AtomicBoolean running = new AtomicBoolean(false);
 
     public AccountHandler(ClientConnection clientConnection, Packet packet, ObjectOutputStream outputStream) {
@@ -51,7 +49,6 @@ public class AccountHandler implements Runnable {
         String request = packet.getRequest();
         UserInformation userInformation = packet.getInformation();
         Serializable data = packet.getData();
-
         switch(request)
         {
             case Packet.SIGN_IN:
