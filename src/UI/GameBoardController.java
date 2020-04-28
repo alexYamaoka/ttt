@@ -27,14 +27,13 @@ public class GameBoardController
     @FXML
     Button userChatEnter, mainMenu, newGame, startNewChat;
 
-
-
     @FXML
     Label panel1, panel2, panel3, panel4, panel5, panel6, panel7, panel8, panel9;
-    
 
     @FXML
     VBox myGamesContainer;      // container to place labels for all the games the user has going on.
+
+
 
 
 }

@@ -53,7 +53,9 @@ public class GameThread implements Runnable
     {
         isRunning.set(true);
 
-        Packet gameReceived;
+        Packet gameReceived; // rename to move
+        // passing moves to each other.  not the game
+        // create a class called game move.
 
         try
         {
@@ -77,7 +79,20 @@ public class GameThread implements Runnable
             try
             {
                 gameReceived = (Packet) inputFromPlayer1.readObject();
+
+                // check if valid move,
+                // checks the game model
+
+                // if its a valid move, send it to both players.
+                // want to update UI from the server side.
+
+
+
+
+
                 outputToPlayer2.writeObject(gameReceived);
+
+                // if move is valid, return packet to both players of the move
 
                 gameReceived = (Packet) inputFromPlayer2.readObject();
                 outputToPlayer1.writeObject(gameReceived);
