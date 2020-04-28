@@ -1,13 +1,11 @@
 package Models;
 
 import ObserverPatterns.GameObserver;
-import Server.ClientConnection;
 import Shared.Packet;
 import Shared.UserInformation;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class Game extends BaseModel {
     // game logic
@@ -15,12 +13,14 @@ public class Game extends BaseModel {
     // player 1
     // player 2
 
+    private TTTBoard tttBoard;
     private UserInformation player1;
     private UserInformation player2;
     private List<GameObserver> gameObserversList;
 
     public Game(UserInformation player1, UserInformation player2)
     {
+        TTTBoard tttBoard = new TTTBoard();
         this.player1 = player1;
         this.player2 = player2;
         gameObserversList = new ArrayList<>();
@@ -49,6 +49,5 @@ public class Game extends BaseModel {
             // observer.update(packet);     // broadcast packet with move or game status ex: tie game, winner
         }
     }
-
 
 }
