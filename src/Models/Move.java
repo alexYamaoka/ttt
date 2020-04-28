@@ -24,10 +24,10 @@ public class Move extends BaseModel {
         this.row = row;
         this.column = column;
         this.userInformation = userInformation;
-        dateAndTime = getCurrentDateAndTime();
+        dateAndTime = createDateAndTime();
     }
 
-    private String getCurrentDateAndTime()
+    private String createDateAndTime()
     {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
