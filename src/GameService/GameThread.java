@@ -91,6 +91,7 @@ public class GameThread implements Runnable
 
 
                 boolean player1MadeMove = false;
+                boolean player2MadeMove = false;
 
 
                 // loops until player 1 makes a valid move
@@ -111,11 +112,6 @@ public class GameThread implements Runnable
                         }
                     }
                 }
-
-
-
-
-                boolean player2MadeMove = false;
 
 
 
