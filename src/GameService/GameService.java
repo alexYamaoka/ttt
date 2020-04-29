@@ -30,7 +30,6 @@ public class GameService implements Runnable, Service
 
     private final HashMap<String, GameRoomInformation> ongoingGameRooms = new HashMap<>();
 
-
     public GameService() {
     }
 

@@ -100,16 +100,21 @@ public class AccountHandler implements Runnable {
                 break;
             case Packet.UPDATE_USER:
                 String UpdateString = data.toString();
+                UserInformation user = new UserInformation();
                 String[] str3 = UpdateString.trim().split("\\s+");
                 String UpdateFirstName = str3[0];
                 String UpdateLastName = str3[1];
                 String UpdateUserName = str3[2];
                 String UpdateEmail = str3[3];
                 String UpdatePassword = str3[4];
+                user.setFirstName(UpdateFirstName);
+                user.setLastName(UpdateLastName);
+                user.setUserName(UpdateUserName);
+                user.setPassword(UpdatePassword);
                 try {
-                    //if(server.updateUser()))
+                    if(server.updateUser(user))
                     outputStream.writeObject(new UserInformation(UpdateFirstName, UpdateLastName, UpdateUserName, UpdateEmail, UpdatePassword));
-                } catch (IOException ex) {
+                } catch (IOException | SQLException ex) {
                     ex.printStackTrace();
                 }
                 break;

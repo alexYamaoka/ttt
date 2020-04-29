@@ -64,6 +64,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
     @Override
     public BaseModel update(BaseModel obj) throws SQLException {
         StringBuilder query = new StringBuilder();
+        List<BaseModel> items = new ArrayList<>();
         if (obj instanceof UserInformation) {
             UserInformation user = (UserInformation) obj;
             query.append("UPDATE ");
@@ -72,8 +73,9 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
             System.out.println(query.toString());
             UserStatement.setString(1, user.getUserName());
             UserStatement.executeQuery(query.toString());
+            items.add(user);
         }
-        return null;
+        return (BaseModel) items;
     }
 
     @Override
@@ -157,12 +159,6 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         while(rs.next()){
             if(obj.getCanonicalName().equalsIgnoreCase("Shared.UserInformation")){
                 UserInformation u = new UserInformation();
-//                System.out.println(rs.getString(1));
-//                System.out.println(rs.getString(2));
-//                System.out.println(rs.getString(3));
-//                System.out.println(rs.getString(4));
-//                System.out.println(rs.getString(5));
-//                System.out.println(rs.getString(6));
                 u.setId(rs.getString(1));
                 u.setUserName(rs.getString(2));
                 u.setPassword(rs.getString(3));
@@ -174,5 +170,4 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         }
         return items;
     }
-
 }

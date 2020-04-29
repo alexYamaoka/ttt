@@ -34,8 +34,12 @@ public class Server {
     }
 
     public boolean updateUser(UserInformation user) throws SQLException {
-        ds.update(user);
-        return true;
+        List User = (List) ds.update(user);
+        if(User.isEmpty()){
+            return false;
+        }else{
+            return true;
+        }
     }
 
     public boolean registerUser(String username, String firstname, String lastname,String password) throws SQLException {

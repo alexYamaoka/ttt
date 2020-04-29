@@ -13,7 +13,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GameThread implements Runnable
 {
-    // takes in two players
     private ClientConnection player1;
     private ClientConnection player2;
     private Thread thread;
@@ -53,7 +52,7 @@ public class GameThread implements Runnable
     {
         isRunning.set(true);
 
-        Packet gameReceived;
+        Packet move; //gameReceived
 
         try
         {
@@ -76,11 +75,12 @@ public class GameThread implements Runnable
 
             try
             {
-                gameReceived = (Packet) inputFromPlayer1.readObject();
-                outputToPlayer2.writeObject(gameReceived);
-
-                gameReceived = (Packet) inputFromPlayer2.readObject();
-                outputToPlayer1.writeObject(gameReceived);
+                move = (Packet) inputFromPlayer1.readObject();
+                //check move
+                outputToPlayer2.writeObject(move);
+                move = (Packet) inputFromPlayer2.readObject();
+                //check move
+                outputToPlayer1.writeObject(move);
 
                 // if game ends, break out of loop and end the task
 
