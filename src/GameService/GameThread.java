@@ -94,21 +94,27 @@ public class GameThread implements Runnable
                 boolean player2MadeMove = false;
 
 
+
+
                 // loops until player 1 makes a valid move
                 while (!player1MadeMove)
                 {
                     Packet player1Move = (Packet) inputFromPlayer1.readObject();
-                    Move move1 = (Move) player1Move.getData();
-
 
                     if (player1Move.getRequest().equals(Packet.GAME_MOVE))
                     {
+                        Move move1 = (Move) player1Move.getData();
+
                         if (game.checkIfValidMove(move1))
                         {
                             game.makeMove(move1);
                             outputToPlayer2.writeObject(player1Move);
                             outputToPlayer1.writeObject(player1Move);
                             player1MadeMove = true;
+                        }
+                        else
+                        {
+                            System.out.println("Not a valid move");
                         }
                     }
                 }
@@ -119,10 +125,11 @@ public class GameThread implements Runnable
                 while (!player2MadeMove)
                 {
                     Packet player2Move = (Packet) inputFromPlayer2.readObject();
-                    Move move2 = (Move) player2Move.getData();
 
                     if (player2Move.getRequest().equals(Packet.GAME_MOVE))
                     {
+                        Move move2 = (Move) player2Move.getData();
+
                         if (game.checkIfValidMove(move2))
                         {
                             game.makeMove(move2);
@@ -130,8 +137,14 @@ public class GameThread implements Runnable
                             outputToPlayer1.writeObject(player2Move);
                             player2MadeMove = true;
                         }
+                        else
+                        {
+                            System.out.println("Not a valid move");
+                        }
                     }
                 }
+
+
 
             }
             catch (IOException | ClassNotFoundException ex)
