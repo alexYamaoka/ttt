@@ -105,6 +105,7 @@ public class GameThread implements Runnable
                     {
                         Move move1 = (Move) player1Move.getData();
 
+                        // check if its a valid move
                         if (game.checkIfValidMove(move1))
                         {
                             game.makeMove(move1);
@@ -116,6 +117,13 @@ public class GameThread implements Runnable
                         {
                             System.out.println("Not a valid move");
                         }
+
+
+                        // TODO: isGameOver() inside game
+//                        if (game.isGameOver())
+//                        {
+//
+//                        }
                     }
                 }
 
@@ -141,6 +149,14 @@ public class GameThread implements Runnable
                         {
                             System.out.println("Not a valid move");
                         }
+
+
+
+                        // TODO: isGameOver() inside game
+//                        if (game.isGameOver())
+//                        {
+//
+//                        }
                     }
                 }
 
@@ -151,12 +167,7 @@ public class GameThread implements Runnable
             {
                 ex.printStackTrace();
             }
-
-
         }
-
-
     }
-
 
 }
