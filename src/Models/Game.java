@@ -50,4 +50,11 @@ public class Game extends BaseModel {
         }
     }
 
+    public void makeMove(Move move)
+    {
+        tttBoard.setX(move.getRow(), move.getColumn());
+    }
+
+
+
 }
