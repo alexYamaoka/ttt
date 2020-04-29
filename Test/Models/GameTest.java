@@ -13,7 +13,7 @@ class GameTest
 
 
     @Test
-    void getPlayer1_shouldReturnUserInformation()
+    void getPlayer1_shouldReturn_UserInformation()
     {
         Game game = new Game(player1, player2);
 
@@ -23,7 +23,7 @@ class GameTest
     }
 
     @Test
-    void getPlayer2_shouldReturnUserInformation()
+    void getPlayer2_shouldReturn_UserInformation()
     {
         Game game = new Game(player1, player2);
 
@@ -35,7 +35,7 @@ class GameTest
 
 
     @Test
-    void player1MakeMove_shouldReturnX()
+    void player1MakeMove_shouldReturn_X()
     {
         Game game = new Game(player1, player2);
 
@@ -46,7 +46,7 @@ class GameTest
     }
 
     @Test
-    void player2MakeMove_shouldReturnO()
+    void player2MakeMove_shouldReturn_O()
     {
         Game game = new Game(player1, player2);
 
@@ -57,7 +57,7 @@ class GameTest
     }
 
     @Test
-    void checkIfValidMove_shouldReturnTrue()
+    void checkIfValidMove_shouldReturn_True()
     {
         Game game = new Game(player1, player2);
 
@@ -69,7 +69,7 @@ class GameTest
     }
 
     @Test
-    void checkIfValidMove_shouldReturnFalse()
+    void checkIfValidMove_shouldReturn_False()
     {
         Game game = new Game(player1, player2);
 

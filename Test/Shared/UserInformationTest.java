@@ -6,16 +6,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class UserInformationTest
 {
+    UserInformation userInformation = new UserInformation("firstName", "lastName", "username", "email", "password");
 
     @Test
-    void getFirstName_returnsCorrect()
+    void getFirstName_returns_Correct()
     {
-        UserInformation userInformation = new UserInformation("firstName", "lastName", "username", "email", "password");
+
         assertEquals("firstName", userInformation.getFirstName());
     }
 
     @Test
-    void setFirstName_assignsCorrect()
+    void setFirstName_assigns_Correct()
     {
         UserInformation userInformation = new UserInformation();
         userInformation.setFirstName("firstName");
@@ -23,14 +24,14 @@ class UserInformationTest
     }
 
     @Test
-    void getLastName_returnsCorrect()
+    void getLastName_returns_Correct()
     {
         UserInformation userInformation = new UserInformation("firstName", "lastName", "username", "email", "password");
         assertEquals("lastName", userInformation.getLastName());
     }
 
     @Test
-    void setLastName_assignsCorrect()
+    void setLastName_assigns_Correct()
     {
         UserInformation userInformation = new UserInformation();
         userInformation.setLastName("lastName");
@@ -38,14 +39,14 @@ class UserInformationTest
     }
 
     @Test
-    void getUserName_returnsCorrect()
+    void getUserName_returns_Correct()
     {
         UserInformation userInformation = new UserInformation("firstName", "lastName", "username", "email", "password");
         assertEquals("username", userInformation.getUserName());
     }
 
     @Test
-    void setUserName_assignsCorrect()
+    void setUserName_assigns_Correct()
     {
         UserInformation userInformation = new UserInformation();
         userInformation.setUserName("username");

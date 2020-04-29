@@ -16,7 +16,7 @@ class TTTBoardTest
     }
 
     @Test
-    void setX()
+    void setX_shouldReturn_X()
     {
         TTTBoard tttBoard = new TTTBoard();
 
@@ -27,7 +27,7 @@ class TTTBoardTest
     }
 
     @Test
-    void setO()
+    void setO_shouldReturn_O()
     {
         TTTBoard tttBoard = new TTTBoard();
 
@@ -40,7 +40,7 @@ class TTTBoardTest
 
 
     @Test
-    void isCellEmpty()
+    void isCellEmpty_shouldReturn_UnderscoreCharacter()
     {
         TTTBoard tttBoard = new TTTBoard();
         assertEquals('_', tttBoard.getCharInCell(1,1));
@@ -48,7 +48,7 @@ class TTTBoardTest
 
 
     @Test
-    void isWinner()
+    void isWinner_shouldReturn_true()
     {
         TTTBoard tttBoard = new TTTBoard();
         tttBoard.setX(0,0);
@@ -59,7 +59,7 @@ class TTTBoardTest
     }
 
     @Test
-    void isTieGame()
+    void isTieGame_shouldReturn_true()
     {
         TTTBoard tttBoard = new TTTBoard();
         tttBoard.setX(0,0);
