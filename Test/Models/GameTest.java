@@ -59,12 +59,8 @@ class GameTest
         String username = "username";
         String email = "email";
         String password = "password";
-
         UserInformation player1 = new UserInformation(firstName, lastName, username, email, password);
         UserInformation player2 = new UserInformation(firstName, lastName, username, email, password);
-
-        System.out.println("player1: " + player1);
-        System.out.println("player2: " + player2);
 
         Game game = new Game(player1, player2);
 
@@ -96,11 +92,27 @@ class GameTest
     @Test
     void checkIfValidMove()
     {
+        String firstName = "firstName";
+        String lastName = "lastName";
+        String username = "username";
+        String email = "email";
+        String password = "password";
+        UserInformation player1 = new UserInformation(firstName, lastName, username, email, password);
+        UserInformation player2 = new UserInformation(firstName, lastName, username, email, password);
+
+        Game game = new Game(player1, player2);
+        Move move1 = new Move(1,1,player1);
+        Move move2 = new Move (1,1, player2);
+
+        game.player1MakeMove(move1);
+
+        assertEquals(false, game.checkIfValidMove(move2));
     }
 
     @Test
     void isPlayer1Winner()
     {
+
     }
 
     @Test
@@ -111,5 +123,6 @@ class GameTest
     @Test
     void isTieGame()
     {
+
     }
 }

@@ -20,7 +20,7 @@ public class Game extends BaseModel {
 
     public Game(UserInformation player1, UserInformation player2)
     {
-        TTTBoard tttBoard = new TTTBoard();
+        tttBoard = new TTTBoard();
         this.player1 = player1;
         this.player2 = player2;
         gameObserversList = new ArrayList<>();
