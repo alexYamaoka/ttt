@@ -49,7 +49,7 @@ public class SignInController implements Initializable, SignInResultListener
     @FXML
     private Button btn_LogIn, btn_SignUp;
     @FXML
-    private Label usernameError, passwordError, loginError;
+    private Label usernameError, passwordError, logInError;
     @FXML
     private BorderPane parentContainerSignIn;
     @FXML
@@ -184,9 +184,10 @@ public class SignInController implements Initializable, SignInResultListener
                     Scene scene = new Scene(root);
                     stage.setScene(scene);
                     stage.show();
+                    controller.getOptions().updateInfo();
                 }
                 else{
-                    loginError.setText("The username or password provided is incorrect.");
+                    logInError.setText("The username or password provided is incorrect.");
                 }
             }
         });

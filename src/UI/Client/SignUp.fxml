@@ -57,6 +57,7 @@
               </Label>
               <Button fx:id="btn_SignIn" layoutX="57.0" layoutY="252.0" mnemonicParsing="false" onAction="#onSignInButtonClicked" prefHeight="27.0" prefWidth="57.0" style="-fx-background-color: white; -fx-text-fill: #204060; -fx-border-color: white;" text="Sign in" />
               <Button fx:id="btn_SignUp" layoutX="131.0" layoutY="252.0" mnemonicParsing="false" onAction="#onSignUpButtonClicked" onKeyPressed="#OnEnterKeyPressed" prefHeight="32.0" prefWidth="101.5" style="-fx-background-color: #204060; -fx-text-fill: white;" text="Create account" />
+            <Label fx:id="registrationError" layoutX="72.0" layoutY="225.0" prefHeight="17.0" prefWidth="158.0" style="-fx-text-fill: red" />
           </children>
       </AnchorPane>
    </children>

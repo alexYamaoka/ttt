@@ -121,4 +121,8 @@ public class ClientController
         return signUpController;
     }
 
+    public Options getOptions() {
+        return options;
+    }
+
 }
