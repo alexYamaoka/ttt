@@ -112,6 +112,17 @@ public class GameThread implements Runnable
                             outputToPlayer2.writeObject(player1Move);
                             outputToPlayer1.writeObject(player1Move);
                             player1MadeMove = true;
+
+
+                            if (game.isPlayer1Winner(move1))
+                            {
+                                System.out.println("Player 1 Wins");
+                            }
+
+                            if (game.isTieGame())
+                            {
+                                System.out.println("Tie Game");
+                            }
                         }
                         else
                         {
@@ -144,6 +155,17 @@ public class GameThread implements Runnable
                             outputToPlayer2.writeObject(player2Move);
                             outputToPlayer1.writeObject(player2Move);
                             player2MadeMove = true;
+
+
+                            if (game.isPlayer2Winner(move2))
+                            {
+                                System.out.println("Player 2 Wins");
+                            }
+
+                            if (game.isTieGame())
+                            {
+                                System.out.println("Tie Game");
+                            }
                         }
                         else
                         {

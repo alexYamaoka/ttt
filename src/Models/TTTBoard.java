@@ -1,5 +1,7 @@
 package Models;
 
+import Shared.UserInformation;
+
 public class TTTBoard
 {
     private final char X = 'X';
@@ -85,4 +87,23 @@ public class TTTBoard
 
         return false;
     }
+
+
+
+    public boolean isTieGame()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                if (board[i][j] == emptyCell)
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
 }

@@ -60,9 +60,19 @@ public class Game extends BaseModel {
         return tttBoard.isMoveValid(move.getRow(), move.getColumn());
     }
 
-//    public boolean isGameOver()
-//    {
-//
-//    }
+    public boolean isPlayer1Winner(Move move)
+    {
+        return tttBoard.isWinner(move.getRow(), move.getColumn(), 'X');
+    }
+
+    public boolean isPlayer2Winner(Move move)
+    {
+        return tttBoard.isWinner(move.getRow(), move.getColumn(), 'O');
+    }
+
+    public boolean isTieGame()
+    {
+        return tttBoard.isTieGame();
+    }
 
 }
