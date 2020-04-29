@@ -4,6 +4,7 @@ import Client.Client;
 import Server.ClientConnection;
 import DataBase.*;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 public class GameRoomInformation {
@@ -13,6 +14,7 @@ public class GameRoomInformation {
     private String Id;
     private String gameName;
 
+
     private ArrayList<ClientConnection> GameObservers = new ArrayList<>();
 
     public GameRoomInformation (ClientConnection player1,String gameName) {
@@ -21,7 +23,6 @@ public class GameRoomInformation {
         this.Id = gameId.getNewId();
         this.gameName = gameName;
         this.player1 = player1;
-
     }
 
     public void start(){
@@ -43,7 +44,5 @@ public class GameRoomInformation {
     public void addGameObserver(ClientConnection client){
         GameObservers.add(client);
     }
-
-
 
 }
