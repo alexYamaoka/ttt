@@ -108,7 +108,7 @@ public class GameThread implements Runnable
                         // check if its a valid move
                         if (game.checkIfValidMove(move1))
                         {
-                            game.makeMove(move1);
+                            game.player1MakeMove(move1);
                             outputToPlayer2.writeObject(player1Move);
                             outputToPlayer1.writeObject(player1Move);
                             player1MadeMove = true;
@@ -151,7 +151,7 @@ public class GameThread implements Runnable
 
                         if (game.checkIfValidMove(move2))
                         {
-                            game.makeMove(move2);
+                            game.player2MakeMove(move2);
                             outputToPlayer2.writeObject(player2Move);
                             outputToPlayer1.writeObject(player2Move);
                             player2MadeMove = true;

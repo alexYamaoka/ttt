@@ -54,7 +54,7 @@ public class TTTBoard
         numOfMovesLeft--;
     }
 
-    public boolean isMoveValid(int row, int col)
+    public boolean isCellEmpty(int row, int col)
     {
         return board[row][col] == emptyCell;
     }

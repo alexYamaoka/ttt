@@ -50,14 +50,19 @@ public class Game extends BaseModel {
         }
     }
 
-    public void makeMove(Move move)
+    public void player1MakeMove(Move move)
     {
         tttBoard.setX(move.getRow(), move.getColumn());
     }
 
+    public void player2MakeMove(Move move)
+    {
+        tttBoard.setO(move.getRow(), move.getColumn());
+    }
+
     public boolean checkIfValidMove(Move move)
     {
-        return tttBoard.isMoveValid(move.getRow(), move.getColumn());
+        return tttBoard.isCellEmpty(move.getRow(), move.getColumn());
     }
 
     public boolean isPlayer1Winner(Move move)
