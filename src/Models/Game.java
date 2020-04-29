@@ -53,11 +53,17 @@ public class Game extends BaseModel {
     public void player1MakeMove(Move move)
     {
         tttBoard.setX(move.getRow(), move.getColumn());
+
+        tttBoard.printBoard();
+        System.out.println();
     }
 
     public void player2MakeMove(Move move)
     {
         tttBoard.setO(move.getRow(), move.getColumn());
+
+        tttBoard.printBoard();
+        System.out.println();
     }
 
     public boolean checkIfValidMove(Move move)

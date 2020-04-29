@@ -105,6 +105,7 @@ public class GameThread implements Runnable
                     {
                         Move move1 = (Move) player1Move.getData();
 
+
                         // check if its a valid move
                         if (game.checkIfValidMove(move1))
                         {
