@@ -55,6 +55,9 @@ public class Game extends BaseModel {
         tttBoard.setX(move.getRow(), move.getColumn());
     }
 
-
+    public boolean checkIfValidMove(Move move)
+    {
+        return tttBoard.isMoveValid(move.getRow(), move.getColumn());
+    }
 
 }

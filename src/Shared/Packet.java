@@ -19,6 +19,7 @@ public class Packet implements Serializable {
     public static final String MAKE_NEXT_MOVE = "MAKE-NEXT-MOVE";
     public static final String OBSERVE_GAME = "OBSERVE-GAME";
     public static final String GET_GAMES = "GET_GAMES"; // Joinable games
+    public static final String GAME_MOVE = "GAME-MOVE";
 
 
     public Packet(String request, UserInformation information, Serializable data) {

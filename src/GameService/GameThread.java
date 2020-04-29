@@ -1,6 +1,7 @@
 package GameService;
 
 import Models.Game;
+import Models.Move;
 import Server.ClientConnection;
 import Shared.Packet;
 import javafx.scene.chart.ScatterChart;
@@ -29,7 +30,7 @@ public class GameThread implements Runnable
 
     public GameThread(ClientConnection player1, ClientConnection player2, ArrayList<ClientConnection> GameObservers)
     {
-        game = new Game();
+        game = new Game(player1.getInformation(), player2.getInformation());
         this.player1 = player1;
         this.player2 = player2;
         this.GameObservers = GameObservers;
@@ -56,7 +57,7 @@ public class GameThread implements Runnable
     {
         isRunning.set(true);
 
-        Packet playerMove; // rename to move
+
         // passing moves to each other.  not the game
         // create a class called game move.
 
@@ -89,14 +90,52 @@ public class GameThread implements Runnable
                 // if game ends, break out of loop and end the task
 
 
-                playerMove = (Packet) inputFromPlayer1.readObject();
-                outputToPlayer2.writeObject(playerMove);
-                outputToPlayer1.writeObject(playerMove);
+                boolean player1MadeMove = false;
 
 
-                playerMove = (Packet) inputFromPlayer2.readObject();
-                outputToPlayer2.writeObject(playerMove);
-                outputToPlayer1.writeObject(playerMove);
+                // loops until player 1 makes a valid move
+                while (!player1MadeMove)
+                {
+                    Packet player1Move = (Packet) inputFromPlayer1.readObject();
+                    Move move1 = (Move) player1Move.getData();
+
+
+                    if (player1Move.getRequest().equals(Packet.GAME_MOVE))
+                    {
+                        if (game.checkIfValidMove(move1))
+                        {
+                            game.makeMove(move1);
+                            outputToPlayer2.writeObject(player1Move);
+                            outputToPlayer1.writeObject(player1Move);
+                            player1MadeMove = true;
+                        }
+                    }
+                }
+
+
+
+
+                boolean player2MadeMove = false;
+
+
+
+                // loops until player 2 makes a valid move
+                while (!player2MadeMove)
+                {
+                    Packet player2Move = (Packet) inputFromPlayer2.readObject();
+                    Move move2 = (Move) player2Move.getData();
+
+                    if (player2Move.getRequest().equals(Packet.GAME_MOVE))
+                    {
+                        if (game.checkIfValidMove(move2))
+                        {
+                            game.makeMove(move2);
+                            outputToPlayer2.writeObject(player2Move);
+                            outputToPlayer1.writeObject(player2Move);
+                            player2MadeMove = true;
+                        }
+                    }
+                }
 
             }
             catch (IOException | ClassNotFoundException ex)
