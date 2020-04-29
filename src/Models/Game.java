@@ -52,6 +52,12 @@ public class Game extends BaseModel {
 
     public void player1MakeMove(Move move)
     {
+        System.out.println("Row: " + move.getRow());
+        System.out.println("column: " + move.getColumn());
+        System.out.println("userInformation: " + move.getUserInformation());
+
+        System.out.println("tttBoard: " + tttBoard);
+
         tttBoard.setX(move.getRow(), move.getColumn());
 
         tttBoard.printBoard();
@@ -64,6 +70,11 @@ public class Game extends BaseModel {
 
         tttBoard.printBoard();
         System.out.println();
+    }
+
+    public char getCharInTile(int row, int col)
+    {
+        return tttBoard.getCharInCell(row, col);
     }
 
     public boolean checkIfValidMove(Move move)

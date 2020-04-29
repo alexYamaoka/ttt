@@ -15,6 +15,7 @@ public class TTTBoard
 
     public TTTBoard()
     {
+        board = new char[numOfRows][numOfColumns];
         initializeBoard();
         numOfMovesLeft = 9;
     }
@@ -52,6 +53,11 @@ public class TTTBoard
     {
         board[row][col] = O;
         numOfMovesLeft--;
+    }
+
+    public char getCharInCell(int row, int col)
+    {
+        return board[row][col];
     }
 
     public boolean isCellEmpty(int row, int col)
