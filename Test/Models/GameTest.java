@@ -7,38 +7,65 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest
 {
+    UserInformation player1 = new UserInformation("player1_firstName", "player1_lastName", "player1_username", "player1_email", "player1_password");
+    UserInformation player2 = new UserInformation("player2_firstName", "player2_lastName", "player2_username", "player2_email", "player2_password");
+    Game game = new Game(player1, player2);
 
 
     @Test
-    void getPlayer1()
+    void getPlayer1_shouldReturnUserInformation()
     {
-        String firstName = "firstName";
-        String lastName = "lastName";
-        String username = "username";
-        String email = "email";
-        String password = "password";
-        UserInformation player1 = new UserInformation(firstName, lastName, username, email, password);
-        UserInformation player2 = new UserInformation(firstName, lastName, username, email, password);
-
-        Game game = new Game(player1, player2);
+        System.out.println("player1: " + player1);
 
         assertEquals(player1, game.getPlayer1());
     }
 
     @Test
-    void getPlayer2()
+    void getPlayer2_shouldReturnUserInformation()
     {
-        String firstName = "firstName";
-        String lastName = "lastName";
-        String username = "username";
-        String email = "email";
-        String password = "password";
-        UserInformation player1 = new UserInformation(firstName, lastName, username, email, password);
-        UserInformation player2 = new UserInformation(firstName, lastName, username, email, password);
-
-        Game game = new Game(player1, player2);
+        System.out.println("player1: " + player1);
 
         assertEquals(player2, game.getPlayer2());
+    }
+
+
+
+    @Test
+    void player1MakeMove_shouldReturnX()
+    {
+        Move move = new Move(1,1, player1);
+        game.player1MakeMove(move);
+
+        assertEquals('X', game.getCharInTile(1,1));
+    }
+
+    @Test
+    void player2MakeMove_shouldReturnO()
+    {
+        Move move = new Move(1,1,player2);
+        game.player2MakeMove(move);
+
+        assertEquals('O', game.getCharInTile(1,1));
+    }
+
+    @Test
+    void checkIfValidMove_shouldReturnTrue()
+    {
+        Move move1 = new Move(1,1,player1);
+        Move move2 = new Move (2,1, player2);
+        game.player1MakeMove(move1);
+
+        assertEquals(true, game.checkIfValidMove(move2));
+    }
+
+    @Test
+    void checkIfValidMove_shouldReturnFalse()
+    {
+        Move move1 = new Move(1,1,player1);
+        Move move2 = new Move (1,1, player2);
+        game.player1MakeMove(move1);
+
+        assertEquals(false, game.checkIfValidMove(move2));
     }
 
     @Test
@@ -51,63 +78,7 @@ class GameTest
     {
     }
 
-    @Test
-    void player1MakeMove()
-    {
-        String firstName = "firstName";
-        String lastName = "lastName";
-        String username = "username";
-        String email = "email";
-        String password = "password";
-        UserInformation player1 = new UserInformation(firstName, lastName, username, email, password);
-        UserInformation player2 = new UserInformation(firstName, lastName, username, email, password);
 
-        Game game = new Game(player1, player2);
-
-        Move move = new Move(1,1, player1);
-
-        game.player1MakeMove(move);
-
-        assertEquals('X', game.getCharInTile(1,1));
-    }
-
-    @Test
-    void player2MakeMove()
-    {
-        String firstName = "firstName";
-        String lastName = "lastName";
-        String username = "username";
-        String email = "email";
-        String password = "password";
-        UserInformation player1 = new UserInformation(firstName, lastName, username, email, password);
-        UserInformation player2 = new UserInformation(firstName, lastName, username, email, password);
-
-        Game game = new Game(player1, player2);
-        Move move = new Move(1,1,player2);
-        game.player2MakeMove(move);
-
-        assertEquals('O', game.getCharInTile(1,1));
-    }
-
-    @Test
-    void checkIfValidMove()
-    {
-        String firstName = "firstName";
-        String lastName = "lastName";
-        String username = "username";
-        String email = "email";
-        String password = "password";
-        UserInformation player1 = new UserInformation(firstName, lastName, username, email, password);
-        UserInformation player2 = new UserInformation(firstName, lastName, username, email, password);
-
-        Game game = new Game(player1, player2);
-        Move move1 = new Move(1,1,player1);
-        Move move2 = new Move (1,1, player2);
-
-        game.player1MakeMove(move1);
-
-        assertEquals(false, game.checkIfValidMove(move2));
-    }
 
     @Test
     void isPlayer1Winner()
