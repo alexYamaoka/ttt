@@ -6,11 +6,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class UserInformationTest
 {
-    UserInformation userInformation = new UserInformation("firstName", "lastName", "username", "email", "password");
+
 
     @Test
     void getFirstName_returns_Correct()
     {
+        UserInformation userInformation = new UserInformation("firstName", "lastName", "username", "email", "password");
 
         assertEquals("firstName", userInformation.getFirstName());
     }
