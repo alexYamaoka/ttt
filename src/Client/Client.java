@@ -15,8 +15,6 @@ public class Client
     private ArrayDeque<Packet> requestsToServer = new ArrayDeque<>();
     private ArrayDeque<Packet> responseFromServer = new ArrayDeque<>();
 
-
-
     public Client(String hostName, int port, UserInformation userInformation)
     {
         this.hostName = hostName;
