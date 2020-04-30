@@ -3,7 +3,7 @@ package Client;
 import Shared.UserInformation;
 import UI.Client.*;
 
-import UI.GameBoardController;
+import UI.Client.GameBoardController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -65,10 +65,11 @@ public class ClientController
             options.setClientController(this);
             Scene optionsScene = new Scene(optionsPane);
 
-            loader = new FXMLLoader(getClass().getResource("../UI/GameBoard.fxml"));
+            loader = new FXMLLoader(getClass().getResource("../UI/Client/GameBoard.fxml"));
             gameBoardPane = loader.load();
             gameBoardController = loader.getController();
             gameBoardController.setClientController(this);
+            Scene gameBoardScene = new Scene(gameBoardPane);
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -132,6 +133,10 @@ public class ClientController
 
     public Options getOptions() {
         return options;
+    }
+
+    public Pane getGameBoardPane() {
+        return gameBoardPane;
     }
 
 }
