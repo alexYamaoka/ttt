@@ -1,5 +1,6 @@
 package UI;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -10,30 +11,52 @@ import javafx.scene.layout.VBox;
 public class GameBoardController
 {
     @FXML
-    Label player1Name, player2Name;
-
+    Label player1Name, player2Name, time;
     @FXML
-    Label playerOverallStatsWins, playerOverallStatsLosses, playerOverallStatsTies;
+    Button rematch, quit, zZ, zO, zT, oZ, oO, oT, tZ, tO, tT;
 
-    @FXML
-    Label currentGameStatsWins, currentGameStatsLosses, currentGameStatsTies;
+    public void playerMoved(Button button){
+        resetTime();
+    }
+    public void playerMovedzZ(ActionEvent actionEvent) {
+        playerMoved(zZ);
+    }
+    public void playerMovedzO(ActionEvent actionEvent) {
+        playerMoved(zO);
+    }
+    public void playerMovedzT(ActionEvent actionEvent) {
+        playerMoved(zT);
+    }
+    public void playerMovedoZ(ActionEvent actionEvent) {
+        playerMoved(oZ);
+    }
+    public void playerMovedoO(ActionEvent actionEvent) {
+        playerMoved(oO);
+    }
+    public void playerMovedoT(ActionEvent actionEvent) {
+        playerMoved(oT);
+    }
+    public void playerMovedtZ(ActionEvent actionEvent) {
+        playerMoved(tZ);
+    }
+    public void playerMovedtO(ActionEvent actionEvent) {
+        playerMoved(tO);
+    }
+    public void playerMovedtT(ActionEvent actionEvent) {
+        playerMoved(tT);
+    }
 
-    @FXML
-    Label showChatHistory;
+    public void rematch(ActionEvent actionEvent) {
+    }
 
-    @FXML
-    TextArea userChatInput;
+    public void quit(ActionEvent actionEvent) {
+    }
 
-    @FXML
-    Button userChatEnter, mainMenu, newGame, startNewChat;
+    private void countdownTime(){
 
-    @FXML
-    Label panel1, panel2, panel3, panel4, panel5, panel6, panel7, panel8, panel9;
-
-    @FXML
-    VBox myGamesContainer;      // container to place labels for all the games the user has going on.
-
-
-
-
+    }
+    public void resetTime(){
+        time.setText("00:30");
+        countdownTime();
+    }
 }
