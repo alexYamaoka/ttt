@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1025.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496) radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.Client.GameBoardController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1025.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496) radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.Client.GameBoardController">
    <children>
       <ImageView fitHeight="63.0" fitWidth="87.0" layoutX="469.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -34,15 +31,15 @@
             </Label>
          </children>
       </HBox>
-      <Button fx:id="zZ" layoutX="510.0" layoutY="120.0" mnemonicParsing="false" onAction="#playerMovedzZ" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" text="Button" />
-      <Button fx:id="zO" layoutX="660.0" layoutY="120.0" mnemonicParsing="false" onAction="#playerMovedzO" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" text="Button" />
-      <Button fx:id="zT" layoutX="810.0" layoutY="120.0" mnemonicParsing="false" onAction="#playerMovedzT" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" text="Button" />
-      <Button fx:id="oZ" layoutX="510.0" layoutY="270.0" mnemonicParsing="false" onAction="#playerMovedoZ" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" text="Button" />
-      <Button fx:id="oO" layoutX="660.0" layoutY="270.0" mnemonicParsing="false" onAction="#playerMovedoO" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" text="Button" />
-      <Button fx:id="oT" layoutX="810.0" layoutY="270.0" mnemonicParsing="false" onAction="#playerMovedoT" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" text="Button" />
-      <Button fx:id="tZ" layoutX="510.0" layoutY="420.0" mnemonicParsing="false" onAction="#playerMovedtZ" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" text="Button" />
-      <Button fx:id="tO" layoutX="660.0" layoutY="420.0" mnemonicParsing="false" onAction="#playerMovedtO" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" text="Button" />
-      <Button fx:id="tT" layoutX="810.0" layoutY="420.0" mnemonicParsing="false" onAction="#playerMovedtT" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" text="Button" />
+      <Button fx:id="zZ" layoutX="510.0" layoutY="120.0" mnemonicParsing="false" onAction="#playerMovedzZ" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" />
+      <Button fx:id="zO" layoutX="660.0" layoutY="120.0" mnemonicParsing="false" onAction="#playerMovedzO" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" />
+      <Button fx:id="zT" layoutX="810.0" layoutY="120.0" mnemonicParsing="false" onAction="#playerMovedzT" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" />
+      <Button fx:id="oZ" layoutX="510.0" layoutY="270.0" mnemonicParsing="false" onAction="#playerMovedoZ" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" />
+      <Button fx:id="oO" layoutX="660.0" layoutY="270.0" mnemonicParsing="false" onAction="#playerMovedoO" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" />
+      <Button fx:id="oT" layoutX="810.0" layoutY="270.0" mnemonicParsing="false" onAction="#playerMovedoT" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" />
+      <Button fx:id="tZ" layoutX="510.0" layoutY="420.0" mnemonicParsing="false" onAction="#playerMovedtZ" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" />
+      <Button fx:id="tO" layoutX="660.0" layoutY="420.0" mnemonicParsing="false" onAction="#playerMovedtO" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" />
+      <Button fx:id="tT" layoutX="810.0" layoutY="420.0" mnemonicParsing="false" onAction="#playerMovedtT" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" />
       <Button layoutX="195.0" layoutY="250.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" text="Button" />
       <Button layoutX="195.0" layoutY="340.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" text="Button" />
       <Button fx:id="rematch" layoutX="195.0" layoutY="430.0" mnemonicParsing="false" onAction="#rematch" prefHeight="40.0" prefWidth="120.0" text="Rematch" />
