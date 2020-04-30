@@ -1,5 +1,7 @@
 package Client;
 
+import Models.Move;
+import ObserverPatterns.GameListener;
 import ObserverPatterns.SignInResultListener;
 import ObserverPatterns.SignUpResultListener;
 import ObserverPatterns.UpdateUserinformationListener;
@@ -17,6 +19,7 @@ public class ReadMessageBus implements Runnable
     private SignInResultListener signInResultListener;
     private SignUpResultListener signUpResultListener;
     private UpdateUserinformationListener updateUserinformationListener;
+    private GameListener gameListener;
 
 
 
@@ -26,6 +29,7 @@ public class ReadMessageBus implements Runnable
         signInResultListener = clientController.getSignInController();
         signUpResultListener = clientController.getSignUpController();
         updateUserinformationListener = clientController.getOptions();
+        gameListener = clientController.getGameBoardController();
     }
 
     public void start()
@@ -66,6 +70,9 @@ public class ReadMessageBus implements Runnable
                     case Packet.UPDATE_USER:
                         updateUserinformationListener.updateUserinformation(response.getData().toString());
                         break;
+
+                    case Packet.GAME_MOVE:
+                        gameListener.updateMove(((Move)response.getData()).getMove());
                 }
 
             }
