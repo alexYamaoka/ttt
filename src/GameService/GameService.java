@@ -28,7 +28,7 @@ public class GameService implements Runnable, Service
     private static Lock lock = new ReentrantLock();
     private HashSet<ClientConnection> clientConnections = new HashSet<>();
 
-    private final HashMap<String, GameRoomInformation> ongoingGameRooms = new HashMap<>();
+    //private final HashMap<String, GameRoomInformation> ongoingGameRooms = new HashMap<>();
 
     public GameService() {
     }
@@ -61,18 +61,21 @@ public class GameService implements Runnable, Service
                 ex.printStackTrace();
             }
     }
-
+/*
     public void addGame(GameRoomInformation game){
         ongoingGameRooms.put(game.getGameName(),game);
     }
+
     public GameRoomInformation getGame(String Id){
         return ongoingGameRooms.get(Id);
     }
+
+
+
     public Set<String> getGames(){
         return ongoingGameRooms.keySet();
-
     }
-
+ */
     public void handle(ClientConnection clientConnection, Packet packet) {
 
         GameHandler handler = new GameHandler(clientConnection, packet, this);

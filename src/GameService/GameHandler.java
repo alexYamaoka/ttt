@@ -2,18 +2,14 @@ package GameService;
 
 import DataBase.sql.DataSource;
 import DataBase.sql.DatabaseManager;
-import Models.BaseModel;
 import Shared.Packet;
 import Shared.UserInformation;
 import app.Server;
 import Server.ClientConnection;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
+
 import java.io.Serializable;
-import java.sql.SQLException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GameHandler implements Runnable
@@ -55,24 +51,24 @@ public class GameHandler implements Runnable
         switch(request)
         {
             case Packet.JOIN_GAME:
-                GameRoomInformation game = service.getGame(data.toString());
-                game.join(clientConnection);
+               // GameRoomInformation game = service.getGame(data.toString());
+                //game.join(clientConnection);
                 //Database call
-                game.start();
+                //game.start();
                 break;
 
             case Packet.OBSERVE_GAME:
-                GameRoomInformation ObserverGame = service.getGame(data.toString());
+                //GameRoomInformation ObserverGame = service.getGame(data.toString());
                 break;
 
             case Packet.NEW_GAME_CREATED:
-                service.addGame(new GameRoomInformation(clientConnection,data.toString())); //pull game name from data
+                //service.addGame(new GameRoomInformation(clientConnection,data.toString())); //pull game name from data
 
                 break;
 
             case Packet.GET_GAMES:
                 try {
-                    clientConnection.getOutputStream().writeObject(new Packet(Packet.GET_GAMES, userInformation, (Serializable) service.getGames())); // list of current games
+                   // clientConnection.getOutputStream().writeObject(new Packet(Packet.GET_GAMES, userInformation, (Serializable) service.getGames())); // list of current games
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

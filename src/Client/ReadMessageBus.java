@@ -2,6 +2,7 @@ package Client;
 
 import ObserverPatterns.SignInResultListener;
 import ObserverPatterns.SignUpResultListener;
+import ObserverPatterns.UpdateUserinformationListener;
 import Shared.Packet;
 import Shared.UserInformation;
 
@@ -15,6 +16,7 @@ public class ReadMessageBus implements Runnable
 
     private SignInResultListener signInResultListener;
     private SignUpResultListener signUpResultListener;
+    private UpdateUserinformationListener updateUserinformationListener;
 
 
 
@@ -23,6 +25,7 @@ public class ReadMessageBus implements Runnable
         this.clientController = clientController;
         signInResultListener = clientController.getSignInController();
         signUpResultListener = clientController.getSignUpController();
+        updateUserinformationListener = clientController.getOptions();
     }
 
     public void start()
@@ -54,12 +57,14 @@ public class ReadMessageBus implements Runnable
                         break;
 
                     case Packet.SIGN_IN:
-                        System.out.println("SIGN-IN Received");
-                        System.out.println(response.getData().toString());
                         signInResultListener.updateSignInResult(response.getData().toString());
                         break;
 
                     case Packet.SIGN_OUT:
+                        break;
+
+                    case Packet.UPDATE_USER:
+                        updateUserinformationListener.updateUserinformation(response.getData().toString());
                         break;
                 }
 
