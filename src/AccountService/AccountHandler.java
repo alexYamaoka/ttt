@@ -26,10 +26,10 @@ public class AccountHandler implements Runnable {
 
     private final AtomicBoolean running = new AtomicBoolean(false);
 
-    public AccountHandler(ClientConnection clientConnection, Packet packet, ObjectOutputStream outputStream) {
+    public AccountHandler(ClientConnection clientConnection, Packet packet) {
         this.packet = packet;
-        this.outputStream = outputStream;
         this.clientConnection = clientConnection;
+        this.outputStream = clientConnection.getOutputStream();
     }
 
     public void start() {
