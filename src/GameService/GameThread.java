@@ -1,5 +1,7 @@
 package GameService;
 
+import Models.Game;
+import Models.Move;
 import Server.ClientConnection;
 import Shared.Packet;
 import javafx.scene.chart.ScatterChart;
@@ -24,9 +26,11 @@ public class GameThread implements Runnable
     private ObjectInputStream inputFromPlayer1;
     private ObjectInputStream inputFromPlayer2;
     private ArrayList<ClientConnection> GameObservers;
+    private Game game;
 
     public GameThread(ClientConnection player1, ClientConnection player2, ArrayList<ClientConnection> GameObservers)
     {
+        game = new Game(player1.getInformation(), player2.getInformation());
         this.player1 = player1;
         this.player2 = player2;
         this.GameObservers = GameObservers;
@@ -53,7 +57,9 @@ public class GameThread implements Runnable
     {
         isRunning.set(true);
 
-        Packet gameReceived;
+
+        // passing moves to each other.  not the game
+        // create a class called game move.
 
         try
         {
@@ -76,25 +82,115 @@ public class GameThread implements Runnable
 
             try
             {
-                gameReceived = (Packet) inputFromPlayer1.readObject();
-                outputToPlayer2.writeObject(gameReceived);
-
-                gameReceived = (Packet) inputFromPlayer2.readObject();
-                outputToPlayer1.writeObject(gameReceived);
-
+                // check if valid move,
+                // checks the game model
+                // if its a valid move, send it to both players.
+                // notify observers
+                // want to update UI from the server side.
                 // if game ends, break out of loop and end the task
+
+
+                boolean player1MadeMove = false;
+                boolean player2MadeMove = false;
+
+
+
+
+                // loops until player 1 makes a valid move
+                while (!player1MadeMove)
+                {
+                    Packet player1Move = (Packet) inputFromPlayer1.readObject();
+
+                    if (player1Move.getRequest().equals(Packet.GAME_MOVE))
+                    {
+                        Move move1 = (Move) player1Move.getData();
+
+
+                        // check if its a valid move
+                        if (game.checkIfValidMove(move1))
+                        {
+                            game.player1MakeMove(move1);
+                            outputToPlayer2.writeObject(player1Move);
+                            outputToPlayer1.writeObject(player1Move);
+                            player1MadeMove = true;
+
+
+                            if (game.isPlayer1Winner(move1))
+                            {
+                                System.out.println("Player 1 Wins");
+                            }
+
+                            if (game.isTieGame())
+                            {
+                                System.out.println("Tie Game");
+                            }
+                        }
+                        else
+                        {
+                            System.out.println("Not a valid move");
+                        }
+
+
+                        // TODO: isGameOver() inside game
+//                        if (game.isGameOver())
+//                        {
+//
+//                        }
+                    }
+                }
+
+
+
+                // loops until player 2 makes a valid move
+                while (!player2MadeMove)
+                {
+                    Packet player2Move = (Packet) inputFromPlayer2.readObject();
+
+                    if (player2Move.getRequest().equals(Packet.GAME_MOVE))
+                    {
+                        Move move2 = (Move) player2Move.getData();
+
+                        if (game.checkIfValidMove(move2))
+                        {
+                            game.player2MakeMove(move2);
+                            outputToPlayer2.writeObject(player2Move);
+                            outputToPlayer1.writeObject(player2Move);
+                            player2MadeMove = true;
+
+
+                            if (game.isPlayer2Winner(move2))
+                            {
+                                System.out.println("Player 2 Wins");
+                            }
+
+                            if (game.isTieGame())
+                            {
+                                System.out.println("Tie Game");
+                            }
+                        }
+                        else
+                        {
+                            System.out.println("Not a valid move");
+                        }
+
+
+
+                        // TODO: isGameOver() inside game
+//                        if (game.isGameOver())
+//                        {
+//
+//                        }
+                    }
+                }
+
+
 
             }
             catch (IOException | ClassNotFoundException ex)
             {
                 ex.printStackTrace();
             }
-
-
         }
-
-
     }
-
 
 }
