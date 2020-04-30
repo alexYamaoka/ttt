@@ -1,48 +1,100 @@
 package Models;
 
+import ObserverPatterns.GameObserver;
+import Shared.Packet;
 import Shared.UserInformation;
 
-import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Game extends BaseModel {
+    // game logic
+    // list of observers
+    // player 1
+    // player 2
 
-    private Date startTime;
-    private Date endTime;
-    private long time;
+    private TTTBoard tttBoard;
     private UserInformation player1;
     private UserInformation player2;
+    private List<GameObserver> gameObserversList;
 
-    public UserInformation getPlayer1() {
+    public Game(UserInformation player1, UserInformation player2)
+    {
+        tttBoard = new TTTBoard();
+        this.player1 = player1;
+        this.player2 = player2;
+        gameObserversList = new ArrayList<>();
+    }
+
+
+    public UserInformation getPlayer1()
+    {
         return player1;
     }
 
-    public void setPlayer1(UserInformation player1) {
-        this.player1 = player1;
-    }
-
-    public UserInformation getPlayer2() {
+    public UserInformation getPlayer2()
+    {
         return player2;
     }
 
-    public void setPlayer2(UserInformation player2) {
-        this.player2 = player2;
+    public void addGameObserver(GameObserver observer)
+    {
+        gameObserversList.add(observer);
     }
 
-    public Date getStartTime() {
-        return startTime;
+    public void notifyObservers(Packet packet)
+    {
+        for (GameObserver observer: gameObserversList)
+        {
+            // observer.update(packet);     // broadcast packet with move or game status ex: tie game, winner
+        }
     }
 
-    public void setStartTime(Date startTime) {
-        startTime.setTime(this.time = System.currentTimeMillis());;
+    public void player1MakeMove(Move move)
+    {
+        System.out.println("Row: " + move.getRow());
+        System.out.println("column: " + move.getColumn());
+        System.out.println("userInformation: " + move.getUserInformation());
+
+        System.out.println("tttBoard: " + tttBoard);
+
+        tttBoard.setX(move.getRow(), move.getColumn());
+
+        tttBoard.printBoard();
+        System.out.println();
     }
 
-    public Date getEndTime() {
-        return endTime;
+    public void player2MakeMove(Move move)
+    {
+        tttBoard.setO(move.getRow(), move.getColumn());
+
+        tttBoard.printBoard();
+        System.out.println();
     }
 
-    public void setEndTime(Date endTime) {
-        endTime.setTime(this.time = System.currentTimeMillis());;
+    public char getCharInTile(int row, int col)
+    {
+        return tttBoard.getCharInCell(row, col);
     }
 
+    public boolean checkIfValidMove(Move move)
+    {
+        return tttBoard.isCellEmpty(move.getRow(), move.getColumn());
+    }
+
+    public boolean isPlayer1Winner(Move move)
+    {
+        return tttBoard.isWinner(move.getRow(), move.getColumn(), 'X');
+    }
+
+    public boolean isPlayer2Winner(Move move)
+    {
+        return tttBoard.isWinner(move.getRow(), move.getColumn(), 'O');
+    }
+
+    public boolean isTieGame()
+    {
+        return tttBoard.isTieGame();
+    }
 
 }

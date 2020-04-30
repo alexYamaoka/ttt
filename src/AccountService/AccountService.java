@@ -56,14 +56,10 @@ public class AccountService implements Service, Runnable {
         }
     }
 
-    public void handle(ClientConnection clientConnection, Packet packet, ObjectOutputStream outputStream) {
-        AccountHandler handler = new AccountHandler(clientConnection, packet, outputStream);
-        handler.start();
-    }
-
     @Override
     public void handle(ClientConnection clientConnection, Packet packet) {
-
+        AccountHandler handler = new AccountHandler(clientConnection, packet);
+        handler.start();
     }
 
     public void addServiceListener(Service service) {
