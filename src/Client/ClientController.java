@@ -139,4 +139,7 @@ public class ClientController
         return gameBoardPane;
     }
 
+    public GameBoardController getGameBoardController() {
+        return gameBoardController;
+    }
 }

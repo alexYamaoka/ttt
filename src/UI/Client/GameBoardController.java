@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
+import javafx.util.Pair;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -25,6 +26,8 @@ public class GameBoardController implements Initializable, GameListener
     Button rematch, quit, zZ, zO, zT, oZ, oO, oT, tZ, tO, tT;
 
     private ClientController clientController;
+
+    private HashMap<Pair<Integer, Integer>, Button> buttons = new HashMap<>();
 
     public void playerMoved(int x, int y){
         Move move = new Move(x, y, clientController.getClient().getUserInformation());
@@ -88,8 +91,11 @@ public class GameBoardController implements Initializable, GameListener
     }
 
     @Override
-    public void updateMove(Move move) {
-
+    public void updateMove(String move) {
+        String[] str = move.trim().split("\\s+");
+        Pair<Integer, Integer> pair = new Pair<>(Integer.parseInt(str[0]), Integer.parseInt(str[1]));
+        Button button = buttons.get(pair);
+        button.setText(str[2]);
     }
 
     @Override
@@ -99,6 +105,14 @@ public class GameBoardController implements Initializable, GameListener
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        buttons.put(new Pair<>(0, 0), zZ);
+        buttons.put(new Pair<>(0, 1), zO);
+        buttons.put(new Pair<>(0, 2), zT);
+        buttons.put(new Pair<>(1, 0), oZ);
+        buttons.put(new Pair<>(1, 1), oO);
+        buttons.put(new Pair<>(1, 2), oT);
+        buttons.put(new Pair<>(2, 0), tZ);
+        buttons.put(new Pair<>(2, 1), tO);
+        buttons.put(new Pair<>(2, 2), tT);
     }
 }

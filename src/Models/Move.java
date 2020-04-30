@@ -1,6 +1,7 @@
 package Models;
 
 import Shared.UserInformation;
+import javafx.util.Pair;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -55,5 +56,9 @@ public class Move extends BaseModel {
 
     public String getToken() {
         return token;
+    }
+
+    public String getMove() {
+        return row + " " + column + " " + token;
     }
 }
