@@ -17,7 +17,7 @@ public class Server {
     private DataSource ds = DatabaseManager.getInstance();
 
     public boolean addgame(String gameId, Date startTime, Date endTime, int PlayerOneId, int PlayerTwoId,int StartingPlayerID,int WinningPlayerId){
-        BaseModel game = new Game(gameId,startTime,endTime,PlayerOneId,PlayerTwoId,StartingPlayerID,WinningPlayerId);
+        //BaseModel game = new Game(gameId,startTime,endTime,PlayerOneId,PlayerTwoId,StartingPlayerID,WinningPlayerId);
         return true;
     }
 
@@ -29,7 +29,6 @@ public class Server {
     public boolean login(String username, String password) throws SQLException {
         List flag;
         flag = ds.query(Shared.UserInformation.class, " username = '" + username + "' AND password = '" + password + "'");
-
         if(flag.isEmpty()){
             return false;
         }else return true;
