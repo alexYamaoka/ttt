@@ -14,14 +14,22 @@ public class Packet implements Serializable {
     public static final String UPDATE_USER = "UPDATE-USER";
     public static final String DELETE_ACCOUNT = "DELETE-ACCOUNT";
 
-
-
+    public static final String JOIN_GAME = "JOIN_GAME";
+    public static final String NEW_GAME_CREATED = "NEW-GAME-CREATED";
+    public static final String MAKE_NEXT_MOVE = "MAKE-NEXT-MOVE";
+    public static final String OBSERVE_GAME = "OBSERVE-GAME";
+    public static final String GET_GAMES = "GET_GAMES"; // Joinable games
+    public static final String GAME_MOVE = "GAME-MOVE";
 
 
     public Packet(String request, UserInformation information, Serializable data) {
         this.request = request;
         this.information = information;
         this.data = data;
+    }
+
+    public Packet() {
+
     }
 
     public String getRequest() {

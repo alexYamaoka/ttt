@@ -4,6 +4,7 @@ import Client.ClientController;
 import DataBase.sql.DatabaseManager;
 import ObserverPatterns.SignInResultListener;
 import Shared.Packet;
+import Shared.UserInformation;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -48,7 +49,7 @@ public class SignInController implements Initializable, SignInResultListener
     @FXML
     private Button btn_LogIn, btn_SignUp;
     @FXML
-    private Label usernameError, passwordError;
+    private Label usernameError, passwordError, logInError;
     @FXML
     private BorderPane parentContainerSignIn;
     @FXML
@@ -58,10 +59,6 @@ public class SignInController implements Initializable, SignInResultListener
 
     private ClientController controller;
 
-
-
-
-
     @FXML
     public void onEnterKeyPressed(KeyEvent keyEvent) {
         if (keyEvent.getCode().equals(KeyCode.ENTER)) {
@@ -70,8 +67,6 @@ public class SignInController implements Initializable, SignInResultListener
             signInUser(username, password);
         }
     }
-
-
 
 
     @FXML
@@ -103,21 +98,19 @@ public class SignInController implements Initializable, SignInResultListener
         boolean value_entered = true;
         if (username.isBlank()) {
             txtF_Username.setStyle("-fx-border-color: red;");
-            usernameError.setStyle("-fx-text-fill: red;");
+            usernameError.setText("Enter an username");
             value_entered = false;
-        } else {
-            txtF_Username.setStyle("");
-            usernameError.setStyle("-fx-text-fill: white;");
-            value_entered = false;
+        }
+        else{
+            usernameError.setText("");
         }
         if (password.isBlank()) {
             txtF_Password.setStyle("-fx-border-color: red;");
-            passwordError.setStyle("-fx-text-fill: red;");
+            passwordError.setText("Enter a password");
             value_entered = false;
-        } else {
-            txtF_Password.setStyle("");
-            passwordError.setStyle("-fx-text-fill: white;");
-            value_entered = false;
+        }
+        else{
+            passwordError.setText("");
         }
 
         return value_entered;
@@ -147,16 +140,6 @@ public class SignInController implements Initializable, SignInResultListener
         timeline.play();
     }
 
-    public void MainMenuScene() throws IOException {
-        Stage stage = null;
-        Parent root = null;
-        stage = (Stage) btn_LogIn.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("Sign In initialized");
@@ -184,9 +167,28 @@ public class SignInController implements Initializable, SignInResultListener
         Platform.runLater(new Runnable()
         {
             @Override
-            public void run()
-            {
-                System.out.println(message);
+            public void run() {
+                if (!message.equalsIgnoreCase("FAIL")) {
+                    String[] str = message.trim().split("\\s+");
+                    String id = str[0];
+                    String firstName = str[1];
+                    String lastName = str[2];
+                    String username = str[3];
+                    String email = str[4];
+                    String password = str[5];
+                    UserInformation userInformation = new UserInformation(firstName, lastName, username, email, password);
+                    userInformation.setId(id);
+                    controller.getClient().setUserInformation(userInformation);
+                    Stage stage = (Stage) btn_LogIn.getScene().getWindow();
+                    Parent root = controller.getMainMenuPain();
+                    Scene scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.show();
+                    controller.getOptions().updateInfo();
+                }
+                else{
+                    logInError.setText("The username or password provided is incorrect.");
+                }
             }
         });
     }

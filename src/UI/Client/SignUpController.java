@@ -3,6 +3,7 @@ package UI.Client;
 import Client.ClientController;
 import ObserverPatterns.SignUpResultListener;
 import Shared.Packet;
+import Shared.UserInformation;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -24,6 +25,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -43,7 +45,7 @@ public class SignUpController implements Initializable, SignUpResultListener
     @FXML
     private Button btn_SignIn, btn_SignUp;
     @FXML
-    private Label firstNameError, lastNameError, usernameError, passwordError, confirmPasswordError;
+    private Label firstNameError, lastNameError, usernameError, passwordError, confirmPasswordError, registrationError;
 
     private ClientController controller;
 
@@ -161,58 +163,60 @@ public class SignUpController implements Initializable, SignUpResultListener
 
     public boolean checkPasswords(String password, String confirmPassword){
         if (!password.equals(confirmPassword)){
-            usernameError.setTextFill(Color.RED);
-            passwordError.setText("Passwords do not match");
+            confirmPasswordError.setText("Passwords do not match");
+            confirmPasswordError.setTextFill(Color.RED);
             return false;
         }
-        else
+        else{
+            confirmPasswordError.setText("");
             return true;
+        }
     }
     public boolean checkField(String firstName,String lastName,String username,String password,String confirmPassword){
         boolean value_entered = true;
         if (firstName.isBlank()) {
             txtF_FirstName.setStyle("-fx-border-color: red;");
-            firstNameError.setStyle("-fx-text-fill: red;");
+            firstNameError.setText("Enter first name");
             value_entered = false;
         } else{
             txtF_FirstName.setStyle("");
-            firstNameError.setStyle("-fx-text-fill: white;");
+            firstNameError.setText("");
             value_entered = false;
         }
         if (lastName.isBlank()) {
             txtF_LastName.setStyle("-fx-border-color: red;");
-            lastNameError.setStyle("-fx-text-fill: red;");
+            lastNameError.setText("Enter last name");
             value_entered = false;
         } else{
             txtF_LastName.setStyle("");
-            lastNameError.setStyle("-fx-text-fill: white;");
+            passwordError.setText("");
             value_entered = false;
         }
         if (username.isBlank()) {
             txtF_Username.setStyle("-fx-border-color: red;");
-            usernameError.setStyle("-fx-text-fill: red;");
+            usernameError.setText("Enter an username");
             value_entered = false;
         } else{
             txtF_Username.setStyle("");
-            usernameError.setStyle("-fx-text-fill: white;");
+            usernameError.setText("");
             value_entered = false;
         }
         if (password.isBlank()) {
             txtF_Password.setStyle("-fx-border-color: red;");
-            passwordError.setStyle("-fx-text-fill: red;");
+            passwordError.setText("Enter a password");
             value_entered = false;
         } else{
             txtF_Password.setStyle("");
-            passwordError.setStyle("-fx-text-fill: white;");
+            passwordError.setText("");
             value_entered = false;
         }
         if (confirmPassword.isBlank()) {
             txtF_ConfirmPassword.setStyle("-fx-border-color: red;");
-            confirmPasswordError.setStyle("-fx-text-fill: red;");
+            confirmPasswordError.setText("Confirm your password");
             value_entered = false;
         } else{
             txtF_ConfirmPassword.setStyle("");
-            confirmPasswordError.setStyle("-fx-text-fill: white;");
+            confirmPasswordError.setText("");
             value_entered = false;
         }
 
@@ -240,7 +244,35 @@ public class SignUpController implements Initializable, SignUpResultListener
             @Override
             public void run()
             {
-                System.out.println("message: " + message);
+                if(!message.contains("FAIL")) {
+                    // The middle anchorpane of the borderpane
+                    AnchorPane middleAnchorPane = signInController.getMiddleAnchorPane();
+
+                    // The stackpane of the anchorpane
+                    Pane root = signInController.getSignInPane();
+                    Scene scene = btn_SignIn.getScene();
+
+                    Pane root1 = parentContainerSignUp;
+
+                    root.translateXProperty().set(scene.getWidth() * -0.5);
+                    root1.translateXProperty().set(0);
+
+                    middleAnchorPane.getChildren().add(root);
+
+                    Timeline timeline = new Timeline();
+                    KeyValue keyValue = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
+                    KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.3), keyValue);
+                    KeyValue keyValue1 = new KeyValue(root1.translateXProperty(), 300, Interpolator.EASE_IN);
+                    KeyFrame keyFrame1 = new KeyFrame(Duration.seconds(0.3), keyValue1);
+                    timeline.getKeyFrames().add(keyFrame);
+                    timeline.getKeyFrames().add(keyFrame1);
+                    timeline.setOnFinished(event1 -> {
+                        middleAnchorPane.getChildren().remove(parentContainerSignUp);
+                    });
+                    timeline.play();
+                } else {
+                    registrationError.setText("Username is already taken!");
+                }
             }
         });
     }

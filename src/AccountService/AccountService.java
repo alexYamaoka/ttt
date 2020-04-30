@@ -19,9 +19,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class AccountService implements Service, Runnable {
     private Thread worker;
-    private HashSet<ClientConnection> clientConnections;
+    private HashSet<ClientConnection> clientConnections = new HashSet<>();
+    private HashSet<Service> serviceListeners = new HashSet<>();
     private final AtomicBoolean running = new AtomicBoolean(false);
     private DataSource ds = DatabaseManager.getInstance();
+
     public AccountService() {
     }
 
@@ -42,7 +44,7 @@ public class AccountService implements Service, Runnable {
             // Create a server socket for listening for requests
             ServerSocket serverSocket = new ServerSocket(8000, 0, InetAddress.getByName("localhost"));
             var pool = Executors.newFixedThreadPool(100);
-            System.out.println("Server started");
+            System.out.println("Account Service started");
             while (running.get()) {
                 Socket socket = serverSocket.accept();
                 ClientConnection connection = new ClientConnection(socket, this);
@@ -54,8 +56,36 @@ public class AccountService implements Service, Runnable {
         }
     }
 
-    public void handle(Packet packet, ObjectOutputStream outputStream) {
-        AccountHandler handler = new AccountHandler(packet, outputStream);
+    public void handle(ClientConnection clientConnection, Packet packet, ObjectOutputStream outputStream) {
+        AccountHandler handler = new AccountHandler(clientConnection, packet, outputStream);
         handler.start();
+    }
+
+    @Override
+    public void handle(ClientConnection clientConnection, Packet packet) {
+
+    }
+
+    public void addServiceListener(Service service) {
+        serviceListeners.add(service);
+    }
+
+    public void broadcast(Packet packet) {
+        for(ClientConnection connection : clientConnections) {
+            try {
+                connection.getOutputStream().writeObject(packet);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        for (Service service : serviceListeners) {
+            service.update(packet);
+        }
+    }
+
+
+
+    public void update(Packet packet) {
+
     }
 }

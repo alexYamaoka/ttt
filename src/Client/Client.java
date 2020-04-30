@@ -40,7 +40,6 @@ public class Client
 
             writeThread.start();
             readThread.start();
-
         }
         catch (IOException ex)
         {
@@ -85,6 +84,10 @@ public class Client
     public UserInformation getUserInformation()
     {
         return userInformation;
+    }
+
+    public void setUserInformation(UserInformation userInformation) {
+        this.userInformation = userInformation;
     }
 
 }

@@ -6,28 +6,24 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class WriteToServerTask implements Runnable
 {
     private ObjectOutputStream objectOutputStream;
     private Socket socket;
     private Client client;
-    //private Thread thread;
-    private boolean isRunning = true;
+    private Thread thread;
+    private AtomicBoolean running = new AtomicBoolean(false);
 
     public WriteToServerTask(Socket socket, Client client)
     {
         this.socket = socket;
         this.client = client;
-
-
         try
         {
             objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-
-
-            //Packet packet = new Packet(Packet.REGISTER_CLIENT, client.getUserInformation(), client.getUserInformation());
-            //objectOutputStream.writeObject(packet);
+            objectOutputStream.writeObject(new Packet("CONNECT", client.getUserInformation(), "CONNECT"));
         }
         catch (IOException e)
         {
@@ -35,12 +31,20 @@ public class WriteToServerTask implements Runnable
         }
     }
 
+    public void start() {
+        thread = new Thread(this);
+        thread.start();
+    }
 
+    public void stop() {
+        running.set(false);
+    }
 
     @Override
     public void run()
     {
-        while (isRunning)
+        running.set(true);
+        while (running.get())
         {
             try
             {
@@ -54,7 +58,7 @@ public class WriteToServerTask implements Runnable
             } catch (IOException e)
             {
                 e.printStackTrace();
-                isRunning = false;
+                running.set(false);
             }
         }
     }

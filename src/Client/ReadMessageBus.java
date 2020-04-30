@@ -2,16 +2,21 @@ package Client;
 
 import ObserverPatterns.SignInResultListener;
 import ObserverPatterns.SignUpResultListener;
+import ObserverPatterns.UpdateUserinformationListener;
 import Shared.Packet;
+import Shared.UserInformation;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ReadMessageBus implements Runnable
 {
     private ClientController clientController;
-    private Thread workerThread;
-    private boolean isRunning = false;
+    private Thread thread;
+    private AtomicBoolean running = new AtomicBoolean(false);
 
     private SignInResultListener signInResultListener;
     private SignUpResultListener signUpResultListener;
+    private UpdateUserinformationListener updateUserinformationListener;
 
 
 
@@ -20,12 +25,17 @@ public class ReadMessageBus implements Runnable
         this.clientController = clientController;
         signInResultListener = clientController.getSignInController();
         signUpResultListener = clientController.getSignUpController();
+        updateUserinformationListener = clientController.getOptions();
     }
 
     public void start()
     {
-        workerThread = new Thread(this);
-        workerThread.start();
+        thread = new Thread(this);
+        thread.start();
+    }
+
+    public void stop() {
+        running.set(false);
     }
 
 
@@ -33,7 +43,8 @@ public class ReadMessageBus implements Runnable
     @Override
     public void run()
     {
-        while (isRunning)
+        running.set(true);
+        while (running.get())
         {
             Packet response = clientController.getClient().getNextResponseFromServer();
 
@@ -50,6 +61,10 @@ public class ReadMessageBus implements Runnable
                         break;
 
                     case Packet.SIGN_OUT:
+                        break;
+
+                    case Packet.UPDATE_USER:
+                        updateUserinformationListener.updateUserinformation(response.getData().toString());
                         break;
                 }
 

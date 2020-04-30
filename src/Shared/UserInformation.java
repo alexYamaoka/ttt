@@ -6,10 +6,12 @@ import java.io.Serializable;
 import java.util.UUID;
 
 public class UserInformation extends BaseModel implements Serializable {
+
     private String firstName, lastName;
     private String userName;
-    private String email;
+    private String email = "email";
     private String password;
+    private int isDeleted;
 
     public UserInformation() {
 
@@ -20,6 +22,8 @@ public class UserInformation extends BaseModel implements Serializable {
         this.lastName = lastName;
         this.userName = userName;
         this.email = email;
+        this.password = password;
+        this.isDeleted = 0;
     }
 
     public String getFirstName() {
@@ -53,4 +57,20 @@ public class UserInformation extends BaseModel implements Serializable {
         this.password = password;
     }
 
+    @Override
+    public int getIsDeleted() {
+        return isDeleted;
+    }
+
+    @Override
+    public void setIsDeleted(int isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(getId() + " " + firstName + " " + lastName + " " + userName + " " + email + " " + password);
+        return builder.toString();
+    }
 }

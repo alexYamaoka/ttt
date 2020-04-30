@@ -9,4 +9,5 @@ public class UUIDGenerator implements IdGenerator {
     public String getNewId() {
         return UUID.randomUUID().toString();
     }
+
 }

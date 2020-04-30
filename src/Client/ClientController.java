@@ -32,7 +32,7 @@ public class ClientController
 
     public ClientController(Stage stage) {
         this.stage = stage;
-        client = new Client("localhost,", 8000, new UserInformation("NA", "NA", "Anonymous", "NA", "NA"));
+        client = new Client("localhost", 8000, new UserInformation("NA", "NA", "Anonymous", "NA", "NA"));
         initialize();
         setUpClientToUI();
     }
@@ -60,6 +60,7 @@ public class ClientController
             optionsPane = loader.load();
             options = loader.getController();
             options.setClientController(this);
+            Scene optionsScene = new Scene(optionsPane);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -79,6 +80,10 @@ public class ClientController
         {
             ex.printStackTrace();
         }
+    }
+
+    public void run() {
+        client.execute();
     }
 
     public Client getClient()
@@ -114,6 +119,10 @@ public class ClientController
     public SignUpController getSignUpController()
     {
         return signUpController;
+    }
+
+    public Options getOptions() {
+        return options;
     }
 
 }

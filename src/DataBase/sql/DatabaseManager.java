@@ -1,8 +1,6 @@
 package DataBase.sql;
-import DataBase.TypeGenerator;
 import DataBase.UUIDGenerator;
 import Models.BaseModel;
-import Models.Game;
 import Shared.UserInformation;
 
 import java.sql.*;
@@ -32,7 +30,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
             synchronized (DatabaseManager.class){
                 if(instance == null){
                     instance = new DatabaseManager();
-                    System.out.println("Connection made");
+                    System.out.println("DatabaseManager: Connection made");
                 }
             }
         }
@@ -50,68 +48,73 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
     }
 
     @Override
-    public BaseModel delete(BaseModel obj) throws SQLException {
-        StringBuilder query = new StringBuilder();
-        UserStatement = myConn.prepareStatement("UPDATE user SET " + "isDeleted = ? " +"WHERE id = ?");
-        if(obj instanceof UserInformation){
-            UserInformation userObj = (UserInformation) obj;
-            UserStatement.setInt(1,userObj.getIsDeleted()); // set idDeleted to 1 somewhere else before passing message request
-            UserStatement.setString(2, userObj.getId());
+    public boolean delete(String username, String firstname, String lastname,String password) throws SQLException {
+            StringBuilder query = new StringBuilder();
+            query.append("UPDATE user SET");
+            query.append("isDeleted = 1");
+            query.append("WHERE ");
+            query.append("username = '" + username + "' AND password = '" + password + "'");
+            UserStatement = myConn.prepareStatement(query.toString());
             UserStatement.executeUpdate(query.toString());
-        }
-        return null;
+            System.out.println(query.toString());
+
+        return true;
     }
 
     @Override
     public BaseModel update(BaseModel obj) throws SQLException {
-
         StringBuilder query = new StringBuilder();
-        query.append("UPDATE ");
-        if(obj instanceof UserInformation){
-            UserInformation userObj = (UserInformation) obj;
+        if (obj instanceof UserInformation) {
+            UserInformation user = (UserInformation) obj;
+            query.append("UPDATE ");
             query.append("user SET username = ? WHERE id = ? ");
             UserStatement = myConn.prepareStatement(query.toString());
             System.out.println(query.toString());
-            UserStatement.setString(1,userObj.getUserName());
-            UserStatement.setString(2,userObj.getId());
-            System.out.println(query.toString());
-            int row = UserStatement.executeUpdate();
-            System.out.println(row);
-
+            UserStatement.setString(1, user.getUserName());
+            UserStatement.executeQuery(query.toString());
         }
         return null;
     }
 
     @Override
-    public BaseModel get(String id) throws SQLException {
+    public ArrayList<UserInformation> get(String password) throws SQLException {
         StringBuilder query = new StringBuilder();
-        //UserStatement = myConn.prepareStatement("SELECT * FROM user" + " username, password, FirstName, LastName" + "WHERE id = ?");
-        return null;
-    }
+        query.append("SELECT * FROM user WHERE password = ").append(password);
+        System.out.println("Print out "+query.toString());
 
-
-    public List<UserInformation> userInfo_List(UserInformation obj){
-        List<UserInformation> users = new ArrayList<>();
-        users.add(obj);
-        return users;
+        UserStatement = myConn.prepareStatement(query.toString());
+        ResultSet rs;
+        rs = UserStatement.executeQuery(query.toString());
+        ArrayList<UserInformation> items = new ArrayList<>();
+        while(rs.next()) {
+            UserInformation u = new UserInformation();
+            u.setId(rs.getString(1));
+            u.setUserName(rs.getString(2));
+            u.setFirstName(rs.getString(3));
+            u.setLastName(rs.getString(4));
+            items.add(u);
+        }
+        return items;
     }
 
     @Override
     public List<BaseModel> list(Class obj) {
-
         return null;
     }
 
     @Override
-    public BaseModel insert(BaseModel obj) throws SQLException {
+    public boolean insert(BaseModel obj) throws SQLException {
         StringBuilder query = new StringBuilder();
         query.append("INSERT INTO ");
+        int row = 0;
         if(obj instanceof UserInformation){
             UserInformation userObj = (UserInformation) obj;
             UUIDGenerator newID = new UUIDGenerator();
+            System.out.println("Name "+userObj.getUserName());
             query.append("user ");
             query.append("(id, username, password, FirstName, LastName, isDeleted)");
             query.append("values (?,?,?,?,?,?)");
+
             UserStatement = myConn.prepareStatement(query.toString());
             System.out.println(query.toString());
             UserStatement.setString(1,newID.getNewId());
@@ -120,11 +123,16 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
             UserStatement.setString(4,userObj.getFirstName());
             UserStatement.setString(5,userObj.getLastName());
             UserStatement.setInt(6,userObj.getIsDeleted());
+            System.out.println(UserStatement.toString());
             System.out.println(query.toString());
-            int row = UserStatement.executeUpdate();
-            System.out.println(row);
+            row = UserStatement.executeUpdate();
+            System.out.println("Row = " + row);
         }
-        return null;
+
+        if(row == 0){
+            return false;
+        }else
+        return true;
     }
 
     @Override
@@ -137,113 +145,34 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         }else if(obj.getCanonicalName().equalsIgnoreCase("Models.Game")){
             query.append("games");
         }if(!filter.trim().equals("")){
-            query.append("WHERE" + filter);
+            query.append("WHERE " + filter);
         }
         System.out.println(query.toString());
         PreparedStatement ps;
         ps = myConn.prepareStatement(query.toString());
         ResultSet rs = ps.executeQuery(query.toString());
+        System.out.println(" RS = " + rs.toString());
 
         List<BaseModel> items = new ArrayList<>();
         while(rs.next()){
             if(obj.getCanonicalName().equalsIgnoreCase("Shared.UserInformation")){
                 UserInformation u = new UserInformation();
+//                System.out.println(rs.getString(1));
+//                System.out.println(rs.getString(2));
+//                System.out.println(rs.getString(3));
+//                System.out.println(rs.getString(4));
+//                System.out.println(rs.getString(5));
+//                System.out.println(rs.getString(6));
                 u.setId(rs.getString(1));
                 u.setUserName(rs.getString(2));
-                u.setFirstName(rs.getString(3));
-                u.setLastName(rs.getString(4));
+                u.setPassword(rs.getString(3));
+                u.setFirstName(rs.getString(4));
+                u.setLastName(rs.getString(5));
+                u.setIsDeleted(rs.getInt(6));
                 items.add(u);
             }
         }
         return items;
     }
-
-    /*
-    public boolean addUser(User user) throws SQLException {
-        String DataBase.sql = "INSERT INTO user ("
-                + "id,"
-                +"username,"
-                +"password ,"
-                +"FirstName,"
-                +"LastName ) VALUES ("
-                +"null, ?, ?, ?, ?)"; //null is userID its autoincrement
-        PreparedStatement ps =  myConn.prepareStatement(DataBase.sql,Statement.RETURN_GENERATED_KEYS);
-        ps.setString(1,user.getUserName());
-        ps.setString(2, user.getPassword());
-        ps.setString(3,user.getFirstName());
-        ps.setString(4,user.getLastName());
-        ps.executeUpdate();
-        System.out.println("Added user " + user.getUserName());
-        ResultSet keys = ps.getGeneratedKeys();
-        if(keys.next()){
-            //user.setId(keys.getInt(1));
-        }
-        ps.close();
-        return true;
-    }
-
-
-    public boolean getUser(String password,String UserName) throws SQLException { //for sign in
-        ResultSet rs;
-        PreparedStatement ps;
-        ps = myConn.prepareStatement("SELECT FROM user WHERE password = ? , id,username,password,FirstName,LastName");
-        ps.setString(1,password);
-        //ps.setString(1,UserName);
-        /*rs = ps.executeQuery();
-        while(rs.next()){
-            int id = rs.getInt(1);
-            String username = rs.getString(2);
-            String Password = rs.getString(3);
-            String FirstName = rs.getString(4);
-            String LastName = rs.getString(5);
-            System.out.println(username + " " + Password + " " + FirstName + " " + LastName);
-        }
-        
-
-
-        System.out.println("User retrieved");
-
-        return true;
-    }
-
-    public boolean deleteUser(String username) throws SQLException {
-        PreparedStatement ps = myConn.prepareStatement("Delete FROM user Where username = ?");
-        ps.setString(1,username);
-        ps.executeUpdate();
-        System.out.println("Removed User : " + username);
-        return true;
-    }
-
-    public boolean deleteUser(int userID) throws SQLException {
-        PreparedStatement ps = myConn.prepareStatement("Delete FROM user Where id = ?");
-        ps.setInt(1,userID);
-        ps.executeUpdate();
-        System.out.println("Removed User with id : " + userID);
-        return true;
-    }
-
-    public boolean updateUser(User user){
-
-        //String DataBase.sql = " UPDATE user SET username = ?, password = ? WHERE id = ?"
-
-        return true;
-    }
-
-
-
-    public List<User> getAllUsers(){
-
-        return User;
-    }
-
-
-    public List<User> getUsers(String filter){
-
-        List<User> users = new ArrayList<>();
-    }
-
-
-
-    */
 
 }

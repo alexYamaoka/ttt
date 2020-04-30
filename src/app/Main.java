@@ -3,6 +3,9 @@ package app;
 import AccountService.AccountService;
 import Client.ClientController;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -13,12 +16,25 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        // start client
-        ClientController clientController = new ClientController(stage);
-        stage.setTitle("EndFrame TicTacToe");
-
         // start AccountService
         AccountService service = new AccountService();
         service.start();
+
+        // start client
+        ClientController clientController = new ClientController(stage);
+        stage.setTitle("EndFrame TicTacToe");
+        clientController.run();
+
+/*
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../UI/Client/SignIn.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+
+        stage.setScene(scene);
+        stage.show();
+
+
+ */
+
     }
 }
