@@ -51,10 +51,10 @@ public class GameHandler implements Runnable
         switch(request)
         {
             case Packet.JOIN_GAME:
-               // GameRoomInformation game = service.getGame(data.toString());
-                //game.join(clientConnection);
+               GameRoomInformation game = service.getGame(data.toString());
+                game.join(clientConnection);
                 //Database call
-                //game.start();
+                game.start();
                 break;
 
             case Packet.OBSERVE_GAME:
@@ -68,7 +68,7 @@ public class GameHandler implements Runnable
 
             case Packet.GET_GAMES:
                 try {
-                   // clientConnection.getOutputStream().writeObject(new Packet(Packet.GET_GAMES, userInformation, (Serializable) service.getGames())); // list of current games
+                   clientConnection.getOutputStream().writeObject(new Packet(Packet.GET_GAMES, userInformation, (Serializable) service.getGames())); // list of current games
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
