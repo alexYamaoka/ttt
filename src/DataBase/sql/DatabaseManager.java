@@ -1,9 +1,11 @@
 package DataBase.sql;
 import DataBase.UUIDGenerator;
 import Models.BaseModel;
+import Models.Game;
 import Shared.UserInformation;
 
 import java.sql.*;
+import java.sql.Date;
 import java.util.*;
 
 public class DatabaseManager implements DataSource {  // subscribing to sign in for sign in info
@@ -64,6 +66,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
     @Override
     public BaseModel update(BaseModel obj) throws SQLException {
         StringBuilder query = new StringBuilder();
+        List<BaseModel> items = new ArrayList<>();
         if (obj instanceof UserInformation) {
             UserInformation user = (UserInformation) obj;
             query.append("UPDATE ");
@@ -72,8 +75,9 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
             System.out.println(query.toString());
             UserStatement.setString(1, user.getUserName());
             UserStatement.executeQuery(query.toString());
+            items.add(user);
         }
-        return null;
+        return (BaseModel) items;
     }
 
     @Override
@@ -102,11 +106,26 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         return null;
     }
 
+
     @Override
     public boolean insert(BaseModel obj) throws SQLException {
         StringBuilder query = new StringBuilder();
         query.append("INSERT INTO ");
         int row = 0;
+        if(obj instanceof Game){
+            Game game = (Game) obj;
+            UUIDGenerator newID = new UUIDGenerator();
+            query.append("game");
+            query.append("(gameID, StartTime, EndTime, Player1Id, Player2Id, StartingPlayerId, WinningPlayerId)");
+            query.append("values (?,?,?,?,?,?,?)");
+            GameStatement.setString(1,newID.getNewId());
+            GameStatement.setDate(2,game.getStartTime());
+            GameStatement.setDate(3,game.getEndTime());
+            //GameStatement.setInt(4,game.getPlayer1());
+            //GameStatement.setInt(4,game.getPlayer2().;
+
+
+        }
         if(obj instanceof UserInformation){
             UserInformation userObj = (UserInformation) obj;
             UUIDGenerator newID = new UUIDGenerator();
@@ -157,12 +176,6 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         while(rs.next()){
             if(obj.getCanonicalName().equalsIgnoreCase("Shared.UserInformation")){
                 UserInformation u = new UserInformation();
-//                System.out.println(rs.getString(1));
-//                System.out.println(rs.getString(2));
-//                System.out.println(rs.getString(3));
-//                System.out.println(rs.getString(4));
-//                System.out.println(rs.getString(5));
-//                System.out.println(rs.getString(6));
                 u.setId(rs.getString(1));
                 u.setUserName(rs.getString(2));
                 u.setPassword(rs.getString(3));
@@ -174,5 +187,4 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         }
         return items;
     }
-
 }
