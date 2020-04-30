@@ -65,12 +65,13 @@ public class GameService implements Runnable, Service
     public void addGame(GameRoomInformation game){
         ongoingGameRooms.put(game.getGameName(),game);
     }
+
     public GameRoomInformation getGame(String Id){
         return ongoingGameRooms.get(Id);
     }
+
     public Set<String> getGames(){
         return ongoingGameRooms.keySet();
-
     }
 
     public void handle(ClientConnection clientConnection, Packet packet) {
