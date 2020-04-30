@@ -1,11 +1,10 @@
 package DataBase.sql;
 import DataBase.UUIDGenerator;
+import GameService.GameRoomInformation;
 import Models.BaseModel;
-import Models.Game;
 import Shared.UserInformation;
 
 import java.sql.*;
-import java.sql.Date;
 import java.util.*;
 
 public class DatabaseManager implements DataSource {  // subscribing to sign in for sign in info
@@ -108,24 +107,22 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
 
 
     @Override
+    public boolean insertGame(GameRoomInformation obj) {
+        StringBuilder query = new StringBuilder();
+        GameRoomInformation game = obj;
+        query.append("INSERT INTO game");
+        int row = 0;
+        System.out.println("Name "+game.getGameName() + game.getId());
+        query.append("(gameID, StartTime, EndTime, Player1Id, Player2Id, StartingPlayerId, WinningPlayerId");
+
+        return false;
+    }
+
+    @Override
     public boolean insert(BaseModel obj) throws SQLException {
         StringBuilder query = new StringBuilder();
         query.append("INSERT INTO ");
         int row = 0;
-        if(obj instanceof Game){
-            Game game = (Game) obj;
-            UUIDGenerator newID = new UUIDGenerator();
-            query.append("game");
-            query.append("(gameID, StartTime, EndTime, Player1Id, Player2Id, StartingPlayerId, WinningPlayerId)");
-            query.append("values (?,?,?,?,?,?,?)");
-            GameStatement.setString(1,newID.getNewId());
-            //GameStatement.setDate(2,game.getStartTime());
-            //GameStatement.setDate(3,game.getEndTime());
-            //GameStatement.setInt(4,game.getPlayer1());
-            //GameStatement.setInt(4,game.getPlayer2().;
-
-
-        }
         if(obj instanceof UserInformation){
             UserInformation userObj = (UserInformation) obj;
             UUIDGenerator newID = new UUIDGenerator();

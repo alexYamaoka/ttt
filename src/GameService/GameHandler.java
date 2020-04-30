@@ -51,8 +51,10 @@ public class GameHandler implements Runnable
         switch(request)
         {
             case Packet.JOIN_GAME:
-               GameRoomInformation game = service.getGame(data.toString());
+                GameRoomInformation game = service.getGame(data.toString());
                 game.join(clientConnection);
+
+                ds.insertGame(game);
                 //Database call
                 game.start();
                 break;
@@ -62,6 +64,10 @@ public class GameHandler implements Runnable
                 break;
 
             case Packet.NEW_GAME_CREATED:
+                String newGameString = data.toString();
+                String[] str = newGameString.trim().split("\\s+");
+                System.out.println("data = " + data.toString());
+                String newGameName = str[0];
                 service.addGame(new GameRoomInformation(clientConnection,data.toString())); //pull game name from data
 
                 break;
