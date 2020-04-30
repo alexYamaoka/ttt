@@ -19,7 +19,6 @@ public class GameRoomInformation {
         UUIDGenerator gameId = new UUIDGenerator();
         this.Id = gameId.getNewId();
         this.gameName = gameName;
-
     }
 
     public void start(){

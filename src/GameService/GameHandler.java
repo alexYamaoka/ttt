@@ -58,11 +58,11 @@ public class GameHandler implements Runnable
                 break;
 
             case Packet.OBSERVE_GAME:
-                //GameRoomInformation ObserverGame = service.getGame(data.toString());
+                GameRoomInformation ObserverGame = service.getGame(data.toString());
                 break;
 
             case Packet.NEW_GAME_CREATED:
-                //service.addGame(new GameRoomInformation(clientConnection,data.toString())); //pull game name from data
+                service.addGame(new GameRoomInformation(clientConnection,data.toString())); //pull game name from data
 
                 break;
 
