@@ -1,6 +1,8 @@
 package Models;
 
+import DataBase.UUIDGenerator;
 import ObserverPatterns.GameObserver;
+import Server.ClientConnection;
 import Shared.Packet;
 import Shared.UserInformation;
 
@@ -19,14 +21,23 @@ public class Game extends BaseModel {
     private UserInformation player2;
     private List<GameObserver> gameObserversList;
     private Date startTime, endTime;
+    ClientConnection playerOneConnection;
+    ClientConnection playerTwoConnection;
+    private String Id;
+    private String gameName;
 
-    public Game(UserInformation player1, UserInformation player2)
+
+    public Game(UserInformation player1, UserInformation player2,String gameName)
     {
         tttBoard = new TTTBoard();
         this.player1 = player1;
         this.player2 = player2;
         gameObserversList = new ArrayList<>();
         startTime = new Date();
+
+        UUIDGenerator gameId = new UUIDGenerator();
+        this.Id = gameId.getNewId();
+        this.gameName = gameName;
     }
 
 

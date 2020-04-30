@@ -119,8 +119,8 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
             query.append("(gameID, StartTime, EndTime, Player1Id, Player2Id, StartingPlayerId, WinningPlayerId)");
             query.append("values (?,?,?,?,?,?,?)");
             GameStatement.setString(1,newID.getNewId());
-            GameStatement.setDate(2,game.getStartTime());
-            GameStatement.setDate(3,game.getEndTime());
+            //GameStatement.setDate(2,game.getStartTime());
+            //GameStatement.setDate(3,game.getEndTime());
             //GameStatement.setInt(4,game.getPlayer1());
             //GameStatement.setInt(4,game.getPlayer2().;
 
