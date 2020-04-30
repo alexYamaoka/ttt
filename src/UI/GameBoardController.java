@@ -1,5 +1,6 @@
 package UI;
 
+import Client.ClientController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,6 +15,8 @@ public class GameBoardController
     Label player1Name, player2Name, time;
     @FXML
     Button rematch, quit, zZ, zO, zT, oZ, oO, oT, tZ, tO, tT;
+
+    private ClientController clientController;
 
     public void playerMoved(Button button){
         resetTime();
@@ -58,5 +61,9 @@ public class GameBoardController
     public void resetTime(){
         time.setText("00:30");
         countdownTime();
+    }
+
+    public void setClientController(ClientController clientController) {
+        this.clientController = clientController;
     }
 }

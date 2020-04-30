@@ -65,7 +65,7 @@ public class AccountHandler implements Runnable {
                         items = ds.query(UserInformation.class," username = '" + userName + "' AND password = '" + password + "'");
                         packet = new Packet(Packet.SIGN_IN,userInformation, items.get(0));
                         outputStream.writeObject(packet);
-                        //clientConnection.setInformation((UserInformation)items.get(0));
+                        clientConnection.setInformation((UserInformation)items.get(0));
                     } else {
                         packet = new Packet(Packet.SIGN_IN, userInformation, "FAIL");
                         outputStream.writeObject(packet);
