@@ -63,9 +63,15 @@ public class GameThread implements Runnable {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-
-
         while (isRunning.get()) {
+
+            while (!game.isOver()){
+
+
+
+
+            }
+
             // play ttt game
             // while game has not ended
             // send and receive packet with game inside

@@ -112,4 +112,11 @@ public class TTTBoard
         return true;
     }
 
+    public boolean isOver(){
+        if(numOfMovesLeft == 0)
+            return true;
+        else return false;
+
+    }
+
 }

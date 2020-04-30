@@ -3,13 +3,10 @@ package app;
 import DataBase.sql.DataSource;
 import DataBase.sql.DatabaseManager;
 import Models.BaseModel;
-import Models.Game;
 import Shared.UserInformation;
 
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Server {

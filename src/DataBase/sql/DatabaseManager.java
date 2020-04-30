@@ -1,6 +1,6 @@
 package DataBase.sql;
 import DataBase.UUIDGenerator;
-import GameService.GameRoomInformation;
+import Models.Game;
 import Models.BaseModel;
 import Shared.UserInformation;
 
@@ -107,13 +107,21 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
 
 
     @Override
-    public boolean insertGame(GameRoomInformation obj) {
+    public boolean insertGame(Game obj) throws SQLException {
         StringBuilder query = new StringBuilder();
-        GameRoomInformation game = obj;
+        Game game = obj;
         query.append("INSERT INTO game");
         int row = 0;
         System.out.println("Name "+game.getGameName() + game.getId());
         query.append("(gameID, StartTime, EndTime, Player1Id, Player2Id, StartingPlayerId, WinningPlayerId");
+        query.append("values (?,?,?,?,?,?,?)");
+        GameStatement = myConn.prepareStatement(query.toString());
+        System.out.println(query.toString());
+        GameStatement.setString(1,game.getId());
+        GameStatement.setTimestamp(2,game.getStartTime());
+        GameStatement.setTimestamp(3,game.getEndTime());
+        GameStatement.setString(4,game.getPlayer1Info().getId());
+        GameStatement.setString(5,game.getPlayer2Info().getId());
 
         return false;
     }

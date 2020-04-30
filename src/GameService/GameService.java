@@ -28,7 +28,7 @@ public class GameService implements Runnable, Service
     private static Lock lock = new ReentrantLock();
     private HashSet<ClientConnection> clientConnections = new HashSet<>();
 
-    private final HashMap<String, GameRoomInformation> ongoingGameRooms = new HashMap<>();
+    private final HashMap<String, Game> ongoingGameRooms = new HashMap<>();
 
     public GameService() {
     }
@@ -62,11 +62,11 @@ public class GameService implements Runnable, Service
             }
     }
 
-    public void addGame(GameRoomInformation game){
+    public void addGame(Game game){
         ongoingGameRooms.put(game.getGameName(),game);
     }
 
-    public GameRoomInformation getGame(String Id){
+    public Game getGame(String Id){
         return ongoingGameRooms.get(Id);
     }
 
