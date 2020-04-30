@@ -15,7 +15,7 @@ public class GameRoomInformation {
     private ArrayList<ClientConnection> GameObservers = new ArrayList<>();
 
     public GameRoomInformation (ClientConnection player1,String gameName) {
-
+        this.player1 = player1;
         UUIDGenerator gameId = new UUIDGenerator();
         this.Id = gameId.getNewId();
         this.gameName = gameName;
