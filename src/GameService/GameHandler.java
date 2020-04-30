@@ -63,11 +63,11 @@ public class GameHandler implements Runnable
 
             case Packet.OBSERVE_GAME:
                 GameRoomInformation ObserverGame = service.getGame(data.toString());
-
                 break;
 
             case Packet.NEW_GAME_CREATED:
                 service.addGame(new GameRoomInformation(clientConnection,data.toString())); //pull game name from data
+
                 break;
 
             case Packet.GET_GAMES:
