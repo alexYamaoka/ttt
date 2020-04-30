@@ -3,6 +3,7 @@ package Client;
 import Shared.UserInformation;
 import UI.Client.*;
 
+import UI.GameBoardController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -20,12 +21,14 @@ public class ClientController
     private MainMenuController mainMenuController;
     private UI.Client.SignUpController signUpController;
     private UI.Client.Options options;
+    private GameBoardController gameBoardController;
 
     // Scenes
     private Pane signInPane;
     private Pane signUpPane;
     private Pane mainMenuPain;
     private Pane optionsPane;
+    private Pane gameBoardPane;
 
     private ReadMessageBus readMessageBus;
 
@@ -61,6 +64,12 @@ public class ClientController
             options = loader.getController();
             options.setClientController(this);
             Scene optionsScene = new Scene(optionsPane);
+
+            loader = new FXMLLoader(getClass().getResource("../UI/GameBoard.fxml"));
+            gameBoardPane = loader.load();
+            gameBoardController = loader.getController();
+            gameBoardController.setClientController(this);
+
         } catch (IOException ex) {
             ex.printStackTrace();
         }

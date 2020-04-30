@@ -65,4 +65,8 @@ public class ClientConnection implements Runnable {
     public UserInformation getInformation() {
         return information;
     }
+
+    public void setInformation(UserInformation userInformation) {
+        this.information = userInformation;
+    }
 }
