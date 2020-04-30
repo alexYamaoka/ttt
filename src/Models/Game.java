@@ -5,6 +5,7 @@ import Shared.Packet;
 import Shared.UserInformation;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Game extends BaseModel {
@@ -17,6 +18,7 @@ public class Game extends BaseModel {
     private UserInformation player1;
     private UserInformation player2;
     private List<GameObserver> gameObserversList;
+    private Date startTime, endTime;
 
     public Game(UserInformation player1, UserInformation player2)
     {
@@ -24,6 +26,7 @@ public class Game extends BaseModel {
         this.player1 = player1;
         this.player2 = player2;
         gameObserversList = new ArrayList<>();
+        startTime = new Date();
     }
 
 
@@ -52,6 +55,7 @@ public class Game extends BaseModel {
 
     public void player1MakeMove(Move move)
     {
+        move.setToken("O");
         System.out.println("Row: " + move.getRow());
         System.out.println("column: " + move.getColumn());
         System.out.println("userInformation: " + move.getUserInformation());
@@ -66,6 +70,7 @@ public class Game extends BaseModel {
 
     public void player2MakeMove(Move move)
     {
+        move.setToken("O");
         tttBoard.setO(move.getRow(), move.getColumn());
 
         tttBoard.printBoard();
@@ -95,6 +100,14 @@ public class Game extends BaseModel {
     public boolean isTieGame()
     {
         return tttBoard.isTieGame();
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
     }
 
 }

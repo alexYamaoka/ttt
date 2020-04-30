@@ -1,19 +1,14 @@
 package Models;
 
 import Shared.UserInformation;
+import javafx.util.Pair;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Move extends BaseModel {
-    // row
-    // col
-    // person who made the move
-    // user
-    // constructor would have a game and the player, row and col
-
-
+    private String token;
     private int row;
     private int column;
     private UserInformation userInformation;
@@ -53,5 +48,17 @@ public class Move extends BaseModel {
     public UserInformation getUserInformation()
     {
         return userInformation;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public String getMove() {
+        return row + " " + column + " " + token;
     }
 }
