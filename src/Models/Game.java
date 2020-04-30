@@ -27,10 +27,6 @@ public class Game extends BaseModel {
     }
 
 
-    public Game getGame(){
-        return Game;
-    }
-
     public UserInformation getPlayer1()
     {
         return player1;
