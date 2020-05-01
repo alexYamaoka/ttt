@@ -11,6 +11,7 @@ import java.io.IOException;
 
 import java.io.Serializable;
 
+import java.sql.SQLException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GameHandler implements Runnable
@@ -55,8 +56,11 @@ public class GameHandler implements Runnable
                 Game game = service.getGame(data.toString());
                 game.join(clientConnection);
 
-                //ds.insertGame(game);
-                //Database call
+                try {
+                    ds.insertGame(game);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 game.start();
                 break;
 

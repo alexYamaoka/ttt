@@ -123,7 +123,13 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         GameStatement.setString(4,game.getPlayer1Info().getId());
         GameStatement.setString(5,game.getPlayer2Info().getId());
 
-        return false;
+        row = UserStatement.executeUpdate();
+        System.out.println("Row = " + row);
+
+        if(row == 0){
+            return false;
+        }else
+            return true;
     }
 
     @Override
@@ -131,6 +137,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         StringBuilder query = new StringBuilder();
         query.append("INSERT INTO ");
         int row = 0;
+
         if(obj instanceof UserInformation){
             UserInformation userObj = (UserInformation) obj;
             UUIDGenerator newID = new UUIDGenerator();
@@ -138,7 +145,6 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
             query.append("user ");
             query.append("(id, username, password, FirstName, LastName, isDeleted)");
             query.append("values (?,?,?,?,?,?)");
-
             UserStatement = myConn.prepareStatement(query.toString());
             System.out.println(query.toString());
             UserStatement.setString(1,newID.getNewId());
@@ -152,6 +158,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
             row = UserStatement.executeUpdate();
             System.out.println("Row = " + row);
         }
+
 
         if(row == 0){
             return false;
