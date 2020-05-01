@@ -12,16 +12,15 @@ public class Client
     private String hostName;
     private int port;
     private UserInformation userInformation;
+    private ClientController controller;
     private ArrayDeque<Packet> requestsToServer = new ArrayDeque<>();
-    private ArrayDeque<Packet> responseFromServer = new ArrayDeque<>();
 
-
-
-    public Client(String hostName, int port, UserInformation userInformation)
+    public Client(String hostName, int port, UserInformation userInformation, ClientController controller)
     {
         this.hostName = hostName;
         this.port = port;
         this.userInformation = userInformation;
+        this.controller = controller;
     }
 
 
@@ -57,7 +56,7 @@ public class Client
 
     public void addResponseFromServer(Packet packet)
     {
-        responseFromServer.add(packet);
+       controller.addResponse(packet);
     }
 
 
@@ -66,16 +65,6 @@ public class Client
         if (! requestsToServer.isEmpty())
         {
             return requestsToServer.pop();
-        }
-
-        return null;
-    }
-
-    public Packet getNextResponseFromServer()
-    {
-        if (! responseFromServer.isEmpty())
-        {
-            return responseFromServer.pop();
         }
 
         return null;
