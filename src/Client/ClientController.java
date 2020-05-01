@@ -13,7 +13,7 @@ import java.io.IOException;
 
 public class ClientController
 {
-    private Client client;
+    private Client accountClient;
     private Stage stage;
 
     // Controllers to be initialized
@@ -35,7 +35,7 @@ public class ClientController
 
     public ClientController(Stage stage) {
         this.stage = stage;
-        client = new Client("localhost", 8000, new UserInformation("NA", "NA", "Anonymous", "NA", "NA"));
+        accountClient = new Client("localhost", 8000, new UserInformation("NA", "NA", "Anonymous", "NA", "NA"));
         initialize();
         setUpClientToUI();
     }
@@ -93,16 +93,16 @@ public class ClientController
     }
 
     public void run() {
-        client.execute();
+        accountClient.execute();
     }
 
-    public Client getClient()
+    public Client getAccountClient()
     {
-        return client;
+        return accountClient;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setAccountClient(Client client) {
+        this.accountClient = client;
     }
 
     public Pane getSignInPane() {

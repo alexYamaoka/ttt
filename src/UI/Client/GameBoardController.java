@@ -30,9 +30,9 @@ public class GameBoardController implements Initializable, GameListener
     private HashMap<Pair<Integer, Integer>, Button> buttons = new HashMap<>();
 
     public void playerMoved(int x, int y){
-        Move move = new Move(x, y, clientController.getClient().getUserInformation());
-        Packet packet = new Packet(Packet.GAME_MOVE, clientController.getClient().getUserInformation(), move);
-        clientController.getClient().addRequestToServer(packet);
+        Move move = new Move(x, y, clientController.getAccountClient().getUserInformation());
+        Packet packet = new Packet(Packet.GAME_MOVE, clientController.getAccountClient().getUserInformation(), move);
+        clientController.getAccountClient().addRequestToServer(packet);
         resetTime();
     }
 
