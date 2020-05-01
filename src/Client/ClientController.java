@@ -34,7 +34,6 @@ public class ClientController {
 
     private ArrayDeque<Packet> responses = new ArrayDeque<>();
 
-
     public ClientController(Stage stage) {
         this.stage = stage;
         accountClient = new Client("localhost", 8000, new UserInformation("NA", "NA", "Anonymous", "NA", "NA"), this);
