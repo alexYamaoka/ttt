@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:controller="UI.Client.GameLobby" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="990.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496)radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:controller ="UI.Client.GameLobby" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="990.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496)radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" >
    <children>
       <TabPane layoutX="4.0" layoutY="-2.0" prefHeight="680.0" prefWidth="990.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -30,8 +30,8 @@
                               <Font size="36.0" />
                            </font>
                         </Label>
-                        <Button layoutX="75.0" layoutY="83.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="102.0" text="Join Game" />
-                        <Button layoutX="74.0" layoutY="169.0" mnemonicParsing="false" text="Spectate Game" />
+                        <Button fx:id="JoinGameButton" layoutX="75.0" layoutY="83.0" mnemonicParsing="false" onAction="#onJoinGameButtonClicked" prefHeight="27.0" prefWidth="102.0" text="Join Game" />
+                        <Button fx:id="SpectateGameButton" layoutX="74.0" layoutY="169.0" mnemonicParsing="false" onAction="#onSpectateGameButtonClicked" text="Spectate Game" />
                         <ListView layoutX="230.0" layoutY="392.0" prefHeight="153.0" prefWidth="372.0" />
                         <Button layoutX="312.0" layoutY="593.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="217.0" text="Send" />
                         <Label layoutX="383.0" layoutY="342.0" text="Chat">

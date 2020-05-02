@@ -14,6 +14,11 @@ import java.util.ResourceBundle;
 
 public class GameLobby implements Initializable, LobbyListener {
     @FXML
+    private Button JoinGameButton;
+
+    @FXML
+    private Button SpectateGameButton;
+    @FXML
     private Button NewGameButton;
     private ClientController clientController;
 
@@ -24,6 +29,18 @@ public class GameLobby implements Initializable, LobbyListener {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+    }
+
+    public void onJoinGameButtonClicked(ActionEvent event){
+        if (event.getSource() == JoinGameButton) {
+
+        }
+    }
+
+    public void onSpectateGameButtonClicked(ActionEvent event){
+        if (event.getSource() == SpectateGameButton) {
+
+        }
     }
        
     public void onPlayButtonClicked(ActionEvent event) {
