@@ -110,6 +110,18 @@ public class ReadMessageBus implements Runnable
                     case Packet.PLAYER_TWO_USERNAME:
                         gameListener.setPlayer2Username(response.getData().toString());
                         break;
+
+                    case Packet.PLAYER_ONE_WINS:
+                        gameListener.updateStatus(response.getData().toString());
+                        break;
+
+                    case Packet.PLAYER_TWO_WINS:
+                        gameListener.updateStatus(response.getData().toString());
+                        break;
+
+                    case Packet.TIE_GAME:
+                        gameListener.updateStatus(response.getData().toString());
+                        break;
                 }
             }
         }

@@ -24,6 +24,9 @@ public class Packet implements Serializable {
     public static final String NO_OPPONENT_FOUND = "NO-OPPONENT_FOUND";
     public static final String PLAYER_ONE_USERNAME = "PLAYER-ONE-USERNAME";
     public static final String PLAYER_TWO_USERNAME = "PLAYER-TWO-USERNAME";
+    public static final String PLAYER_ONE_WINS = "PLAYER-ONE-WINS";
+    public static final String PLAYER_TWO_WINS = "PLAYER-TWO-WINS";
+    public static final String TIE_GAME = "TIE-GAME";
 
 
     public Packet(String request, UserInformation information, Serializable data) {
