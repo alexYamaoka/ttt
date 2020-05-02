@@ -90,20 +90,15 @@ public class ReadMessageBus implements Runnable
 
 
                     case Packet.GAME_MOVE:
-                        System.out.println("inside Read message bus: game move received");
                         gameListener.updateMove((Move)response.getData());
                         break;
 
                     case Packet.NEW_GAME_CREATED:
-                        System.out.println("new game created inside readMessageBus");
-                        System.out.println("response from server: " + response.getData().toString());
                         lobbyListener.newGame(response.getData().toString());
 
                         break;
 
                     case Packet.Game_Name:
-                        System.out.println("received game name from readMessageBus");
-                        System.out.println("response from server: " + response.getData().toString());
                         lobbyListener.updateUIWithNewGame(response.getData().toString());
                         gameListener.setGameName(response.getData().toString());
                         break;

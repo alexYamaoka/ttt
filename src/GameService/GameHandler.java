@@ -78,22 +78,14 @@ public class GameHandler implements Runnable
 
             case Packet.NEW_GAME_CREATED:
                 try {
-                    System.out.println("New Game started start");
                     service.addGame(new Game(clientConnection, data.toString())); //pull game name from data
                     Packet packet = new Packet(Packet.NEW_GAME_CREATED, clientConnection.getInformation(), "SUCCESS");
                     clientConnection.getOutputStream().writeObject(packet);
-                    System.out.println("New Game end");
 
 
-
-                    // send the game name back to the client to use in Move constructor on client side
+                    // send the game name back to the client to use in constructor for the MOVE class on client side
                     Packet gameNamePacket = new Packet(Packet.Game_Name, clientConnection.getInformation(), data.toString());
                     clientConnection.getOutputStream().writeObject(gameNamePacket);
-
-
-
-
-
 
 
                 } catch (IOException ex) {
@@ -114,7 +106,7 @@ public class GameHandler implements Runnable
                     System.out.println("starting game thread!");
 
 
-                    // sending the gameName over the client
+                    // sending the gameName over the client. gamename needed to direct the moves to the right game
                     Packet gameNamePacket = new Packet(Packet.Game_Name, clientConnection.getInformation(), data.toString());
                     clientConnection.getOutputStream().writeObject(gameNamePacket);
 
@@ -140,23 +132,14 @@ public class GameHandler implements Runnable
 
             case Packet.GAME_MOVE:
                 // packet request type game move
-                System.out.println("game move has been received");
                 try
                 {
                     Move newMove = (Move)data;
 
-                    System.out.println("New Move");
-                    System.out.println("Row: " + newMove.getRow());
-                    System.out.println("col: " + newMove.getColumn());
-
-
-
                     if (gameThreadList.containsKey(newMove.getGameName()))
                     {
-                        System.out.println("Game thread as been found from hashSet");
                         GameThread gameThreadForMove = gameThreadList.get(newMove.getGameName());
                         gameThreadForMove.addMove(newMove);
-                        System.out.println("sending move to thread");
                     }
                     else
                     {

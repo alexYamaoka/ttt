@@ -92,7 +92,6 @@ public class GameThread implements Runnable {
 
         try
         {
-
             // sends the username of player1
             Packet whoIsPlayer1 = new Packet(Packet.PLAYER_ONE_USERNAME, player1UserInformation, player1UserInformation.getUserName());
             player1.getOutputStream().writeObject(whoIsPlayer1);
@@ -109,8 +108,6 @@ public class GameThread implements Runnable {
         {
             ex.printStackTrace();
         }
-
-
 
 
         while (isRunning.get()) {
@@ -152,8 +149,6 @@ public class GameThread implements Runnable {
                         System.out.println("make move if statements have been skipped");
                     }
 
-
-
                 }
 
             }
@@ -161,60 +156,6 @@ public class GameThread implements Runnable {
             {
                 e.printStackTrace();
             }
-
-
-
-/*
-            try
-            {
-
-
-
-                if (player1UserInformation.equals(newMove.getUserInformation()))
-                {
-                    System.out.println("new move is by player 1");
-                    if (game.checkIfValidMove(newMove))
-                    {
-                        game.player1MakeMove(newMove);
-                        isPlayer1Turn = false;
-                        hasPlayerMadeMove = false;
-
-                        outputToPlayer1.writeObject(newMove);
-                        outputToPlayer2.writeObject(newMove);
-                    }
-                    else
-                    {
-                        System.out.println("Not a valid move");
-                        Packet packet = new Packet(Packet.INVALID_GAME_MOVE, player1UserInformation, "NOT A VALID MOVE");
-                        outputToPlayer1.writeObject(packet);
-                    }
-                }
-                else if (player2UserInformation.equals(newMove.getUserInformation()))
-                {
-                    System.out.println("new move is by player 2");
-
-                    if (game.checkIfValidMove(newMove))
-                    {
-                        game.player2MakeMove(newMove);
-                        isPlayer1Turn = true;
-                        hasPlayerMadeMove = false;
-                    }
-                    else
-                    {
-                        System.out.println("Not a valid move");
-                        Packet packet = new Packet(Packet.INVALID_GAME_MOVE, player1UserInformation, "NOT A VALID MOVE");
-                        outputToPlayer2.writeObject(packet);
-                    }
-                }
-            }
-            catch (IOException ex)
-            {
-                ex.printStackTrace();
-            }
-
- */
-
-
         }
     }
 }
