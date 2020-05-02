@@ -87,14 +87,22 @@ public class GameThread implements Runnable {
 
         while (isRunning.get()) {
 
+            System.out.println("inside game thread run method");
+
+
+
             if (! moveQueue.isEmpty())
             {
                 Move newMove = moveQueue.removeFirst();
+                System.out.println("New Move received from the queue");
+                System.out.println("row: " + newMove.getRow());
+                System.out.println("col: " + newMove.getColumn());
 
                 try
                 {
-                    if (player1UserInformation == newMove.getUserInformation())
+                    if (player1UserInformation.equals(newMove.getUserInformation()))
                     {
+                        System.out.println("new move is by player 1");
                         if (game.checkIfValidMove(newMove))
                         {
                             game.player1MakeMove(newMove);
@@ -111,8 +119,10 @@ public class GameThread implements Runnable {
                             outputToPlayer1.writeObject(packet);
                         }
                     }
-                    else if (player2UserInformation == newMove.getUserInformation())
+                    else if (player2UserInformation.equals(newMove.getUserInformation()))
                     {
+                        System.out.println("new move is by player 2");
+
                         if (game.checkIfValidMove(newMove))
                         {
                             game.player2MakeMove(newMove);
