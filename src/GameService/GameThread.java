@@ -61,8 +61,6 @@ public class GameThread implements Runnable {
             outputToPlayer2.writeObject(joinGamePacket);
 
 
-
-
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -98,11 +96,10 @@ public class GameThread implements Runnable {
                         }
 
 
-                        // TODO: isGameOver() inside game
-//                        if (game.isGameOver())
-//                        {
-//
-//                        }
+                        if (game.isOver())
+                        {
+
+                        }
                     }
                 }
 
@@ -133,11 +130,10 @@ public class GameThread implements Runnable {
                         }
 
 
-                        // TODO: isGameOver() inside game
-//                        if (game.isGameOver())
-//                        {
-//
-//                        }
+                        if (game.isOver())
+                        {
+
+                        }
                     }
                 }
 

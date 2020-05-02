@@ -70,7 +70,6 @@ public class GameHandler implements Runnable
 
             case Packet.NEW_GAME_CREATED:
                 service.addGame(new Game(clientConnection,data.toString())); //pull game name from data
-
                 break;
 
             case Packet.GET_GAMES:

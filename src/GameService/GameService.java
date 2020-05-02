@@ -36,7 +36,6 @@ public class GameService implements Runnable, Service
     public void start() {
         worker = new Thread(this);
         worker.start();
-
     }
 
     public void stop() {

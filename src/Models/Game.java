@@ -16,7 +16,6 @@ import java.util.List;
 
 public class Game extends BaseModel {
 
-
     private TTTBoard tttBoard;
     private List<GameObserver> gameObserversList;
 
@@ -54,6 +53,10 @@ public class Game extends BaseModel {
 
     public String getGameName(){
         return gameName;
+    }
+
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
     }
 
     public void addGameObserver(ClientConnection client){
