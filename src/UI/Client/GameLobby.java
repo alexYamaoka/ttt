@@ -1,7 +1,11 @@
 package UI.Client;
 
+import ObserverPatterns.LobbyListener;
+import Shared.Packet;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import Client.ClientController;
@@ -10,15 +14,12 @@ import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class GameLobby implements Initializable {
-
-
+public class GameLobby implements Initializable, LobbyListener {
     @FXML
     private Button JoinGameButton;
 
     @FXML
     private Button SpectateGameButton;
-
     @FXML
     private Button NewGameButton;
     private ClientController clientController;
@@ -45,13 +46,28 @@ public class GameLobby implements Initializable {
     }
        
     public void onPlayButtonClicked(ActionEvent event) {
-
         if (event.getSource() == NewGameButton) {
-
+            Packet packet = new Packet(Packet.NEW_GAME_CREATED, clientController.getAccountClient().getUserInformation(), "test");
+            clientController.getGameClient().addRequestToServer(packet);
         }
 
     }
 
+    @Override
+    public void newGame(String message) {
+        if(message.equalsIgnoreCase("SUCCESS")) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    Stage stage = null;
+                    Parent root = null;
 
-
+                    stage = (Stage) NewGameButton.getScene().getWindow();
+                    root = clientController.getGameBoardPane();
+                    stage.setScene(root.getScene());
+                    stage.show();
+                }
+            });
+        }
+    }
 }
