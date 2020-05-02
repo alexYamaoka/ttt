@@ -88,7 +88,9 @@ public class GameLobby implements Initializable, LobbyListener {
        
     public void onPlayButtonClicked(ActionEvent event) {
         if (event.getSource() == NewGameButton) {
-            Packet packet = new Packet(Packet.NEW_GAME_CREATED, clientController.getAccountClient().getUserInformation(), "test");
+
+            String gameName = clientController.getAccountClient().getUserInformation().getUserName() + ":" + System.currentTimeMillis();
+            Packet packet = new Packet(Packet.NEW_GAME_CREATED, clientController.getAccountClient().getUserInformation(), gameName);
 
             System.out.println("New Game Created " + " Created by " + clientController.getAccountClient().getUserInformation().getFirstName() );
 
@@ -141,6 +143,8 @@ public class GameLobby implements Initializable, LobbyListener {
     @Override
     public void getListOfGames(HashSet<String> listOfGames)
     {
+        this.listOfGames.clear();
+
         if (listOfGames != null)
         {
             this.listOfGames = listOfGames;
@@ -157,8 +161,6 @@ public class GameLobby implements Initializable, LobbyListener {
                 }
             });
         }
-
     }
-
 
 }

@@ -62,16 +62,7 @@ public class GameThread implements Runnable {
     {
         System.out.println("Inside GameThread, adding move to the queue");
         moveQueue.add(move);
-//        if (isPlayer1Turn && player1UserInformation.equals(move.getUserInformation()) && !hasPlayerMadeMove)
-//        {
-//            moveQueue.put(move);
-//            hasPlayerMadeMove = true;
-//        }
-//        else if (!isPlayer1Turn && player2UserInformation.equals(move.getUserInformation()) && !hasPlayerMadeMove)
-//        {
-//            moveQueue.put(move);
-//            hasPlayerMadeMove = true;
-//        }
+
 
     }
 
@@ -120,35 +111,68 @@ public class GameThread implements Runnable {
                 {
                     System.out.println("Inside game thread, removing move from the queue ");
                     newMove = moveQueue.take();
-                    System.out.println("New Move received from the queue");
-                    System.out.println("row: " + newMove.getRow());
-                    System.out.println("col: " + newMove.getColumn());
+
 
                     if (newMove.getUserInformation() == player1UserInformation)
                     {
                         System.out.println("game player1.make move is called");
-                        game.player1MakeMove(newMove);
 
-                        Packet packet = new Packet(Packet.GAME_MOVE, player1UserInformation,newMove);
-                        player1.getOutputStream().writeObject(packet);
-                        player2.getOutputStream().writeObject(packet);
-                        System.out.println("move is outputted to both players");
+                        if (game.checkIfValidMove(newMove))
+                        {
+                            game.player1MakeMove(newMove);
+
+                            Packet packet = new Packet(Packet.GAME_MOVE, player1UserInformation,newMove);
+                            player1.getOutputStream().writeObject(packet);
+                            player2.getOutputStream().writeObject(packet);
+                            System.out.println("move is outputted to both players");
+
+
+                            if (game.isPlayer1Winner(newMove))
+                            {
+                                System.out.println("Player 1 Wins!");
+                            }
+                            else if (game.isTieGame())
+                            {
+                                System.out.println("Tie Game");
+                            }
+                        }
+                        else
+                        {
+                            System.out.println("Not a valid move");
+                        }
+
+
+
                     }
                     else if (newMove.getUserInformation() == player2UserInformation)
                     {
                         System.out.println("game player2.make move is called");
-                        game.player2MakeMove(newMove);
 
-                        Packet packet = new Packet(Packet.GAME_MOVE, player2UserInformation, newMove);
-                        player1.getOutputStream().writeObject(packet);
-                        player2.getOutputStream().writeObject(packet);
-                        System.out.println("move is outputted to both players");
+                        if (game.checkIfValidMove(newMove))
+                        {
+                            game.player2MakeMove(newMove);
+
+                            Packet packet = new Packet(Packet.GAME_MOVE, player2UserInformation, newMove);
+                            player1.getOutputStream().writeObject(packet);
+                            player2.getOutputStream().writeObject(packet);
+                            System.out.println("move is outputted to both players");
+
+
+
+                            if (game.isPlayer2Winner(newMove))
+                            {
+                                System.out.println("Player 2 Wins!");
+                            }
+                            else if (game.isTieGame())
+                            {
+                                System.out.println("Tie Game");
+                            }
+                        }
                     }
                     else
                     {
                         System.out.println("make move if statements have been skipped");
                     }
-
                 }
 
             }
