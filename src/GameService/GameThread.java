@@ -4,6 +4,7 @@ import Models.Game;
 import Models.Move;
 import Server.ClientConnection;
 import Shared.Packet;
+import Shared.UserInformation;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -27,7 +28,7 @@ public class GameThread implements Runnable {
     private Game game;
 
     public GameThread(ClientConnection player1, ClientConnection player2, ArrayList<ClientConnection> GameObservers) {
-        //game = new Game(player1.getInformation(), player2.getInformation());
+
         this.player1 = player1;
         this.player2 = player2;
         this.GameObservers = GameObservers;
@@ -50,38 +51,25 @@ public class GameThread implements Runnable {
     @Override
     public void run() {
         isRunning.set(true);
-
-
         // passing moves to each other.  not the game
         // create a class called game move.
-
         try {
-            Packet packet1 = new Packet(Packet.NEW_GAME_CREATED, player1.getInformation(), "Opponent Found!");
-            Packet packet2 = new Packet(Packet.NEW_GAME_CREATED, player2.getInformation(), "Opponent Found!");
-            outputToPlayer1.writeObject(packet2);
-            outputToPlayer2.writeObject(packet1);
+            game = new Game(player1,game.getGameName());
+            Packet joinGamePacket = new Packet(Packet.JOIN_GAME,player2.getInformation(),"Opponent Found!");
+            game.join(player2);
+            outputToPlayer1.writeObject(joinGamePacket);
+            outputToPlayer2.writeObject(joinGamePacket);
+
+
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-
-
         while (isRunning.get()) {
-            // play ttt game
-            // while game has not ended
-            // send and receive packet with game inside
 
             try {
-                // check if valid move,
-                // checks the game model
-                // if its a valid move, send it to both players.
-                // notify observers
-                // want to update UI from the server side.
-                // if game ends, break out of loop and end the task
-
 
                 boolean player1MadeMove = false;
                 boolean player2MadeMove = false;
-
 
                 // loops until player 1 makes a valid move
                 while (!player1MadeMove) {
@@ -89,15 +77,12 @@ public class GameThread implements Runnable {
 
                     if (player1Move.getRequest().equals(Packet.GAME_MOVE)) {
                         Move move1 = (Move) player1Move.getData();
-
-
                         // check if its a valid move
                         if (game.checkIfValidMove(move1)) {
                             game.player1MakeMove(move1);
                             outputToPlayer2.writeObject(player1Move);
                             outputToPlayer1.writeObject(player1Move);
                             player1MadeMove = true;
-
 
                             if (game.isPlayer1Winner(move1)) {
                                 System.out.println("Player 1 Wins");
@@ -111,11 +96,10 @@ public class GameThread implements Runnable {
                         }
 
 
-                        // TODO: isGameOver() inside game
-//                        if (game.isGameOver())
-//                        {
-//
-//                        }
+                        if (game.isOver())
+                        {
+
+                        }
                     }
                 }
 
@@ -146,11 +130,10 @@ public class GameThread implements Runnable {
                         }
 
 
-                        // TODO: isGameOver() inside game
-//                        if (game.isGameOver())
-//                        {
-//
-//                        }
+                        if (game.isOver())
+                        {
+
+                        }
                     }
                 }
 
@@ -160,5 +143,7 @@ public class GameThread implements Runnable {
             }
         }
     }
+
+
 
 }

@@ -21,6 +21,9 @@ public class Main extends Application {
         AccountService service = new AccountService();
         service.start();
 
+        GameService game = new GameService();
+        game.start();
+
         // start client
         ClientController clientController = new ClientController(stage);
         stage.setTitle("EndFrame TicTacToe");

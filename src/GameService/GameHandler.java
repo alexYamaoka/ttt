@@ -2,6 +2,7 @@ package GameService;
 
 import DataBase.sql.DataSource;
 import DataBase.sql.DatabaseManager;
+import Models.Game;
 import Shared.Packet;
 import Shared.UserInformation;
 import app.Server;
@@ -10,6 +11,7 @@ import java.io.IOException;
 
 import java.io.Serializable;
 
+import java.sql.SQLException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GameHandler implements Runnable
@@ -51,19 +53,23 @@ public class GameHandler implements Runnable
         switch(request)
         {
             case Packet.JOIN_GAME:
-               GameRoomInformation game = service.getGame(data.toString());
+                Game game = service.getGame(data.toString());
                 game.join(clientConnection);
-                //Database call
+
+                try {
+                    ds.insertGame(game);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 game.start();
                 break;
 
             case Packet.OBSERVE_GAME:
-                GameRoomInformation ObserverGame = service.getGame(data.toString());
+                Game ObserverGame = service.getGame(data.toString());
                 break;
 
             case Packet.NEW_GAME_CREATED:
-                service.addGame(new GameRoomInformation(clientConnection,data.toString())); //pull game name from data
-
+                service.addGame(new Game(clientConnection,data.toString())); //pull game name from data
                 break;
 
             case Packet.GET_GAMES:
