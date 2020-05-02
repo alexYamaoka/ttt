@@ -32,7 +32,7 @@ public class GameBoardController implements Initializable, GameListener
     public void playerMoved(int x, int y){
         Move move = new Move(x, y, clientController.getAccountClient().getUserInformation());
         Packet packet = new Packet(Packet.GAME_MOVE, clientController.getAccountClient().getUserInformation(), move);
-        clientController.getAccountClient().addRequestToServer(packet);
+        clientController.getGameClient().addRequestToServer(packet);
         resetTime();
     }
 
