@@ -185,7 +185,7 @@ public class GameBoardController implements Initializable, GameListener
 
     @Override
     public void updateStatus(String message) {
-
+        System.out.println("GAME STATUS:" + message);
     }
 
     @Override
