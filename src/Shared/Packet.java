@@ -20,6 +20,8 @@ public class Packet implements Serializable {
     public static final String GET_GAMES = "GET_GAMES"; // Joinable games
     public static final String GAME_MOVE = "GAME-MOVE";
     public static final String INVALID_GAME_MOVE = "INVALID-GAME-MOVE";
+    public static final String Game_Name = "GAME-NAME";
+    public static final String NO_OPPONENT_FOUND = "NO-OPPONENT_FOUND";
 
 
     public Packet(String request, UserInformation information, Serializable data) {

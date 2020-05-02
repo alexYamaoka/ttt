@@ -8,6 +8,8 @@ import Shared.Packet;
 import Shared.UserInformation;
 import app.Server;
 import Server.ClientConnection;
+import com.sun.javafx.iio.ios.IosDescriptor;
+
 import java.io.IOException;
 
 import java.io.Serializable;
@@ -65,7 +67,23 @@ public class GameHandler implements Runnable
         switch(request)
         {
             case Packet.NEW_GAME_CREATED:
-                service.addGame(new Game(clientConnection,data.toString())); //pull game name from data
+                try {
+                    System.out.println("New Game started start");
+                    service.addGame(new Game(clientConnection, data.toString())); //pull game name from data
+                    Packet packet = new Packet(Packet.NEW_GAME_CREATED, clientConnection.getInformation(), "SUCCESS");
+                    clientConnection.getOutputStream().writeObject(packet);
+                    System.out.println("New Game end");
+
+
+
+                    Packet gameNamePacket = new Packet(Packet.Game_Name, clientConnection.getInformation(), "test");
+                    clientConnection.getOutputStream().writeObject(gameNamePacket);
+
+
+
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
                 break;
 
             case Packet.JOIN_GAME:
@@ -92,9 +110,29 @@ public class GameHandler implements Runnable
 
             case Packet.GAME_MOVE:
                 // packet request type game move
+
                 Move newMove = (Move)data;
-                GameThread gameThreadForMove = gameThreadList.get(newMove.getGameName());
-                gameThreadForMove.addMove(newMove);
+
+                if (gameThreadList.containsKey(newMove.getGameName()))
+                {
+                    GameThread gameThreadForMove = gameThreadList.get(newMove.getGameName());
+                    gameThreadForMove.addMove(newMove);
+                }
+                else
+                {
+                    System.out.println("Opponent has not been found!");
+                    Packet errorPacket = new Packet(Packet.NO_OPPONENT_FOUND, clientConnection.getInformation(), "No Opponent Found");
+                    try
+                    {
+                        clientConnection.getOutputStream().writeObject(errorPacket);
+                    }
+                    catch (IOException ex)
+                    {
+                        ex.printStackTrace();
+                    }
+
+                }
+
                 break;
 
             case Packet.GET_GAMES:

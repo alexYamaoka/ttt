@@ -4,6 +4,7 @@ import Models.Move;
 import ObserverPatterns.*;
 import Shared.Packet;
 import Shared.UserInformation;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -75,9 +76,14 @@ public class ReadMessageBus implements Runnable
                         break;
 
                     case Packet.NEW_GAME_CREATED:
+                        System.out.println("response from server: " + response.getData().toString());
                         lobbyListener.newGame(response.getData().toString());
-                        gameListener.setGameName(response.getData().toString());
+
                         break;
+
+                    case Packet.Game_Name:
+                        System.out.println("response from server: " + response.getData().toString());
+                        gameListener.setGameName(response.getData().toString());
                 }
             }
         }
