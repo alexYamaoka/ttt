@@ -44,6 +44,7 @@ public class MainMenuController implements Initializable {
 
         Client client = new Client("localhost", 8080, clientController.getAccountClient().getUserInformation(), clientController);
         clientController.setGameClient(client);
+        client.execute();
     }
 
 

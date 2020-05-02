@@ -69,7 +69,13 @@ public class GameHandler implements Runnable
                 break;
 
             case Packet.NEW_GAME_CREATED:
-                service.addGame(new Game(clientConnection,data.toString())); //pull game name from data
+                try {
+                    service.addGame(new Game(clientConnection, data.toString())); //pull game name from data
+                    Packet packet = new Packet(Packet.NEW_GAME_CREATED, clientConnection.getInformation(), "SUCCESS");
+                    clientConnection.getOutputStream().writeObject(packet);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
                 break;
 
             case Packet.GET_GAMES:
