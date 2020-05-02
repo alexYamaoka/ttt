@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:controller ="UI.Client.GameLobby" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="990.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496)radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" >
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="990.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496)radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.Client.GameLobby">
    <children>
       <TabPane layoutX="4.0" layoutY="-2.0" prefHeight="680.0" prefWidth="990.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -19,12 +19,6 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="680.0" prefWidth="990.0">
                      <children>
-                        <TableView layoutX="229.0" layoutY="82.0" prefHeight="228.0" prefWidth="739.0">
-                          <columns>
-                            <TableColumn prefWidth="261.2393493652344" text="Game" />
-                            <TableColumn minWidth="8.440948486328125" prefWidth="197.3912353515625" text="Players" />
-                          </columns>
-                        </TableView>
                         <Label layoutX="523.0" layoutY="18.0" text="Lobby List">
                            <font>
                               <Font size="36.0" />
@@ -53,6 +47,8 @@
                         <Button fx:id="NewGameButton" layoutX="75.0" layoutY="125.0" mnemonicParsing="false" onAction="#onPlayButtonClicked" prefHeight="27.0" prefWidth="102.0" text="New Game" />
                         <TextField layoutX="31.0" layoutY="412.0" promptText="Wins" />
                         <TextField layoutX="32.0" layoutY="455.0" promptText="Loss" />
+                        <Button fx:id="Quit" layoutX="98.0" layoutY="226.0" mnemonicParsing="false" onAction="#onQuitClicked" text="Quit" />
+                        <ListView fx:id="LobbyGameListview" layoutX="232.0" layoutY="110.0" prefHeight="200.0" prefWidth="604.0" />
                      </children>
                   </AnchorPane>
             </content>

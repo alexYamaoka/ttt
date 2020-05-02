@@ -47,15 +47,16 @@ public class GameThread implements Runnable {
         isRunning.set(false);
     }
 
-
     @Override
     public void run() {
         isRunning.set(true);
+        System.out.println("Game Thread called and started");
         // passing moves to each other.  not the game
         // create a class called game move.
         try {
             game = new Game(player1,game.getGameName());
             Packet joinGamePacket = new Packet(Packet.JOIN_GAME,player2.getInformation(),"Opponent Found!");
+            System.out.println("join game packet " + joinGamePacket.toString());
             game.join(player2);
             outputToPlayer1.writeObject(joinGamePacket);
             outputToPlayer2.writeObject(joinGamePacket);
@@ -74,6 +75,7 @@ public class GameThread implements Runnable {
                 // loops until player 1 makes a valid move
                 while (!player1MadeMove) {
                     Packet player1Move = (Packet) inputFromPlayer1.readObject();
+                    System.out.println("Player one packet " + player1Move.toString());
 
                     if (player1Move.getRequest().equals(Packet.GAME_MOVE)) {
                         Move move1 = (Move) player1Move.getData();
@@ -142,6 +144,7 @@ public class GameThread implements Runnable {
                 ex.printStackTrace();
             }
         }
+        System.out.println("Game Thread called and ended");
     }
 
 
