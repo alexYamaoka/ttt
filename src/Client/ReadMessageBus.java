@@ -75,7 +75,6 @@ public class ReadMessageBus implements Runnable
                         break;
 
                     case Packet.NEW_GAME_CREATED:
-                        System.out.println("READ MESSAGE BUS!" + response.getData());
                         lobbyListener.newGame(response.getData().toString());
                         break;
                 }
