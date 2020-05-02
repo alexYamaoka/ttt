@@ -117,9 +117,12 @@ public class GameBoardController implements Initializable, GameListener
                 int col = move.getColumn();
                 UserInformation userInformation = move.getUserInformation();
 
-                if (userInformation == clientController.getAccountClient().getUserInformation())
+                System.out.println("userInformation from packet: " + userInformation.getUserName());
+                System.out.println("this userinformation" + clientController.getAccountClient().getUserInformation());
+
+                if (userInformation.getUserName().equals(clientController.getAccountClient().getUserInformation().getUserName()))
                 {
-                    System.out.println("move was this mine");
+                    System.out.println("move was  mine");
                     if (row == 0 && col == 0)
                         zZ.setText("X");
                     else if (row == 0 && col == 1)
