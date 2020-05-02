@@ -37,7 +37,7 @@ public class GameThread implements Runnable {
     private boolean isPlayer1Turn = true;
     private boolean hasPlayerMadeMove = true;
 
-    private Deque<Move> moveQueue = new LinkedBlockingDeque<>();
+    private Deque<Move> moveQueue = new LinkedList<>();
 
 
 
@@ -87,48 +87,52 @@ public class GameThread implements Runnable {
 
         while (isRunning.get()) {
 
-            Move newMove = moveQueue.removeFirst();
-
-            try
+            if (! moveQueue.isEmpty())
             {
-                if (player1UserInformation == newMove.getUserInformation())
-                {
-                    if (game.checkIfValidMove(newMove))
-                    {
-                        game.player1MakeMove(newMove);
-                        isPlayer1Turn = false;
-                        hasPlayerMadeMove = false;
+                Move newMove = moveQueue.removeFirst();
 
-                        outputToPlayer1.writeObject(newMove);
-                        outputToPlayer2.writeObject(newMove);
-                    }
-                    else
+                try
+                {
+                    if (player1UserInformation == newMove.getUserInformation())
                     {
-                        System.out.println("Not a valid move");
-                        Packet packet = new Packet(Packet.INVALID_GAME_MOVE, player1UserInformation, "NOT A VALID MOVE");
-                        outputToPlayer1.writeObject(packet);
+                        if (game.checkIfValidMove(newMove))
+                        {
+                            game.player1MakeMove(newMove);
+                            isPlayer1Turn = false;
+                            hasPlayerMadeMove = false;
+
+                            outputToPlayer1.writeObject(newMove);
+                            outputToPlayer2.writeObject(newMove);
+                        }
+                        else
+                        {
+                            System.out.println("Not a valid move");
+                            Packet packet = new Packet(Packet.INVALID_GAME_MOVE, player1UserInformation, "NOT A VALID MOVE");
+                            outputToPlayer1.writeObject(packet);
+                        }
+                    }
+                    else if (player2UserInformation == newMove.getUserInformation())
+                    {
+                        if (game.checkIfValidMove(newMove))
+                        {
+                            game.player2MakeMove(newMove);
+                            isPlayer1Turn = true;
+                            hasPlayerMadeMove = false;
+                        }
+                        else
+                        {
+                            System.out.println("Not a valid move");
+                            Packet packet = new Packet(Packet.INVALID_GAME_MOVE, player1UserInformation, "NOT A VALID MOVE");
+                            outputToPlayer2.writeObject(packet);
+                        }
                     }
                 }
-                else if (player2UserInformation == newMove.getUserInformation())
+                catch (IOException ex)
                 {
-                    if (game.checkIfValidMove(newMove))
-                    {
-                        game.player2MakeMove(newMove);
-                        isPlayer1Turn = true;
-                        hasPlayerMadeMove = false;
-                    }
-                    else
-                    {
-                        System.out.println("Not a valid move");
-                        Packet packet = new Packet(Packet.INVALID_GAME_MOVE, player1UserInformation, "NOT A VALID MOVE");
-                        outputToPlayer2.writeObject(packet);
-                    }
+                    ex.printStackTrace();
                 }
             }
-            catch (IOException ex)
-            {
-                ex.printStackTrace();
-            }
+
         }
     }
 }

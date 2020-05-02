@@ -56,6 +56,27 @@ public class GameLobby implements Initializable, LobbyListener {
         if (event.getSource() == JoinGameButton) {
             String selectedGame = LobbyGameListview.getSelectionModel().getSelectedItem().toString();
             System.out.println("selected item in listView: " + selectedGame);
+
+
+
+            Packet packet = new Packet(Packet.JOIN_GAME, clientController.getAccountClient().getUserInformation(), selectedGame);
+            clientController.getGameClient().addRequestToServer(packet);
+
+
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    Stage stage = null;
+                    Parent root = null;
+
+                    stage = (Stage) NewGameButton.getScene().getWindow();
+                    root = clientController.getGameBoardPane();
+                    stage.setScene(root.getScene());
+                    stage.show();
+
+                    System.out.println("Displaying new game window");
+                }
+            });
         }
     }
 

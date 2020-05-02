@@ -86,7 +86,8 @@ public class GameHandler implements Runnable
 
 
 
-                    Packet gameNamePacket = new Packet(Packet.Game_Name, clientConnection.getInformation(), "test");
+                    // get the game name and send it back as a packet
+                    Packet gameNamePacket = new Packet(Packet.Game_Name, clientConnection.getInformation(), data.toString());
                     clientConnection.getOutputStream().writeObject(gameNamePacket);
 
 
@@ -101,10 +102,17 @@ public class GameHandler implements Runnable
             case Packet.JOIN_GAME:
                 Game game = service.getGame(data.toString());
                 game.join(clientConnection);
+                System.out.println("Opponent joined game!");
 
                 GameThread gameThread = new GameThread(game, game.getPlayer1ClientConnection(), clientConnection);
                 gameThreadList.put(game.getGameName(), gameThread);
                 gameThread.start();
+                System.out.println("starting game thread!");
+
+
+
+                Packet packet = new Packet(Packet.JOIN_GAME, clientConnection.getInformation(), data.toString());
+                //clientConnection.getOutputStream().writeObject();
 
                 /*
                 try {
