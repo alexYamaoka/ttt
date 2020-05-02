@@ -21,16 +21,16 @@
             <Font size="40.0" />
          </font>
       </Label>
-      <TableView fx:id="activeGames" layoutX="119.0" layoutY="162.0" prefHeight="228.0" prefWidth="800.0">
+      <TableView fx:id="activeGames" layoutX="112.5" layoutY="160.0" prefHeight="400.0" prefWidth="800.0">
         <columns>
-          <TableColumn fx:id="player1Column" prefWidth="200.0" text="Player 1" />
-          <TableColumn fx:id="player2Column" minWidth="8.440948486328125" prefWidth="200.0" text="Player 2" />
-            <TableColumn fx:id="statusColumn" prefWidth="200.0" text="Status" />
-            <TableColumn fx:id="optionsColumn" prefWidth="200.0" text="Options" />
+          <TableColumn fx:id="player1Column" editable="false" prefWidth="200.0" text="Player 1" />
+          <TableColumn fx:id="player2Column" editable="false" minWidth="8.440948486328125" prefWidth="200.0" text="Player 2" />
+            <TableColumn fx:id="statusColumn" editable="false" prefWidth="200.0" text="Status" />
+            <TableColumn fx:id="optionsColumn" editable="false" prefWidth="200.0" text="Options" />
         </columns>
       </TableView>
-      <Button fx:id="joinGameButton" layoutX="845.0" layoutY="461.0" mnemonicParsing="false" prefWidth="80.0" text="Join Game" />
-      <Button fx:id="spectateButton" layoutX="733.0" layoutY="462.0" mnemonicParsing="false" prefWidth="80.0" text="Spectate" />
-      <Button fx:id="NewGameButton" layoutX="465.0" layoutY="460.0" mnemonicParsing="false" onAction="#onPlayButtonClicked" text="Play against computer" />
+      <Button fx:id="updateTableButton" layoutX="927.5" layoutY="160.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#updateTableButtonClicked" prefHeight="30.0" prefWidth="30.0" text="⟳" />
+      <Button fx:id="newGameAgainstComputerButton" layoutX="772.5" layoutY="590.0" mnemonicParsing="false" onAction="#onPlayAgainstComputerButtonClicked" prefWidth="140.0" text="Play against computer" />
+      <Button fx:id="newGameButton" layoutX="617.5" layoutY="590.0" mnemonicParsing="false" onAction="#onCreateGameButtonClicked" prefWidth="140.0" text="Create new game" />
    </children>
 </AnchorPane>

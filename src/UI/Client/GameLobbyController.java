@@ -4,11 +4,14 @@ import Models.Game;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldListCell;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 import Client.ClientController;
 import javafx.fxml.Initializable;
@@ -25,7 +28,7 @@ public class GameLobbyController implements Initializable {
     @FXML
     private TableColumn<Game, Button> optionsColumn;
     @FXML
-    private Button spectateButton, joinGameButton, NewGameButton;
+    private Button updateTableButton, newGameButton, newGameAgainstComputerButton;
     @FXML
     private ClientController clientController;
 
@@ -35,38 +38,54 @@ public class GameLobbyController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        player1Column.setCellValueFactory(new PropertyValueFactory<Game, String>("player1"));
-        player2Column.setCellValueFactory(new PropertyValueFactory<Game, String>("player2"));
-        statusColumn.setCellValueFactory(new PropertyValueFactory<Game, String>("status"));
-        optionsColumn.setCellValueFactory(new PropertyValueFactory<Game, Button>("options"));
-
-        activeGames.setItems(getGames());
+        initializeTable();
+        loadGames();
     }
 
+    private void initializeTable(){
+        player1Column.setCellValueFactory(new PropertyValueFactory<>("player1"));
+        player2Column.setCellValueFactory(new PropertyValueFactory<>("player2"));
+        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+        optionsColumn.setCellValueFactory(new PropertyValueFactory<>("options"));
+    }
     // import an ObservableList of all active games from server
-    private ObservableList<Game> getGames() {
+    private void loadGames(/* List of active games */) {
         ObservableList<Game> games = FXCollections.observableArrayList();
 
         /*add game information
-        example:
-        games.add(game.getPlayer1Info().getUserName(), game.getPlayer2Info().getUserName(), game.getGameStatus(), getButton(game));
+        for (int n = 0; ) {
+            games.add(gameof.getPlayer1Info().getUserName(), listofgame.getPlayer2Info().getUserName(), listofgame.getGameStatus(), getButton(game));
+        }
         */
 
-        return games;
+        activeGames.setItems(games);
     }
-
-    private Object getButton(Game game) {
-        if (game.getGameStatus() == "Ongoing")
-            return spectateButton;
-        else
-            return joinGameButton;
-    }
-
-    public void onPlayButtonClicked(ActionEvent event) {
-
-        if (event.getSource() == NewGameButton) {
-
+    private Button getButton(Game game) {
+        Button button = new Button();
+        button.setPrefWidth(800);
+        if (game.getGameStatus() == "Ongoing"){
+            button.setText("Spectate");
+            button.setId("spectateButton");
+            button.setOnAction(click -> spectateButtonClicked());
+        }
+        else{
+            button.setText("Join Game");
+            button.setId("joinGameButton");
+            button.setOnAction(click -> joinGameButtonClicked());
         }
 
+        return button;
+    }
+
+    public void spectateButtonClicked(){}
+    public void joinGameButtonClicked(){
+
+    }
+    public void onPlayAgainstComputerButtonClicked(ActionEvent event) {
+    }
+    public void onCreateGameButtonClicked(){}
+
+    public void updateTableButtonClicked(ActionEvent actionEvent) {
+        loadGames();
     }
 }
