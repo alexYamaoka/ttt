@@ -115,7 +115,7 @@ public class GameThread implements Runnable {
                 System.out.println("game player1.make move is called");
                 game.player1MakeMove(newMove);
 
-                Packet packet = new Packet(Packet.GAME_MOVE, player1, newMove)
+                Packet packet = new Packet(Packet.GAME_MOVE, player1UserInformation, newMove);
                 player1.getOutputStream().writeObject(packet);
                 player2.getOutputStream().writeObject(packet);
                 System.out.println("move is outputted to both players");

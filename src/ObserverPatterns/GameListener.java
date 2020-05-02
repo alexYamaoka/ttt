@@ -3,7 +3,7 @@ package ObserverPatterns;
 import Models.Move;
 
 public interface GameListener {
-    void updateMove(String message);
+    void updateMove(Move move);
 
     void updateStatus(String message);
 

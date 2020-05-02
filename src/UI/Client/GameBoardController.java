@@ -4,6 +4,8 @@ import Client.ClientController;
 import Models.Move;
 import ObserverPatterns.GameListener;
 import Shared.Packet;
+import Shared.UserInformation;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -103,11 +105,71 @@ public class GameBoardController implements Initializable, GameListener
     }
 
     @Override
-    public void updateMove(String move) {
-        String[] str = move.trim().split("\\s+");
-        Pair<Integer, Integer> pair = new Pair<>(Integer.parseInt(str[0]), Integer.parseInt(str[1]));
-        Button button = buttons.get(pair);
-        button.setText(str[2]);
+    public void updateMove(Move move) {
+
+        System.out.println("update move has been called");
+        Platform.runLater(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                int row = move.getRow();
+                int col = move.getColumn();
+                UserInformation userInformation = move.getUserInformation();
+
+                if (userInformation.equals(clientController.getAccountClient().getUserInformation()))
+                {
+                    System.out.println("move was this mine");
+                    if (row == 0 && col == 0)
+                        zZ.setText("X");
+                    else if (row == 0 && col == 1)
+                        zO.setText("X");
+                    else if (row == 0 && col == 2)
+                        zT.setText("X");
+                    else if (row == 1 && col == 0)
+                        oZ.setText("X");
+                    else if (row == 1 && col == 1)
+                        oO.setText("X");
+                    else if (row == 1 && col == 2)
+                        oT.setText("X");
+                    else if (row == 2 && col == 0)
+                        tZ.setText("X");
+                    else if (row == 2 && col == 1)
+                        tO.setText("X");
+                    else if (row == 2 && col == 2)
+                        tT.setText("X");
+
+                }
+                else
+                {
+                    System.out.println("move was not mine");
+                    if (row == 0 && col == 0)
+                        zZ.setText("O");
+                    else if (row == 0 && col == 1)
+                        zO.setText("O");
+                    else if (row == 0 && col == 2)
+                        zT.setText("O");
+                    else if (row == 1 && col == 0)
+                        oZ.setText("O");
+                    else if (row == 1 && col == 1)
+                        oO.setText("O");
+                    else if (row == 1 && col == 2)
+                        oT.setText("O");
+                    else if (row == 2 && col == 0)
+                        tZ.setText("O");
+                    else if (row == 2 && col == 1)
+                        tO.setText("O");
+                    else if (row == 2 && col == 2)
+                        tT.setText("O");
+                }
+
+//                String[] str = move.trim().split("\\s+");
+//                Pair<Integer, Integer> pair = new Pair<>(Integer.parseInt(str[0]), Integer.parseInt(str[1]));
+//                Button button = buttons.get(pair);
+//                button.setText(str[2]);
+            }
+        });
+
     }
 
     @Override

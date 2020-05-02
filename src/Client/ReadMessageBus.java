@@ -90,7 +90,8 @@ public class ReadMessageBus implements Runnable
 
 
                     case Packet.GAME_MOVE:
-                        gameListener.updateMove(((Move)response.getData()).getMove());
+                        System.out.println("inside Read message bus: game move received");
+                        gameListener.updateMove((Move)response.getData());
                         break;
 
                     case Packet.NEW_GAME_CREATED:
