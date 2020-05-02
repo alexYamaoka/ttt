@@ -137,28 +137,42 @@ public class GameHandler implements Runnable
 
             case Packet.GAME_MOVE:
                 // packet request type game move
-
-                Move newMove = (Move)data;
-
-                if (gameThreadList.containsKey(newMove.getGameName()))
+                System.out.println("game move has been received");
+                try
                 {
-                    GameThread gameThreadForMove = gameThreadList.get(newMove.getGameName());
-                    gameThreadForMove.addMove(newMove);
-                }
-                else
-                {
-                    System.out.println("Opponent has not been found!");
-                    Packet errorPacket = new Packet(Packet.NO_OPPONENT_FOUND, clientConnection.getInformation(), "No Opponent Found");
-                    try
-                    {
-                        clientConnection.getOutputStream().writeObject(errorPacket);
-                    }
-                    catch (IOException ex)
-                    {
-                        ex.printStackTrace();
-                    }
-                }
+                    Move newMove = (Move)data;
 
+                    System.out.println("New Move");
+                    System.out.println("Row: " + newMove.getRow());
+                    System.out.println("col: " + newMove.getColumn());
+
+
+
+                    if (gameThreadList.containsKey(newMove.getGameName()))
+                    {
+                        System.out.println("Game thread as been found from hashSet");
+                        GameThread gameThreadForMove = gameThreadList.get(newMove.getGameName());
+                        gameThreadForMove.addMove(newMove);
+                        System.out.println("sending move to thread");
+                    }
+                    else
+                    {
+                        System.out.println("Opponent has not been found!");
+                        Packet errorPacket = new Packet(Packet.NO_OPPONENT_FOUND, clientConnection.getInformation(), "No Opponent Found");
+                        try
+                        {
+                            clientConnection.getOutputStream().writeObject(errorPacket);
+                        }
+                        catch (IOException ex)
+                        {
+                            ex.printStackTrace();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ex.printStackTrace();
+                }
                 break;
 
 
