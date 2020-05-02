@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="990.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496)radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.Client.GameLobby">
+<AnchorPane fx:controller ="UI.Client.GameLobby" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="990.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496)radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" >
    <children>
       <TabPane layoutX="4.0" layoutY="-2.0" prefHeight="680.0" prefWidth="990.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
