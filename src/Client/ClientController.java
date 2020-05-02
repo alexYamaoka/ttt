@@ -148,4 +148,12 @@ public class ClientController {
     public GameBoardController getGameBoardController() {
         return gameBoardController;
     }
+
+    public Client getGameClient() {
+        return gameClient;
+    }
+
+    public void setGameClient(Client client) {
+        this.gameClient = client;
+    }
 }
