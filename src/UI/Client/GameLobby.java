@@ -86,6 +86,8 @@ public class GameLobby implements Initializable, LobbyListener {
                     root = clientController.getGameBoardPane();
                     stage.setScene(root.getScene());
                     stage.show();
+
+                    System.out.println("Displaying new game window");
                 }
             });
         }

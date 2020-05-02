@@ -76,9 +76,9 @@ public class ReadMessageBus implements Runnable
 
                     case Packet.NEW_GAME_CREATED:
                         lobbyListener.newGame(response.getData().toString());
+                        gameListener.setGameName(response.getData().toString());
                         break;
                 }
-
             }
         }
     }
