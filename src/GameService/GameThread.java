@@ -92,7 +92,6 @@ public class GameThread implements Runnable {
 
         while (isRunning.get()) {
 
-            System.out.println("inside game thread run method");
             Move newMove = null;
 
             try
@@ -124,6 +123,10 @@ public class GameThread implements Runnable {
                         player1.getOutputStream().writeObject(packet);
                         player2.getOutputStream().writeObject(packet);
                         System.out.println("move is outputted to both players");
+                    }
+                    else
+                    {
+                        System.out.println("make move if statements have been skipped");
                     }
 
 

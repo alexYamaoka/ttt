@@ -97,7 +97,7 @@ public class Game extends BaseModel {
 
     public void player1MakeMove(Move move)
     {
-        move.setToken("O");
+        move.setToken("X");
         System.out.println("Row: " + move.getRow());
         System.out.println("column: " + move.getColumn());
         System.out.println("userInformation: " + move.getUserInformation());
