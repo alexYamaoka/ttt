@@ -30,12 +30,6 @@ public class GameHandler implements Runnable
     private final AtomicBoolean running = new AtomicBoolean(false);
 
 
-
-
-
-
-
-
     public GameHandler(ClientConnection clientConnection, Packet packet,GameService service) {
         this.service = service;
         this.packet = packet;
@@ -83,7 +77,7 @@ public class GameHandler implements Runnable
                     clientConnection.getOutputStream().writeObject(packet);
 
 
-                    // send the game name back to the client to use in constructor for the MOVE class on client side
+                    // send the gameName back to the client to use in constructor for the MOVE class on client side
                     Packet gameNamePacket = new Packet(Packet.Game_Name, clientConnection.getInformation(), data.toString());
                     clientConnection.getOutputStream().writeObject(gameNamePacket);
 
@@ -106,7 +100,7 @@ public class GameHandler implements Runnable
                     System.out.println("starting game thread!");
 
 
-                    // sending the gameName over the client. gamename needed to direct the moves to the right game
+                    // sending the gameName over the client. gameName is needed to direct the moves to the right game
                     Packet gameNamePacket = new Packet(Packet.Game_Name, clientConnection.getInformation(), data.toString());
                     clientConnection.getOutputStream().writeObject(gameNamePacket);
 
@@ -131,7 +125,6 @@ public class GameHandler implements Runnable
                 break;
 
             case Packet.GAME_MOVE:
-                // packet request type game move
                 try
                 {
                     Move newMove = (Move)data;
@@ -143,7 +136,7 @@ public class GameHandler implements Runnable
                     }
                     else
                     {
-                        System.out.println("Opponent has not been found!");
+                        // else statement is for when opponent has not been found yet.
                         Packet errorPacket = new Packet(Packet.NO_OPPONENT_FOUND, clientConnection.getInformation(), "No Opponent Found");
                         try
                         {
@@ -160,7 +153,6 @@ public class GameHandler implements Runnable
                     ex.printStackTrace();
                 }
                 break;
-
 
         }
 

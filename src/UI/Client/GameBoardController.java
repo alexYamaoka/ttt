@@ -29,12 +29,19 @@ public class GameBoardController implements Initializable, GameListener
     @FXML
     Button rematch, quit, zZ, zO, zT, oZ, oO, oT, tZ, tO, tT;
 
+    private HashMap<Pair<Integer, Integer>, Button> buttons = new HashMap<>();
+
     private ClientController clientController;
     private String gameName;
     private String player1Username;
     private String player2Username;
 
-    private HashMap<Pair<Integer, Integer>, Button> buttons = new HashMap<>();
+
+
+
+
+
+
 
     public void playerMoved(int x, int y){
         Move move = new Move(x, y, clientController.getAccountClient().getUserInformation(), gameName);
@@ -119,9 +126,8 @@ public class GameBoardController implements Initializable, GameListener
                 int col = move.getColumn();
                 UserInformation userInformation = move.getUserInformation();
 
-                System.out.println("userInformation from packet: " + userInformation.getUserName());
-                System.out.println("this userinformation" + clientController.getAccountClient().getUserInformation().getUserName());
 
+                // used players username to determine who is X and who is O.
                 if (player1Username.equals(userInformation.getUserName()))
                 {
                     System.out.println("move was  mine");
