@@ -7,10 +7,12 @@ import Shared.Packet;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import java.net.URL;
@@ -76,6 +78,15 @@ public class GameBoardController implements Initializable, GameListener
     }
 
     public void quit(ActionEvent actionEvent) {
+        if (actionEvent.getSource() == quit) {
+            Stage stage = null;
+            Parent root = null;
+
+            stage = (Stage) quit.getScene().getWindow();
+            root = clientController.getLobbyPane();
+            stage.setScene(root.getScene());
+            stage.show();
+        }
     }
 
     private void countdownTime(){

@@ -3,6 +3,7 @@ package GameService;
 import DataBase.sql.DataSource;
 import DataBase.sql.DatabaseManager;
 import Models.Game;
+import Models.Move;
 import Shared.Packet;
 import Shared.UserInformation;
 import app.Server;
@@ -70,9 +71,11 @@ public class GameHandler implements Runnable
 
             case Packet.NEW_GAME_CREATED:
                 try {
+                    System.out.println("New Game started start");
                     service.addGame(new Game(clientConnection, data.toString())); //pull game name from data
                     Packet packet = new Packet(Packet.NEW_GAME_CREATED, clientConnection.getInformation(), "SUCCESS");
                     clientConnection.getOutputStream().writeObject(packet);
+                    System.out.println("New Game end");
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
@@ -84,6 +87,10 @@ public class GameHandler implements Runnable
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+            case Packet.GAME_MOVE:
+                Move move ;
+
         }
 
         stop();
