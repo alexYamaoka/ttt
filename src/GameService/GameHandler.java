@@ -100,19 +100,21 @@ public class GameHandler implements Runnable
                 break;
 
             case Packet.JOIN_GAME:
-                Game game = service.getGame(data.toString());
-                game.join(clientConnection);
-                System.out.println("Opponent joined game!");
+                try
+                {
+                    Game game = service.getGame(data.toString());
+                    game.join(clientConnection);
+                    System.out.println("Opponent joined game!");
 
-                GameThread gameThread = new GameThread(game, game.getPlayer1ClientConnection(), clientConnection);
-                gameThreadList.put(game.getGameName(), gameThread);
-                gameThread.start();
-                System.out.println("starting game thread!");
+                    GameThread gameThread = new GameThread(game, game.getPlayer1ClientConnection(), clientConnection);
+                    gameThreadList.put(game.getGameName(), gameThread);
+                    gameThread.start();
+                    System.out.println("starting game thread!");
 
 
-
-                Packet packet = new Packet(Packet.JOIN_GAME, clientConnection.getInformation(), data.toString());
-                //clientConnection.getOutputStream().writeObject();
+                    // sending the gameName over the client
+                    Packet gameNamePacket = new Packet(Packet.Game_Name, clientConnection.getInformation(), data.toString());
+                    clientConnection.getOutputStream().writeObject(gameNamePacket);
 
                 /*
                 try {
@@ -120,8 +122,13 @@ public class GameHandler implements Runnable
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                game.start();
                 */
+                }
+                catch (IOException ex)
+                {
+                    ex.printStackTrace();
+                }
+
                 break;
 
             case Packet.OBSERVE_GAME:
