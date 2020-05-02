@@ -90,6 +90,29 @@ public class GameThread implements Runnable {
     public void run() {
         isRunning.set(true);
 
+        try
+        {
+
+            // sends the username of player1
+            Packet whoIsPlayer1 = new Packet(Packet.PLAYER_ONE_USERNAME, player1UserInformation, player1UserInformation.getUserName());
+            player1.getOutputStream().writeObject(whoIsPlayer1);
+            player2.getOutputStream().writeObject(whoIsPlayer1);
+            System.out.println("sending packet about player1");
+
+            // sends the username of player2
+            Packet whoIsPlayer2 = new Packet(Packet.PLAYER_TWO_USERNAME, player2UserInformation, player2UserInformation.getUserName());
+            player1.getOutputStream().writeObject(whoIsPlayer2);
+            player2.getOutputStream().writeObject(whoIsPlayer2);
+            System.out.println("sending packet about player2");
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+
+
+
+
         while (isRunning.get()) {
 
             Move newMove = null;
@@ -109,7 +132,7 @@ public class GameThread implements Runnable {
                         System.out.println("game player1.make move is called");
                         game.player1MakeMove(newMove);
 
-                        Packet packet = new Packet(Packet.GAME_MOVE, player1UserInformation, newMove);
+                        Packet packet = new Packet(Packet.GAME_MOVE, player1UserInformation,newMove);
                         player1.getOutputStream().writeObject(packet);
                         player2.getOutputStream().writeObject(packet);
                         System.out.println("move is outputted to both players");

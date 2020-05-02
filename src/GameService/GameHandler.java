@@ -86,9 +86,11 @@ public class GameHandler implements Runnable
 
 
 
-                    // get the game name and send it back as a packet
+                    // send the game name back to the client to use in Move constructor on client side
                     Packet gameNamePacket = new Packet(Packet.Game_Name, clientConnection.getInformation(), data.toString());
                     clientConnection.getOutputStream().writeObject(gameNamePacket);
+
+
 
 
 
@@ -115,6 +117,7 @@ public class GameHandler implements Runnable
                     // sending the gameName over the client
                     Packet gameNamePacket = new Packet(Packet.Game_Name, clientConnection.getInformation(), data.toString());
                     clientConnection.getOutputStream().writeObject(gameNamePacket);
+
 
                 /*
                 try {

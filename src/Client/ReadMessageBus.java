@@ -106,6 +106,16 @@ public class ReadMessageBus implements Runnable
                         System.out.println("response from server: " + response.getData().toString());
                         lobbyListener.updateUIWithNewGame(response.getData().toString());
                         gameListener.setGameName(response.getData().toString());
+                        break;
+
+
+                    case Packet.PLAYER_ONE_USERNAME:
+                        gameListener.setPlayer1Username(response.getData().toString());
+                        break;
+
+                    case Packet.PLAYER_TWO_USERNAME:
+                        gameListener.setPlayer2Username(response.getData().toString());
+                        break;
                 }
             }
         }

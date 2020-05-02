@@ -31,6 +31,8 @@ public class GameBoardController implements Initializable, GameListener
 
     private ClientController clientController;
     private String gameName;
+    private String player1Username;
+    private String player2Username;
 
     private HashMap<Pair<Integer, Integer>, Button> buttons = new HashMap<>();
 
@@ -118,9 +120,9 @@ public class GameBoardController implements Initializable, GameListener
                 UserInformation userInformation = move.getUserInformation();
 
                 System.out.println("userInformation from packet: " + userInformation.getUserName());
-                System.out.println("this userinformation" + clientController.getAccountClient().getUserInformation());
+                System.out.println("this userinformation" + clientController.getAccountClient().getUserInformation().getUserName());
 
-                if (userInformation.getUserName().equals(clientController.getAccountClient().getUserInformation().getUserName()))
+                if (player1Username.equals(userInformation.getUserName()))
                 {
                     System.out.println("move was  mine");
                     if (row == 0 && col == 0)
@@ -184,6 +186,20 @@ public class GameBoardController implements Initializable, GameListener
     public void setGameName(String gameName)
     {
         this.gameName = gameName;
+    }
+
+    @Override
+    public void setPlayer1Username(String player1Username)
+    {
+        System.out.println("setPlayer1Username: " + player1Username);
+        this.player1Username = player1Username;
+    }
+
+    @Override
+    public void setPlayer2Username(String player2Username)
+    {
+        System.out.println("setPlayer2Username: " + player2Username);
+        this.player2Username = player2Username;
     }
 
     @Override
