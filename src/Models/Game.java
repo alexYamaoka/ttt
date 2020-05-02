@@ -98,11 +98,6 @@ public class Game extends BaseModel {
     public void player1MakeMove(Move move)
     {
         move.setToken("X");
-        System.out.println("Row: " + move.getRow());
-        System.out.println("column: " + move.getColumn());
-        System.out.println("userInformation: " + move.getUserInformation());
-
-        System.out.println("tttBoard: " + tttBoard);
 
         tttBoard.setX(move.getRow(), move.getColumn());
 
@@ -114,6 +109,7 @@ public class Game extends BaseModel {
     {
         move.setToken("O");
         tttBoard.setO(move.getRow(), move.getColumn());
+
 
         tttBoard.printBoard();
         System.out.println();
