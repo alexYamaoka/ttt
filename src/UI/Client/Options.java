@@ -93,7 +93,7 @@ public class Options implements Initializable, UpdateUserinformationListener {
     }
 
     public void updateInfo() {
-        UserInformation information = controller.getClient().getUserInformation();
+        UserInformation information = controller.getAccountClient().getUserInformation();
         firstName.setPromptText(information.getFirstName());
         lastName.setPromptText(information.getLastName());
         userName.setPromptText(information.getUserName());
@@ -109,8 +109,8 @@ public class Options implements Initializable, UpdateUserinformationListener {
         properties.setProperty("lastName", lastName);
         properties.setProperty("username", username);
 
-        Packet packet = new Packet(Packet.UPDATE_USER, controller.getClient().getUserInformation(), properties);
-        controller.getClient().addRequestToServer(packet);
+        Packet packet = new Packet(Packet.UPDATE_USER, controller.getAccountClient().getUserInformation(), properties);
+        controller.getAccountClient().addRequestToServer(packet);
     }
 
     public void passwordSaved(ActionEvent event) {
@@ -118,10 +118,10 @@ public class Options implements Initializable, UpdateUserinformationListener {
         String newPassword = this.newPassword.getText();
         String confirmPassword = this.confirmPassword.getText();
 
-        if(oldPassword.equals(controller.getClient().getUserInformation().getPassword())) {
+        if(oldPassword.equals(controller.getAccountClient().getUserInformation().getPassword())) {
             if (newPassword.equals(confirmPassword)) {
-                Packet packet = new Packet(Packet.UPDATE_USER, controller.getClient().getUserInformation(), newPassword);
-                controller.getClient().addRequestToServer(packet);
+                Packet packet = new Packet(Packet.UPDATE_USER, controller.getAccountClient().getUserInformation(), newPassword);
+                controller.getAccountClient().addRequestToServer(packet);
             } else {
                 updateError.setTextFill(Color.RED);
                 updateError.setText("New passwords do not match!");
@@ -152,7 +152,7 @@ public class Options implements Initializable, UpdateUserinformationListener {
                     String password = str[5];
                     UserInformation userInformation = new UserInformation(firstName, lastName, username, email, password);
                     userInformation.setId(id);
-                    controller.getClient().setUserInformation(userInformation);
+                    controller.getAccountClient().setUserInformation(userInformation);
                     controller.getOptions().updateInfo();
                     updateError.setTextFill(Color.LIMEGREEN);
                     updateError.setText("Information Has Been Updated!");

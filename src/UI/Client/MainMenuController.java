@@ -1,5 +1,6 @@
 package UI.Client;
 
+import Client.Client;
 import Client.ClientController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -40,6 +41,9 @@ public class MainMenuController implements Initializable {
         }
         stage.setScene(root.getScene());
         stage.show();
+
+        Client client = new Client("localhost", 8080, clientController.getAccountClient().getUserInformation(), clientController);
+        clientController.setGameClient(client);
     }
 
 

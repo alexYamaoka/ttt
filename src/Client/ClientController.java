@@ -1,19 +1,19 @@
 package Client;
 
+import Shared.Packet;
 import Shared.UserInformation;
 import UI.Client.*;
-
-import UI.Client.GameBoardController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayDeque;
 
-public class ClientController
-{
-    private Client client;
+public class ClientController {
+    private Client accountClient;
+    private Client gameClient;
     private Stage stage;
 
     // Controllers to be initialized
@@ -32,10 +32,11 @@ public class ClientController
 
     private ReadMessageBus readMessageBus;
 
+    private ArrayDeque<Packet> responses = new ArrayDeque<>();
 
     public ClientController(Stage stage) {
         this.stage = stage;
-        client = new Client("localhost", 8000, new UserInformation("NA", "NA", "Anonymous", "NA", "NA"));
+        accountClient = new Client("localhost", 8000, new UserInformation("NA", "NA", "Anonymous", "NA", "NA"), this);
         initialize();
         setUpClientToUI();
     }
@@ -76,33 +77,40 @@ public class ClientController
         }
     }
 
-    private void setUpClientToUI()
-    {
-        try
-        {
+    private void setUpClientToUI() {
+        try {
             Scene scene = new Scene(signInPane);
             stage.setScene(scene);
             stage.show();
             readMessageBus = new ReadMessageBus(this);
             readMessageBus.start();
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
     public void run() {
-        client.execute();
+        accountClient.execute();
     }
 
-    public Client getClient()
-    {
-        return client;
+    public Client getAccountClient() {
+        return accountClient;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setAccountClient(Client client) {
+        this.accountClient = client;
+    }
+
+    public Packet getNextResponse() {
+        if (!responses.isEmpty()) {
+            return responses.pop();
+        }
+
+        return null;
+    }
+
+    public void addResponse(Packet packet) {
+        responses.add(packet);
     }
 
     public Pane getSignInPane() {
@@ -121,13 +129,11 @@ public class ClientController
         return optionsPane;
     }
 
-    public SignInController getSignInController()
-    {
+    public SignInController getSignInController() {
         return signInController;
     }
 
-    public SignUpController getSignUpController()
-    {
+    public SignUpController getSignUpController() {
         return signUpController;
     }
 
@@ -141,5 +147,13 @@ public class ClientController
 
     public GameBoardController getGameBoardController() {
         return gameBoardController;
+    }
+
+    public Client getGameClient() {
+        return gameClient;
+    }
+
+    public void setGameClient(Client client) {
+        this.gameClient = client;
     }
 }
