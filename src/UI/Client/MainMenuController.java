@@ -37,7 +37,7 @@ public class MainMenuController implements Initializable {
 
         if (event.getSource() == playButton) {
             stage = (Stage) playButton.getScene().getWindow();
-            root = clientController.getGameBoardPane();
+            root = clientController.getLobbyPane();
         }
         stage.setScene(root.getScene());
         stage.show();
