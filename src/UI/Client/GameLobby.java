@@ -18,12 +18,13 @@ import Client.ClientController;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class GameLobby implements Initializable, LobbyListener {
 
 
-    public ListView LobbyGameListview;
+    @FXML
+    public ListView LobbyGameListview = new ListView();
 
     @FXML
     private Button JoinGameButton;
@@ -36,6 +37,12 @@ public class GameLobby implements Initializable, LobbyListener {
     @FXML
     private Button Quit;
 
+
+    Set<String> listOfGames = new HashSet<>();
+
+
+
+
     public void setClientController(ClientController clientController) {
         this.clientController = clientController;
     }
@@ -47,7 +54,29 @@ public class GameLobby implements Initializable, LobbyListener {
 
     public void onJoinGameButtonClicked(ActionEvent event){
         if (event.getSource() == JoinGameButton) {
+            String selectedGame = LobbyGameListview.getSelectionModel().getSelectedItem().toString();
+            System.out.println("selected item in listView: " + selectedGame);
 
+
+
+            Packet packet = new Packet(Packet.JOIN_GAME, clientController.getAccountClient().getUserInformation(), selectedGame);
+            clientController.getGameClient().addRequestToServer(packet);
+
+
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    Stage stage = null;
+                    Parent root = null;
+
+                    stage = (Stage) NewGameButton.getScene().getWindow();
+                    root = clientController.getGameBoardPane();
+                    stage.setScene(root.getScene());
+                    stage.show();
+
+                    System.out.println("Displaying new game window");
+                }
+            });
         }
     }
 
@@ -59,7 +88,9 @@ public class GameLobby implements Initializable, LobbyListener {
        
     public void onPlayButtonClicked(ActionEvent event) {
         if (event.getSource() == NewGameButton) {
-            Packet packet = new Packet(Packet.NEW_GAME_CREATED, clientController.getAccountClient().getUserInformation(), "test");
+
+            String gameName = clientController.getAccountClient().getUserInformation().getUserName() + ":" + System.currentTimeMillis();
+            Packet packet = new Packet(Packet.NEW_GAME_CREATED, clientController.getAccountClient().getUserInformation(), gameName);
 
             System.out.println("New Game Created " + " Created by " + clientController.getAccountClient().getUserInformation().getFirstName() );
 
@@ -79,6 +110,8 @@ public class GameLobby implements Initializable, LobbyListener {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
+                    //LobbyGameListview.getItems().add("test");
+
                     Stage stage = null;
                     Parent root = null;
 
@@ -86,8 +119,48 @@ public class GameLobby implements Initializable, LobbyListener {
                     root = clientController.getGameBoardPane();
                     stage.setScene(root.getScene());
                     stage.show();
+
+                    System.out.println("Displaying new game window");
                 }
             });
         }
     }
+
+    @Override
+    public void updateUIWithNewGame(String gameName)
+    {
+        Platform.runLater(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                listOfGames.add(gameName);
+                LobbyGameListview.getItems().add(gameName);
+            }
+        });
+    }
+
+    @Override
+    public void getListOfGames(HashSet<String> listOfGames)
+    {
+        this.listOfGames.clear();
+
+        if (listOfGames != null)
+        {
+            this.listOfGames = listOfGames;
+
+            Platform.runLater(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    for (String gameName: listOfGames)
+                    {
+                        LobbyGameListview.getItems().add(gameName);
+                    }
+                }
+            });
+        }
+    }
+
 }

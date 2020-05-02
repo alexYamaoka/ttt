@@ -4,7 +4,9 @@ import Models.Move;
 import ObserverPatterns.*;
 import Shared.Packet;
 import Shared.UserInformation;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 
+import java.util.HashSet;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ReadMessageBus implements Runnable
@@ -18,6 +20,7 @@ public class ReadMessageBus implements Runnable
     private UpdateUserinformationListener updateUserinformationListener;
     private GameListener gameListener;
     private LobbyListener lobbyListener;
+    private HashSet<String> listOfGames;
 
 
 
@@ -70,15 +73,56 @@ public class ReadMessageBus implements Runnable
                         updateUserinformationListener.updateUserinformation(response.getData().toString());
                         break;
 
+
+                    case Packet.GET_GAMES:
+                        listOfGames = (HashSet<String>)response.getData();
+                        System.out.println("Received list of games: " + listOfGames);
+                        if (listOfGames != null)
+                        {
+                            lobbyListener.getListOfGames(listOfGames);
+                        }
+                        break;
+
+                    case Packet.JOIN_GAME:
+                        System.out.println("join game inside readMessageBus");
+
+                        break;
+
+
                     case Packet.GAME_MOVE:
-                        gameListener.updateMove(((Move)response.getData()).getMove());
+                        gameListener.updateMove((Move)response.getData());
                         break;
 
                     case Packet.NEW_GAME_CREATED:
                         lobbyListener.newGame(response.getData().toString());
                         break;
-                }
 
+                    case Packet.Game_Name:
+                        lobbyListener.updateUIWithNewGame(response.getData().toString());
+                        gameListener.setGameName(response.getData().toString());
+                        break;
+
+
+                    case Packet.PLAYER_ONE_USERNAME:
+                        gameListener.setPlayer1Username(response.getData().toString());
+                        break;
+
+                    case Packet.PLAYER_TWO_USERNAME:
+                        gameListener.setPlayer2Username(response.getData().toString());
+                        break;
+
+                    case Packet.PLAYER_ONE_WINS:
+                        gameListener.updateStatus(response.getData().toString());
+                        break;
+
+                    case Packet.PLAYER_TWO_WINS:
+                        gameListener.updateStatus(response.getData().toString());
+                        break;
+
+                    case Packet.TIE_GAME:
+                        gameListener.updateStatus(response.getData().toString());
+                        break;
+                }
             }
         }
     }
