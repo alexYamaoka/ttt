@@ -2,8 +2,10 @@ package UI.Client;
 
 import ObserverPatterns.LobbyListener;
 import Shared.Packet;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import Client.ClientController;
@@ -53,6 +55,19 @@ public class GameLobby implements Initializable, LobbyListener {
 
     @Override
     public void newGame(String message) {
-        System.out.println(message);
+        if(message.equalsIgnoreCase("SUCCESS")) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    Stage stage = null;
+                    Parent root = null;
+
+                    stage = (Stage) NewGameButton.getScene().getWindow();
+                    root = clientController.getGameBoardPane();
+                    stage.setScene(root.getScene());
+                    stage.show();
+                }
+            });
+        }
     }
 }
