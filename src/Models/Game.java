@@ -25,6 +25,7 @@ public class Game extends BaseModel {
     UserInformation player2Info;
     private String Id;
     private String gameName;
+    private String gameStatus;
     private Timestamp startTime;
     private Timestamp endTime;
 
@@ -168,4 +169,11 @@ public class Game extends BaseModel {
         this.player2Info = player2Info;
     }
 
+    public String getGameStatus() {
+        return gameStatus;
+    }
+
+    public void setGameStatus(String gameStatus) {
+        this.gameStatus = gameStatus;
+    }
 }

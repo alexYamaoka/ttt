@@ -21,7 +21,7 @@ public class ClientController {
     private MainMenuController mainMenuController;
     private UI.Client.SignUpController signUpController;
     private UI.Client.Options options;
-    private GameLobby gameLobby;
+    private GameLobbyController gameLobby;
     private GameBoardController gameBoardController;
 
     // Scenes
