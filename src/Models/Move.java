@@ -13,12 +13,14 @@ public class Move extends BaseModel {
     private int column;
     private UserInformation userInformation;
     private String dateAndTime;
+    private String gameName;
 
-    public Move(int row, int column, UserInformation userInformation)
+    public Move(int row, int column, UserInformation userInformation, String gameName)
     {
         this.row = row;
         this.column = column;
         this.userInformation = userInformation;
+        this.gameName = gameName;
         dateAndTime = createDateAndTime();
     }
 
@@ -60,5 +62,10 @@ public class Move extends BaseModel {
 
     public String getMove() {
         return row + " " + column + " " + token;
+    }
+
+    public String getGameName()
+    {
+        return gameName;
     }
 }

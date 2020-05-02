@@ -28,11 +28,12 @@ public class GameBoardController implements Initializable, GameListener
     Button rematch, quit, zZ, zO, zT, oZ, oO, oT, tZ, tO, tT;
 
     private ClientController clientController;
+    private String gameName;
 
     private HashMap<Pair<Integer, Integer>, Button> buttons = new HashMap<>();
 
     public void playerMoved(int x, int y){
-        Move move = new Move(x, y, clientController.getAccountClient().getUserInformation());
+        Move move = new Move(x, y, clientController.getAccountClient().getUserInformation(), gameName);
         Packet packet = new Packet(Packet.GAME_MOVE, clientController.getAccountClient().getUserInformation(), move);
         clientController.getGameClient().addRequestToServer(packet);
         resetTime();
@@ -112,6 +113,12 @@ public class GameBoardController implements Initializable, GameListener
     @Override
     public void updateStatus(String message) {
 
+    }
+
+    @Override
+    public void setGameName(String gameName)
+    {
+        this.gameName = gameName;
     }
 
     @Override

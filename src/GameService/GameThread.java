@@ -6,37 +6,70 @@ import Server.ClientConnection;
 import Shared.Packet;
 import Shared.UserInformation;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public class GameThread implements Runnable {
     // takes in two players
-    private ClientConnection player1;
-    private ClientConnection player2;
+
     private Thread thread;
     private AtomicBoolean isRunning = new AtomicBoolean(false);
+    private ArrayList<ClientConnection> GameObservers;
+    private Game game;
 
+    private ClientConnection player1;
+    private ClientConnection player2;
+    private UserInformation player1UserInformation;
+    private UserInformation player2UserInformation;
     private ObjectOutputStream outputToPlayer1;
     private ObjectOutputStream outputToPlayer2;
     private ObjectInputStream inputFromPlayer1;
     private ObjectInputStream inputFromPlayer2;
-    private ArrayList<ClientConnection> GameObservers;
-    private Game game;
+    private boolean isPlayer1Turn = true;
+    private boolean hasPlayerMadeMove = true;
 
-    public GameThread(ClientConnection player1, ClientConnection player2, ArrayList<ClientConnection> GameObservers) {
+    private Deque<Move> moveQueue = new LinkedBlockingDeque<>();
 
+
+
+    public GameThread(Game game, ClientConnection player1, ClientConnection player2) {
+        this.game = game;
         this.player1 = player1;
         this.player2 = player2;
-        this.GameObservers = GameObservers;
+
+        player1UserInformation = player1.getInformation();
+        player2UserInformation = player2.getInformation();
+
         outputToPlayer1 = player1.getOutputStream();
         outputToPlayer2 = player2.getOutputStream();
         inputFromPlayer1 = player1.getInputStream();
         inputFromPlayer2 = player2.getInputStream();
     }
+
+    public void addMove(Move move)
+    {
+        if (isPlayer1Turn && player1UserInformation.equals(move.getUserInformation()) && !hasPlayerMadeMove)
+        {
+            moveQueue.addLast(move);
+            hasPlayerMadeMove = true;
+        }
+        else if (!isPlayer1Turn && player2UserInformation.equals(move.getUserInformation()) && !hasPlayerMadeMove)
+        {
+            moveQueue.addLast(move);
+            hasPlayerMadeMove = true;
+        }
+
+    }
+
 
     public void start() {
         thread = new Thread(this);
@@ -47,106 +80,55 @@ public class GameThread implements Runnable {
         isRunning.set(false);
     }
 
+
     @Override
     public void run() {
         isRunning.set(true);
-        System.out.println("Game Thread called and started");
-        // passing moves to each other.  not the game
-        // create a class called game move.
-        try {
-            game = new Game(player1,game.getGameName());
-            Packet joinGamePacket = new Packet(Packet.JOIN_GAME,player2.getInformation(),"Opponent Found!");
-            System.out.println("join game packet " + joinGamePacket.toString());
-            game.join(player2);
-            outputToPlayer1.writeObject(joinGamePacket);
-            outputToPlayer2.writeObject(joinGamePacket);
 
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
         while (isRunning.get()) {
 
-            try {
+            Move newMove = moveQueue.removeFirst();
 
-                boolean player1MadeMove = false;
-                boolean player2MadeMove = false;
+            try
+            {
+                if (player1UserInformation == newMove.getUserInformation())
+                {
+                    if (game.checkIfValidMove(newMove))
+                    {
+                        game.player1MakeMove(newMove);
+                        isPlayer1Turn = false;
+                        hasPlayerMadeMove = false;
 
-                // loops until player 1 makes a valid move
-                while (!player1MadeMove) {
-                    Packet player1Move = (Packet) inputFromPlayer1.readObject();
-                    System.out.println("Player one packet " + player1Move.toString());
-
-                    if (player1Move.getRequest().equals(Packet.GAME_MOVE)) {
-                        Move move1 = (Move) player1Move.getData();
-                        // check if its a valid move
-                        if (game.checkIfValidMove(move1)) {
-                            game.player1MakeMove(move1);
-                            outputToPlayer2.writeObject(player1Move);
-                            outputToPlayer1.writeObject(player1Move);
-                            player1MadeMove = true;
-
-                            if (game.isPlayer1Winner(move1)) {
-                                System.out.println("Player 1 Wins");
-                            }
-
-                            if (game.isTieGame()) {
-                                System.out.println("Tie Game");
-                            }
-                        } else {
-                            System.out.println("Not a valid move");
-                        }
-
-
-                        if (game.isOver())
-                        {
-
-                        }
+                        outputToPlayer1.writeObject(newMove);
+                        outputToPlayer2.writeObject(newMove);
+                    }
+                    else
+                    {
+                        System.out.println("Not a valid move");
+                        Packet packet = new Packet(Packet.INVALID_GAME_MOVE, player1UserInformation, "NOT A VALID MOVE");
+                        outputToPlayer1.writeObject(packet);
                     }
                 }
-
-
-                // loops until player 2 makes a valid move
-                while (!player2MadeMove) {
-                    Packet player2Move = (Packet) inputFromPlayer2.readObject();
-
-                    if (player2Move.getRequest().equals(Packet.GAME_MOVE)) {
-                        Move move2 = (Move) player2Move.getData();
-
-                        if (game.checkIfValidMove(move2)) {
-                            game.player2MakeMove(move2);
-                            outputToPlayer2.writeObject(player2Move);
-                            outputToPlayer1.writeObject(player2Move);
-                            player2MadeMove = true;
-
-
-                            if (game.isPlayer2Winner(move2)) {
-                                System.out.println("Player 2 Wins");
-                            }
-
-                            if (game.isTieGame()) {
-                                System.out.println("Tie Game");
-                            }
-                        } else {
-                            System.out.println("Not a valid move");
-                        }
-
-
-                        if (game.isOver())
-                        {
-
-                        }
+                else if (player2UserInformation == newMove.getUserInformation())
+                {
+                    if (game.checkIfValidMove(newMove))
+                    {
+                        game.player2MakeMove(newMove);
+                        isPlayer1Turn = true;
+                        hasPlayerMadeMove = false;
+                    }
+                    else
+                    {
+                        System.out.println("Not a valid move");
+                        Packet packet = new Packet(Packet.INVALID_GAME_MOVE, player1UserInformation, "NOT A VALID MOVE");
+                        outputToPlayer2.writeObject(packet);
                     }
                 }
-
-
-            } catch (IOException | ClassNotFoundException ex) {
+            }
+            catch (IOException ex)
+            {
                 ex.printStackTrace();
             }
         }
-        System.out.println("Game Thread called and ended");
     }
-
-
-
 }

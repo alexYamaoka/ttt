@@ -27,8 +27,10 @@ public class GameService implements Runnable, Service
 
     private static Lock lock = new ReentrantLock();
     private HashSet<ClientConnection> clientConnections = new HashSet<>();
-
     private final HashMap<String, Game> ongoingGameRooms = new HashMap<>();
+    private HashMap<String, GameThread> gameThreadList = new HashMap<>();
+
+
 
     public GameService() {
     }
@@ -44,21 +46,21 @@ public class GameService implements Runnable, Service
     }
 
     @Override
-        public void run() {
-            running.set(true);
-            try {
-                ServerSocket serverSocket = new ServerSocket(PORT_NUMBER, 0, InetAddress.getByName("localhost"));
-                var pool = Executors.newFixedThreadPool(100);
-                System.out.println("Game Service started");
-                while (running.get()) {
-                    Socket socket = serverSocket.accept();
-                    ClientConnection connection = new ClientConnection(socket, this);
-                    clientConnections.add(connection);
-                    pool.execute(connection);
-                }
-            } catch (IOException ex) {
-                ex.printStackTrace();
+    public void run() {
+        running.set(true);
+        try {
+            ServerSocket serverSocket = new ServerSocket(PORT_NUMBER, 0, InetAddress.getByName("localhost"));
+            var pool = Executors.newFixedThreadPool(100);
+            System.out.println("Game Service started");
+            while (running.get()) {
+                Socket socket = serverSocket.accept();
+                ClientConnection connection = new ClientConnection(socket, this);
+                clientConnections.add(connection);
+                pool.execute(connection);
             }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public void addGame(Game game){
@@ -99,6 +101,11 @@ public class GameService implements Runnable, Service
 
     public void update(Packet packet) {
 
+    }
+
+    public HashMap<String, GameThread> getGameThreadList()
+    {
+        return gameThreadList;
     }
 
 
