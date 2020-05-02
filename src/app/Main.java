@@ -29,6 +29,10 @@ public class Main extends Application {
         stage.setTitle("EndFrame TicTacToe");
         clientController.run();
 
+        // start game service
+        GameService gameService = new GameService();
+        gameService.start();
+
 /*
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../UI/Client/SignIn.fxml"));
         Parent root = loader.load();

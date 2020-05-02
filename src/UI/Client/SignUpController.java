@@ -127,8 +127,8 @@ public class SignUpController implements Initializable, SignUpResultListener
         // register new user and go to main menu scene
         String registerInfo = firstName + " " + lastName + " " + username + " " + password;
 
-        Packet packet = new Packet(Packet.REGISTER_CLIENT, controller.getClient().getUserInformation(), registerInfo);
-        controller.getClient().addRequestToServer(packet);
+        Packet packet = new Packet(Packet.REGISTER_CLIENT, controller.getAccountClient().getUserInformation(), registerInfo);
+        controller.getAccountClient().addRequestToServer(packet);
     }
 
 

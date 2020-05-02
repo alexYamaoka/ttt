@@ -87,8 +87,8 @@ public class SignInController implements Initializable, SignInResultListener
                 }
             });
         } else {
-            Packet packet = new Packet(Packet.SIGN_IN, controller.getClient().getUserInformation(), username + " " + password);
-            controller.getClient().addRequestToServer(packet);
+            Packet packet = new Packet(Packet.SIGN_IN, controller.getAccountClient().getUserInformation(), username + " " + password);
+            controller.getAccountClient().addRequestToServer(packet);
 
         }
     }
@@ -178,7 +178,7 @@ public class SignInController implements Initializable, SignInResultListener
                     String password = str[5];
                     UserInformation userInformation = new UserInformation(firstName, lastName, username, email, password);
                     userInformation.setId(id);
-                    controller.getClient().setUserInformation(userInformation);
+                    controller.getAccountClient().setUserInformation(userInformation);
                     Stage stage = (Stage) btn_LogIn.getScene().getWindow();
                     Parent root = controller.getMainMenuPain();
                     Scene scene = new Scene(root);

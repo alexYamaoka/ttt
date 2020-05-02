@@ -50,7 +50,7 @@ public class ReadMessageBus implements Runnable
         running.set(true);
         while (running.get())
         {
-            Packet response = clientController.getClient().getNextResponseFromServer();
+            Packet response = clientController.getNextResponse();
 
             if (response != null)
             {
