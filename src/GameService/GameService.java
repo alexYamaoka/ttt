@@ -25,9 +25,10 @@ public class GameService implements Runnable, Service
     private DataSource ds = DatabaseManager.getInstance();
     private final int PORT_NUMBER = 8080;
 
-    private static Lock lock = new ReentrantLock();
+
+
     private HashSet<ClientConnection> clientConnections = new HashSet<>();
-    private final HashMap<String, Game> ongoingGameRooms = new HashMap<>();
+    private HashMap<String, Game> ongoingGameRooms = new HashMap<>();
     private HashMap<String, GameThread> gameThreadList = new HashMap<>();
 
 
@@ -71,9 +72,26 @@ public class GameService implements Runnable, Service
         return ongoingGameRooms.get(Id);
     }
 
-    public Set<String> getGames(){
-        return ongoingGameRooms.keySet();
+
+
+    public HashSet<String> getGames(){
+        if (!ongoingGameRooms.isEmpty())
+        {
+            System.out.println("games available");
+            return new HashSet<>(ongoingGameRooms.keySet());
+        }
+        System.out.println("no games going on at the moment");
+        return null;
     }
+
+    public HashMap<String, GameThread> getGameThreadList()
+    {
+        return gameThreadList;
+    }
+
+
+
+
 
     public void handle(ClientConnection clientConnection, Packet packet) {
 
@@ -103,10 +121,9 @@ public class GameService implements Runnable, Service
 
     }
 
-    public HashMap<String, GameThread> getGameThreadList()
-    {
-        return gameThreadList;
-    }
+
+
+
 
 
 }

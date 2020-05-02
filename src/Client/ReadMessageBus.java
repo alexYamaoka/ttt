@@ -6,6 +6,7 @@ import Shared.Packet;
 import Shared.UserInformation;
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 
+import java.util.HashSet;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ReadMessageBus implements Runnable
@@ -19,6 +20,7 @@ public class ReadMessageBus implements Runnable
     private UpdateUserinformationListener updateUserinformationListener;
     private GameListener gameListener;
     private LobbyListener lobbyListener;
+    private HashSet<String> listOfGames;
 
 
 
@@ -71,6 +73,17 @@ public class ReadMessageBus implements Runnable
                         updateUserinformationListener.updateUserinformation(response.getData().toString());
                         break;
 
+
+                    case Packet.GET_GAMES:
+                        listOfGames = (HashSet<String>)response.getData();
+                        System.out.println("Received list of games: " + listOfGames);
+                        if (listOfGames != null)
+                        {
+                            lobbyListener.getListOfGames(listOfGames);
+                        }
+                        break;
+
+
                     case Packet.GAME_MOVE:
                         gameListener.updateMove(((Move)response.getData()).getMove());
                         break;
@@ -83,6 +96,7 @@ public class ReadMessageBus implements Runnable
 
                     case Packet.Game_Name:
                         System.out.println("response from server: " + response.getData().toString());
+                        lobbyListener.updateUIWithNewGame(response.getData().toString());
                         gameListener.setGameName(response.getData().toString());
                 }
             }

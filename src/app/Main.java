@@ -28,9 +28,9 @@ public class Main extends Application {
 
 
         // start client
-        ClientController clientController1 = new ClientController(stage);
+        ClientController clientController = new ClientController(stage);
         stage.setTitle("EndFrame TicTacToe");
-        clientController1.run();
+        clientController.run();
 
 
 

@@ -66,6 +66,16 @@ public class GameHandler implements Runnable
 
         switch(request)
         {
+            case Packet.GET_GAMES:
+                try {
+                    clientConnection.getOutputStream().writeObject(new Packet(Packet.GET_GAMES, userInformation, (Serializable) service.getGames())); // list of current games
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+
+
+
             case Packet.NEW_GAME_CREATED:
                 try {
                     System.out.println("New Game started start");
@@ -78,6 +88,8 @@ public class GameHandler implements Runnable
 
                     Packet gameNamePacket = new Packet(Packet.Game_Name, clientConnection.getInformation(), "test");
                     clientConnection.getOutputStream().writeObject(gameNamePacket);
+
+
 
 
 
@@ -130,18 +142,11 @@ public class GameHandler implements Runnable
                     {
                         ex.printStackTrace();
                     }
-
                 }
 
                 break;
 
-            case Packet.GET_GAMES:
-                try {
-                    clientConnection.getOutputStream().writeObject(new Packet(Packet.GET_GAMES, userInformation, (Serializable) service.getGames())); // list of current games
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                break;
+
         }
 
         stop();
@@ -150,7 +155,4 @@ public class GameHandler implements Runnable
     public boolean getRunning() {
         return running.get();
     }
-
-
-
 }
