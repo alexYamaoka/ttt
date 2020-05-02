@@ -16,6 +16,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -39,7 +40,7 @@ public class GameThread implements Runnable {
     private boolean isPlayer1Turn = true;
     private boolean hasPlayerMadeMove = true;
 
-    private SynchronousQueue<Move> moveQueue = new SynchronousQueue<>();
+    private BlockingQueue<Move> moveQueue = new LinkedBlockingQueue<>();
 
 
 
@@ -60,7 +61,7 @@ public class GameThread implements Runnable {
     public void addMove(Move move) throws InterruptedException
     {
         System.out.println("Inside GameThread, adding move to the queue");
-        moveQueue.put(move);
+        moveQueue.add(move);
 //        if (isPlayer1Turn && player1UserInformation.equals(move.getUserInformation()) && !hasPlayerMadeMove)
 //        {
 //            moveQueue.put(move);
@@ -96,72 +97,89 @@ public class GameThread implements Runnable {
 
             try
             {
-                System.out.println("Inside game thread, removing move from the queue ");
                 if (! moveQueue.isEmpty())
+                {
+                    System.out.println("Inside game thread, removing move from the queue ");
                     newMove = moveQueue.take();
+                    System.out.println("New Move received from the queue");
+                    System.out.println("row: " + newMove.getRow());
+                    System.out.println("col: " + newMove.getColumn());
+
+                    if (newMove.getUserInformation() == player1UserInformation)
+                    {
+                        System.out.println("game player1.make move is called");
+                        game.player1MakeMove(newMove);
+                    }
+                    else if (newMove.getUserInformation() == player2UserInformation)
+                    {
+                        System.out.println("game player2.make move is called");
+                        game.player2MakeMove(newMove);
+                    }
+
+
+                    Packet packet = new Packet(Packet.GAME_MOVE, player1UserInformation, newMove);
+                    player1.getOutputStream().writeObject(packet);
+                    player2.getOutputStream().writeObject(packet);
+                    System.out.println("move is outputted to both players");
+                }
+
             }
-            catch (InterruptedException e)
+            catch (InterruptedException | IOException e)
             {
                 e.printStackTrace();
             }
-            System.out.println("New Move received from the queue");
-            System.out.println("row: " + newMove.getRow());
-            System.out.println("col: " + newMove.getColumn());
 
 
 
+/*
             try
             {
-                System.out.println("game player1.make move is called");
-                game.player1MakeMove(newMove);
-
-                Packet packet = new Packet(Packet.GAME_MOVE, player1UserInformation, newMove);
-                player1.getOutputStream().writeObject(packet);
-                player2.getOutputStream().writeObject(packet);
-                System.out.println("move is outputted to both players");
 
 
-//                if (player1UserInformation.equals(newMove.getUserInformation()))
-//                {
-//                    System.out.println("new move is by player 1");
-//                    if (game.checkIfValidMove(newMove))
-//                    {
-//                        game.player1MakeMove(newMove);
-//                        isPlayer1Turn = false;
-//                        hasPlayerMadeMove = false;
-//
-//                        outputToPlayer1.writeObject(newMove);
-//                        outputToPlayer2.writeObject(newMove);
-//                    }
-//                    else
-//                    {
-//                        System.out.println("Not a valid move");
-//                        Packet packet = new Packet(Packet.INVALID_GAME_MOVE, player1UserInformation, "NOT A VALID MOVE");
-//                        outputToPlayer1.writeObject(packet);
-//                    }
-//                }
-//                else if (player2UserInformation.equals(newMove.getUserInformation()))
-//                {
-//                    System.out.println("new move is by player 2");
-//
-//                    if (game.checkIfValidMove(newMove))
-//                    {
-//                        game.player2MakeMove(newMove);
-//                        isPlayer1Turn = true;
-//                        hasPlayerMadeMove = false;
-//                    }
-//                    else
-//                    {
-//                        System.out.println("Not a valid move");
-//                        Packet packet = new Packet(Packet.INVALID_GAME_MOVE, player1UserInformation, "NOT A VALID MOVE");
-//                        outputToPlayer2.writeObject(packet);
-//                    }
-//                }
+
+                if (player1UserInformation.equals(newMove.getUserInformation()))
+                {
+                    System.out.println("new move is by player 1");
+                    if (game.checkIfValidMove(newMove))
+                    {
+                        game.player1MakeMove(newMove);
+                        isPlayer1Turn = false;
+                        hasPlayerMadeMove = false;
+
+                        outputToPlayer1.writeObject(newMove);
+                        outputToPlayer2.writeObject(newMove);
+                    }
+                    else
+                    {
+                        System.out.println("Not a valid move");
+                        Packet packet = new Packet(Packet.INVALID_GAME_MOVE, player1UserInformation, "NOT A VALID MOVE");
+                        outputToPlayer1.writeObject(packet);
+                    }
+                }
+                else if (player2UserInformation.equals(newMove.getUserInformation()))
+                {
+                    System.out.println("new move is by player 2");
+
+                    if (game.checkIfValidMove(newMove))
+                    {
+                        game.player2MakeMove(newMove);
+                        isPlayer1Turn = true;
+                        hasPlayerMadeMove = false;
+                    }
+                    else
+                    {
+                        System.out.println("Not a valid move");
+                        Packet packet = new Packet(Packet.INVALID_GAME_MOVE, player1UserInformation, "NOT A VALID MOVE");
+                        outputToPlayer2.writeObject(packet);
+                    }
+                }
             }
             catch (IOException ex)
             {
                 ex.printStackTrace();
             }
+
+ */
 
 
         }
