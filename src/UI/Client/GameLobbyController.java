@@ -43,8 +43,8 @@ public class GameLobbyController implements Initializable, LobbyListener {
     }
 
     private void initializeTable() {
-        player1Column.setCellValueFactory(new PropertyValueFactory<>("player1Info"));
-        player2Column.setCellValueFactory(new PropertyValueFactory<>("player2Info"));
+        player1Column.setCellValueFactory(new PropertyValueFactory<>("player1Username"));
+        player2Column.setCellValueFactory(new PropertyValueFactory<>("player2Username"));
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("gameStatus"));
 //        optionsColumn.setCellValueFactory(new PropertyValueFactory<>("options"));
     }

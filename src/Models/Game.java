@@ -22,8 +22,11 @@ public class Game extends BaseModel implements Serializable {
     private transient TTTBoard tttBoard;
     private transient ClientConnection player1;
     private transient ClientConnection player2;
-    UserInformation player1Info;
-    UserInformation player2Info;
+    private transient UserInformation player1Info;
+    private transient UserInformation player2Info;
+
+    private String player1Username;
+    private String player2Username;
     private String id;
     private String gameStatus;
     private Timestamp startTime;
@@ -34,6 +37,8 @@ public class Game extends BaseModel implements Serializable {
         UUIDGenerator gameId = new UUIDGenerator();
         this.id = gameId.getNewId();
         this.player1 = player1;
+        this.player1Info = player1.getInformation();
+        this.player1Username = player1Info.getUserName();
         tttBoard = new TTTBoard();
         this.gameStatus = "WAITING FOR ANOTHER PLAYER";
     }
@@ -173,5 +178,13 @@ public class Game extends BaseModel implements Serializable {
 
     public void setGameStatus(String gameStatus) {
         this.gameStatus = gameStatus;
+    }
+
+    public String getPlayer1Username() {
+        return player1Username;
+    }
+
+    public String getPlayer2Username() {
+        return player2Username;
     }
 }
