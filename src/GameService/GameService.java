@@ -6,6 +6,7 @@ import Models.Game;
 import Server.ClientConnection;
 import Server.Service;
 import Shared.Packet;
+import Shared.UserInformation;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -30,7 +31,7 @@ public class GameService implements Runnable, Service
     private HashSet<ClientConnection> clientConnections = new HashSet<>();
     private HashMap<String, Game> ongoingGameRooms = new HashMap<>();
     private HashMap<String, GameThread> gameThreadList = new HashMap<>();
-    private Set<String> playersOnline = new HashSet<>();
+    private Set<UserInformation> playersOnline = new HashSet<>();
 
     public GameService() {
     }
@@ -74,17 +75,17 @@ public class GameService implements Runnable, Service
     }
 
 
-    public void addOnlinePlayer(String username)
+    public void addOnlinePlayer(UserInformation user)
     {
-        playersOnline.add(username);
+        playersOnline.add(user);
     }
 
-    public HashSet<String> getPlayersOnline()
+    public HashSet<UserInformation> getPlayersOnline()
     {
         if (!playersOnline.isEmpty())
         {
             System.out.println("online players");
-            return (HashSet<String>) playersOnline;
+            return (HashSet<UserInformation>) playersOnline;
         }
         System.out.println("no players online");
         return null;

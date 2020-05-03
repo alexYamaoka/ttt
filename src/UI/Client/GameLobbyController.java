@@ -4,6 +4,8 @@ import Client.ClientController;
 import Models.Game;
 import ObserverPatterns.LobbyListener;
 import Shared.Packet;
+import Shared.UserInformation;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -37,27 +39,19 @@ public class GameLobbyController implements Initializable, LobbyListener {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializeTable();
-        loadGames();
+        // Send message to server to get packet of games online
     }
 
     private void initializeTable() {
-        player1Column.setCellValueFactory(new PropertyValueFactory<>("player1"));
-        player2Column.setCellValueFactory(new PropertyValueFactory<>("player2"));
-        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
-        optionsColumn.setCellValueFactory(new PropertyValueFactory<>("options"));
+        player1Column.setCellValueFactory(new PropertyValueFactory<>("player1Info"));
+        player2Column.setCellValueFactory(new PropertyValueFactory<>("player2Info"));
+        statusColumn.setCellValueFactory(new PropertyValueFactory<>("gameStatus"));
+//        optionsColumn.setCellValueFactory(new PropertyValueFactory<>("options"));
     }
 
     // import an ObservableList of all active games from server
-    private void loadGames(/* List of active games */) {
-        ObservableList<Game> games = FXCollections.observableArrayList();
-
-        /*add game information
-        for (int n = 0; ) {
-            games.add(gameof.getPlayer1Info().getUserName(), listofgame.getPlayer2Info().getUserName(), listofgame.getGameStatus(), getButton(game));
-        }
-        */
-
-        activeGames.setItems(games);
+    private void loadGames(HashSet<Game> listOfGames) {
+        activeGames.getItems().addAll(listOfGames);
     }
 
     private Button getButton(Game game) {
@@ -96,26 +90,46 @@ public class GameLobbyController implements Initializable, LobbyListener {
     }
 
     public void updateTableButtonClicked(ActionEvent actionEvent) {
-        loadGames();
+        // send packet to get list of games
     }
 
     @Override
     public void newGame(String message) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
 
+            }
+        });
     }
 
     @Override
     public void updateUIWithNewGame(String gameName) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
 
+            }
+        });
     }
 
     @Override
-    public void getListOfGames(HashSet<String> listOfGames) {
-
+    public void getListOfGames(HashSet<Game> listOfGames) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                loadGames(listOfGames);
+            }
+        });
     }
 
     @Override
-    public void getListOfOnlinePlayers(HashSet<String> listOfOnlinePlayers) {
+    public void getListOfOnlinePlayers(HashSet<UserInformation> listOfOnlinePlayers) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
 
+            }
+        });
     }
 }

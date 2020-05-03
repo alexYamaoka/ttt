@@ -1,5 +1,6 @@
 package Client;
 
+import Models.Game;
 import Models.Move;
 import ObserverPatterns.*;
 import Shared.Packet;
@@ -20,11 +21,6 @@ public class ReadMessageBus implements Runnable
     private UpdateUserinformationListener updateUserinformationListener;
     private GameListener gameListener;
     private LobbyListener lobbyListener;
-
-    private HashSet<String> listOfGames;
-    private HashSet<String> listOfPlayers;
-
-
 
     public ReadMessageBus(ClientController clientController)
     {
@@ -77,21 +73,12 @@ public class ReadMessageBus implements Runnable
 
 
                     case Packet.GET_GAMES:
-                        listOfGames = (HashSet<String>)response.getData();
-                        System.out.println("Received list of games: " + listOfGames);
-                        if (listOfGames != null)
-                        {
-                            lobbyListener.getListOfGames(listOfGames);
-                        }
+                        lobbyListener.getListOfGames(((HashSet<Game>)response.getData()));
                         break;
 
                     case Packet.GET_ONLINE_PLAYERS:
-                        listOfPlayers = (HashSet<String>) response.getData();
-                        System.out.println("Received list of online players: " + listOfPlayers);
-                        if (listOfPlayers != null)
-                        {
-                            lobbyListener.getListOfOnlinePlayers(listOfPlayers);
-                        }
+                        lobbyListener.getListOfOnlinePlayers(((HashSet<UserInformation>)response.getData()));
+                        break;
 
                     case Packet.JOIN_GAME:
                         System.out.println("join game inside readMessageBus");
