@@ -98,7 +98,9 @@ public class GameLobbyController implements Initializable, LobbyListener {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-
+                if (message.equalsIgnoreCase("SUCCESS")) {
+                    System.out.println("New game created Successfully");
+                }
             }
         });
     }

@@ -35,6 +35,7 @@ public class Game extends BaseModel implements Serializable {
         this.id = gameId.getNewId();
         this.player1 = player1;
         tttBoard = new TTTBoard();
+        this.gameStatus = "WAITING FOR ANOTHER PLAYER";
     }
 
 //        public void start(){
