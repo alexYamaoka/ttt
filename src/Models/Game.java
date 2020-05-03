@@ -10,17 +10,18 @@ import Server.ClientConnection;
 import Shared.Packet;
 import Shared.UserInformation;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Game extends BaseModel {
+public class Game extends BaseModel implements Serializable {
 
-    private List<GameObserver> gameObserversList;
-    private ArrayList<ClientConnection> GameObservers = new ArrayList<>();
-    private TTTBoard tttBoard;
-    ClientConnection player1;
-    ClientConnection player2;
+    private transient List<GameObserver> gameObserversList;
+    private transient ArrayList<ClientConnection> GameObservers = new ArrayList<>();
+    private transient TTTBoard tttBoard;
+    private transient ClientConnection player1;
+    private transient ClientConnection player2;
     UserInformation player1Info;
     UserInformation player2Info;
     private String id;
