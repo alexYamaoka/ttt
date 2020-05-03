@@ -86,11 +86,8 @@ public class GameLobby implements Initializable, LobbyListener {
     public void onCreateGameButtonClicked(ActionEvent event) {
         if (event.getSource() == newGameButton) {
             Packet packet = new Packet(Packet.NEW_GAME_CREATED, clientController.getAccountClient().getUserInformation(), "NEW-GAME");
-
-            System.out.println("New Game Created " + " Created by " + clientController.getAccountClient().getUserInformation().getFirstName() );
-
-
             clientController.getGameClient().addRequestToServer(packet);
+            System.out.println("New Game Created " + " Created by " + clientController.getAccountClient().getUserInformation().getFirstName());
         }
 
     }
