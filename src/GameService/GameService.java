@@ -65,19 +65,8 @@ public class GameService implements Runnable, Service
 
     public void addGame(Game game){
         ongoingGameRooms.put(game.getId(), game);
-
-        try
-        {
-            for (ClientConnection clientConnection: clientConnections)
-            {
-                Packet packet = new Packet(Packet.GET_GAMES, clientConnection.getInformation(), getGames());
-                clientConnection.getOutputStream().writeObject(packet);
-            }
-        }
-        catch (Exception ex)
-        {
-            ex.printStackTrace();
-        }
+        Packet packet = new Packet(Packet.GET_GAMES, null, getGames());
+        broadcast(packet);
     }
 
     public Game getGame(String id){

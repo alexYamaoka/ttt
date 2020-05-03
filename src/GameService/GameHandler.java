@@ -86,13 +86,14 @@ public class GameHandler implements Runnable
 
             case Packet.NEW_GAME_CREATED:
                 try {
-                    service.addGame(new Game(clientConnection)); //pull game name from data
+                    Game game = new Game(clientConnection);
+                    service.addGame(game); //pull game name from data
                     Packet packet = new Packet(Packet.NEW_GAME_CREATED, clientConnection.getInformation(), "SUCCESS");
                     clientConnection.getOutputStream().writeObject(packet);
 
 
-                    // send the gameName back to the client to use in constructor for the MOVE class on client side
-                    Packet gameNamePacket = new Packet(Packet.Game_Name, clientConnection.getInformation(), data.toString());
+                    // send the gameId back to the client to use in constructor for the MOVE class on client side
+                    Packet gameNamePacket = new Packet(Packet.Game_Name, clientConnection.getInformation(), game.getId());
                     clientConnection.getOutputStream().writeObject(gameNamePacket);
 
 
