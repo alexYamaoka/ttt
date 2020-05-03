@@ -51,6 +51,11 @@ public class MainMenuController implements Initializable {
         // requests for the list of available games on the server to display it into the listview for user's UI
         Packet requestingListOfGames = new Packet(Packet.GET_GAMES, client.getUserInformation(), "requesting list of games");
         client.addRequestToServer(requestingListOfGames);
+
+
+        // requests for the list of online players
+        Packet requestingListOfOnlinePlayers = new Packet(Packet.GET_ONLINE_PLAYERS, client.getUserInformation(), client.getUserInformation().getUserName());
+        client.addRequestToServer(requestingListOfOnlinePlayers);
     }
 
 

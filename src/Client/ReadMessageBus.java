@@ -20,7 +20,9 @@ public class ReadMessageBus implements Runnable
     private UpdateUserinformationListener updateUserinformationListener;
     private GameListener gameListener;
     private LobbyListener lobbyListener;
+
     private HashSet<String> listOfGames;
+    private HashSet<String> listOfPlayers;
 
 
 
@@ -82,6 +84,14 @@ public class ReadMessageBus implements Runnable
                             lobbyListener.getListOfGames(listOfGames);
                         }
                         break;
+
+                    case Packet.GET_ONLINE_PLAYERS:
+                        listOfPlayers = (HashSet<String>) response.getData();
+                        System.out.println("Received list of online players: " + listOfPlayers);
+                        if (listOfPlayers != null)
+                        {
+                            lobbyListener.getListOfOnlinePlayers(listOfPlayers);
+                        }
 
                     case Packet.JOIN_GAME:
                         System.out.println("join game inside readMessageBus");

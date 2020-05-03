@@ -18,6 +18,7 @@ public class Packet implements Serializable {
     public static final String NEW_GAME_CREATED = "NEW-GAME-CREATED";
     public static final String OBSERVE_GAME = "OBSERVE-GAME";
     public static final String GET_GAMES = "GET_GAMES"; // Joinable games
+    public static final String GET_ONLINE_PLAYERS = "GET-ONLINE-PLAYERS";
     public static final String GAME_MOVE = "GAME-MOVE";
     public static final String INVALID_GAME_MOVE = "INVALID-GAME-MOVE";
     public static final String Game_Name = "GAME-NAME";

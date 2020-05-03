@@ -7,4 +7,5 @@ public interface LobbyListener {
 
     void updateUIWithNewGame(String gameName);
     void getListOfGames(HashSet<String> listOfGames);
+    void getListOfOnlinePlayers(HashSet<String> listOfOnlinePlayers);
 }
