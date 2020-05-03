@@ -92,11 +92,11 @@ public class GameService implements Runnable, Service
     }
 
 
-    public HashSet<String> getGames(){
+    public HashSet<Game> getGames(){
         if (!ongoingGameRooms.isEmpty())
         {
             System.out.println("games available");
-            return new HashSet<>(ongoingGameRooms.keySet());
+            return new HashSet<Game>(ongoingGameRooms.values());
         }
         System.out.println("no games going on at the moment");
         return null;
