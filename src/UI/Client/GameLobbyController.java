@@ -3,6 +3,7 @@ package UI.Client;
 import Client.ClientController;
 import Models.Game;
 import ObserverPatterns.LobbyListener;
+import Shared.Packet;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -85,7 +86,13 @@ public class GameLobbyController implements Initializable, LobbyListener {
     public void onPlayAgainstComputerButtonClicked(ActionEvent event) {
     }
 
-    public void onCreateGameButtonClicked() {
+    public void onCreateGameButtonClicked(ActionEvent event) {
+        if (event.getSource() == newGameButton) {
+            Packet packet = new Packet(Packet.NEW_GAME_CREATED, clientController.getAccountClient().getUserInformation(), "NEW-GAME");
+            clientController.getGameClient().addRequestToServer(packet);
+            System.out.println("New Game Created " + " Created by " + clientController.getAccountClient().getUserInformation().getFirstName());
+        }
+
     }
 
     public void updateTableButtonClicked(ActionEvent actionEvent) {
