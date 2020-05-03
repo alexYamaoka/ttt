@@ -23,41 +23,32 @@ public class Game extends BaseModel {
     ClientConnection player2;
     UserInformation player1Info;
     UserInformation player2Info;
-    private String Id;
-    private String gameName;
+    private String id;
     private String gameStatus;
     private Timestamp startTime;
     private Timestamp endTime;
 
 
 
-    public Game(ClientConnection player1, String gameName) {
+    public Game(ClientConnection player1) {
         UUIDGenerator gameId = new UUIDGenerator();
-        this.Id = gameId.getNewId();
-        this.gameName = gameName;
+        this.id = gameId.getNewId();
         this.player1 = player1;
         tttBoard = new TTTBoard();
     }
 
-    //    public void start(){
+//        public void start(){
 //        GameThread gameThread = new GameThread(player1,player2,GameObservers);
 //        gameThread.start();
 //        setStartTime();
 //    }
+
     public void join(ClientConnection player2){
         this.player2 = player2;
     }
 
     public String getId(){
-        return this.Id;
-    }
-
-    public String getGameName(){
-        return gameName;
-    }
-
-    public void setGameName(String gameName) {
-        this.gameName = gameName;
+        return this.id;
     }
 
     public void addGameObserver(ClientConnection client){

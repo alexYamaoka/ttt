@@ -21,25 +21,16 @@ import java.net.URL;
 import java.util.*;
 
 public class GameLobby implements Initializable, LobbyListener {
-
+    @FXML
+    private TableView activeGames;
 
     @FXML
-    public ListView LobbyGameListview = new ListView();
+    private TableColumn player1Column, player2Column, statusColumn, optionsColumn;
 
     @FXML
-    private ListView LobbyPlayersListview = new ListView();
+    private Button updateTableButton, newGameAgainstComputerButton, newGameButton;
 
-
-    @FXML
-    private Button JoinGameButton;
-
-    @FXML
-    private Button SpectateGameButton;
-    @FXML
-    private Button NewGameButton;
     private ClientController clientController;
-    @FXML
-    private Button Quit;
 
 
     Set<String> listOfGames = new HashSet<>();
@@ -57,57 +48,58 @@ public class GameLobby implements Initializable, LobbyListener {
 
     }
 
-    public void onJoinGameButtonClicked(ActionEvent event){
-        if (event.getSource() == JoinGameButton) {
-            String selectedGame = LobbyGameListview.getSelectionModel().getSelectedItem().toString();
-            System.out.println("selected item in listView: " + selectedGame);
+//    public void onJoinGameButtonClicked(ActionEvent event){
+//        if (event.getSource() == JoinGameButton) {
+//            String selectedGame = activeGames.getSelectionModel().getSelectedItem().toString();
+////            String selectedGame = LobbyGameListview.getSelectionModel().getSelectedItem().toString();
+//            System.out.println("selected item in listView: " + selectedGame);
+//
+//
+//
+//            Packet packet = new Packet(Packet.JOIN_GAME, clientController.getAccountClient().getUserInformation(), selectedGame);
+//            clientController.getGameClient().addRequestToServer(packet);
+//
+//
+//            Platform.runLater(new Runnable() {
+//                @Override
+//                public void run() {
+//                    Stage stage = null;
+//                    Parent root = null;
+//
+//                    stage = (Stage) NewGameButton.getScene().getWindow();
+//                    root = clientController.getGameBoardPane();
+//                    stage.setScene(root.getScene());
+//                    stage.show();
+//
+//                    System.out.println("Displaying new game window");
+//                }
+//            });
+//        }
+//    }
 
+//    public void onSpectateGameButtonClicked(ActionEvent event){
+//        if (event.getSource() == SpectateGameButton) {
+//
+//        }
+//    }
 
+//    public void onPlayButtonClicked(ActionEvent event) {
+//        if (event.getSource() == NewGameButton) {
+//
+//            String gameName = clientController.getAccountClient().getUserInformation().getUserName() + ":" + System.currentTimeMillis();
+//            Packet packet = new Packet(Packet.NEW_GAME_CREATED, clientController.getAccountClient().getUserInformation(), gameName);
+//
+//            System.out.println("New Game Created " + " Created by " + clientController.getAccountClient().getUserInformation().getFirstName() );
+//
+//
+//            clientController.getGameClient().addRequestToServer(packet);
+//        }
+//
+//    }
 
-            Packet packet = new Packet(Packet.JOIN_GAME, clientController.getAccountClient().getUserInformation(), selectedGame);
-            clientController.getGameClient().addRequestToServer(packet);
-
-
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    Stage stage = null;
-                    Parent root = null;
-
-                    stage = (Stage) NewGameButton.getScene().getWindow();
-                    root = clientController.getGameBoardPane();
-                    stage.setScene(root.getScene());
-                    stage.show();
-
-                    System.out.println("Displaying new game window");
-                }
-            });
-        }
-    }
-
-    public void onSpectateGameButtonClicked(ActionEvent event){
-        if (event.getSource() == SpectateGameButton) {
-
-        }
-    }
-       
-    public void onPlayButtonClicked(ActionEvent event) {
-        if (event.getSource() == NewGameButton) {
-
-            String gameName = clientController.getAccountClient().getUserInformation().getUserName() + ":" + System.currentTimeMillis();
-            Packet packet = new Packet(Packet.NEW_GAME_CREATED, clientController.getAccountClient().getUserInformation(), gameName);
-
-            System.out.println("New Game Created " + " Created by " + clientController.getAccountClient().getUserInformation().getFirstName() );
-
-
-            clientController.getGameClient().addRequestToServer(packet);
-        }
-
-    }
-
-    public void onQuitClicked(ActionEvent event){
-
-    }
+//    public void onQuitClicked(ActionEvent event){
+//
+//    }
 
     @Override
     public void newGame(String message) {
@@ -120,7 +112,7 @@ public class GameLobby implements Initializable, LobbyListener {
                     Stage stage = null;
                     Parent root = null;
 
-                    stage = (Stage) NewGameButton.getScene().getWindow();
+                    stage = (Stage) newGameButton.getScene().getWindow();
                     root = clientController.getGameBoardPane();
                     stage.setScene(root.getScene());
                     stage.show();
@@ -140,7 +132,7 @@ public class GameLobby implements Initializable, LobbyListener {
             public void run()
             {
                 listOfGames.add(gameName);
-                LobbyGameListview.getItems().add(gameName);
+                activeGames.getItems().add(gameName);
             }
         });
     }
@@ -161,7 +153,7 @@ public class GameLobby implements Initializable, LobbyListener {
                 {
                     for (String gameName: listOfGames)
                     {
-                        LobbyGameListview.getItems().add(gameName);
+                        activeGames.getItems().add(gameName);
                     }
                 }
             });
@@ -186,7 +178,7 @@ public class GameLobby implements Initializable, LobbyListener {
                 {
                     for (String username: listOfOnlinePlayers)
                     {
-                        LobbyPlayersListview.getItems().add(username);
+                        activeGames.getItems().add(username);
                     }
                 }
             });
