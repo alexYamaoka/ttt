@@ -27,6 +27,10 @@ public class GameLobby implements Initializable, LobbyListener {
     public ListView LobbyGameListview = new ListView();
 
     @FXML
+    private ListView LobbyPlayersListview = new ListView();
+
+
+    @FXML
     private Button JoinGameButton;
 
     @FXML
@@ -39,6 +43,7 @@ public class GameLobby implements Initializable, LobbyListener {
 
 
     Set<String> listOfGames = new HashSet<>();
+    Set<String> listOfOnlinePlayers = new HashSet<>();
 
 
 
@@ -157,6 +162,31 @@ public class GameLobby implements Initializable, LobbyListener {
                     for (String gameName: listOfGames)
                     {
                         LobbyGameListview.getItems().add(gameName);
+                    }
+                }
+            });
+        }
+    }
+
+    @Override
+    public void getListOfOnlinePlayers(HashSet<String> listOfOnlinePlayers)
+    {
+        System.out.println("inside game lobby get list of online players");
+
+        this.listOfOnlinePlayers.clear();
+
+        if (listOfOnlinePlayers != null)
+        {
+            this.listOfOnlinePlayers = listOfOnlinePlayers;
+
+            Platform.runLater(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    for (String username: listOfOnlinePlayers)
+                    {
+                        LobbyPlayersListview.getItems().add(username);
                     }
                 }
             });

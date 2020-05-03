@@ -16,6 +16,7 @@ import java.io.Serializable;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GameHandler implements Runnable
@@ -58,11 +59,13 @@ public class GameHandler implements Runnable
 
 
 
+
         switch(request)
         {
             case Packet.GET_GAMES:
                 try {
                     clientConnection.getOutputStream().writeObject(new Packet(Packet.GET_GAMES, userInformation, (Serializable) service.getGames())); // list of current games
+                    clientConnection.getOutputStream().flush();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -70,7 +73,9 @@ public class GameHandler implements Runnable
 
             case Packet.GET_ONLINE_PLAYERS:
                 try {
+                    service.addOnlinePlayer((String)data);
                     clientConnection.getOutputStream().writeObject(new Packet(Packet.GET_ONLINE_PLAYERS, userInformation, (Serializable) service.getPlayersOnline())); // list of online players
+                    clientConnection.getOutputStream().flush();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="990.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496)radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.Client.GameLobby">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="990.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496)radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.Client.GameLobby">
    <children>
       <TabPane layoutX="4.0" layoutY="-2.0" prefHeight="680.0" prefWidth="990.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -39,16 +32,12 @@
                            </font>
                         </Label>
                         <TextField layoutX="229.0" layoutY="548.0" prefHeight="40.0" prefWidth="373.0" />
-                        <TableView layoutX="635.0" layoutY="390.0" prefHeight="200.0" prefWidth="337.0">
-                          <columns>
-                            <TableColumn prefWidth="334.91259765625" text="Players" />
-                          </columns>
-                        </TableView>
                         <Button fx:id="NewGameButton" layoutX="75.0" layoutY="125.0" mnemonicParsing="false" onAction="#onPlayButtonClicked" prefHeight="27.0" prefWidth="102.0" text="New Game" />
                         <TextField layoutX="31.0" layoutY="412.0" promptText="Wins" />
                         <TextField layoutX="32.0" layoutY="455.0" promptText="Loss" />
                         <Button fx:id="Quit" layoutX="98.0" layoutY="226.0" mnemonicParsing="false" onAction="#onQuitClicked" text="Quit" />
                         <ListView fx:id="LobbyGameListview" layoutX="232.0" layoutY="110.0" prefHeight="200.0" prefWidth="604.0" />
+                        <ListView fx:id="LobbyPlayersListview" layoutX="651.0" layoutY="392.0" prefHeight="198.0" prefWidth="290.0" />
                      </children>
                   </AnchorPane>
             </content>

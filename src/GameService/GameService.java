@@ -56,7 +56,6 @@ public class GameService implements Runnable, Service
                 Socket socket = serverSocket.accept();
                 ClientConnection connection = new ClientConnection(socket, this);
                 clientConnections.add(connection);                              // adds to hashMap of client connections
-                playersOnline.add(connection.getInformation().getUserName());   // adds username to hashSet of players online
                 pool.execute(connection);
             }
         } catch (IOException ex) {
@@ -85,6 +84,11 @@ public class GameService implements Runnable, Service
         return ongoingGameRooms.get(Id);
     }
 
+
+    public void addOnlinePlayer(String username)
+    {
+        playersOnline.add(username);
+    }
 
     public HashSet<String> getPlayersOnline()
     {
