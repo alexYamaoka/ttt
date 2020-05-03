@@ -62,8 +62,6 @@ public class GameThread implements Runnable {
     {
         System.out.println("Inside GameThread, adding move to the queue");
         moveQueue.add(move);
-
-
     }
 
 
@@ -94,6 +92,8 @@ public class GameThread implements Runnable {
             player1.getOutputStream().writeObject(whoIsPlayer2);
             player2.getOutputStream().writeObject(whoIsPlayer2);
             System.out.println("sending packet about player2");
+
+            isPlayer1Turn = true;
         }
         catch (IOException ex)
         {
@@ -113,18 +113,21 @@ public class GameThread implements Runnable {
                     newMove = moveQueue.take();
 
 
-                    if (newMove.getUserInformation() == player1UserInformation)
+
+                    if (newMove.getUserInformation() == player1UserInformation && isPlayer1Turn)
                     {
                         System.out.println("game player1.make move is called");
 
                         if (game.checkIfValidMove(newMove))
                         {
                             game.player1MakeMove(newMove);
-
+                            isPlayer1Turn = false;
                             Packet packet = new Packet(Packet.GAME_MOVE, player1UserInformation,newMove);
                             player1.getOutputStream().writeObject(packet);
                             player2.getOutputStream().writeObject(packet);
                             System.out.println("move is outputted to both players");
+
+                            isPlayer1Turn = false;
 
 
                             if (game.isPlayer1Winner(newMove))
@@ -153,7 +156,7 @@ public class GameThread implements Runnable {
 
 
                     }
-                    else if (newMove.getUserInformation() == player2UserInformation)
+                    else if (newMove.getUserInformation() == player2UserInformation && !isPlayer1Turn)
                     {
                         System.out.println("game player2.make move is called");
 
@@ -166,7 +169,7 @@ public class GameThread implements Runnable {
                             player2.getOutputStream().writeObject(packet);
                             System.out.println("move is outputted to both players");
 
-
+                            isPlayer1Turn = true;
 
                             if (game.isPlayer2Winner(newMove))
                             {
