@@ -83,23 +83,22 @@ public class GameLobby implements Initializable, LobbyListener {
 //        }
 //    }
 
-//    public void onPlayButtonClicked(ActionEvent event) {
-//        if (event.getSource() == NewGameButton) {
-//
-//            String gameName = clientController.getAccountClient().getUserInformation().getUserName() + ":" + System.currentTimeMillis();
-//            Packet packet = new Packet(Packet.NEW_GAME_CREATED, clientController.getAccountClient().getUserInformation(), gameName);
-//
-//            System.out.println("New Game Created " + " Created by " + clientController.getAccountClient().getUserInformation().getFirstName() );
-//
-//
-//            clientController.getGameClient().addRequestToServer(packet);
-//        }
-//
-//    }
+    public void onCreateGameButtonClicked(ActionEvent event) {
+        if (event.getSource() == newGameButton) {
+            String gameName = clientController.getAccountClient().getUserInformation().getUserName() + ":" + System.currentTimeMillis();
+            Packet packet = new Packet(Packet.NEW_GAME_CREATED, clientController.getAccountClient().getUserInformation(), gameName);
 
-//    public void onQuitClicked(ActionEvent event){
-//
-//    }
+            System.out.println("New Game Created " + " Created by " + clientController.getAccountClient().getUserInformation().getFirstName() );
+
+
+            clientController.getGameClient().addRequestToServer(packet);
+        }
+
+    }
+
+    public void onQuitClicked(ActionEvent event){
+
+    }
 
     @Override
     public void newGame(String message) {

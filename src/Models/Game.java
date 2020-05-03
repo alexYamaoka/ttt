@@ -29,7 +29,6 @@ public class Game extends BaseModel {
     private Timestamp endTime;
 
 
-
     public Game(ClientConnection player1) {
         UUIDGenerator gameId = new UUIDGenerator();
         this.id = gameId.getNewId();

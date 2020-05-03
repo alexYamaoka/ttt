@@ -64,7 +64,7 @@ public class GameService implements Runnable, Service
     }
 
     public void addGame(Game game){
-        ongoingGameRooms.put(game.getGameName(),game);
+        ongoingGameRooms.put(game.getId(), game);
 
         try
         {
@@ -80,8 +80,8 @@ public class GameService implements Runnable, Service
         }
     }
 
-    public Game getGame(String Id){
-        return ongoingGameRooms.get(Id);
+    public Game getGame(String id){
+        return ongoingGameRooms.get(id);
     }
 
 
