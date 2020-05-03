@@ -20,7 +20,9 @@ public class ReadMessageBus implements Runnable
     private UpdateUserinformationListener updateUserinformationListener;
     private GameListener gameListener;
     private LobbyListener lobbyListener;
+
     private HashSet<String> listOfGames;
+    private HashSet<String> listOfPlayers;
 
 
 

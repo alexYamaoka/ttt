@@ -68,6 +68,15 @@ public class GameHandler implements Runnable
                 }
                 break;
 
+            case Packet.GET_ONLINE_PLAYERS:
+                try {
+                    clientConnection.getOutputStream().writeObject(new Packet(Packet.GET_ONLINE_PLAYERS, userInformation, (Serializable) service.getPlayersOnline())); // list of online players
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+
+
 
 
             case Packet.NEW_GAME_CREATED:

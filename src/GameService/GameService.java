@@ -30,8 +30,7 @@ public class GameService implements Runnable, Service
     private HashSet<ClientConnection> clientConnections = new HashSet<>();
     private HashMap<String, Game> ongoingGameRooms = new HashMap<>();
     private HashMap<String, GameThread> gameThreadList = new HashMap<>();
-
-
+    private Set<String> playersOnline = new HashSet<>();
 
     public GameService() {
     }
@@ -56,7 +55,8 @@ public class GameService implements Runnable, Service
             while (running.get()) {
                 Socket socket = serverSocket.accept();
                 ClientConnection connection = new ClientConnection(socket, this);
-                clientConnections.add(connection);
+                clientConnections.add(connection);                              // adds to hashMap of client connections
+                playersOnline.add(connection.getInformation().getUserName());   // adds username to hashSet of players online
                 pool.execute(connection);
             }
         } catch (IOException ex) {
@@ -85,6 +85,17 @@ public class GameService implements Runnable, Service
         return ongoingGameRooms.get(Id);
     }
 
+
+    public HashSet<String> getPlayersOnline()
+    {
+        if (!playersOnline.isEmpty())
+        {
+            System.out.println("online players");
+            return (HashSet<String>) playersOnline;
+        }
+        System.out.println("no players online");
+        return null;
+    }
 
 
     public HashSet<String> getGames(){
