@@ -85,7 +85,7 @@ public class GameHandler implements Runnable
 
 
                     // send the gameId back to the client to use in constructor for the MOVE class on client side
-                    Packet gameNamePacket = new Packet(Packet.Game_Name, clientConnection.getInformation(), game.getId());
+                    Packet gameNamePacket = new Packet(Packet.Game_Name, clientConnection.getInformation(), game);
                     clientConnection.getOutputStream().writeObject(gameNamePacket);
 
 
