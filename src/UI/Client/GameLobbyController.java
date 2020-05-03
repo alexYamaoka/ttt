@@ -104,11 +104,11 @@ public class GameLobbyController implements Initializable, LobbyListener {
     }
 
     @Override
-    public void updateUIWithNewGame(String gameName) {
+    public void updateUIWithNewGame(Game game) {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-
+                activeGames.getItems().add(game);
             }
         });
     }
@@ -118,6 +118,7 @@ public class GameLobbyController implements Initializable, LobbyListener {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
+                activeGames.getItems().clear();
                 loadGames(listOfGames);
             }
         });

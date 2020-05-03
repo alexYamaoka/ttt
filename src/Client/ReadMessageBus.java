@@ -101,7 +101,7 @@ public class ReadMessageBus implements Runnable
                         break;
 
                     case Packet.Game_Name:
-                        lobbyListener.updateUIWithNewGame(response.getData().toString());
+                        lobbyListener.updateUIWithNewGame((Game) response.getData());
                         gameListener.setGameName(response.getData().toString());
                         break;
 

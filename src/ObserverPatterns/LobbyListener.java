@@ -8,7 +8,7 @@ import java.util.HashSet;
 public interface LobbyListener {
     void newGame(String message);
 
-    void updateUIWithNewGame(String gameName);
+    void updateUIWithNewGame(Game game);
     void getListOfGames(HashSet<Game> listOfGames);
     void getListOfOnlinePlayers(HashSet<UserInformation> listOfOnlinePlayers);
 }
