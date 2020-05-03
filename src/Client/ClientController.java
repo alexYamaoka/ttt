@@ -169,4 +169,8 @@ public class ClientController {
     public Pane getLobbyPane() {
         return lobbyPane;
     }
+
+    public GameLobby getGameLobby() {
+        return gameLobby;
+    }
 }

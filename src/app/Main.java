@@ -21,10 +21,22 @@ public class Main extends Application {
         AccountService service = new AccountService();
         service.start();
 
+        // start gameservice
+        GameService gameService = new GameService();
+        gameService.start();
+
+
+
         // start client
         ClientController clientController = new ClientController(stage);
         stage.setTitle("EndFrame TicTacToe");
         clientController.run();
+
+
+
+
+
+
 /*
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../UI/Client/SignIn.fxml"));
         Parent root = loader.load();

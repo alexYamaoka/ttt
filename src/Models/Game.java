@@ -16,9 +16,9 @@ import java.util.List;
 
 public class Game extends BaseModel {
 
-    private TTTBoard tttBoard;
     private List<GameObserver> gameObserversList;
-
+    private ArrayList<ClientConnection> GameObservers = new ArrayList<>();
+    private TTTBoard tttBoard;
     ClientConnection player1;
     ClientConnection player2;
     UserInformation player1Info;
@@ -29,7 +29,7 @@ public class Game extends BaseModel {
     private Timestamp startTime;
     private Timestamp endTime;
 
-    private ArrayList<ClientConnection> GameObservers = new ArrayList<>();
+
 
     public Game(ClientConnection player1, String gameName) {
         UUIDGenerator gameId = new UUIDGenerator();
@@ -39,11 +39,11 @@ public class Game extends BaseModel {
         tttBoard = new TTTBoard();
     }
 
-    public void start(){
-        GameThread gameThread = new GameThread(player1,player2,GameObservers);
-        gameThread.start();
-        setStartTime();
-    }
+    //    public void start(){
+//        GameThread gameThread = new GameThread(player1,player2,GameObservers);
+//        gameThread.start();
+//        setStartTime();
+//    }
     public void join(ClientConnection player2){
         this.player2 = player2;
     }
@@ -98,12 +98,7 @@ public class Game extends BaseModel {
 
     public void player1MakeMove(Move move)
     {
-        move.setToken("O");
-        System.out.println("Row: " + move.getRow());
-        System.out.println("column: " + move.getColumn());
-        System.out.println("userInformation: " + move.getUserInformation());
-
-        System.out.println("tttBoard: " + tttBoard);
+        move.setToken("X");
 
         tttBoard.setX(move.getRow(), move.getColumn());
 
@@ -156,17 +151,28 @@ public class Game extends BaseModel {
         return player1Info;
     }
 
+    public UserInformation getPlayer2Info(){
+        return player2Info;
+    }
+
     public void setPlayer1Info(UserInformation player1Info) {
 
         this.player1Info = player1Info;
     }
 
-    public UserInformation getPlayer2Info(){
-        return player2Info;
-    }
-
     public void setPlayer2Info(UserInformation player2Info) {
         this.player2Info = player2Info;
+    }
+
+
+    public ClientConnection getPlayer1ClientConnection()
+    {
+        return player1;
+    }
+
+    public ClientConnection getPlayer2ClientConnection()
+    {
+        return player2;
     }
 
     public String getGameStatus() {
