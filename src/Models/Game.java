@@ -25,6 +25,7 @@ public class Game extends BaseModel {
     UserInformation player2Info;
     private String Id;
     private String gameName;
+    private String gameStatus;
     private Timestamp startTime;
     private Timestamp endTime;
 
@@ -110,7 +111,6 @@ public class Game extends BaseModel {
         move.setToken("O");
         tttBoard.setO(move.getRow(), move.getColumn());
 
-
         tttBoard.printBoard();
         System.out.println();
     }
@@ -175,4 +175,11 @@ public class Game extends BaseModel {
         return player2;
     }
 
+    public String getGameStatus() {
+        return gameStatus;
+    }
+
+    public void setGameStatus(String gameStatus) {
+        this.gameStatus = gameStatus;
+    }
 }

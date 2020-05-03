@@ -1,48 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="990.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496)radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.Client.GameLobby">
-   <children>
-      <TabPane layoutX="4.0" layoutY="-2.0" prefHeight="680.0" prefWidth="990.0" tabClosingPolicy="UNAVAILABLE">
-        <tabs>
-          <Tab text="Lobby">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="680.0" prefWidth="990.0">
-                     <children>
-                        <Label layoutX="523.0" layoutY="18.0" text="Lobby List">
-                           <font>
-                              <Font size="36.0" />
-                           </font>
-                        </Label>
-                        <Button fx:id="JoinGameButton" layoutX="75.0" layoutY="83.0" mnemonicParsing="false" onAction="#onJoinGameButtonClicked" prefHeight="27.0" prefWidth="102.0" text="Join Game" />
-                        <Button fx:id="SpectateGameButton" layoutX="74.0" layoutY="169.0" mnemonicParsing="false" onAction="#onSpectateGameButtonClicked" text="Spectate Game" />
-                        <ListView layoutX="230.0" layoutY="392.0" prefHeight="153.0" prefWidth="372.0" />
-                        <Button layoutX="312.0" layoutY="593.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="217.0" text="Send" />
-                        <Label layoutX="383.0" layoutY="342.0" text="Chat">
-                           <font>
-                              <Font size="36.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="740.0" layoutY="342.0" text="Players">
-                           <font>
-                              <Font size="36.0" />
-                           </font>
-                        </Label>
-                        <TextField layoutX="229.0" layoutY="548.0" prefHeight="40.0" prefWidth="373.0" />
-                        <Button fx:id="NewGameButton" layoutX="75.0" layoutY="125.0" mnemonicParsing="false" onAction="#onPlayButtonClicked" prefHeight="27.0" prefWidth="102.0" text="New Game" />
-                        <TextField layoutX="31.0" layoutY="412.0" promptText="Wins" />
-                        <TextField layoutX="32.0" layoutY="455.0" promptText="Loss" />
-                        <Button fx:id="Quit" layoutX="98.0" layoutY="226.0" mnemonicParsing="false" onAction="#onQuitClicked" text="Quit" />
-                        <ListView fx:id="LobbyGameListview" layoutX="232.0" layoutY="110.0" prefHeight="200.0" prefWidth="604.0" />
-                        <ListView fx:id="LobbyPlayersListview" layoutX="651.0" layoutY="392.0" prefHeight="198.0" prefWidth="290.0" />
-                     </children>
-                  </AnchorPane>
-            </content>
-          </Tab>
-        </tabs>
-      </TabPane>
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1025.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496)radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.Client.GameLobbyController">
+    <children>
+        <ImageView fitHeight="63.0" fitWidth="87.0" layoutX="469.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../Resources/Icons/Logo.png" />
+            </image>
+        </ImageView>
+        <Label layoutX="384.0" layoutY="93.0" text="Active Games" textFill="WHITE">
+            <font>
+                <Font size="40.0" />
+            </font>
+        </Label>
+        <TableView fx:id="activeGames" layoutX="112.5" layoutY="160.0" prefHeight="400.0" prefWidth="800.0">
+            <columns>
+                <TableColumn fx:id="player1Column" editable="false" prefWidth="200.0" text="Player 1" />
+                <TableColumn fx:id="player2Column" editable="false" minWidth="8.440948486328125" prefWidth="200.0" text="Player 2" />
+                <TableColumn fx:id="statusColumn" editable="false" prefWidth="200.0" text="Status" />
+                <TableColumn fx:id="optionsColumn" editable="false" prefWidth="200.0" text="Options" />
+            </columns>
+        </TableView>
+        <Button fx:id="updateTableButton" layoutX="927.5" layoutY="160.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#updateTableButtonClicked" prefHeight="30.0" prefWidth="30.0" text="⟳" />
+        <Button fx:id="newGameAgainstComputerButton" layoutX="772.5" layoutY="590.0" mnemonicParsing="false" onAction="#onPlayAgainstComputerButtonClicked" prefWidth="140.0" text="Play against computer" />
+        <Button fx:id="newGameButton" layoutX="617.5" layoutY="590.0" mnemonicParsing="false" onAction="#onCreateGameButtonClicked" prefWidth="140.0" text="Create new game" />
+    </children>
 </AnchorPane>
