@@ -52,6 +52,8 @@ public class GameHandler implements Runnable
         Serializable data = packet.getData();
         HashMap<String, GameThread> gameThreadList = service.getGameThreadList();
 
+        System.out.println("Request: " + request);
+
         switch(request)
         {
             case Packet.GET_GAMES:
@@ -72,9 +74,6 @@ public class GameHandler implements Runnable
                     e.printStackTrace();
                 }
                 break;
-
-
-
 
             case Packet.NEW_GAME_CREATED:
                 try {

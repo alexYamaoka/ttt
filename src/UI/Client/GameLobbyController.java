@@ -51,6 +51,7 @@ public class GameLobbyController implements Initializable, LobbyListener {
 
     // import an ObservableList of all active games from server
     private void loadGames(HashSet<Game> listOfGames) {
+        System.out.println("Load games called!");
         activeGames.getItems().addAll(listOfGames);
     }
 
@@ -84,7 +85,6 @@ public class GameLobbyController implements Initializable, LobbyListener {
         if (event.getSource() == newGameButton) {
             Packet packet = new Packet(Packet.NEW_GAME_CREATED, clientController.getAccountClient().getUserInformation(), "NEW-GAME");
             clientController.getGameClient().addRequestToServer(packet);
-            System.out.println("New Game Created " + " Created by " + clientController.getAccountClient().getUserInformation().getFirstName());
         }
 
     }
@@ -110,7 +110,8 @@ public class GameLobbyController implements Initializable, LobbyListener {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                activeGames.getItems().add(game);
+                System.out.println("Update Game: " + game.getPlayer1Username());
+//                activeGames.getItems().add(game);
             }
         });
     }

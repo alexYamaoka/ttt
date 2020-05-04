@@ -75,6 +75,7 @@ public class ReadMessageBus implements Runnable
                     case Packet.GET_GAMES:
                         HashSet<Game> listOfGames = (HashSet<Game>) response.getData();
                         if (listOfGames != null) {
+                            System.out.println("Inside GET_GAMES");
                             lobbyListener.getListOfGames(listOfGames);
                         }
                         break;
@@ -82,6 +83,10 @@ public class ReadMessageBus implements Runnable
                     case Packet.GET_ONLINE_PLAYERS:
                         HashSet<UserInformation> listOfPlayers = (HashSet<UserInformation>) response.getData();
                         if (listOfPlayers != null) {
+                            System.out.println("Inside GET_ONLINE_PLAYERS");
+                            for (UserInformation userInformation : listOfPlayers) {
+                                System.out.println(userInformation);
+                            }
                             lobbyListener.getListOfOnlinePlayers(listOfPlayers);
                         }
                         break;
