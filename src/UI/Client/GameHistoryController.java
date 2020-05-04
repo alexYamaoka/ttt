@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.ResourceBundle;
 
 
-public class GameHistory implements Initializable {
+public class GameHistoryController implements Initializable {
     @FXML
     TableView gameHistoryTable;
     @FXML
