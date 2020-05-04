@@ -54,7 +54,7 @@ public class MainMenuController implements Initializable {
 
 
         // requests for the list of online players
-        Packet requestingListOfOnlinePlayers = new Packet(Packet.GET_ONLINE_PLAYERS, client.getUserInformation(), client.getUserInformation().getUserName());
+        Packet requestingListOfOnlinePlayers = new Packet(Packet.GET_ONLINE_PLAYERS, client.getUserInformation(), client.getUserInformation());
         client.addRequestToServer(requestingListOfOnlinePlayers);
     }
 

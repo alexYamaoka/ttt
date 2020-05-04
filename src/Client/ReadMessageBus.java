@@ -1,5 +1,6 @@
 package Client;
 
+import Models.Game;
 import Models.Move;
 import ObserverPatterns.*;
 import Shared.Packet;
@@ -20,11 +21,6 @@ public class ReadMessageBus implements Runnable
     private UpdateUserinformationListener updateUserinformationListener;
     private GameListener gameListener;
     private LobbyListener lobbyListener;
-
-    private HashSet<String> listOfGames;
-    private HashSet<String> listOfPlayers;
-
-
 
     public ReadMessageBus(ClientController clientController)
     {
@@ -77,21 +73,23 @@ public class ReadMessageBus implements Runnable
 
 
                     case Packet.GET_GAMES:
-                        listOfGames = (HashSet<String>)response.getData();
-                        System.out.println("Received list of games: " + listOfGames);
-                        if (listOfGames != null)
-                        {
+                        HashSet<Game> listOfGames = (HashSet<Game>) response.getData();
+                        if (listOfGames != null) {
+                            System.out.println("Inside GET_GAMES");
                             lobbyListener.getListOfGames(listOfGames);
                         }
                         break;
 
                     case Packet.GET_ONLINE_PLAYERS:
-                        listOfPlayers = (HashSet<String>) response.getData();
-                        System.out.println("Received list of online players: " + listOfPlayers);
-                        if (listOfPlayers != null)
-                        {
+                        HashSet<UserInformation> listOfPlayers = (HashSet<UserInformation>) response.getData();
+                        if (listOfPlayers != null) {
+                            System.out.println("Inside GET_ONLINE_PLAYERS");
+                            for (UserInformation userInformation : listOfPlayers) {
+                                System.out.println(userInformation);
+                            }
                             lobbyListener.getListOfOnlinePlayers(listOfPlayers);
                         }
+                        break;
 
                     case Packet.JOIN_GAME:
                         System.out.println("join game inside readMessageBus");
@@ -108,7 +106,7 @@ public class ReadMessageBus implements Runnable
                         break;
 
                     case Packet.Game_Name:
-                        lobbyListener.updateUIWithNewGame(response.getData().toString());
+                        lobbyListener.updateUIWithNewGame((Game) response.getData());
                         gameListener.setGameName(response.getData().toString());
                         break;
 

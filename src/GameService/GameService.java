@@ -6,31 +6,28 @@ import Models.Game;
 import Server.ClientConnection;
 import Server.Service;
 import Shared.Packet;
+import Shared.UserInformation;
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
-public class GameService implements Runnable, Service
-{
+public class GameService implements Runnable, Service {
+    private final AtomicBoolean running = new AtomicBoolean(false);
+    private final int PORT_NUMBER = 8080;
     private Thread worker;
     private HashSet<Service> serviceListeners = new HashSet<>();
-    private final AtomicBoolean running = new AtomicBoolean(false);
     private DataSource ds = DatabaseManager.getInstance();
-    private final int PORT_NUMBER = 8080;
-
-
-
     private HashSet<ClientConnection> clientConnections = new HashSet<>();
     private HashMap<String, Game> ongoingGameRooms = new HashMap<>();
     private HashMap<String, GameThread> gameThreadList = new HashMap<>();
-    private Set<String> playersOnline = new HashSet<>();
+    private Set<UserInformation> playersOnline = new HashSet<>();
 
     public GameService() {
     }
@@ -63,62 +60,39 @@ public class GameService implements Runnable, Service
         }
     }
 
-    public void addGame(Game game){
-        ongoingGameRooms.put(game.getGameName(),game);
-
-        try
-        {
-            for (ClientConnection clientConnection: clientConnections)
-            {
-                Packet packet = new Packet(Packet.GET_GAMES, clientConnection.getInformation(), getGames());
-                clientConnection.getOutputStream().writeObject(packet);
-            }
-        }
-        catch (Exception ex)
-        {
-            ex.printStackTrace();
-        }
+    public void addGame(Game game) {
+        ongoingGameRooms.put(game.getId(), game);
+        Packet packet = new Packet(Packet.GET_GAMES, null, getGames());
+        broadcast(packet);
     }
 
-    public Game getGame(String Id){
-        return ongoingGameRooms.get(Id);
+    public Game getGame(String id) {
+        return ongoingGameRooms.get(id);
     }
 
 
-    public void addOnlinePlayer(String username)
-    {
-        playersOnline.add(username);
+    public void addOnlinePlayer(UserInformation user) {
+        playersOnline.add(user);
     }
 
-    public HashSet<String> getPlayersOnline()
-    {
-        if (!playersOnline.isEmpty())
-        {
-            System.out.println("online players");
-            return (HashSet<String>) playersOnline;
+    public HashSet<UserInformation> getPlayersOnline() {
+        if (!playersOnline.isEmpty()) {
+            return (HashSet<UserInformation>) playersOnline;
         }
-        System.out.println("no players online");
         return null;
     }
 
 
-    public HashSet<String> getGames(){
-        if (!ongoingGameRooms.isEmpty())
-        {
-            System.out.println("games available");
-            return new HashSet<>(ongoingGameRooms.keySet());
+    public HashSet<Game> getGames() {
+        if (!ongoingGameRooms.isEmpty()) {
+            return new HashSet<Game>(ongoingGameRooms.values());
         }
-        System.out.println("no games going on at the moment");
         return null;
     }
 
-    public HashMap<String, GameThread> getGameThreadList()
-    {
+    public HashMap<String, GameThread> getGameThreadList() {
         return gameThreadList;
     }
-
-
-
 
 
     public void handle(ClientConnection clientConnection, Packet packet) {
@@ -132,7 +106,7 @@ public class GameService implements Runnable, Service
     }
 
     public void broadcast(Packet packet) {
-        for(ClientConnection connection : clientConnections) {
+        for (ClientConnection connection : clientConnections) {
             try {
                 connection.getOutputStream().writeObject(packet);
             } catch (IOException ex) {
@@ -148,10 +122,6 @@ public class GameService implements Runnable, Service
     public void update(Packet packet) {
 
     }
-
-
-
-
 
 
 }

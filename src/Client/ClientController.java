@@ -170,7 +170,7 @@ public class ClientController {
         return lobbyPane;
     }
 
-    public GameLobby getGameLobby() {
+    public GameLobbyController getGameLobby() {
         return gameLobby;
     }
 }

@@ -10,54 +10,51 @@ import Server.ClientConnection;
 import Shared.Packet;
 import Shared.UserInformation;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Game extends BaseModel {
+public class Game extends BaseModel implements Serializable {
 
-    private List<GameObserver> gameObserversList;
-    private ArrayList<ClientConnection> GameObservers = new ArrayList<>();
-    private TTTBoard tttBoard;
-    ClientConnection player1;
-    ClientConnection player2;
-    UserInformation player1Info;
-    UserInformation player2Info;
-    private String Id;
-    private String gameName;
+    private transient List<GameObserver> gameObserversList;
+    private transient ArrayList<ClientConnection> GameObservers = new ArrayList<>();
+    private transient TTTBoard tttBoard;
+    private transient ClientConnection player1;
+    private transient ClientConnection player2;
+    private transient UserInformation player1Info;
+    private transient UserInformation player2Info;
+
+    private String player1Username;
+    private String player2Username;
+    private String id;
     private String gameStatus;
     private Timestamp startTime;
     private Timestamp endTime;
 
 
-
-    public Game(ClientConnection player1, String gameName) {
+    public Game(ClientConnection player1) {
         UUIDGenerator gameId = new UUIDGenerator();
-        this.Id = gameId.getNewId();
-        this.gameName = gameName;
+        this.id = gameId.getNewId();
         this.player1 = player1;
+        this.player1Info = player1.getInformation();
+        this.player1Username = player1Info.getUserName();
         tttBoard = new TTTBoard();
+        this.gameStatus = "WAITING FOR ANOTHER PLAYER";
     }
 
-    //    public void start(){
+//        public void start(){
 //        GameThread gameThread = new GameThread(player1,player2,GameObservers);
 //        gameThread.start();
 //        setStartTime();
 //    }
+
     public void join(ClientConnection player2){
         this.player2 = player2;
     }
 
     public String getId(){
-        return this.Id;
-    }
-
-    public String getGameName(){
-        return gameName;
-    }
-
-    public void setGameName(String gameName) {
-        this.gameName = gameName;
+        return this.id;
     }
 
     public void addGameObserver(ClientConnection client){
@@ -181,5 +178,13 @@ public class Game extends BaseModel {
 
     public void setGameStatus(String gameStatus) {
         this.gameStatus = gameStatus;
+    }
+
+    public String getPlayer1Username() {
+        return player1Username;
+    }
+
+    public String getPlayer2Username() {
+        return player2Username;
     }
 }

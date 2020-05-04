@@ -1,26 +1,26 @@
 package UI.Client;
 
+import Client.ClientController;
 import Models.Game;
+import ObserverPatterns.LobbyListener;
+import Shared.Packet;
+import Shared.UserInformation;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldListCell;
-import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.stage.Stage;
-import Client.ClientController;
-import javafx.fxml.Initializable;
 
-import javax.swing.text.TabableView;
 import java.net.URL;
+import java.util.HashSet;
 import java.util.ResourceBundle;
 
-public class GameLobbyController implements Initializable {
+public class GameLobbyController implements Initializable, LobbyListener {
     @FXML
     private TableView<Game> activeGames;
     @FXML
@@ -39,36 +39,30 @@ public class GameLobbyController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializeTable();
-        loadGames();
+        // Send message to server to get packet of games online
     }
 
-    private void initializeTable(){
-        player1Column.setCellValueFactory(new PropertyValueFactory<>("player1"));
-        player2Column.setCellValueFactory(new PropertyValueFactory<>("player2"));
-        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
-        optionsColumn.setCellValueFactory(new PropertyValueFactory<>("options"));
+    private void initializeTable() {
+        player1Column.setCellValueFactory(new PropertyValueFactory<>("player1Username"));
+        player2Column.setCellValueFactory(new PropertyValueFactory<>("player2Username"));
+        statusColumn.setCellValueFactory(new PropertyValueFactory<>("gameStatus"));
+//        optionsColumn.setCellValueFactory(new PropertyValueFactory<>("options"));
     }
+
     // import an ObservableList of all active games from server
-    private void loadGames(/* List of active games */) {
-        ObservableList<Game> games = FXCollections.observableArrayList();
-
-        /*add game information
-        for (int n = 0; ) {
-            games.add(gameof.getPlayer1Info().getUserName(), listofgame.getPlayer2Info().getUserName(), listofgame.getGameStatus(), getButton(game));
-        }
-        */
-
-        activeGames.setItems(games);
+    private void loadGames(HashSet<Game> listOfGames) {
+        System.out.println("Load games called!");
+        activeGames.getItems().addAll(listOfGames);
     }
+
     private Button getButton(Game game) {
         Button button = new Button();
         button.setPrefWidth(800);
-        if (game.getGameStatus() == "Ongoing"){
+        if (game.getGameStatus() == "Ongoing") {
             button.setText("Spectate");
             button.setId("spectateButton");
             button.setOnAction(click -> spectateButtonClicked());
-        }
-        else{
+        } else {
             button.setText("Join Game");
             button.setId("joinGameButton");
             button.setOnAction(click -> joinGameButtonClicked());
@@ -77,15 +71,69 @@ public class GameLobbyController implements Initializable {
         return button;
     }
 
-    public void spectateButtonClicked(){}
-    public void joinGameButtonClicked(){
+    public void spectateButtonClicked() {
+    }
+
+    public void joinGameButtonClicked() {
 
     }
+
     public void onPlayAgainstComputerButtonClicked(ActionEvent event) {
     }
-    public void onCreateGameButtonClicked(){}
+
+    public void onCreateGameButtonClicked(ActionEvent event) {
+        if (event.getSource() == newGameButton) {
+            Packet packet = new Packet(Packet.NEW_GAME_CREATED, clientController.getAccountClient().getUserInformation(), "NEW-GAME");
+            clientController.getGameClient().addRequestToServer(packet);
+        }
+
+    }
 
     public void updateTableButtonClicked(ActionEvent actionEvent) {
-        loadGames();
+        // send packet to get list of games
+    }
+
+    @Override
+    public void newGame(String message) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                if (message.equalsIgnoreCase("SUCCESS")) {
+                    System.out.println("New game created Successfully");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void updateUIWithNewGame(Game game) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("Update Game: " + game.getPlayer1Username());
+//                activeGames.getItems().add(game);
+            }
+        });
+    }
+
+    @Override
+    public void getListOfGames(HashSet<Game> listOfGames) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                activeGames.getItems().clear();
+                loadGames(listOfGames);
+            }
+        });
+    }
+
+    @Override
+    public void getListOfOnlinePlayers(HashSet<UserInformation> listOfOnlinePlayers) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        });
     }
 }

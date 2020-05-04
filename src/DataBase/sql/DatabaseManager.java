@@ -112,7 +112,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         Game game = obj;
         query.append("INSERT INTO game");
         int row = 0;
-        System.out.println("Name "+game.getGameName() + game.getId());
+        System.out.println("Game Id: " + game.getId());
         query.append("(gameID, StartTime, EndTime, Player1Id, Player2Id, StartingPlayerId, WinningPlayerId");
         query.append("values (?,?,?,?,?,?,?)");
         GameStatement = myConn.prepareStatement(query.toString());
