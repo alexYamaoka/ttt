@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="576.0" prefWidth="606.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496)radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.Client.Options">
+<AnchorPane prefHeight="580.0" prefWidth="600.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496)radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.Client.Options">
    <children>
       <SplitPane fx:id="splitPane" dividerPositions="0.2736842105263158" layoutX="17.0" layoutY="82.0" prefHeight="481.0" prefWidth="572.0" style="-fx-border-color: #000000#000000; -fx-border-insets: 0,0; -fx-padding: 0; -fx-split-pane-divider: 0;">
         <items>
