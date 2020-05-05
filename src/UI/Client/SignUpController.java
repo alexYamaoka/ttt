@@ -233,7 +233,7 @@ public class SignUpController implements Initializable, SignUpResultListener
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println("Sign up Initialized");
+
     }
 
     @Override

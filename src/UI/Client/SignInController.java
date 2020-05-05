@@ -143,7 +143,7 @@ public class SignInController implements Initializable, SignInResultListener
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println("Sign In initialized");
+
     }
 
     public ClientController getClientController() {

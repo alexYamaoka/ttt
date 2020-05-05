@@ -66,7 +66,7 @@ public class GameHandler implements Runnable {
                 try {
                     Game game = new Game(clientConnection);
                     service.addGame(game); // add game to game list and broadcast
-                    Packet packet = new Packet(Packet.NEW_GAME_CREATED, clientConnection.getInformation(), "SUCCESS");
+                    Packet packet = new Packet(Packet.NEW_GAME_CREATED, clientConnection.getInformation(), game.getId()+ " " + "SUCCESS");
                     clientConnection.getOutputStream().writeObject(packet);
                 } catch (IOException ex) {
                     ex.printStackTrace();
@@ -81,9 +81,12 @@ public class GameHandler implements Runnable {
                     GameThread gameThread = new GameThread(game, game.getPlayer1ClientConnection(), clientConnection);
                     gameThreadList.put(game.getId(), gameThread);
                     gameThread.start();
+                    // Send successful join message
+                    Packet packet = new Packet(Packet.JOIN_GAME, userInformation, game);
+                    clientConnection.getOutputStream().writeObject(packet);
                     // Broadcast changes in game info
-                    Packet broadcast = new Packet(Packet.GET_GAMES, null, service.getGames());
-                    service.broadcast(broadcast);
+//                    Packet broadcast = new Packet(Packet.GET_GAMES, null, service.getGames());
+//                    service.broadcast(broadcast);
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());
                     running.set(false);
@@ -98,12 +101,12 @@ public class GameHandler implements Runnable {
                 try {
                     Move newMove = (Move) data;
 
-                    if (gameThreadList.containsKey(newMove.getGameName())) {
-                        GameThread gameThreadForMove = gameThreadList.get(newMove.getGameName());
+                    if (gameThreadList.containsKey(newMove.getGameId())) {
+                        GameThread gameThreadForMove = gameThreadList.get(newMove.getGameId());
                         gameThreadForMove.addMove(newMove);
                     } else {
                         // else statement is for when opponent has not been found yet.
-                        Packet errorPacket = new Packet(Packet.NO_OPPONENT_FOUND, clientConnection.getInformation(), "No Opponent Found");
+                        Packet errorPacket = new Packet(Packet.NO_OPPONENT_FOUND, clientConnection.getInformation(), newMove.getGameId() + " " + "No-Opponent-Found");
                         try {
                             clientConnection.getOutputStream().writeObject(errorPacket);
                         } catch (IOException ex) {

@@ -2,34 +2,38 @@ package UI.Client;
 
 import Client.ClientController;
 import Models.Game;
+import Models.Move;
+import ObserverPatterns.GameListener;
 import ObserverPatterns.LobbyListener;
 import Shared.Packet;
 import Shared.UserInformation;
 import javafx.application.Platform;
-import javafx.beans.Observable;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableSet;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.util.Pair;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
-public class GameLobbyController implements Initializable, LobbyListener {
+public class GameLobbyController implements Initializable, LobbyListener, GameListener {
     @FXML
     private TableView<Game> activeGames;
     @FXML
@@ -42,6 +46,8 @@ public class GameLobbyController implements Initializable, LobbyListener {
     private ClientController clientController;
 
     private ObservableList<Game> data = FXCollections.observableArrayList();
+
+    private HashMap<String, Pair<Pane, GameBoardController>> gameBoards = new HashMap<>();
 
     public void setClientController(ClientController clientController) {
         this.clientController = clientController;
@@ -61,12 +67,6 @@ public class GameLobbyController implements Initializable, LobbyListener {
         addButtonsToTable();
     }
 
-    // import an ObservableList of all active games from server
-    private void loadGames(HashSet<Game> listOfGames) {
-        System.out.println("Load games called!");
-        activeGames.getItems().addAll(listOfGames);
-    }
-
     public void onPlayAgainstComputerButtonClicked(ActionEvent event) {
     }
 
@@ -84,56 +84,135 @@ public class GameLobbyController implements Initializable, LobbyListener {
 
     @Override
     public void newGame(String message) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                if (message.equalsIgnoreCase("SUCCESS")) {
-                    System.out.println("New game created Successfully");
-                }
+        Platform.runLater(() -> {
+            String[] str = message.trim().split("\\s+");
+            String gameId = str[0];
+            String status = str[1];
+            System.out.println("New Game Created: " + message);
+            if (status.equalsIgnoreCase("SUCCESS")) {
+                System.out.println("New game created Successfully");
             }
         });
     }
 
     @Override
     public void getListOfGames(HashSet<Game> listOfGames) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                activeGames.getItems().clear();
-                data.clear();
-                data.addAll(listOfGames);
-            }
+        Platform.runLater(() -> {
+            data.clear();
+            data.addAll(listOfGames);
         });
     }
 
     @Override
     public void getListOfOnlinePlayers(HashSet<UserInformation> listOfOnlinePlayers) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
+        Platform.runLater(() -> {
 
+        });
+    }
+
+    @Override
+    public void updateMove(Move move) {
+        Platform.runLater(()->{
+            System.out.println("UpdateMove: " + gameBoards.containsKey(move.getGameId()));
+            if (gameBoards.containsKey(move.getGameId())) {
+                gameBoards.get(move.getGameId()).getValue().updateMove(move);
+            }
+        });
+    }
+
+    @Override
+    public void updateStatus(String message) {
+        Platform.runLater(()->{
+            String[] str = message.trim().split("\\s+");
+            String gameId = str[0];
+            String status = str[1];
+            System.out.println("Update Status: " + message);
+            if (gameBoards.containsKey(gameId)) {
+                gameBoards.get(gameId).getValue().updateStatus(status);
+            }
+        });
+    }
+
+    @Override
+    public void setPlayer1Username(String player1Username) {
+        Platform.runLater(()->{
+            String[] str = player1Username.trim().split("\\s+");
+            String gameId = str[0];
+            String username = str[1];
+            System.out.println("Set Player 1 Username: " + player1Username);
+            if (gameBoards.containsKey(gameId)) {
+                gameBoards.get(gameId).getValue().setPlayer1Username(username);
+            }
+        });
+    }
+
+    @Override
+    public void setPlayer2Username(String player2Username) {
+        Platform.runLater(()->{
+            String[] str = player2Username.trim().split("\\s+");
+            String gameId = str[0];
+            String username = str[1];
+            System.out.println("Set Player 2 Username: " + player2Username);
+            if (gameBoards.containsKey(gameId)) {
+                gameBoards.get(gameId).getValue().setPlayer2Username(username);
+            }
+        });
+    }
+
+    @Override
+    public void joinGame(Game game) {
+        Platform.runLater(() -> {
+            try {
+                System.out.println("Join Game: " + game.getId());
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
+                Pane pane = loader.load();
+                GameBoardController gameBoardController = loader.getController();
+                gameBoardController.setClientController(clientController);
+                gameBoardController.setGame(game);
+                Pair<Pane, GameBoardController> pair = new Pair<>(pane, gameBoardController);
+                gameBoards.put(game.getId(), pair);
+                Scene scene = new Scene(pane);
+
+                // switch to the new scene
+                Stage stage = (Stage) newGameButton.getScene().getWindow();
+                Parent root = pane;
+                stage.setScene(root.getScene());
+                stage.show();
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
         });
     }
 
     private void addButtonsToTable() {
-        Callback<TableColumn<Game, Void>, TableCell<Game, Void>> cellFactory = new Callback<TableColumn<Game, Void>, TableCell<Game, Void>>() {
+        Callback<TableColumn<Game, Void>, TableCell<Game, Void>> cellFactory = new Callback<>() {
             @Override
             public TableCell<Game, Void> call(final TableColumn<Game, Void> param) {
                 final TableCell<Game, Void> cell = new TableCell<>() {
                     private final Button joinButton = new Button("Join");
+                    private final Button spectateButton = new Button("Spectate");
+
                     {
-                        joinButton.setOnAction(event-> {
+                        joinButton.setOnAction(event -> {
                             Game game = getTableView().getItems().get(getIndex());
-                            if(!game.getPlayer1Username().equalsIgnoreCase(clientController.getAccountClient().getUserInformation().getUserName())) {
+                            if (!game.getPlayer1Username().equalsIgnoreCase(clientController.getAccountClient().getUserInformation().getUserName())) {
                                 Packet packet = new Packet(Packet.JOIN_GAME, clientController.getAccountClient().getUserInformation(), game.getId());
                                 clientController.getGameClient().addRequestToServer(packet);
                             } else {
-                                // switch to gameBoard
+                                // Load a new scene if a scene is not already loaded
+                                if (!gameBoards.containsKey(game.getId())) {
+                                    joinGame(game);
+                                } else {
+                                    // switch to loaded scene
+                                    Stage stage = (Stage) newGameButton.getScene().getWindow();
+                                    Parent root = gameBoards.get(game.getId()).getKey();
+                                    stage.setScene(root.getScene());
+                                    stage.show();
+                                }
                             }
                         });
                     }
-                    private final Button spectateButton = new Button("Spectate");
+
                     {
                         spectateButton.setOnAction(event -> {
                             // send spectate game packet to game server
@@ -148,7 +227,7 @@ public class GameLobbyController implements Initializable, LobbyListener {
                     @Override
                     public void updateItem(Void item, boolean empty) {
                         super.updateItem(item, empty);
-                        if(empty) {
+                        if (empty) {
                             setGraphic(null);
                         } else {
                             HBox pane = new HBox(joinButton, spectateButton);

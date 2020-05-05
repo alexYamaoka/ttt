@@ -1,6 +1,7 @@
 package UI.Client;
 
 import Client.ClientController;
+import Models.Game;
 import Models.Move;
 import ObserverPatterns.GameListener;
 import Shared.Packet;
@@ -28,14 +29,17 @@ public class GameBoardController implements Initializable, GameListener {
 
     private HashMap<Pair<Integer, Integer>, Button> buttons = new HashMap<>();
 
+    private Game game;
+
     private ClientController clientController;
-    private String gameName;
+    private String gameId;
     private String player1Username;
     private String player2Username;
 
 
     public void playerMoved(int x, int y) {
-        Move move = new Move(x, y, clientController.getAccountClient().getUserInformation(), gameName);
+        Move move = new Move(x, y, clientController.getAccountClient().getUserInformation(), gameId);
+        System.out.println("Player Moved: " + move.getGameId() + " " + move.getMove());
         Packet packet = new Packet(Packet.GAME_MOVE, clientController.getAccountClient().getUserInformation(), move);
         clientController.getGameClient().addRequestToServer(packet);
         resetTime();
@@ -109,57 +113,54 @@ public class GameBoardController implements Initializable, GameListener {
     public void updateMove(Move move) {
 
         System.out.println("update move has been called");
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                int row = move.getRow();
-                int col = move.getColumn();
-                UserInformation userInformation = move.getUserInformation();
+        Platform.runLater(() -> {
+            int row = move.getRow();
+            int col = move.getColumn();
+            UserInformation userInformation = move.getUserInformation();
 
 
-                // used players username to determine who is X and who is O.
-                if (player1Username.equals(userInformation.getUserName())) {
-                    System.out.println("move was  mine");
-                    if (row == 0 && col == 0)
-                        zZ.setText("X");
-                    else if (row == 0 && col == 1)
-                        zO.setText("X");
-                    else if (row == 0 && col == 2)
-                        zT.setText("X");
-                    else if (row == 1 && col == 0)
-                        oZ.setText("X");
-                    else if (row == 1 && col == 1)
-                        oO.setText("X");
-                    else if (row == 1 && col == 2)
-                        oT.setText("X");
-                    else if (row == 2 && col == 0)
-                        tZ.setText("X");
-                    else if (row == 2 && col == 1)
-                        tO.setText("X");
-                    else if (row == 2 && col == 2)
-                        tT.setText("X");
+            // used players username to determine who is X and who is O.
+            if (player1Username.equals(userInformation.getUserName())) {
+                System.out.println("move was  mine");
+                if (row == 0 && col == 0)
+                    zZ.setText("X");
+                else if (row == 0 && col == 1)
+                    zO.setText("X");
+                else if (row == 0 && col == 2)
+                    zT.setText("X");
+                else if (row == 1 && col == 0)
+                    oZ.setText("X");
+                else if (row == 1 && col == 1)
+                    oO.setText("X");
+                else if (row == 1 && col == 2)
+                    oT.setText("X");
+                else if (row == 2 && col == 0)
+                    tZ.setText("X");
+                else if (row == 2 && col == 1)
+                    tO.setText("X");
+                else if (row == 2 && col == 2)
+                    tT.setText("X");
 
-                } else if (player2Username.equals(userInformation.getUserName())){
-                    System.out.println("move was oppenents");
-                    if (row == 0 && col == 0)
-                        zZ.setText("O");
-                    else if (row == 0 && col == 1)
-                        zO.setText("O");
-                    else if (row == 0 && col == 2)
-                        zT.setText("O");
-                    else if (row == 1 && col == 0)
-                        oZ.setText("O");
-                    else if (row == 1 && col == 1)
-                        oO.setText("O");
-                    else if (row == 1 && col == 2)
-                        oT.setText("O");
-                    else if (row == 2 && col == 0)
-                        tZ.setText("O");
-                    else if (row == 2 && col == 1)
-                        tO.setText("O");
-                    else if (row == 2 && col == 2)
-                        tT.setText("O");
-                }
+            } else if (player2Username.equals(userInformation.getUserName())) {
+                System.out.println("move was oppenents");
+                if (row == 0 && col == 0)
+                    zZ.setText("O");
+                else if (row == 0 && col == 1)
+                    zO.setText("O");
+                else if (row == 0 && col == 2)
+                    zT.setText("O");
+                else if (row == 1 && col == 0)
+                    oZ.setText("O");
+                else if (row == 1 && col == 1)
+                    oO.setText("O");
+                else if (row == 1 && col == 2)
+                    oT.setText("O");
+                else if (row == 2 && col == 0)
+                    tZ.setText("O");
+                else if (row == 2 && col == 1)
+                    tO.setText("O");
+                else if (row == 2 && col == 2)
+                    tT.setText("O");
             }
         });
 
@@ -168,11 +169,6 @@ public class GameBoardController implements Initializable, GameListener {
     @Override
     public void updateStatus(String message) {
         System.out.println("GAME STATUS:" + message);
-    }
-
-    @Override
-    public void setGameName(String gameName) {
-        this.gameName = gameName;
     }
 
     @Override
@@ -198,5 +194,11 @@ public class GameBoardController implements Initializable, GameListener {
         buttons.put(new Pair<>(2, 0), tZ);
         buttons.put(new Pair<>(2, 1), tO);
         buttons.put(new Pair<>(2, 2), tT);
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+        this.gameId = game.getId();
+        System.out.println("Set Game: " + this.game + " " + this.game.getId());
     }
 }

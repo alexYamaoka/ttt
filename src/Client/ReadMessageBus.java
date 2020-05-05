@@ -2,16 +2,17 @@ package Client;
 
 import Models.Game;
 import Models.Move;
-import ObserverPatterns.*;
+import ObserverPatterns.LobbyListener;
+import ObserverPatterns.SignInResultListener;
+import ObserverPatterns.SignUpResultListener;
+import ObserverPatterns.UpdateUserinformationListener;
 import Shared.Packet;
 import Shared.UserInformation;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 
 import java.util.HashSet;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class ReadMessageBus implements Runnable
-{
+public class ReadMessageBus implements Runnable {
     private ClientController clientController;
     private Thread thread;
     private AtomicBoolean running = new AtomicBoolean(false);
@@ -19,21 +20,17 @@ public class ReadMessageBus implements Runnable
     private SignInResultListener signInResultListener;
     private SignUpResultListener signUpResultListener;
     private UpdateUserinformationListener updateUserinformationListener;
-    private GameListener gameListener;
     private LobbyListener lobbyListener;
 
-    public ReadMessageBus(ClientController clientController)
-    {
+    public ReadMessageBus(ClientController clientController) {
         this.clientController = clientController;
         signInResultListener = clientController.getSignInController();
         signUpResultListener = clientController.getSignUpController();
         updateUserinformationListener = clientController.getOptions();
-        gameListener = clientController.getGameBoardController();
         lobbyListener = clientController.getGameLobby();
     }
 
-    public void start()
-    {
+    public void start() {
         thread = new Thread(this);
         thread.start();
     }
@@ -43,87 +40,92 @@ public class ReadMessageBus implements Runnable
     }
 
 
-
     @Override
-    public void run()
-    {
-        running.set(true);
-        while (running.get())
-        {
-            Packet response = clientController.getNextResponse();
+    public void run() {
+        try {
+            running.set(true);
+            while (running.get()) {
+                Packet response = clientController.getNextResponse();
 
-            if (response != null)
-            {
-                switch (response.getRequest())
-                {
-                    case Packet.REGISTER_CLIENT:
-                        signUpResultListener.updateSignInResult(response.getData().toString());
-                        break;
+                if (response != null) {
+                    switch (response.getRequest()) {
+                        case Packet.REGISTER_CLIENT:
+                            signUpResultListener.updateSignInResult(response.getData().toString());
+                            break;
 
-                    case Packet.SIGN_IN:
-                        signInResultListener.updateSignInResult(response.getData().toString());
-                        break;
+                        case Packet.SIGN_IN:
+                            signInResultListener.updateSignInResult(response.getData().toString());
+                            break;
 
-                    case Packet.SIGN_OUT:
-                        break;
+                        case Packet.SIGN_OUT:
+                            break;
 
-                    case Packet.UPDATE_USER:
-                        updateUserinformationListener.updateUserinformation(response.getData().toString());
-                        break;
+                        case Packet.UPDATE_USER:
+                            updateUserinformationListener.updateUserinformation(response.getData().toString());
+                            break;
 
 
-                    case Packet.GET_GAMES:
-                        HashSet<Game> listOfGames = (HashSet<Game>) response.getData();
-                        if (listOfGames != null) {
-                            lobbyListener.getListOfGames(listOfGames);
-                        }
-                        break;
-
-                    case Packet.GET_ONLINE_PLAYERS:
-                        HashSet<UserInformation> listOfPlayers = (HashSet<UserInformation>) response.getData();
-                        if (listOfPlayers != null) {
-                            for (UserInformation userInformation : listOfPlayers) {
-                                System.out.println(userInformation);
+                        case Packet.GET_GAMES:
+                            HashSet<Game> listOfGames = (HashSet<Game>) response.getData();
+                            if (listOfGames != null) {
+                                lobbyListener.getListOfGames(listOfGames);
                             }
-                            lobbyListener.getListOfOnlinePlayers(listOfPlayers);
-                        }
-                        break;
+                            break;
 
-                    case Packet.JOIN_GAME:
-                        System.out.println("join game inside readMessageBus");
+                        case Packet.GET_ONLINE_PLAYERS:
+                            HashSet<UserInformation> listOfPlayers = (HashSet<UserInformation>) response.getData();
+                            if (listOfPlayers != null) {
+                                lobbyListener.getListOfOnlinePlayers(listOfPlayers);
+                            }
+                            break;
 
-                        break;
+                        case Packet.JOIN_GAME:
+                            if (response.getData() != null) {
+                                lobbyListener.joinGame((Game) response.getData());
+                            }
+                            break;
 
 
-                    case Packet.GAME_MOVE:
-                        gameListener.updateMove((Move)response.getData());
-                        break;
+                        case Packet.GAME_MOVE:
+                            lobbyListener.updateMove((Move) response.getData());
+                            break;
 
-                    case Packet.NEW_GAME_CREATED:
-                        lobbyListener.newGame(response.getData().toString());
-                        break;
+                        case Packet.NEW_GAME_CREATED:
+                            lobbyListener.newGame(response.getData().toString());
+                            break;
 
-                    case Packet.PLAYER_ONE_USERNAME:
-                        gameListener.setPlayer1Username(response.getData().toString());
-                        break;
+                        case Packet.PLAYER_ONE_USERNAME:
+                            lobbyListener.setPlayer1Username(response.getData().toString());
+                            break;
 
-                    case Packet.PLAYER_TWO_USERNAME:
-                        gameListener.setPlayer2Username(response.getData().toString());
-                        break;
+                        case Packet.PLAYER_TWO_USERNAME:
+                            lobbyListener.setPlayer2Username(response.getData().toString());
+                            break;
 
-                    case Packet.PLAYER_ONE_WINS:
-                        gameListener.updateStatus(response.getData().toString());
-                        break;
+                        case Packet.PLAYER_ONE_WINS:
+                            lobbyListener.updateStatus(response.getData().toString());
+                            break;
 
-                    case Packet.PLAYER_TWO_WINS:
-                        gameListener.updateStatus(response.getData().toString());
-                        break;
+                        case Packet.PLAYER_TWO_WINS:
+                            lobbyListener.updateStatus(response.getData().toString());
+                            break;
 
-                    case Packet.TIE_GAME:
-                        gameListener.updateStatus(response.getData().toString());
-                        break;
+                        case Packet.TIE_GAME:
+                            lobbyListener.updateStatus(response.getData().toString());
+                            break;
+
+                        case Packet.NO_OPPONENT_FOUND:
+                            lobbyListener.updateStatus(response.getData().toString());
+                            break;
+
+                        case Packet.INVALID_GAME_MOVE:
+                            lobbyListener.updateStatus(response.getData().toString());
+                            break;
+                    }
                 }
             }
+        } catch (Exception ex) {
+            System.out.println("Read Message Exception: " + ex.getMessage());
         }
     }
 }

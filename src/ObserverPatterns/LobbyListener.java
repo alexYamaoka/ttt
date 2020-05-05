@@ -5,8 +5,12 @@ import Shared.UserInformation;
 
 import java.util.HashSet;
 
-public interface LobbyListener {
+public interface LobbyListener extends GameListener {
     void newGame(String message);
+
     void getListOfGames(HashSet<Game> listOfGames);
+
     void getListOfOnlinePlayers(HashSet<UserInformation> listOfOnlinePlayers);
+
+    void joinGame(Game game);
 }
