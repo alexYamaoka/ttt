@@ -118,7 +118,7 @@ public class Options implements Initializable, UpdateUserinformationListener {
         String newPassword = this.newPassword.getText();
         String confirmPassword = this.confirmPassword.getText();
 
-        if(oldPassword.equals(controller.getAccountClient().getUserInformation().getPassword())) {
+        if (oldPassword.equals(controller.getAccountClient().getUserInformation().getPassword())) {
             if (newPassword.equals(confirmPassword)) {
                 Packet packet = new Packet(Packet.UPDATE_USER, controller.getAccountClient().getUserInformation(), newPassword);
                 controller.getAccountClient().addRequestToServer(packet);
