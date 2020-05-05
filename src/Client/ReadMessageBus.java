@@ -107,23 +107,7 @@ public class ReadMessageBus implements Runnable {
                             lobbyListener.setPlayer2Username(response.getData().toString());
                             break;
 
-                        case Packet.PLAYER_ONE_WINS:
-                            lobbyListener.updateStatus(response.getData().toString());
-                            break;
-
-                        case Packet.PLAYER_TWO_WINS:
-                            lobbyListener.updateStatus(response.getData().toString());
-                            break;
-
-                        case Packet.TIE_GAME:
-                            lobbyListener.updateStatus(response.getData().toString());
-                            break;
-
-                        case Packet.NO_OPPONENT_FOUND:
-                            lobbyListener.updateStatus(response.getData().toString());
-                            break;
-
-                        case Packet.INVALID_GAME_MOVE:
+                        case Packet.GAME_STATUS:
                             lobbyListener.updateStatus(response.getData().toString());
                             break;
                     }
