@@ -1,5 +1,5 @@
 package ObserverPatterns;
 
 public interface UpdateUserinformationListener {
-    public void updateUserinformation(String message);
+    void updateUserinformation(String message);
 }

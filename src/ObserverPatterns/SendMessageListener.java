@@ -1,5 +1,4 @@
 package ObserverPatterns;
 
-public interface SendMessageListener
-{
+public interface SendMessageListener {
 }

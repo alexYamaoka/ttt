@@ -1,5 +1,4 @@
 package ObserverPatterns;
 
-public interface RegisterNewUserListener
-{
+public interface RegisterNewUserListener {
 }
