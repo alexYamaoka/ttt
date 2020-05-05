@@ -76,7 +76,7 @@ public class AccountHandler implements Runnable {
                     }
 
                 } catch (SQLException | IOException e) {
-                    e.printStackTrace();
+                    stop();
                 }
                 break;
             case Packet.SIGN_OUT:
@@ -100,7 +100,7 @@ public class AccountHandler implements Runnable {
                 try {
                     outputStream.writeObject(regPacket);
                 } catch (IOException ex) {
-                    ex.printStackTrace();
+                    stop();
                 }
 
                 break;
@@ -121,7 +121,7 @@ public class AccountHandler implements Runnable {
                     if(server.updateUser(user))
                     outputStream.writeObject(new UserInformation(UpdateFirstName, UpdateLastName, UpdateUserName, UpdateEmail, UpdatePassword));
                 } catch (IOException | SQLException ex) {
-                    ex.printStackTrace();
+                    stop();
                 }
                 break;
 
@@ -140,7 +140,7 @@ public class AccountHandler implements Runnable {
                         outputStream.writeObject(deletePacket);
                     }
                 } catch (SQLException | IOException e) {
-                    e.printStackTrace();
+                    stop();
                 }
                 break;
 
@@ -148,7 +148,7 @@ public class AccountHandler implements Runnable {
                 try {
                     clientConnection.getOutputStream().writeObject(new Packet(Packet.GET_ONLINE_PLAYERS, userInformation, service.getPlayersOnline())); // list of online players
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    stop();
                 }
                 break;
         }

@@ -45,7 +45,7 @@ public class AccountService implements Service, Runnable {
         try {
             // Create a server socket for listening for requests
             ServerSocket serverSocket = new ServerSocket(8000, 0, InetAddress.getByName("localhost"));
-            var pool = Executors.newFixedThreadPool(100);
+            var pool = Executors.newFixedThreadPool(20);
             System.out.println("Account Service started");
             while (running.get()) {
                 Socket socket = serverSocket.accept();
@@ -71,6 +71,7 @@ public class AccountService implements Service, Runnable {
     public void broadcast(Packet packet) {
         for(ClientConnection connection : clientConnections) {
             try {
+                connection.getOutputStream().reset();
                 connection.getOutputStream().writeObject(packet);
             } catch (IOException ex) {
                 ex.printStackTrace();

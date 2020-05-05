@@ -46,7 +46,7 @@ public class GameService implements Runnable, Service {
         running.set(true);
         try {
             ServerSocket serverSocket = new ServerSocket(PORT_NUMBER, 0, InetAddress.getByName("localhost"));
-            var pool = Executors.newFixedThreadPool(100);
+            var pool = Executors.newFixedThreadPool(20);
             System.out.println("Game Service started");
             while (running.get()) {
                 Socket socket = serverSocket.accept();
@@ -94,6 +94,7 @@ public class GameService implements Runnable, Service {
     public void broadcast(Packet packet) {
         for (ClientConnection connection : clientConnections) {
             try {
+                connection.getOutputStream().reset();
                 connection.getOutputStream().writeObject(packet);
             } catch (IOException ex) {
                 ex.printStackTrace();

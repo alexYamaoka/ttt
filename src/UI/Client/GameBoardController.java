@@ -1,5 +1,6 @@
 package UI.Client;
 
+import AccountService.AccountService;
 import Client.ClientController;
 import Models.Game;
 import Models.Move;
@@ -25,7 +26,7 @@ public class GameBoardController implements Initializable, GameListener {
     @FXML
     Label player1Name, player2Name, time;
     @FXML
-    Button rematch, quit, zZ, zO, zT, oZ, oO, oT, tZ, tO, tT;
+    Button backToLobby, rematch, quit, zZ, zO, zT, oZ, oO, oT, tZ, tO, tT;
 
     private HashMap<Pair<Integer, Integer>, Button> buttons = new HashMap<>();
 
@@ -85,6 +86,10 @@ public class GameBoardController implements Initializable, GameListener {
     }
 
     public void quit(ActionEvent actionEvent) {
+
+    }
+
+    public void backToLobby(ActionEvent actionEvent) {
         if (actionEvent.getSource() == quit) {
             Stage stage = null;
             Parent root = null;
@@ -175,12 +180,14 @@ public class GameBoardController implements Initializable, GameListener {
     public void setPlayer1Username(String player1Username) {
         System.out.println("setPlayer1Username: " + player1Username);
         this.player1Username = player1Username;
+        player1Name.setText(player1Username);
     }
 
     @Override
     public void setPlayer2Username(String player2Username) {
         System.out.println("setPlayer2Username: " + player2Username);
         this.player2Username = player2Username;
+        player2Name.setText(player2Username);
     }
 
     @Override

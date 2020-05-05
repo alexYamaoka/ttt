@@ -83,16 +83,27 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
     }
 
     @Override
-    public void newGame(String message) {
+    public void newGame(Game game) {
         Platform.runLater(() -> {
-            String[] str = message.trim().split("\\s+");
-            String gameId = str[0];
-            String status = str[1];
-            System.out.println("New Game Created: " + message);
-            if (status.equalsIgnoreCase("SUCCESS")) {
-                System.out.println("New game created Successfully");
-            }
+            System.out.println("New Game Created: " + game.getId());
+            createGame(game);
         });
+    }
+
+    private void createGame(Game game) {
+        System.out.println("Create Game: " + game.getId());
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
+            Pane pane = loader.load();
+            GameBoardController gameBoardController = loader.getController();
+            gameBoardController.setClientController(clientController);
+            gameBoardController.setGame(game);
+            Pair<Pane, GameBoardController> pair = new Pair<>(pane, gameBoardController);
+            gameBoards.put(game.getId(), pair);
+            Scene scene = new Scene(pane);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
@@ -162,25 +173,14 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
     @Override
     public void joinGame(Game game) {
         Platform.runLater(() -> {
-            try {
-                System.out.println("Join Game: " + game.getId());
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
-                Pane pane = loader.load();
-                GameBoardController gameBoardController = loader.getController();
-                gameBoardController.setClientController(clientController);
-                gameBoardController.setGame(game);
-                Pair<Pane, GameBoardController> pair = new Pair<>(pane, gameBoardController);
-                gameBoards.put(game.getId(), pair);
-                Scene scene = new Scene(pane);
-
-                // switch to the new scene
-                Stage stage = (Stage) newGameButton.getScene().getWindow();
-                Parent root = pane;
-                stage.setScene(root.getScene());
-                stage.show();
-            } catch (IOException ex) {
-                ex.printStackTrace();
+            if(!gameBoards.containsKey(game.getId())) {
+                createGame(game);
             }
+            // switch to the new scene
+            Stage stage = (Stage) newGameButton.getScene().getWindow();
+            Parent root = gameBoards.get(game.getId()).getKey();
+            stage.setScene(root.getScene());
+            stage.show();
         });
     }
 
@@ -195,20 +195,18 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
                     {
                         joinButton.setOnAction(event -> {
                             Game game = getTableView().getItems().get(getIndex());
-                            if (!game.getPlayer1Username().equalsIgnoreCase(clientController.getAccountClient().getUserInformation().getUserName())) {
+                            String player1 = game.getPlayer1Username();
+                            String player2 = game.getPlayer2Username();
+                            String clientUsername = clientController.getAccountClient().getUserInformation().getUserName();
+                            System.out.println("Join Button: " + player1 + " " + player2 + " " + clientUsername);
+
+                            if (player1.equals(clientUsername)) {
+                                joinGame(game);
+                            } else if (player2 == null) {
                                 Packet packet = new Packet(Packet.JOIN_GAME, clientController.getAccountClient().getUserInformation(), game.getId());
                                 clientController.getGameClient().addRequestToServer(packet);
-                            } else {
-                                // Load a new scene if a scene is not already loaded
-                                if (!gameBoards.containsKey(game.getId())) {
-                                    joinGame(game);
-                                } else {
-                                    // switch to loaded scene
-                                    Stage stage = (Stage) newGameButton.getScene().getWindow();
-                                    Parent root = gameBoards.get(game.getId()).getKey();
-                                    stage.setScene(root.getScene());
-                                    stage.show();
-                                }
+                            } else if (player2.equals(clientUsername)) {
+                                joinGame(game);
                             }
                         });
                     }
