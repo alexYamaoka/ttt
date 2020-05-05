@@ -26,7 +26,7 @@ public class GameHandler implements Runnable
     private final AtomicBoolean running = new AtomicBoolean(false);
 
 
-    public GameHandler(ClientConnection clientConnection, Packet packet,GameService service) {
+    public GameHandler(ClientConnection clientConnection, Packet packet, GameService service) {
         this.service = service;
         this.packet = packet;
         this.clientConnection = clientConnection;
@@ -59,17 +59,6 @@ public class GameHandler implements Runnable
             case Packet.GET_GAMES:
                 try {
                     clientConnection.getOutputStream().writeObject(new Packet(Packet.GET_GAMES, userInformation, service.getGames())); // list of current games
-                    clientConnection.getOutputStream().flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                break;
-
-            case Packet.GET_ONLINE_PLAYERS:
-                try {
-                    service.addOnlinePlayer((UserInformation) data);
-                    clientConnection.getOutputStream().writeObject(new Packet(Packet.GET_ONLINE_PLAYERS, userInformation, service.getPlayersOnline())); // list of online players
-                    clientConnection.getOutputStream().flush();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

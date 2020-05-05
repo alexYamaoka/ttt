@@ -5,6 +5,7 @@ import DataBase.sql.DatabaseManager;
 import Server.ClientConnection;
 import Server.Service;
 import Shared.Packet;
+import Shared.UserInformation;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -23,6 +24,7 @@ public class AccountService implements Service, Runnable {
     private HashSet<Service> serviceListeners = new HashSet<>();
     private final AtomicBoolean running = new AtomicBoolean(false);
     private DataSource ds = DatabaseManager.getInstance();
+    private HashSet<UserInformation> playersOnline = new HashSet<>();
 
     public AccountService() {
     }
@@ -77,6 +79,17 @@ public class AccountService implements Service, Runnable {
         for (Service service : serviceListeners) {
             service.update(packet);
         }
+    }
+
+    public void addOnlinePlayer(UserInformation user) {
+        playersOnline.add(user);
+    }
+
+    public HashSet<UserInformation> getPlayersOnline() {
+        if (!playersOnline.isEmpty()) {
+            return playersOnline;
+        }
+        return null;
     }
 
 

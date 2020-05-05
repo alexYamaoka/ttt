@@ -199,7 +199,7 @@ public class SignInController implements Initializable, SignInResultListener
 
                     // requests for the list of online players
                     Packet requestingListOfOnlinePlayers = new Packet(Packet.GET_ONLINE_PLAYERS, client.getUserInformation(), client.getUserInformation());
-                    client.addRequestToServer(requestingListOfOnlinePlayers);
+                    controller.getAccountClient().addRequestToServer(requestingListOfOnlinePlayers);
                 }
                 else{
                     logInError.setText("The username or password provided is incorrect.");
