@@ -113,57 +113,54 @@ public class GameBoardController implements Initializable, GameListener {
     public void updateMove(Move move) {
 
         System.out.println("update move has been called");
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                int row = move.getRow();
-                int col = move.getColumn();
-                UserInformation userInformation = move.getUserInformation();
+        Platform.runLater(() -> {
+            int row = move.getRow();
+            int col = move.getColumn();
+            UserInformation userInformation = move.getUserInformation();
 
 
-                // used players username to determine who is X and who is O.
-                if (player1Username.equals(userInformation.getUserName())) {
-                    System.out.println("move was  mine");
-                    if (row == 0 && col == 0)
-                        zZ.setText("X");
-                    else if (row == 0 && col == 1)
-                        zO.setText("X");
-                    else if (row == 0 && col == 2)
-                        zT.setText("X");
-                    else if (row == 1 && col == 0)
-                        oZ.setText("X");
-                    else if (row == 1 && col == 1)
-                        oO.setText("X");
-                    else if (row == 1 && col == 2)
-                        oT.setText("X");
-                    else if (row == 2 && col == 0)
-                        tZ.setText("X");
-                    else if (row == 2 && col == 1)
-                        tO.setText("X");
-                    else if (row == 2 && col == 2)
-                        tT.setText("X");
+            // used players username to determine who is X and who is O.
+            if (player1Username.equals(userInformation.getUserName())) {
+                System.out.println("move was  mine");
+                if (row == 0 && col == 0)
+                    zZ.setText("X");
+                else if (row == 0 && col == 1)
+                    zO.setText("X");
+                else if (row == 0 && col == 2)
+                    zT.setText("X");
+                else if (row == 1 && col == 0)
+                    oZ.setText("X");
+                else if (row == 1 && col == 1)
+                    oO.setText("X");
+                else if (row == 1 && col == 2)
+                    oT.setText("X");
+                else if (row == 2 && col == 0)
+                    tZ.setText("X");
+                else if (row == 2 && col == 1)
+                    tO.setText("X");
+                else if (row == 2 && col == 2)
+                    tT.setText("X");
 
-                } else if (player2Username.equals(userInformation.getUserName())) {
-                    System.out.println("move was oppenents");
-                    if (row == 0 && col == 0)
-                        zZ.setText("O");
-                    else if (row == 0 && col == 1)
-                        zO.setText("O");
-                    else if (row == 0 && col == 2)
-                        zT.setText("O");
-                    else if (row == 1 && col == 0)
-                        oZ.setText("O");
-                    else if (row == 1 && col == 1)
-                        oO.setText("O");
-                    else if (row == 1 && col == 2)
-                        oT.setText("O");
-                    else if (row == 2 && col == 0)
-                        tZ.setText("O");
-                    else if (row == 2 && col == 1)
-                        tO.setText("O");
-                    else if (row == 2 && col == 2)
-                        tT.setText("O");
-                }
+            } else if (player2Username.equals(userInformation.getUserName())) {
+                System.out.println("move was oppenents");
+                if (row == 0 && col == 0)
+                    zZ.setText("O");
+                else if (row == 0 && col == 1)
+                    zO.setText("O");
+                else if (row == 0 && col == 2)
+                    zT.setText("O");
+                else if (row == 1 && col == 0)
+                    oZ.setText("O");
+                else if (row == 1 && col == 1)
+                    oO.setText("O");
+                else if (row == 1 && col == 2)
+                    oT.setText("O");
+                else if (row == 2 && col == 0)
+                    tZ.setText("O");
+                else if (row == 2 && col == 1)
+                    tO.setText("O");
+                else if (row == 2 && col == 2)
+                    tT.setText("O");
             }
         });
 

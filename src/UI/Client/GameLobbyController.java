@@ -84,38 +84,29 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
 
     @Override
     public void newGame(String message) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                String[] str = message.trim().split("\\s+");
-                String gameId = str[0];
-                String status = str[1];
-                System.out.println("New Game Created: " + message);
-                if (status.equalsIgnoreCase("SUCCESS")) {
-                    System.out.println("New game created Successfully");
-                }
+        Platform.runLater(() -> {
+            String[] str = message.trim().split("\\s+");
+            String gameId = str[0];
+            String status = str[1];
+            System.out.println("New Game Created: " + message);
+            if (status.equalsIgnoreCase("SUCCESS")) {
+                System.out.println("New game created Successfully");
             }
         });
     }
 
     @Override
     public void getListOfGames(HashSet<Game> listOfGames) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                data.clear();
-                data.addAll(listOfGames);
-            }
+        Platform.runLater(() -> {
+            data.clear();
+            data.addAll(listOfGames);
         });
     }
 
     @Override
     public void getListOfOnlinePlayers(HashSet<UserInformation> listOfOnlinePlayers) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
+        Platform.runLater(() -> {
 
-            }
         });
     }
 
@@ -163,7 +154,7 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
             String username = str[1];
             System.out.println("Set Player 2 Username: " + player2Username);
             if (gameBoards.containsKey(gameId)) {
-                gameBoards.get(gameId).getValue().setPlayer1Username(username);
+                gameBoards.get(gameId).getValue().setPlayer2Username(username);
             }
         });
     }
@@ -194,7 +185,7 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
     }
 
     private void addButtonsToTable() {
-        Callback<TableColumn<Game, Void>, TableCell<Game, Void>> cellFactory = new Callback<TableColumn<Game, Void>, TableCell<Game, Void>>() {
+        Callback<TableColumn<Game, Void>, TableCell<Game, Void>> cellFactory = new Callback<>() {
             @Override
             public TableCell<Game, Void> call(final TableColumn<Game, Void> param) {
                 final TableCell<Game, Void> cell = new TableCell<>() {
