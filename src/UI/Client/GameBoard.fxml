@@ -41,7 +41,7 @@
       <Button fx:id="tZ" id="gameButton" layoutX="510.0" layoutY="420.0" mnemonicParsing="false" onAction="#playerMovedtZ" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" />
       <Button fx:id="tO" id="gameButton" layoutX="660.0" layoutY="420.0" mnemonicParsing="false" onAction="#playerMovedtO" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" />
       <Button fx:id="tT" id="gameButton" layoutX="810.0" layoutY="420.0" mnemonicParsing="false" onAction="#playerMovedtT" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" />
-      <Button layoutX="195.0" layoutY="250.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" text="Back to Lobby" />
+      <Button fx:id="backToLobby" layoutX="195.0" layoutY="250.0" mnemonicParsing="false" onAction="#backToLobby" prefHeight="40.0" prefWidth="120.0" text="Back to Lobby" />
       <Button fx:id="rematch" layoutX="195.0" layoutY="340.0" mnemonicParsing="false" onAction="#rematch" prefHeight="40.0" prefWidth="120.0" text="Rematch" />
       <Button fx:id="quit" layoutX="195.0" layoutY="428.0" mnemonicParsing="false" onAction="#quit" prefHeight="40.0" prefWidth="120.0" text="Quit" />
    </children>

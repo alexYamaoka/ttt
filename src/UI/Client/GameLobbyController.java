@@ -173,6 +173,9 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
     @Override
     public void joinGame(Game game) {
         Platform.runLater(() -> {
+            if(!gameBoards.containsKey(game.getId())) {
+                createGame(game);
+            }
             // switch to the new scene
             Stage stage = (Stage) newGameButton.getScene().getWindow();
             Parent root = gameBoards.get(game.getId()).getKey();
