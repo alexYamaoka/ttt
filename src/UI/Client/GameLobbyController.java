@@ -2,6 +2,7 @@ package UI.Client;
 
 import Client.ClientController;
 import Models.Game;
+import Models.Move;
 import ObserverPatterns.LobbyListener;
 import Shared.Packet;
 import Shared.UserInformation;
@@ -125,6 +126,37 @@ public class GameLobbyController implements Initializable, LobbyListener {
         });
     }
 
+    @Override
+    public void updateMove(Move move) {
+        if(gameBoards.containsKey(move.getGameId())) {
+            gameBoards.get(move.getGameId()).getValue().updateMove(move);
+        }
+    }
+
+    @Override
+    public void joinGame(Game game) {
+        Platform.runLater(()-> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
+                Pane pane = loader.load();
+                GameBoardController gameBoardController = loader.getController();
+                gameBoardController.setClientController(clientController);
+                gameBoardController.setGame(game);
+                Pair<Pane, GameBoardController> pair = new Pair<>(pane, gameBoardController);
+                gameBoards.put(game.getId(), pair);
+                Scene scene = new Scene(pane);
+
+                // switch to the new scene
+                Stage stage = (Stage) newGameButton.getScene().getWindow();
+                Parent root = pane;
+                stage.setScene(root.getScene());
+                stage.show();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+    }
+
     private void addButtonsToTable() {
         Callback<TableColumn<Game, Void>, TableCell<Game, Void>> cellFactory = new Callback<TableColumn<Game, Void>, TableCell<Game, Void>>() {
             @Override
@@ -140,24 +172,7 @@ public class GameLobbyController implements Initializable, LobbyListener {
                             } else {
                                 // Load a new scene if a scene is not already loaded
                                 if(!gameBoards.containsKey(game)) {
-                                    try {
-                                        FXMLLoader loader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
-                                        Pane pane = loader.load();
-                                        GameBoardController gameBoardController = loader.getController();
-                                        gameBoardController.setClientController(clientController);
-                                        gameBoardController.setGame(game);
-                                        Pair<Pane, GameBoardController> pair = new Pair<>(pane, gameBoardController);
-                                        gameBoards.put(game.getId(), pair);
-                                        Scene scene = new Scene(pane);
-
-                                        // switch to the new scene
-                                        Stage stage = (Stage)newGameButton.getScene().getWindow();
-                                        Parent root = pane;
-                                        stage.setScene(root.getScene());
-                                        stage.show();
-                                    } catch (IOException ex) {
-                                        ex.printStackTrace();
-                                    }
+                                   joinGame(game);
                                 } else {
                                     // switch to loaded scene
                                     Stage stage = (Stage)newGameButton.getScene().getWindow();

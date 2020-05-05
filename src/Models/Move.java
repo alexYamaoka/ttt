@@ -1,7 +1,6 @@
 package Models;
 
 import Shared.UserInformation;
-import javafx.util.Pair;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -13,14 +12,14 @@ public class Move extends BaseModel {
     private int column;
     private UserInformation userInformation;
     private String dateAndTime;
-    private String gameName;
+    private String gameId;
 
-    public Move(int row, int column, UserInformation userInformation, String gameName)
+    public Move(int row, int column, UserInformation userInformation, String gameId)
     {
         this.row = row;
         this.column = column;
         this.userInformation = userInformation;
-        this.gameName = gameName;
+        this.gameId = this.gameId;
         dateAndTime = createDateAndTime();
     }
 
@@ -64,8 +63,8 @@ public class Move extends BaseModel {
         return row + " " + column + " " + token;
     }
 
-    public String getGameName()
+    public String getGameId()
     {
-        return gameName;
+        return gameId;
     }
 }
