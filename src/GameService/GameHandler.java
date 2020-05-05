@@ -108,7 +108,7 @@ public class GameHandler implements Runnable {
                         gameThreadForMove.addMove(newMove);
                     } else {
                         // else statement is for when opponent has not been found yet.
-                        Packet errorPacket = new Packet(Packet.NO_OPPONENT_FOUND, clientConnection.getInformation(), newMove.getGameId() + " " + "No-Opponent-Found");
+                        Packet errorPacket = new Packet(Packet.GAME_STATUS, clientConnection.getInformation(), newMove.getGameId() + " " + "No-Opponent-Found");
                         try {
                             clientConnection.getOutputStream().writeObject(errorPacket);
                         } catch (IOException ex) {
