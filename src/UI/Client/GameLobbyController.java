@@ -195,7 +195,11 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
                     {
                         joinButton.setOnAction(event -> {
                             Game game = getTableView().getItems().get(getIndex());
-                            if (!game.getPlayer1Username().equalsIgnoreCase(clientController.getAccountClient().getUserInformation().getUserName())) {
+                            String player1 = game.getPlayer1Username();
+                            String player2 = game.getPlayer2Username();
+                            String clientUsername = clientController.getAccountClient().getUserInformation().getUserName();
+                            System.out.println("Join Button: " + player1 + " " + player2 + " " + clientUsername);
+                            if (!player1.equals(clientUsername) && player2 == null) {
                                 Packet packet = new Packet(Packet.JOIN_GAME, clientController.getAccountClient().getUserInformation(), game.getId());
                                 clientController.getGameClient().addRequestToServer(packet);
                             } else {
