@@ -1,6 +1,7 @@
 package UI.Client;
 
 import Client.ClientController;
+import Models.Game;
 import Models.Move;
 import ObserverPatterns.GameListener;
 import Shared.Packet;
@@ -28,14 +29,16 @@ public class GameBoardController implements Initializable, GameListener {
 
     private HashMap<Pair<Integer, Integer>, Button> buttons = new HashMap<>();
 
+    private Game game;
+
     private ClientController clientController;
-    private String gameName;
+    private String gameId;
     private String player1Username;
     private String player2Username;
 
 
     public void playerMoved(int x, int y) {
-        Move move = new Move(x, y, clientController.getAccountClient().getUserInformation(), gameName);
+        Move move = new Move(x, y, clientController.getAccountClient().getUserInformation(), gameId);
         Packet packet = new Packet(Packet.GAME_MOVE, clientController.getAccountClient().getUserInformation(), move);
         clientController.getGameClient().addRequestToServer(packet);
         resetTime();
@@ -171,8 +174,8 @@ public class GameBoardController implements Initializable, GameListener {
     }
 
     @Override
-    public void setGameName(String gameName) {
-        this.gameName = gameName;
+    public void setGameId(String gameId) {
+        this.gameId = gameId;
     }
 
     @Override
@@ -198,5 +201,9 @@ public class GameBoardController implements Initializable, GameListener {
         buttons.put(new Pair<>(2, 0), tZ);
         buttons.put(new Pair<>(2, 1), tO);
         buttons.put(new Pair<>(2, 2), tT);
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 }

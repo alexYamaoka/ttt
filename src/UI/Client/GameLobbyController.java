@@ -15,16 +15,24 @@ import javafx.collections.ObservableSet;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.util.Pair;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -42,6 +50,8 @@ public class GameLobbyController implements Initializable, LobbyListener {
     private ClientController clientController;
 
     private ObservableList<Game> data = FXCollections.observableArrayList();
+
+    private HashMap<String, Pair<Pane, GameBoardController>> gameBoards = new HashMap<>();
 
     public void setClientController(ClientController clientController) {
         this.clientController = clientController;
@@ -99,7 +109,6 @@ public class GameLobbyController implements Initializable, LobbyListener {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                activeGames.getItems().clear();
                 data.clear();
                 data.addAll(listOfGames);
             }
@@ -129,7 +138,33 @@ public class GameLobbyController implements Initializable, LobbyListener {
                                 Packet packet = new Packet(Packet.JOIN_GAME, clientController.getAccountClient().getUserInformation(), game.getId());
                                 clientController.getGameClient().addRequestToServer(packet);
                             } else {
-                                // switch to gameBoard
+                                // Load a new scene if a scene is not already loaded
+                                if(!gameBoards.containsKey(game)) {
+                                    try {
+                                        FXMLLoader loader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
+                                        Pane pane = loader.load();
+                                        GameBoardController gameBoardController = loader.getController();
+                                        gameBoardController.setClientController(clientController);
+                                        gameBoardController.setGame(game);
+                                        Pair<Pane, GameBoardController> pair = new Pair<>(pane, gameBoardController);
+                                        gameBoards.put(game.getId(), pair);
+                                        Scene scene = new Scene(pane);
+
+                                        // switch to the new scene
+                                        Stage stage = (Stage)newGameButton.getScene().getWindow();
+                                        Parent root = pane;
+                                        stage.setScene(root.getScene());
+                                        stage.show();
+                                    } catch (IOException ex) {
+                                        ex.printStackTrace();
+                                    }
+                                } else {
+                                    // switch to loaded scene
+                                    Stage stage = (Stage)newGameButton.getScene().getWindow();
+                                    Parent root = gameBoards.get(game.getId()).getKey();
+                                    stage.setScene(root.getScene());
+                                    stage.show();
+                                }
                             }
                         });
                     }

@@ -28,7 +28,6 @@ public class ReadMessageBus implements Runnable
         signInResultListener = clientController.getSignInController();
         signUpResultListener = clientController.getSignUpController();
         updateUserinformationListener = clientController.getOptions();
-        gameListener = clientController.getGameBoardController();
         lobbyListener = clientController.getGameLobby();
     }
 

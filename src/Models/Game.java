@@ -183,4 +183,8 @@ public class Game extends BaseModel implements Serializable {
     public String getPlayer2Username() {
         return player2Username;
     }
+
+    public TTTBoard getTttBoard() {
+        return tttBoard;
+    }
 }
