@@ -35,7 +35,7 @@ public class GameLobbyController implements Initializable, LobbyListener {
     @FXML
     private TableColumn<Game, String> player1Column, player2Column, statusColumn;
     @FXML
-    private TableColumn<Game, Boolean> actionColumn;
+    private TableColumn<Game, Void> actionColumn;
     @FXML
     private Button updateTableButton, newGameButton, newGameAgainstComputerButton;
     @FXML
@@ -54,23 +54,11 @@ public class GameLobbyController implements Initializable, LobbyListener {
     }
 
     private void initializeTable() {
+        activeGames.setItems(data);
         player1Column.setCellValueFactory(new PropertyValueFactory<>("player1Username"));
         player2Column.setCellValueFactory(new PropertyValueFactory<>("player2Username"));
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("gameStatus"));
-        actionColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Game, Boolean>, ObservableValue<Boolean>>() {
-            @Override
-            public ObservableValue call(TableColumn.CellDataFeatures<Game, Boolean> cellDataFeatures) {
-                return new SimpleBooleanProperty(cellDataFeatures.getValue() != null);
-            }
-        });
-
-        actionColumn.setCellFactory(new Callback<TableColumn<Game, Boolean>, TableCell<Game, Boolean>>() {
-            @Override
-            public TableCell<Game, Boolean> call(TableColumn<Game, Boolean> tableColumn) {
-                return new ButtonCell();
-            }
-        });
-        activeGames.setItems(data);
+        addButtonsToTable();
     }
 
     // import an ObservableList of all active games from server
@@ -128,40 +116,50 @@ public class GameLobbyController implements Initializable, LobbyListener {
         });
     }
 
-    private class ButtonCell extends TableCell<Game, Boolean> {
-        final Button joinButton = new Button("Join");
-        final Button spectateButton = new Button("Spectate");
+    private void addButtonsToTable() {
+        Callback<TableColumn<Game, Void>, TableCell<Game, Void>> cellFactory = new Callback<TableColumn<Game, Void>, TableCell<Game, Void>>() {
+            @Override
+            public TableCell<Game, Void> call(final TableColumn<Game, Void> param) {
+                final TableCell<Game, Void> cell = new TableCell<>() {
+                    private final Button joinButton = new Button("Join");
+                    {
+                        joinButton.setOnAction(event-> {
+                            Game game = getTableView().getItems().get(getIndex());
+                            if(!game.getPlayer1Username().equalsIgnoreCase(clientController.getAccountClient().getUserInformation().getUserName())) {
+                                Packet packet = new Packet(Packet.JOIN_GAME, clientController.getAccountClient().getUserInformation(), game);
+                                clientController.getGameClient().addRequestToServer(packet);
+                            } else {
+                                // switch to gameBoard
+                            }
+                        });
+                    }
+                    private final Button spectateButton = new Button("Spectate");
+                    {
+                        spectateButton.setOnAction(event -> {
+                            // send spectate game packet to game server
+                            Game game = getTableView().getItems().get(getIndex());
+                            if (!game.getPlayer1Username().equalsIgnoreCase(clientController.getAccountClient().getUserInformation().getUserName())) {
+                                Packet packet = new Packet(Packet.OBSERVE_GAME, clientController.getAccountClient().getUserInformation(), game);
+                                clientController.getGameClient().addRequestToServer(packet);
+                            }
+                        });
+                    }
 
-        ButtonCell() {
-            joinButton.setOnAction(event -> {
-                // send join game packet to server
-                Game game = getTableView().getItems().get(getIndex());
-                if(!game.getPlayer1Username().equalsIgnoreCase(clientController.getAccountClient().getUserInformation().getUserName())) {
-                    Packet packet = new Packet(Packet.JOIN_GAME, clientController.getAccountClient().getUserInformation(), game);
-                    clientController.getGameClient().addRequestToServer(packet);
-                } else {
-                    // switch to gameBoard
-                }
-            });
-
-            spectateButton.setOnAction(event -> {
-                // send spectate game packet to game server
-                Game game = getTableView().getItems().get(getIndex());
-                if(!game.getPlayer1Username().equalsIgnoreCase(clientController.getAccountClient().getUserInformation().getUserName())) {
-                    Packet packet = new Packet(Packet.OBSERVE_GAME, clientController.getAccountClient().getUserInformation(), game);
-                    clientController.getGameClient().addRequestToServer(packet);
-                }
-            });
-        }
-
-        // Display buttons if the row is empty
-        @Override
-        protected void updateItem(Boolean t, boolean empty) {
-            super.updateItem(t, empty);
-            if(!empty) {
-                HBox pane = new HBox(joinButton, spectateButton);
-                setGraphic(pane);
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if(empty) {
+                            setGraphic(null);
+                        } else {
+                            HBox pane = new HBox(joinButton, spectateButton);
+                            setGraphic(pane);
+                        }
+                    }
+                };
+                return cell;
             }
-        }
+        };
+
+        actionColumn.setCellFactory(cellFactory);
     }
 }

@@ -43,14 +43,10 @@ public class Game extends BaseModel implements Serializable {
         this.gameStatus = "WAITING FOR ANOTHER PLAYER";
     }
 
-//        public void start(){
-//        GameThread gameThread = new GameThread(player1,player2,GameObservers);
-//        gameThread.start();
-//        setStartTime();
-//    }
-
     public void join(ClientConnection player2){
         this.player2 = player2;
+        player2Info = player2.getInformation();
+        player2Username = player2Info.getUserName();
     }
 
     public String getId(){

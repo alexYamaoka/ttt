@@ -83,7 +83,7 @@ public class AccountService implements Service, Runnable {
 
     public void addOnlinePlayer(UserInformation user) {
         playersOnline.add(user);
-        Packet packet = new Packet(Packet.GET_ONLINE_PLAYERS, null, user);
+        Packet packet = new Packet(Packet.GET_ONLINE_PLAYERS, null, getPlayersOnline());
         broadcast(packet);
     }
 
