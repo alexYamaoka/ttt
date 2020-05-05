@@ -139,8 +139,8 @@ public class GameBoardController implements Initializable, GameListener {
                     else if (row == 2 && col == 2)
                         tT.setText("X");
 
-                } else {
-                    System.out.println("move was not mine");
+                } else if (player2Username.equals(userInformation.getUserName())){
+                    System.out.println("move was oppenents");
                     if (row == 0 && col == 0)
                         zZ.setText("O");
                     else if (row == 0 && col == 1)
