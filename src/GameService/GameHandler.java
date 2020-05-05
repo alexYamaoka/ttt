@@ -81,6 +81,9 @@ public class GameHandler implements Runnable {
                     GameThread gameThread = new GameThread(game, game.getPlayer1ClientConnection(), clientConnection);
                     gameThreadList.put(game.getId(), gameThread);
                     gameThread.start();
+                    // Broadcast changes in game info
+                    Packet broadcast = new Packet(Packet.GET_GAMES, null, service.getGames());
+                    service.broadcast(broadcast);
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());
                     running.set(false);
