@@ -193,7 +193,7 @@ public class SignInController implements Initializable, SignInResultListener
 
 
                     // requests for the list of available games on the server to display it into the listview for user's UI
-                    Packet requestingListOfGames = new Packet(Packet.GET_GAMES, client.getUserInformation(), "requesting list of games");
+                    Packet requestingListOfGames = new Packet(Packet.GET_GAMES, userInformation, "requesting list of games");
                     client.addRequestToServer(requestingListOfGames);
 
 
