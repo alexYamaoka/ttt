@@ -44,7 +44,7 @@
         <Button fx:id="backToLobby" layoutX="195.0" layoutY="250.0" mnemonicParsing="false" onAction="#backToLobby" prefHeight="40.0" prefWidth="120.0" text="Back to Lobby" />
         <Button fx:id="rematch" layoutX="195.0" layoutY="340.0" mnemonicParsing="false" onAction="#rematch" prefHeight="40.0" prefWidth="120.0" text="Rematch" />
         <Button fx:id="quit" layoutX="195.0" layoutY="428.0" mnemonicParsing="false" onAction="#quit" prefHeight="40.0" prefWidth="120.0" text="Quit" />
-      <Label fx:id="gameStatus" id="gameStatus" layoutX="474.0" layoutY="222.0" prefHeight="172.0" prefWidth="513.0" />
+      <Label fx:id="gameStatus" mouseTransparent="true"  id="gameStatus" layoutX="474.0" layoutY="222.0" prefHeight="172.0" prefWidth="513.0" />
     </children>
     <stylesheets>
         <URL value="@gameBoard.css" />
