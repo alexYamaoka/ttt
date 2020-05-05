@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ClientConnection implements Runnable {
@@ -41,7 +42,7 @@ public class ClientConnection implements Runnable {
                service.handle(this, packet);
             }
         } catch (IOException | ClassNotFoundException ex) {
-            ex.printStackTrace();
+            stop();
         }
     }
 
