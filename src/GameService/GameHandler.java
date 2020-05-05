@@ -64,7 +64,7 @@ public class GameHandler implements Runnable {
             case Packet.NEW_GAME_CREATED:
                 try {
                     Game game = new Game(clientConnection);
-                    service.addGame(game); //pull game name from data
+                    service.addGame(game); // add game to game list and broadcast
                     Packet packet = new Packet(Packet.NEW_GAME_CREATED, clientConnection.getInformation(), "SUCCESS");
                     clientConnection.getOutputStream().writeObject(packet);
                 } catch (IOException ex) {
