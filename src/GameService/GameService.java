@@ -6,7 +6,6 @@ import Models.Game;
 import Server.ClientConnection;
 import Server.Service;
 import Shared.Packet;
-import Shared.UserInformation;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -14,7 +13,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
