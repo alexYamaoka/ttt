@@ -7,5 +7,4 @@ public interface Service {
 
     void update(Packet packet);
 
-
 }

@@ -123,7 +123,7 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
 
     @Override
     public void updateMove(Move move) {
-        Platform.runLater(()->{
+        Platform.runLater(() -> {
             System.out.println("UpdateMove: " + gameBoards.containsKey(move.getGameId()));
             if (gameBoards.containsKey(move.getGameId())) {
                 gameBoards.get(move.getGameId()).getValue().updateMove(move);
@@ -133,7 +133,7 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
 
     @Override
     public void updateStatus(String message) {
-        Platform.runLater(()->{
+        Platform.runLater(() -> {
             String[] str = message.trim().split("\\s+");
             String gameId = str[0];
             String status = str[1];
@@ -146,7 +146,7 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
 
     @Override
     public void setPlayer1Username(String player1Username) {
-        Platform.runLater(()->{
+        Platform.runLater(() -> {
             String[] str = player1Username.trim().split("\\s+");
             String gameId = str[0];
             String username = str[1];
@@ -159,7 +159,7 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
 
     @Override
     public void setPlayer2Username(String player2Username) {
-        Platform.runLater(()->{
+        Platform.runLater(() -> {
             String[] str = player2Username.trim().split("\\s+");
             String gameId = str[0];
             String username = str[1];
@@ -173,7 +173,7 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
     @Override
     public void joinGame(Game game) {
         Platform.runLater(() -> {
-            if(!gameBoards.containsKey(game.getId())) {
+            if (!gameBoards.containsKey(game.getId())) {
                 createGame(game);
             }
             // switch to the new scene

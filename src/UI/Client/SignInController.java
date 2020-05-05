@@ -37,8 +37,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class SignInController implements Initializable, SignInResultListener
-{
+public class SignInController implements Initializable, SignInResultListener {
     PreparedStatement pr = null;
     ResultSet rs = null;
     @FXML
@@ -78,8 +77,7 @@ public class SignInController implements Initializable, SignInResultListener
     }
 
 
-    private void signInUser(String username, String password)
-    {
+    private void signInUser(String username, String password) {
         if (!checkField(username, password)) {
             Platform.runLater(new Runnable() {
                 @Override
@@ -101,16 +99,14 @@ public class SignInController implements Initializable, SignInResultListener
             txtF_Username.setStyle("-fx-border-color: red;");
             usernameError.setText("Enter an username");
             value_entered = false;
-        }
-        else{
+        } else {
             usernameError.setText("");
         }
         if (password.isBlank()) {
             txtF_Password.setStyle("-fx-border-color: red;");
             passwordError.setText("Enter a password");
             value_entered = false;
-        }
-        else{
+        } else {
             passwordError.setText("");
         }
 
@@ -163,10 +159,8 @@ public class SignInController implements Initializable, SignInResultListener
     }
 
     @Override
-    public void updateSignInResult(String message)
-    {
-        Platform.runLater(new Runnable()
-        {
+    public void updateSignInResult(String message) {
+        Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 if (!message.equalsIgnoreCase("FAIL")) {
@@ -200,8 +194,7 @@ public class SignInController implements Initializable, SignInResultListener
                     // requests for the list of online players
                     Packet requestingListOfOnlinePlayers = new Packet(Packet.GET_ONLINE_PLAYERS, client.getUserInformation(), client.getUserInformation());
                     controller.getAccountClient().addRequestToServer(requestingListOfOnlinePlayers);
-                }
-                else{
+                } else {
                     logInError.setText("The username or password provided is incorrect.");
                 }
             }

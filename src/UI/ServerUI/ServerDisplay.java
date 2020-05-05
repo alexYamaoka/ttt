@@ -7,14 +7,13 @@ import javafx.scene.control.TextField;
 
 import java.awt.event.ActionEvent;
 
-public class ServerDisplay  implements ServiceListener
-{
+public class ServerDisplay implements ServiceListener {
 
 
 //    @FXML
 //    private TextField txt_output;
 
-    public void display(ActionEvent event){
+    public void display(ActionEvent event) {
 
 
         //txt_output.setText();
@@ -22,13 +21,10 @@ public class ServerDisplay  implements ServiceListener
 
 
     @Override
-    public void onDataChanged(String info)
-    {
-        Platform.runLater(new Runnable()
-        {
+    public void onDataChanged(String info) {
+        Platform.runLater(new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
                 // update label
             }
         });

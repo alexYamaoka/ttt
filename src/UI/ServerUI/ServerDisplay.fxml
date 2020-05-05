@@ -5,23 +5,31 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="417.0" prefWidth="651.0" style="-fx-background-color: radial-gradient(radius 200%,#003566,#002E59)radial-gradient(radius 200%,#003566,#002E59);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.ServerUI.ServerDisplay">
-   <children>
-      <SplitPane dividerPositions="0.5137318255250404" layoutX="15.0" layoutY="48.0" prefHeight="306.0" prefWidth="621.0" style="-fx-background-color: #00325F#00325F;">
-        <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="304.0" prefWidth="179.0" style="-fx-background-color: #002C54#002C54;">
-               <children>
-                  <ScrollPane layoutX="7.0" layoutY="8.0" prefHeight="286.0" prefWidth="297.0">
-                     <content>
-                        <Label alignment="TOP_LEFT" prefHeight="544.0" prefWidth="273.0" text="server " />
-                     </content>
-                  </ScrollPane>
-               </children></AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="299.0" prefWidth="370.0" style="-fx-background-color: #002C54#002C54;">
-               <children>
-                  <ScrollPane layoutX="11.0" layoutY="5.0" prefHeight="292.0" prefWidth="276.0" />
-               </children></AnchorPane>
-        </items>
-      </SplitPane>
-   </children>
+<AnchorPane prefHeight="417.0" prefWidth="651.0"
+            style="-fx-background-color: radial-gradient(radius 200%,#003566,#002E59)radial-gradient(radius 200%,#003566,#002E59);"
+            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="UI.ServerUI.ServerDisplay">
+    <children>
+        <SplitPane dividerPositions="0.5137318255250404" layoutX="15.0" layoutY="48.0" prefHeight="306.0"
+                   prefWidth="621.0" style="-fx-background-color: #00325F#00325F;">
+            <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="304.0" prefWidth="179.0"
+                            style="-fx-background-color: #002C54#002C54;">
+                    <children>
+                        <ScrollPane layoutX="7.0" layoutY="8.0" prefHeight="286.0" prefWidth="297.0">
+                            <content>
+                                <Label alignment="TOP_LEFT" prefHeight="544.0" prefWidth="273.0" text="server "/>
+                            </content>
+                        </ScrollPane>
+                    </children>
+                </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="299.0" prefWidth="370.0"
+                            style="-fx-background-color: #002C54#002C54;">
+                    <children>
+                        <ScrollPane layoutX="11.0" layoutY="5.0" prefHeight="292.0" prefWidth="276.0"/>
+                    </children>
+                </AnchorPane>
+            </items>
+        </SplitPane>
+    </children>
 </AnchorPane>

@@ -26,30 +26,30 @@ public class RegistrationController {
     private Button register;
     private String first_Name, last_Name, user_name, pass_word, confirm_Password;
 
-    public boolean checkPasswords(String pass,String confirm){
-        if (!pass.equals(confirm)){
+    public boolean checkPasswords(String pass, String confirm) {
+        if (!pass.equals(confirm)) {
             lbl_Error.setTextFill(Color.RED);
             lbl_Error.setText("Passwords Do not Match");
             return false;
-        }
-        else return true;
+        } else return true;
     }
 
 
-    public boolean checkField(String first,String last,String user,String pass,String confirm){
-        if(first.isBlank()){
+    public boolean checkField(String first, String last, String user, String pass, String confirm) {
+        if (first.isBlank()) {
             lbl_Error.setTextFill(Color.RED);
             lbl_Error.setText("Enter FirstName");
             return false;
-        }else if (last.isBlank()) {
+        } else if (last.isBlank()) {
             lbl_Error.setTextFill(Color.RED);
             lbl_Error.setText("Enter LastName");
             return false;
-        }else if (user.isBlank()) {
+        } else if (user.isBlank()) {
             lbl_Error.setTextFill(Color.RED);
             lbl_Error.setText("Enter UserName");
             return false;
-        }if (pass.isBlank()){
+        }
+        if (pass.isBlank()) {
             lbl_Error.setTextFill(Color.RED);
             lbl_Error.setText("Enter Password");
             return false;
@@ -57,8 +57,7 @@ public class RegistrationController {
             lbl_Error.setTextFill(Color.RED);
             lbl_Error.setText("Enter Confirmation Password");
             return false;
-        }
-        else return true;
+        } else return true;
     }
 
 
@@ -71,8 +70,8 @@ public class RegistrationController {
         user_name = username.getText();
         pass_word = password.getText();
         confirm_Password = confirmPassword.getText();
-        if(checkField(first_Name,last_Name,user_name,pass_word,confirm_Password) && checkPasswords(pass_word,confirm_Password)){
-            if(event.getSource() == register ){
+        if (checkField(first_Name, last_Name, user_name, pass_word, confirm_Password) && checkPasswords(pass_word, confirm_Password)) {
+            if (event.getSource() == register) {
                 stage = (Stage) register.getScene().getWindow();
                 root = FXMLLoader.load(getClass().getResource("Client/SignIn.fxml"));
             }
@@ -86,7 +85,7 @@ public class RegistrationController {
         Stage stage = null;
         Parent root = null;
         btn_Login = (Button) event.getSource();
-        if(event.getSource() == btn_Login ){
+        if (event.getSource() == btn_Login) {
             stage = (Stage) register.getScene().getWindow();
             root = FXMLLoader.load(getClass().getResource("Client/SignIn.fxml"));
         }

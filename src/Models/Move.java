@@ -14,8 +14,7 @@ public class Move extends BaseModel {
     private String dateAndTime;
     private String gameId;
 
-    public Move(int row, int column, UserInformation userInformation, String gameId)
-    {
+    public Move(int row, int column, UserInformation userInformation, String gameId) {
         this.row = row;
         this.column = column;
         this.userInformation = userInformation;
@@ -23,48 +22,42 @@ public class Move extends BaseModel {
         dateAndTime = createDateAndTime();
     }
 
-    private String createDateAndTime()
-    {
+    private String createDateAndTime() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
         return dateFormat.format(date);
     }
 
 
-    public int getRow()
-    {
+    public int getRow() {
         return row;
     }
 
-    public int getColumn()
-    {
+    public int getColumn() {
         return column;
     }
 
-    public String getDateAndTime()
-    {
+    public String getDateAndTime() {
         return dateAndTime;
     }
 
-    public UserInformation getUserInformation()
-    {
+    public UserInformation getUserInformation() {
         return userInformation;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 
     public String getToken() {
         return token;
     }
 
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     public String getMove() {
         return row + " " + column + " " + token;
     }
 
-    public String getGameId()
-    {
+    public String getGameId() {
         return gameId;
     }
 }

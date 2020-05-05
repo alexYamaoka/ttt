@@ -21,9 +21,7 @@ public class MainMenuController implements Initializable {
     private Button playButton, watchMatchesButton, exitButton, optionsButton;
 
 
-
     private ClientController clientController;
-
 
 
     @Override
@@ -72,9 +70,7 @@ public class MainMenuController implements Initializable {
     }
 
 
-
-    public void setClientController(ClientController clientController)
-    {
+    public void setClientController(ClientController clientController) {
         this.clientController = clientController;
     }
 }
