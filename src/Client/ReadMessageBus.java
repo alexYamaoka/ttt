@@ -20,7 +20,6 @@ public class ReadMessageBus implements Runnable
     private SignInResultListener signInResultListener;
     private SignUpResultListener signUpResultListener;
     private UpdateUserinformationListener updateUserinformationListener;
-    private GameListener gameListener;
     private LobbyListener lobbyListener;
 
     public ReadMessageBus(ClientController clientController)
@@ -106,23 +105,31 @@ public class ReadMessageBus implements Runnable
                             break;
 
                         case Packet.PLAYER_ONE_USERNAME:
-                            gameListener.setPlayer1Username(response.getData().toString());
+                            lobbyListener.setPlayer1Username(response.getData().toString());
                             break;
 
                         case Packet.PLAYER_TWO_USERNAME:
-                            gameListener.setPlayer2Username(response.getData().toString());
+                            lobbyListener.setPlayer2Username(response.getData().toString());
                             break;
 
                         case Packet.PLAYER_ONE_WINS:
-                            gameListener.updateStatus(response.getData().toString());
+                            lobbyListener.updateStatus(response.getData().toString());
                             break;
 
                         case Packet.PLAYER_TWO_WINS:
-                            gameListener.updateStatus(response.getData().toString());
+                            lobbyListener.updateStatus(response.getData().toString());
                             break;
 
                         case Packet.TIE_GAME:
-                            gameListener.updateStatus(response.getData().toString());
+                            lobbyListener.updateStatus(response.getData().toString());
+                            break;
+
+                        case Packet.NO_OPPONENT_FOUND:
+                            lobbyListener.updateStatus(response.getData().toString());
+                            break;
+
+                        case Packet.INVALID_GAME_MOVE:
+                            lobbyListener.updateStatus(response.getData().toString());
                             break;
                     }
                 }

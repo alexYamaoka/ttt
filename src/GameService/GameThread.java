@@ -82,13 +82,13 @@ public class GameThread implements Runnable {
         try
         {
             // sends the username of player1
-            Packet whoIsPlayer1 = new Packet(Packet.PLAYER_ONE_USERNAME, player1UserInformation, player1UserInformation.getUserName());
+            Packet whoIsPlayer1 = new Packet(Packet.PLAYER_ONE_USERNAME, player1UserInformation, game.getId() + " " + player1UserInformation.getUserName());
             player1.getOutputStream().writeObject(whoIsPlayer1);
             player2.getOutputStream().writeObject(whoIsPlayer1);
             System.out.println("sending packet about player1");
 
             // sends the username of player2
-            Packet whoIsPlayer2 = new Packet(Packet.PLAYER_TWO_USERNAME, player2UserInformation, player2UserInformation.getUserName());
+            Packet whoIsPlayer2 = new Packet(Packet.PLAYER_TWO_USERNAME, player2UserInformation, game.getId() + " " + player2UserInformation.getUserName());
             player1.getOutputStream().writeObject(whoIsPlayer2);
             player2.getOutputStream().writeObject(whoIsPlayer2);
             System.out.println("sending packet about player2");
@@ -133,14 +133,14 @@ public class GameThread implements Runnable {
                             if (game.isPlayer1Winner(newMove))
                             {
                                 System.out.println("Player 1 Wins!");
-                                Packet player1Wins = new Packet(Packet.PLAYER_ONE_WINS, player1UserInformation, "Player1 wins");
+                                Packet player1Wins = new Packet(Packet.PLAYER_ONE_WINS, player1UserInformation, game.getId()+ " " + "Player1-wins");
                                 player1.getOutputStream().writeObject(player1Wins);
                                 player2.getOutputStream().writeObject(player1Wins);
                             }
                             else if (game.isTieGame())
                             {
                                 System.out.println("Tie Game");
-                                Packet tieGame = new Packet(Packet.TIE_GAME, null, "Tie Game");
+                                Packet tieGame = new Packet(Packet.TIE_GAME, null, game.getId()+ " " + "Tie-Game");
                                 player1.getOutputStream().writeObject(tieGame);
                                 player2.getOutputStream().writeObject(tieGame);
                             }
@@ -148,7 +148,7 @@ public class GameThread implements Runnable {
                         else
                         {
                             System.out.println("Not a valid move");
-                            Packet invalidMove = new Packet(Packet.INVALID_GAME_MOVE, null, "invalid move");
+                            Packet invalidMove = new Packet(Packet.INVALID_GAME_MOVE, null, game.getId() + " " + "invalid-move");
                             player1.getOutputStream().writeObject(invalidMove);
                             player2.getOutputStream().writeObject(invalidMove);
                         }
@@ -174,14 +174,14 @@ public class GameThread implements Runnable {
                             if (game.isPlayer2Winner(newMove))
                             {
                                 System.out.println("Player 2 Wins!");
-                                Packet player2Wins = new Packet(Packet.PLAYER_ONE_WINS, player2UserInformation, "Player2 wins");
+                                Packet player2Wins = new Packet(Packet.PLAYER_ONE_WINS, player2UserInformation, game.getId() + " " + "Player2-wins");
                                 player1.getOutputStream().writeObject(player2Wins);
                                 player2.getOutputStream().writeObject(player2Wins);
                             }
                             else if (game.isTieGame())
                             {
                                 System.out.println("Tie Game");
-                                Packet tieGame = new Packet(Packet.TIE_GAME, null, "Tie Game");
+                                Packet tieGame = new Packet(Packet.TIE_GAME, null, game.getId()+ " " + "Tie-Game");
                                 player1.getOutputStream().writeObject(tieGame);
                                 player2.getOutputStream().writeObject(tieGame);
                             }
@@ -189,7 +189,7 @@ public class GameThread implements Runnable {
                         else
                         {
                             System.out.println("Not a valid move");
-                            Packet invalidMove = new Packet(Packet.INVALID_GAME_MOVE, null, "invalid move");
+                            Packet invalidMove = new Packet(Packet.INVALID_GAME_MOVE, null, game.getId() + " " + "invalid-move");
                             player1.getOutputStream().writeObject(invalidMove);
                             player2.getOutputStream().writeObject(invalidMove);
                         }

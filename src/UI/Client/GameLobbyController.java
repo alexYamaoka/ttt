@@ -3,6 +3,7 @@ package UI.Client;
 import Client.ClientController;
 import Models.Game;
 import Models.Move;
+import ObserverPatterns.GameListener;
 import ObserverPatterns.LobbyListener;
 import Shared.Packet;
 import Shared.UserInformation;
@@ -38,7 +39,7 @@ import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-public class GameLobbyController implements Initializable, LobbyListener {
+public class GameLobbyController implements Initializable, LobbyListener, GameListener {
     @FXML
     private TableView<Game> activeGames;
     @FXML
@@ -128,8 +129,44 @@ public class GameLobbyController implements Initializable, LobbyListener {
 
     @Override
     public void updateMove(Move move) {
+        System.out.println("UpdateMove" + gameBoards.containsKey(move.getGameId()));
         if(gameBoards.containsKey(move.getGameId())) {
             gameBoards.get(move.getGameId()).getValue().updateMove(move);
+        }
+    }
+
+    @Override
+    public void updateStatus(String message) {
+        String[] str = message.trim().split("\\s+");
+        String gameId = str[0];
+        String status = str[1];
+        if(gameBoards.containsKey(gameId)) {
+            gameBoards.get(gameId).getValue().updateStatus(status);
+        }
+    }
+
+    @Override
+    public void setGameId(String gameId) {
+
+    }
+
+    @Override
+    public void setPlayer1Username(String player1Username) {
+        String[] str = player1Username.trim().split("\\s+");
+        String gameId = str[0];
+        String username = str[1];
+        if(gameBoards.containsKey(gameId)) {
+            gameBoards.get(gameId).getValue().setPlayer1Username(username);
+        }
+    }
+
+    @Override
+    public void setPlayer2Username(String player2Username) {
+        String[] str = player2Username.trim().split("\\s+");
+        String gameId = str[0];
+        String username = str[1];
+        if(gameBoards.containsKey(gameId)) {
+            gameBoards.get(gameId).getValue().setPlayer1Username(username);
         }
     }
 
