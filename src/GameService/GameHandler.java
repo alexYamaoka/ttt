@@ -14,16 +14,14 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class GameHandler implements Runnable
-{
+public class GameHandler implements Runnable {
+    private final AtomicBoolean running = new AtomicBoolean(false);
     private Packet packet;
     private Thread worker;
     private DataSource ds = DatabaseManager.getInstance();
     private Server server = new Server();
     private GameService service;
-
     private ClientConnection clientConnection;
-    private final AtomicBoolean running = new AtomicBoolean(false);
 
 
     public GameHandler(ClientConnection clientConnection, Packet packet, GameService service) {
@@ -54,8 +52,7 @@ public class GameHandler implements Runnable
 
         System.out.println("Request: " + request);
 
-        switch(request)
-        {
+        switch (request) {
             case Packet.GET_GAMES:
                 try {
                     clientConnection.getOutputStream().writeObject(new Packet(Packet.GET_GAMES, userInformation, service.getGames())); // list of current games
@@ -70,49 +67,20 @@ public class GameHandler implements Runnable
                     service.addGame(game); //pull game name from data
                     Packet packet = new Packet(Packet.NEW_GAME_CREATED, clientConnection.getInformation(), "SUCCESS");
                     clientConnection.getOutputStream().writeObject(packet);
-
-
-                    // send the gameId back to the client to use in constructor for the MOVE class on client side
-                    Packet gameNamePacket = new Packet(Packet.Game_Name, clientConnection.getInformation(), game);
-                    clientConnection.getOutputStream().writeObject(gameNamePacket);
-
-
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
                 break;
 
             case Packet.JOIN_GAME:
-                try
-                {
-                    Game game = service.getGame(data.toString());
-                    game.join(clientConnection);
-                    System.out.println("Opponent joined game!");
+                Game game = service.getGame(data.toString());
+                game.join(clientConnection);
+                System.out.println("Opponent joined game!");
 
-                    GameThread gameThread = new GameThread(game, game.getPlayer1ClientConnection(), clientConnection);
-                    gameThreadList.put(game.getId(), gameThread);
-                    gameThread.start();
-                    System.out.println("starting game thread!");
-
-
-                    // sending the gameName over the client. gameName is needed to direct the moves to the right game
-                    Packet gameNamePacket = new Packet(Packet.Game_Name, clientConnection.getInformation(), data.toString());
-                    clientConnection.getOutputStream().writeObject(gameNamePacket);
-
-
-                /*
-                try {
-                    ds.insertGame(game);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                */
-                }
-                catch (IOException ex)
-                {
-                    ex.printStackTrace();
-                }
-
+                GameThread gameThread = new GameThread(game, game.getPlayer1ClientConnection(), clientConnection);
+                gameThreadList.put(game.getId(), gameThread);
+                gameThread.start();
+                System.out.println("starting game thread!");
                 break;
 
             case Packet.OBSERVE_GAME:
@@ -120,31 +88,22 @@ public class GameHandler implements Runnable
                 break;
 
             case Packet.GAME_MOVE:
-                try
-                {
-                    Move newMove = (Move)data;
+                try {
+                    Move newMove = (Move) data;
 
-                    if (gameThreadList.containsKey(newMove.getGameName()))
-                    {
+                    if (gameThreadList.containsKey(newMove.getGameName())) {
                         GameThread gameThreadForMove = gameThreadList.get(newMove.getGameName());
                         gameThreadForMove.addMove(newMove);
-                    }
-                    else
-                    {
+                    } else {
                         // else statement is for when opponent has not been found yet.
                         Packet errorPacket = new Packet(Packet.NO_OPPONENT_FOUND, clientConnection.getInformation(), "No Opponent Found");
-                        try
-                        {
+                        try {
                             clientConnection.getOutputStream().writeObject(errorPacket);
-                        }
-                        catch (IOException ex)
-                        {
+                        } catch (IOException ex) {
                             ex.printStackTrace();
                         }
                     }
-                }
-                catch (Exception ex)
-                {
+                } catch (Exception ex) {
                     ex.printStackTrace();
                 }
                 break;
