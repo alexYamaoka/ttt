@@ -36,52 +36,36 @@ public class GameBoardController implements Initializable, GameListener
     private String player1Username;
     private String player2Username;
 
-
-
-
-
-
-
-
     public void playerMoved(int x, int y){
         Move move = new Move(x, y, clientController.getAccountClient().getUserInformation(), gameName);
         Packet packet = new Packet(Packet.GAME_MOVE, clientController.getAccountClient().getUserInformation(), move);
         clientController.getGameClient().addRequestToServer(packet);
         resetTime();
     }
-
     public void playerMovedzZ(ActionEvent actionEvent) {
         playerMoved(0, 0);
     }
-
     public void playerMovedzO(ActionEvent actionEvent) {
         playerMoved(0, 1);
     }
-
     public void playerMovedzT(ActionEvent actionEvent) {
         playerMoved(0, 2);
     }
-
     public void playerMovedoZ(ActionEvent actionEvent) {
         playerMoved(1, 0);
     }
-
     public void playerMovedoO(ActionEvent actionEvent) {
         playerMoved(1, 1);
     }
-
     public void playerMovedoT(ActionEvent actionEvent) {
         playerMoved(1, 2);
     }
-
     public void playerMovedtZ(ActionEvent actionEvent) {
         playerMoved(2, 0);
     }
-
     public void playerMovedtO(ActionEvent actionEvent) {
         playerMoved(2, 1);
     }
-
     public void playerMovedtT(ActionEvent actionEvent) {
         playerMoved(2, 2);
     }
