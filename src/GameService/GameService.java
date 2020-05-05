@@ -27,7 +27,6 @@ public class GameService implements Runnable, Service {
     private HashSet<ClientConnection> clientConnections = new HashSet<>();
     private HashMap<String, Game> ongoingGameRooms = new HashMap<>();
     private HashMap<String, GameThread> gameThreadList = new HashMap<>();
-    private Set<UserInformation> playersOnline = new HashSet<>();
 
     public GameService() {
     }
@@ -69,19 +68,6 @@ public class GameService implements Runnable, Service {
     public Game getGame(String id) {
         return ongoingGameRooms.get(id);
     }
-
-
-    public void addOnlinePlayer(UserInformation user) {
-        playersOnline.add(user);
-    }
-
-    public HashSet<UserInformation> getPlayersOnline() {
-        if (!playersOnline.isEmpty()) {
-            return (HashSet<UserInformation>) playersOnline;
-        }
-        return null;
-    }
-
 
     public HashSet<Game> getGames() {
         if (!ongoingGameRooms.isEmpty()) {

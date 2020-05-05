@@ -23,6 +23,7 @@ public class AccountHandler implements Runnable {
     private DataSource ds = DatabaseManager.getInstance();
     private Server server = new Server();
     private ClientConnection clientConnection;
+    private AccountService service;
 
     private final AtomicBoolean running = new AtomicBoolean(false);
 
@@ -30,6 +31,7 @@ public class AccountHandler implements Runnable {
         this.packet = packet;
         this.clientConnection = clientConnection;
         this.outputStream = clientConnection.getOutputStream();
+        this.service = (AccountService)clientConnection.getService();
     }
 
     public void start() {
@@ -66,6 +68,7 @@ public class AccountHandler implements Runnable {
                         packet = new Packet(Packet.SIGN_IN,userInformation, items.get(0));
                         outputStream.writeObject(packet);
                         clientConnection.setInformation((UserInformation)items.get(0));
+                        service.addOnlinePlayer((UserInformation)items.get(0));
                     } else {
                         packet = new Packet(Packet.SIGN_IN, userInformation, "FAIL");
                         outputStream.writeObject(packet);
@@ -138,7 +141,14 @@ public class AccountHandler implements Runnable {
                 } catch (SQLException | IOException e) {
                     e.printStackTrace();
                 }
+                break;
 
+            case Packet.GET_ONLINE_PLAYERS:
+                try {
+                    clientConnection.getOutputStream().writeObject(new Packet(Packet.GET_ONLINE_PLAYERS, userInformation, service.getPlayersOnline())); // list of online players
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 break;
         }
 
