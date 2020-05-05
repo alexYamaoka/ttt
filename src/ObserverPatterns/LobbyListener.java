@@ -6,7 +6,7 @@ import Shared.UserInformation;
 import java.util.HashSet;
 
 public interface LobbyListener extends GameListener {
-    void newGame(String message);
+    void newGame(Game game);
 
     void getListOfGames(HashSet<Game> listOfGames);
 
