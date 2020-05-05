@@ -1,7 +1,5 @@
 package DataBase;
 
-import DataBase.IdGenerator;
-
 public class TypeGenerator implements IdGenerator {
     @Override
     public String getNewId() {

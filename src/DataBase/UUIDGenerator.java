@@ -1,7 +1,5 @@
 package DataBase;
 
-import DataBase.IdGenerator;
-
 import java.util.UUID;
 
 public class UUIDGenerator implements IdGenerator {
