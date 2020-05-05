@@ -8,14 +8,9 @@ import ObserverPatterns.LobbyListener;
 import Shared.Packet;
 import Shared.UserInformation;
 import javafx.application.Platform;
-import javafx.beans.Observable;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableSet;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -37,7 +32,6 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 public class GameLobbyController implements Initializable, LobbyListener, GameListener {
     @FXML
@@ -130,7 +124,7 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
     @Override
     public void updateMove(Move move) {
         System.out.println("UpdateMove" + gameBoards.containsKey(move.getGameId()));
-        if(gameBoards.containsKey(move.getGameId())) {
+        if (gameBoards.containsKey(move.getGameId())) {
             gameBoards.get(move.getGameId()).getValue().updateMove(move);
         }
     }
@@ -140,7 +134,7 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
         String[] str = message.trim().split("\\s+");
         String gameId = str[0];
         String status = str[1];
-        if(gameBoards.containsKey(gameId)) {
+        if (gameBoards.containsKey(gameId)) {
             gameBoards.get(gameId).getValue().updateStatus(status);
         }
     }
@@ -155,7 +149,7 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
         String[] str = player1Username.trim().split("\\s+");
         String gameId = str[0];
         String username = str[1];
-        if(gameBoards.containsKey(gameId)) {
+        if (gameBoards.containsKey(gameId)) {
             gameBoards.get(gameId).getValue().setPlayer1Username(username);
         }
     }
@@ -165,14 +159,14 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
         String[] str = player2Username.trim().split("\\s+");
         String gameId = str[0];
         String username = str[1];
-        if(gameBoards.containsKey(gameId)) {
+        if (gameBoards.containsKey(gameId)) {
             gameBoards.get(gameId).getValue().setPlayer1Username(username);
         }
     }
 
     @Override
     public void joinGame(Game game) {
-        Platform.runLater(()-> {
+        Platform.runLater(() -> {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
                 Pane pane = loader.load();
@@ -200,19 +194,21 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
             public TableCell<Game, Void> call(final TableColumn<Game, Void> param) {
                 final TableCell<Game, Void> cell = new TableCell<>() {
                     private final Button joinButton = new Button("Join");
+                    private final Button spectateButton = new Button("Spectate");
+
                     {
-                        joinButton.setOnAction(event-> {
+                        joinButton.setOnAction(event -> {
                             Game game = getTableView().getItems().get(getIndex());
-                            if(!game.getPlayer1Username().equalsIgnoreCase(clientController.getAccountClient().getUserInformation().getUserName())) {
+                            if (!game.getPlayer1Username().equalsIgnoreCase(clientController.getAccountClient().getUserInformation().getUserName())) {
                                 Packet packet = new Packet(Packet.JOIN_GAME, clientController.getAccountClient().getUserInformation(), game.getId());
                                 clientController.getGameClient().addRequestToServer(packet);
                             } else {
                                 // Load a new scene if a scene is not already loaded
-                                if(!gameBoards.containsKey(game)) {
-                                   joinGame(game);
+                                if (!gameBoards.containsKey(game)) {
+                                    joinGame(game);
                                 } else {
                                     // switch to loaded scene
-                                    Stage stage = (Stage)newGameButton.getScene().getWindow();
+                                    Stage stage = (Stage) newGameButton.getScene().getWindow();
                                     Parent root = gameBoards.get(game.getId()).getKey();
                                     stage.setScene(root.getScene());
                                     stage.show();
@@ -220,7 +216,7 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
                             }
                         });
                     }
-                    private final Button spectateButton = new Button("Spectate");
+
                     {
                         spectateButton.setOnAction(event -> {
                             // send spectate game packet to game server
@@ -235,7 +231,7 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
                     @Override
                     public void updateItem(Void item, boolean empty) {
                         super.updateItem(item, empty);
-                        if(empty) {
+                        if (empty) {
                             setGraphic(null);
                         } else {
                             HBox pane = new HBox(joinButton, spectateButton);

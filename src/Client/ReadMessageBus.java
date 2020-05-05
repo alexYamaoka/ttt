@@ -2,17 +2,17 @@ package Client;
 
 import Models.Game;
 import Models.Move;
-import ObserverPatterns.*;
+import ObserverPatterns.LobbyListener;
+import ObserverPatterns.SignInResultListener;
+import ObserverPatterns.SignUpResultListener;
+import ObserverPatterns.UpdateUserinformationListener;
 import Shared.Packet;
 import Shared.UserInformation;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 
 import java.util.HashSet;
-import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class ReadMessageBus implements Runnable
-{
+public class ReadMessageBus implements Runnable {
     private ClientController clientController;
     private Thread thread;
     private AtomicBoolean running = new AtomicBoolean(false);
@@ -22,8 +22,7 @@ public class ReadMessageBus implements Runnable
     private UpdateUserinformationListener updateUserinformationListener;
     private LobbyListener lobbyListener;
 
-    public ReadMessageBus(ClientController clientController)
-    {
+    public ReadMessageBus(ClientController clientController) {
         this.clientController = clientController;
         signInResultListener = clientController.getSignInController();
         signUpResultListener = clientController.getSignUpController();
@@ -31,8 +30,7 @@ public class ReadMessageBus implements Runnable
         lobbyListener = clientController.getGameLobby();
     }
 
-    public void start()
-    {
+    public void start() {
         thread = new Thread(this);
         thread.start();
     }
@@ -42,20 +40,15 @@ public class ReadMessageBus implements Runnable
     }
 
 
-
     @Override
-    public void run()
-    {
+    public void run() {
         try {
             running.set(true);
-            while (running.get())
-            {
+            while (running.get()) {
                 Packet response = clientController.getNextResponse();
 
-                if (response != null)
-                {
-                    switch (response.getRequest())
-                    {
+                if (response != null) {
+                    switch (response.getRequest()) {
                         case Packet.REGISTER_CLIENT:
                             signUpResultListener.updateSignInResult(response.getData().toString());
                             break;
@@ -90,14 +83,14 @@ public class ReadMessageBus implements Runnable
                             break;
 
                         case Packet.JOIN_GAME:
-                            if(response.getData() != null) {
+                            if (response.getData() != null) {
                                 lobbyListener.joinGame((Game) response.getData());
                             }
                             break;
 
 
                         case Packet.GAME_MOVE:
-                            lobbyListener.updateMove((Move)response.getData());
+                            lobbyListener.updateMove((Move) response.getData());
                             break;
 
                         case Packet.NEW_GAME_CREATED:

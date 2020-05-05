@@ -6,18 +6,12 @@ import Server.ClientConnection;
 import Shared.Packet;
 import Shared.UserInformation;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
@@ -43,7 +37,6 @@ public class GameThread implements Runnable {
     private BlockingQueue<Move> moveQueue = new LinkedBlockingQueue<>();
 
 
-
     public GameThread(Game game, ClientConnection player1, ClientConnection player2) {
         this.game = game;
         this.player1 = player1;
@@ -58,8 +51,7 @@ public class GameThread implements Runnable {
         inputFromPlayer2 = player2.getInputStream();
     }
 
-    public void addMove(Move move) throws InterruptedException
-    {
+    public void addMove(Move move) throws InterruptedException {
         System.out.println("Inside GameThread, adding move to the queue");
         moveQueue.add(move);
     }
@@ -79,8 +71,7 @@ public class GameThread implements Runnable {
     public void run() {
         isRunning.set(true);
 
-        try
-        {
+        try {
             // sends the username of player1
             Packet whoIsPlayer1 = new Packet(Packet.PLAYER_ONE_USERNAME, player1UserInformation, game.getId() + " " + player1UserInformation.getUserName());
             player1.getOutputStream().writeObject(whoIsPlayer1);
@@ -94,9 +85,7 @@ public class GameThread implements Runnable {
             System.out.println("sending packet about player2");
 
             isPlayer1Turn = true;
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
 
@@ -105,24 +94,19 @@ public class GameThread implements Runnable {
 
             Move newMove = null;
 
-            try
-            {
-                if (! moveQueue.isEmpty())
-                {
+            try {
+                if (!moveQueue.isEmpty()) {
                     System.out.println("Inside game thread, removing move from the queue ");
                     newMove = moveQueue.take();
 
 
-
-                    if (newMove.getUserInformation() == player1UserInformation && isPlayer1Turn)
-                    {
+                    if (newMove.getUserInformation() == player1UserInformation && isPlayer1Turn) {
                         System.out.println("game player1.make move is called");
 
-                        if (game.checkIfValidMove(newMove))
-                        {
+                        if (game.checkIfValidMove(newMove)) {
                             game.player1MakeMove(newMove);
                             isPlayer1Turn = false;
-                            Packet packet = new Packet(Packet.GAME_MOVE, player1UserInformation,newMove);
+                            Packet packet = new Packet(Packet.GAME_MOVE, player1UserInformation, newMove);
                             player1.getOutputStream().writeObject(packet);
                             player2.getOutputStream().writeObject(packet);
                             System.out.println("move is outputted to both players");
@@ -130,23 +114,18 @@ public class GameThread implements Runnable {
                             isPlayer1Turn = false;
 
 
-                            if (game.isPlayer1Winner(newMove))
-                            {
+                            if (game.isPlayer1Winner(newMove)) {
                                 System.out.println("Player 1 Wins!");
-                                Packet player1Wins = new Packet(Packet.PLAYER_ONE_WINS, player1UserInformation, game.getId()+ " " + "Player1-wins");
+                                Packet player1Wins = new Packet(Packet.PLAYER_ONE_WINS, player1UserInformation, game.getId() + " " + "Player1-wins");
                                 player1.getOutputStream().writeObject(player1Wins);
                                 player2.getOutputStream().writeObject(player1Wins);
-                            }
-                            else if (game.isTieGame())
-                            {
+                            } else if (game.isTieGame()) {
                                 System.out.println("Tie Game");
-                                Packet tieGame = new Packet(Packet.TIE_GAME, null, game.getId()+ " " + "Tie-Game");
+                                Packet tieGame = new Packet(Packet.TIE_GAME, null, game.getId() + " " + "Tie-Game");
                                 player1.getOutputStream().writeObject(tieGame);
                                 player2.getOutputStream().writeObject(tieGame);
                             }
-                        }
-                        else
-                        {
+                        } else {
                             System.out.println("Not a valid move");
                             Packet invalidMove = new Packet(Packet.INVALID_GAME_MOVE, null, game.getId() + " " + "invalid-move");
                             player1.getOutputStream().writeObject(invalidMove);
@@ -154,14 +133,10 @@ public class GameThread implements Runnable {
                         }
 
 
-
-                    }
-                    else if (newMove.getUserInformation() == player2UserInformation && !isPlayer1Turn)
-                    {
+                    } else if (newMove.getUserInformation() == player2UserInformation && !isPlayer1Turn) {
                         System.out.println("game player2.make move is called");
 
-                        if (game.checkIfValidMove(newMove))
-                        {
+                        if (game.checkIfValidMove(newMove)) {
                             game.player2MakeMove(newMove);
 
                             Packet packet = new Packet(Packet.GAME_MOVE, player2UserInformation, newMove);
@@ -171,38 +146,29 @@ public class GameThread implements Runnable {
 
                             isPlayer1Turn = true;
 
-                            if (game.isPlayer2Winner(newMove))
-                            {
+                            if (game.isPlayer2Winner(newMove)) {
                                 System.out.println("Player 2 Wins!");
                                 Packet player2Wins = new Packet(Packet.PLAYER_ONE_WINS, player2UserInformation, game.getId() + " " + "Player2-wins");
                                 player1.getOutputStream().writeObject(player2Wins);
                                 player2.getOutputStream().writeObject(player2Wins);
-                            }
-                            else if (game.isTieGame())
-                            {
+                            } else if (game.isTieGame()) {
                                 System.out.println("Tie Game");
-                                Packet tieGame = new Packet(Packet.TIE_GAME, null, game.getId()+ " " + "Tie-Game");
+                                Packet tieGame = new Packet(Packet.TIE_GAME, null, game.getId() + " " + "Tie-Game");
                                 player1.getOutputStream().writeObject(tieGame);
                                 player2.getOutputStream().writeObject(tieGame);
                             }
-                        }
-                        else
-                        {
+                        } else {
                             System.out.println("Not a valid move");
                             Packet invalidMove = new Packet(Packet.INVALID_GAME_MOVE, null, game.getId() + " " + "invalid-move");
                             player1.getOutputStream().writeObject(invalidMove);
                             player2.getOutputStream().writeObject(invalidMove);
                         }
-                    }
-                    else
-                    {
+                    } else {
                         System.out.println("make move if statements have been skipped");
                     }
                 }
 
-            }
-            catch (InterruptedException | IOException e)
-            {
+            } catch (InterruptedException | IOException e) {
                 e.printStackTrace();
             }
         }

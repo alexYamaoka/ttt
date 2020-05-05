@@ -3,10 +3,10 @@ package AccountService;
 import DataBase.sql.DataSource;
 import DataBase.sql.DatabaseManager;
 import Models.BaseModel;
+import Server.ClientConnection;
 import Shared.Packet;
 import Shared.UserInformation;
 import app.Server;
-//import com.mysql.cj.protocol.Resultset;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -14,7 +14,8 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
-import Server.ClientConnection;
+
+//import com.mysql.cj.protocol.Resultset;
 
 public class AccountHandler implements Runnable {
     private Packet packet;
