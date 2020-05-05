@@ -12,6 +12,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         ClientController clientController = new ClientController(primaryStage);
+        clientController.run();
         primaryStage.setTitle("EndFrame TicTacToe");
     }
     public void testDatabase() {
