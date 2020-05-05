@@ -12,8 +12,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
@@ -22,8 +20,7 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 
-public class GameBoardController implements Initializable, GameListener
-{
+public class GameBoardController implements Initializable, GameListener {
     @FXML
     Label player1Name, player2Name, time;
     @FXML
@@ -37,13 +34,7 @@ public class GameBoardController implements Initializable, GameListener
     private String player2Username;
 
 
-
-
-
-
-
-
-    public void playerMoved(int x, int y){
+    public void playerMoved(int x, int y) {
         Move move = new Move(x, y, clientController.getAccountClient().getUserInformation(), gameName);
         Packet packet = new Packet(Packet.GAME_MOVE, clientController.getAccountClient().getUserInformation(), move);
         clientController.getGameClient().addRequestToServer(packet);
@@ -101,10 +92,11 @@ public class GameBoardController implements Initializable, GameListener
         }
     }
 
-    private void countdownTime(){
+    private void countdownTime() {
 
     }
-    public void resetTime(){
+
+    public void resetTime() {
         time.setText("00:30");
         countdownTime();
     }
@@ -117,19 +109,16 @@ public class GameBoardController implements Initializable, GameListener
     public void updateMove(Move move) {
 
         System.out.println("update move has been called");
-        Platform.runLater(new Runnable()
-        {
+        Platform.runLater(new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
                 int row = move.getRow();
                 int col = move.getColumn();
                 UserInformation userInformation = move.getUserInformation();
 
 
                 // used players username to determine who is X and who is O.
-                if (player1Username.equals(userInformation.getUserName()))
-                {
+                if (player1Username.equals(userInformation.getUserName())) {
                     System.out.println("move was  mine");
                     if (row == 0 && col == 0)
                         zZ.setText("X");
@@ -150,9 +139,7 @@ public class GameBoardController implements Initializable, GameListener
                     else if (row == 2 && col == 2)
                         tT.setText("X");
 
-                }
-                else
-                {
+                } else {
                     System.out.println("move was not mine");
                     if (row == 0 && col == 0)
                         zZ.setText("O");
@@ -173,11 +160,6 @@ public class GameBoardController implements Initializable, GameListener
                     else if (row == 2 && col == 2)
                         tT.setText("O");
                 }
-
-//                String[] str = move.trim().split("\\s+");
-//                Pair<Integer, Integer> pair = new Pair<>(Integer.parseInt(str[0]), Integer.parseInt(str[1]));
-//                Button button = buttons.get(pair);
-//                button.setText(str[2]);
             }
         });
 
@@ -189,21 +171,18 @@ public class GameBoardController implements Initializable, GameListener
     }
 
     @Override
-    public void setGameName(String gameName)
-    {
+    public void setGameName(String gameName) {
         this.gameName = gameName;
     }
 
     @Override
-    public void setPlayer1Username(String player1Username)
-    {
+    public void setPlayer1Username(String player1Username) {
         System.out.println("setPlayer1Username: " + player1Username);
         this.player1Username = player1Username;
     }
 
     @Override
-    public void setPlayer2Username(String player2Username)
-    {
+    public void setPlayer2Username(String player2Username) {
         System.out.println("setPlayer2Username: " + player2Username);
         this.player2Username = player2Username;
     }
