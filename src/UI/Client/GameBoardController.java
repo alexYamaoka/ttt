@@ -175,12 +175,14 @@ public class GameBoardController implements Initializable, GameListener {
     public void setPlayer1Username(String player1Username) {
         System.out.println("setPlayer1Username: " + player1Username);
         this.player1Username = player1Username;
+        player1Name.setText(player1Username);
     }
 
     @Override
     public void setPlayer2Username(String player2Username) {
         System.out.println("setPlayer2Username: " + player2Username);
         this.player2Username = player2Username;
+        player2Name.setText(player2Username);
     }
 
     @Override

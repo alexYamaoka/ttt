@@ -46,7 +46,7 @@ public class GameService implements Runnable, Service {
         running.set(true);
         try {
             ServerSocket serverSocket = new ServerSocket(PORT_NUMBER, 0, InetAddress.getByName("localhost"));
-            var pool = Executors.newFixedThreadPool(100);
+            var pool = Executors.newFixedThreadPool(20);
             System.out.println("Game Service started");
             while (running.get()) {
                 Socket socket = serverSocket.accept();
