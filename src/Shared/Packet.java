@@ -21,7 +21,6 @@ public class Packet implements Serializable {
     public static final String GET_ONLINE_PLAYERS = "GET-ONLINE-PLAYERS";
     public static final String GAME_MOVE = "GAME-MOVE";
     public static final String INVALID_GAME_MOVE = "INVALID-GAME-MOVE";
-    public static final String Game_Name = "GAME-NAME";
     public static final String NO_OPPONENT_FOUND = "NO-OPPONENT_FOUND";
     public static final String PLAYER_ONE_USERNAME = "PLAYER-ONE-USERNAME";
     public static final String PLAYER_TWO_USERNAME = "PLAYER-TWO-USERNAME";
