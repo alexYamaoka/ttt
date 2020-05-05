@@ -45,6 +45,8 @@ public class Game extends BaseModel implements Serializable {
 
     public void join(ClientConnection player2){
         this.player2 = player2;
+        player2Info = player2.getInformation();
+        player2Username = player2Info.getUserName();
     }
 
     public String getId(){

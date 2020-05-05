@@ -57,6 +57,7 @@ public class GameHandler implements Runnable {
                 try {
                     clientConnection.getOutputStream().writeObject(new Packet(Packet.GET_GAMES, userInformation, service.getGames())); // list of current games
                 } catch (IOException e) {
+                    running.set(false);
                     e.printStackTrace();
                 }
                 break;
@@ -69,18 +70,21 @@ public class GameHandler implements Runnable {
                     clientConnection.getOutputStream().writeObject(packet);
                 } catch (IOException ex) {
                     ex.printStackTrace();
+                    running.set(false);
                 }
                 break;
 
             case Packet.JOIN_GAME:
-                Game game = service.getGame(data.toString());
-                game.join(clientConnection);
-                System.out.println("Opponent joined game!");
-
-                GameThread gameThread = new GameThread(game, game.getPlayer1ClientConnection(), clientConnection);
-                gameThreadList.put(game.getId(), gameThread);
-                gameThread.start();
-                System.out.println("starting game thread!");
+                try {
+                    Game game = service.getGame(data.toString());
+                    game.join(clientConnection);
+                    GameThread gameThread = new GameThread(game, game.getPlayer1ClientConnection(), clientConnection);
+                    gameThreadList.put(game.getId(), gameThread);
+                    gameThread.start();
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                    running.set(false);
+                }
                 break;
 
             case Packet.OBSERVE_GAME:
@@ -104,7 +108,8 @@ public class GameHandler implements Runnable {
                         }
                     }
                 } catch (Exception ex) {
-                    ex.printStackTrace();
+                    System.out.println(ex.getMessage());
+                    running.set(false);
                 }
                 break;
 

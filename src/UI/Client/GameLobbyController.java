@@ -137,7 +137,7 @@ public class GameLobbyController implements Initializable, LobbyListener {
                 // send join game packet to server
                 Game game = getTableView().getItems().get(getIndex());
                 if(!game.getPlayer1Username().equalsIgnoreCase(clientController.getAccountClient().getUserInformation().getUserName())) {
-                    Packet packet = new Packet(Packet.JOIN_GAME, clientController.getAccountClient().getUserInformation(), game);
+                    Packet packet = new Packet(Packet.JOIN_GAME, clientController.getAccountClient().getUserInformation(), game.getId());
                     clientController.getGameClient().addRequestToServer(packet);
                 } else {
                     // switch to gameBoard
@@ -148,7 +148,7 @@ public class GameLobbyController implements Initializable, LobbyListener {
                 // send spectate game packet to game server
                 Game game = getTableView().getItems().get(getIndex());
                 if(!game.getPlayer1Username().equalsIgnoreCase(clientController.getAccountClient().getUserInformation().getUserName())) {
-                    Packet packet = new Packet(Packet.OBSERVE_GAME, clientController.getAccountClient().getUserInformation(), game);
+                    Packet packet = new Packet(Packet.OBSERVE_GAME, clientController.getAccountClient().getUserInformation(), game.getId());
                     clientController.getGameClient().addRequestToServer(packet);
                 }
             });
