@@ -92,8 +92,8 @@ public class ReadMessageBus implements Runnable {
                             break;
 
                         case Packet.NEW_GAME_CREATED:
-                            if(response.getData() != null) {
-                                lobbyListener.newGame((Game)response.getData());
+                            if (response.getData() != null) {
+                                lobbyListener.newGame((Game) response.getData());
                             } else {
                                 // notify bad game
                             }

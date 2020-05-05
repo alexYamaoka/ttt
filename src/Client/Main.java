@@ -1,35 +1,19 @@
 package Client;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
 
 public class Main extends Application {
+    public static void main(String[] args) throws SQLException {
+        launch(args);
+    }
+
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         ClientController clientController = new ClientController(primaryStage);
         clientController.run();
         primaryStage.setTitle("EndFrame TicTacToe");
-    }
-    public void testDatabase() {
-        //ArrayList<User> user = new ArrayList<>();
-
-        //User newUser = new User("Firstname", "LastName", "Username", "Password");
-        //DatabaseManager.getInstance().addUser(newUser);
-
-        //DatabaseManager.getInstance();
-        //User newUser = new User("Hcorupe","Pass","Harrison","Corupe");
-
-        //DatabaseManager.getInstance().addUser(newUser);
-        //DatabaseManager.getInstance().deleteUser(15);
-        //DatabaseManager.getInstance().deleteUser(16);
-    }
-
-    public static void main(String[] args) throws SQLException {
-        launch(args);
     }
 }
