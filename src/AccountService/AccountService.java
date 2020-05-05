@@ -8,21 +8,18 @@ import Shared.Packet;
 import Shared.UserInformation;
 
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.UnknownHostException;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class AccountService implements Service, Runnable {
+    private final AtomicBoolean running = new AtomicBoolean(false);
     private Thread worker;
     private HashSet<ClientConnection> clientConnections = new HashSet<>();
     private HashSet<Service> serviceListeners = new HashSet<>();
-    private final AtomicBoolean running = new AtomicBoolean(false);
     private DataSource ds = DatabaseManager.getInstance();
     private HashSet<UserInformation> playersOnline = new HashSet<>();
 
@@ -69,7 +66,7 @@ public class AccountService implements Service, Runnable {
     }
 
     public void broadcast(Packet packet) {
-        for(ClientConnection connection : clientConnections) {
+        for (ClientConnection connection : clientConnections) {
             try {
                 connection.getOutputStream().reset();
                 connection.getOutputStream().writeObject(packet);
@@ -94,7 +91,6 @@ public class AccountService implements Service, Runnable {
         }
         return null;
     }
-
 
 
     public void update(Packet packet) {
