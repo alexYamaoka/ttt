@@ -93,6 +93,10 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
+                String[] str = message.trim().split("\\s+");
+                String gameId = str[0];
+                String status = str[1];
+                System.out.println("New Game Created: " + message);
                 if (message.equalsIgnoreCase("SUCCESS")) {
                     System.out.println("New game created Successfully");
                 }
@@ -123,20 +127,25 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
 
     @Override
     public void updateMove(Move move) {
-        System.out.println("UpdateMove" + gameBoards.containsKey(move.getGameId()));
-        if (gameBoards.containsKey(move.getGameId())) {
-            gameBoards.get(move.getGameId()).getValue().updateMove(move);
-        }
+        Platform.runLater(()->{
+            System.out.println("UpdateMove: " + gameBoards.containsKey(move.getGameId()));
+            if (gameBoards.containsKey(move.getGameId())) {
+                gameBoards.get(move.getGameId()).getValue().updateMove(move);
+            }
+        });
     }
 
     @Override
     public void updateStatus(String message) {
-        String[] str = message.trim().split("\\s+");
-        String gameId = str[0];
-        String status = str[1];
-        if (gameBoards.containsKey(gameId)) {
-            gameBoards.get(gameId).getValue().updateStatus(status);
-        }
+        Platform.runLater(()->{
+            String[] str = message.trim().split("\\s+");
+            String gameId = str[0];
+            String status = str[1];
+            System.out.println("Update Status: " + message);
+            if (gameBoards.containsKey(gameId)) {
+                gameBoards.get(gameId).getValue().updateStatus(status);
+            }
+        });
     }
 
     @Override
@@ -146,28 +155,35 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
 
     @Override
     public void setPlayer1Username(String player1Username) {
-        String[] str = player1Username.trim().split("\\s+");
-        String gameId = str[0];
-        String username = str[1];
-        if (gameBoards.containsKey(gameId)) {
-            gameBoards.get(gameId).getValue().setPlayer1Username(username);
-        }
+        Platform.runLater(()->{
+            String[] str = player1Username.trim().split("\\s+");
+            String gameId = str[0];
+            String username = str[1];
+            System.out.println("Set Player 1 Username: " + player1Username);
+            if (gameBoards.containsKey(gameId)) {
+                gameBoards.get(gameId).getValue().setPlayer1Username(username);
+            }
+        });
     }
 
     @Override
     public void setPlayer2Username(String player2Username) {
-        String[] str = player2Username.trim().split("\\s+");
-        String gameId = str[0];
-        String username = str[1];
-        if (gameBoards.containsKey(gameId)) {
-            gameBoards.get(gameId).getValue().setPlayer1Username(username);
-        }
+        Platform.runLater(()->{
+            String[] str = player2Username.trim().split("\\s+");
+            String gameId = str[0];
+            String username = str[1];
+            System.out.println("Set Player 2 Username: " + player2Username);
+            if (gameBoards.containsKey(gameId)) {
+                gameBoards.get(gameId).getValue().setPlayer1Username(username);
+            }
+        });
     }
 
     @Override
     public void joinGame(Game game) {
         Platform.runLater(() -> {
             try {
+                System.out.println("Join Game: " + game.getId());
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("GameBoard.fxml"));
                 Pane pane = loader.load();
                 GameBoardController gameBoardController = loader.getController();

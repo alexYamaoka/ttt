@@ -66,7 +66,7 @@ public class GameHandler implements Runnable {
                 try {
                     Game game = new Game(clientConnection);
                     service.addGame(game); // add game to game list and broadcast
-                    Packet packet = new Packet(Packet.NEW_GAME_CREATED, clientConnection.getInformation(), "SUCCESS");
+                    Packet packet = new Packet(Packet.NEW_GAME_CREATED, clientConnection.getInformation(), game.getId()+ " " + "SUCCESS");
                     clientConnection.getOutputStream().writeObject(packet);
                 } catch (IOException ex) {
                     ex.printStackTrace();
@@ -106,7 +106,7 @@ public class GameHandler implements Runnable {
                         gameThreadForMove.addMove(newMove);
                     } else {
                         // else statement is for when opponent has not been found yet.
-                        Packet errorPacket = new Packet(Packet.NO_OPPONENT_FOUND, clientConnection.getInformation(), "No Opponent Found");
+                        Packet errorPacket = new Packet(Packet.NO_OPPONENT_FOUND, clientConnection.getInformation(), newMove.getGameId() + " " + "No-Opponent-Found");
                         try {
                             clientConnection.getOutputStream().writeObject(errorPacket);
                         } catch (IOException ex) {

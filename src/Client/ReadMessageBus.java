@@ -75,9 +75,6 @@ public class ReadMessageBus implements Runnable {
                         case Packet.GET_ONLINE_PLAYERS:
                             HashSet<UserInformation> listOfPlayers = (HashSet<UserInformation>) response.getData();
                             if (listOfPlayers != null) {
-                                for (UserInformation userInformation : listOfPlayers) {
-                                    System.out.println(userInformation);
-                                }
                                 lobbyListener.getListOfOnlinePlayers(listOfPlayers);
                             }
                             break;
