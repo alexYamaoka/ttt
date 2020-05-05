@@ -39,6 +39,7 @@ public class GameBoardController implements Initializable, GameListener {
 
     public void playerMoved(int x, int y) {
         Move move = new Move(x, y, clientController.getAccountClient().getUserInformation(), gameId);
+        System.out.println("Player Moved: " + move.getGameId() + " " + move.getMove());
         Packet packet = new Packet(Packet.GAME_MOVE, clientController.getAccountClient().getUserInformation(), move);
         clientController.getGameClient().addRequestToServer(packet);
         resetTime();
@@ -174,11 +175,6 @@ public class GameBoardController implements Initializable, GameListener {
     }
 
     @Override
-    public void setGameId(String gameId) {
-        this.gameId = gameId;
-    }
-
-    @Override
     public void setPlayer1Username(String player1Username) {
         System.out.println("setPlayer1Username: " + player1Username);
         this.player1Username = player1Username;
@@ -205,5 +201,7 @@ public class GameBoardController implements Initializable, GameListener {
 
     public void setGame(Game game) {
         this.game = game;
+        this.gameId = game.getId();
+        System.out.println("Set Game: " + this.game + " " + this.game.getId());
     }
 }

@@ -19,7 +19,7 @@ public class Move extends BaseModel {
         this.row = row;
         this.column = column;
         this.userInformation = userInformation;
-        this.gameId = this.gameId;
+        this.gameId = gameId;
         dateAndTime = createDateAndTime();
     }
 

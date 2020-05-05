@@ -67,12 +67,6 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
         addButtonsToTable();
     }
 
-    // import an ObservableList of all active games from server
-    private void loadGames(HashSet<Game> listOfGames) {
-        System.out.println("Load games called!");
-        activeGames.getItems().addAll(listOfGames);
-    }
-
     public void onPlayAgainstComputerButtonClicked(ActionEvent event) {
     }
 
@@ -97,7 +91,7 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
                 String gameId = str[0];
                 String status = str[1];
                 System.out.println("New Game Created: " + message);
-                if (message.equalsIgnoreCase("SUCCESS")) {
+                if (status.equalsIgnoreCase("SUCCESS")) {
                     System.out.println("New game created Successfully");
                 }
             }
@@ -146,11 +140,6 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
                 gameBoards.get(gameId).getValue().updateStatus(status);
             }
         });
-    }
-
-    @Override
-    public void setGameId(String gameId) {
-
     }
 
     @Override
@@ -220,7 +209,7 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
                                 clientController.getGameClient().addRequestToServer(packet);
                             } else {
                                 // Load a new scene if a scene is not already loaded
-                                if (!gameBoards.containsKey(game)) {
+                                if (!gameBoards.containsKey(game.getId())) {
                                     joinGame(game);
                                 } else {
                                     // switch to loaded scene
