@@ -82,12 +82,13 @@ public class GameHandler implements Runnable {
                     gameThreadList.put(game.getId(), gameThread);
                     gameThread.start();
                     // Send successful join message
+                    clientConnection.getOutputStream().reset();
                     Packet packet = new Packet(Packet.JOIN_GAME, userInformation, game);
                     System.out.println(game.getPlayer2Username());
                     clientConnection.getOutputStream().writeObject(packet);
                     // Broadcast changes in game info
-//                    Packet broadcast = new Packet(Packet.GET_GAMES, null, service.getGames());
-//                    service.broadcast(broadcast);
+                    Packet broadcast = new Packet(Packet.GET_GAMES, null, service.getGames());
+                    service.broadcast(broadcast);
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());
                     running.set(false);

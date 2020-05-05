@@ -82,7 +82,6 @@ public class ReadMessageBus implements Runnable {
                         case Packet.JOIN_GAME:
                             if (response.getData() != null) {
                                 System.out.println("Response: JOIN_GAME");
-                                System.out.println(((Game)response.getData()).getPlayer2Username());
                                 lobbyListener.joinGame((Game) response.getData());
                             }
                             break;
