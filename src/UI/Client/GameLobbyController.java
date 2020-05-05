@@ -6,19 +6,28 @@ import ObserverPatterns.LobbyListener;
 import Shared.Packet;
 import Shared.UserInformation;
 import javafx.application.Platform;
+import javafx.beans.Observable;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableSet;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
+import javafx.util.Callback;
 
 import java.net.URL;
 import java.util.HashSet;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class GameLobbyController implements Initializable, LobbyListener {
     @FXML
@@ -26,11 +35,13 @@ public class GameLobbyController implements Initializable, LobbyListener {
     @FXML
     private TableColumn<Game, String> player1Column, player2Column, statusColumn;
     @FXML
-    private TableColumn<Game, Button> optionsColumn;
+    private TableColumn<Game, Boolean> actionColumn;
     @FXML
     private Button updateTableButton, newGameButton, newGameAgainstComputerButton;
     @FXML
     private ClientController clientController;
+
+    private ObservableList<Game> data = FXCollections.observableArrayList();
 
     public void setClientController(ClientController clientController) {
         this.clientController = clientController;
@@ -46,36 +57,26 @@ public class GameLobbyController implements Initializable, LobbyListener {
         player1Column.setCellValueFactory(new PropertyValueFactory<>("player1Username"));
         player2Column.setCellValueFactory(new PropertyValueFactory<>("player2Username"));
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("gameStatus"));
-//        optionsColumn.setCellValueFactory(new PropertyValueFactory<>("options"));
+        actionColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Game, Boolean>, ObservableValue<Boolean>>() {
+            @Override
+            public ObservableValue call(TableColumn.CellDataFeatures<Game, Boolean> cellDataFeatures) {
+                return new SimpleBooleanProperty(cellDataFeatures.getValue() != null);
+            }
+        });
+
+        actionColumn.setCellFactory(new Callback<TableColumn<Game, Boolean>, TableCell<Game, Boolean>>() {
+            @Override
+            public TableCell<Game, Boolean> call(TableColumn<Game, Boolean> tableColumn) {
+                return new ButtonCell();
+            }
+        });
+        activeGames.setItems(data);
     }
 
     // import an ObservableList of all active games from server
     private void loadGames(HashSet<Game> listOfGames) {
         System.out.println("Load games called!");
         activeGames.getItems().addAll(listOfGames);
-    }
-
-    private Button getButton(Game game) {
-        Button button = new Button();
-        button.setPrefWidth(800);
-        if (game.getGameStatus() == "Ongoing") {
-            button.setText("Spectate");
-            button.setId("spectateButton");
-            button.setOnAction(click -> spectateButtonClicked());
-        } else {
-            button.setText("Join Game");
-            button.setId("joinGameButton");
-            button.setOnAction(click -> joinGameButtonClicked());
-        }
-
-        return button;
-    }
-
-    public void spectateButtonClicked() {
-    }
-
-    public void joinGameButtonClicked() {
-
     }
 
     public void onPlayAgainstComputerButtonClicked(ActionEvent event) {
@@ -121,8 +122,8 @@ public class GameLobbyController implements Initializable, LobbyListener {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                activeGames.getItems().clear();
-                loadGames(listOfGames);
+                data.clear();
+                data.addAll(listOfGames);
             }
         });
     }
@@ -135,5 +136,33 @@ public class GameLobbyController implements Initializable, LobbyListener {
 
             }
         });
+    }
+
+    private class ButtonCell extends TableCell<Game, Boolean> {
+        final Button joinButton = new Button("Join");
+        final Button spectateButton = new Button("Spectate");
+
+        ButtonCell() {
+            joinButton.setOnAction(event -> {
+                // send join game packet to server
+                System.out.println("Join Button Clicked!");
+//                clientController.getAccountClient().addRequestToServer();
+            });
+
+            spectateButton.setOnAction(event -> {
+                // send spectate game packet to game server
+                System.out.println("Spectate Button Clicked!");
+            });
+        }
+
+        // Display buttons if the row is empty
+        @Override
+        protected void updateItem(Boolean t, boolean empty) {
+            super.updateItem(t, empty);
+            if(!empty) {
+                HBox pane = new HBox(joinButton, spectateButton);
+                setGraphic(pane);
+            }
+        }
     }
 }
