@@ -12,6 +12,7 @@ import app.Server;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GameHandler implements Runnable {
@@ -82,11 +83,10 @@ public class GameHandler implements Runnable {
                     gameThreadList.put(game.getId(), gameThread);
                     gameThread.start();
                     // Send successful join message
-                    clientConnection.getOutputStream().reset();
-                    Packet packet = new Packet(Packet.JOIN_GAME, userInformation, game);
+                    Game sendGame = new Game(game);
+                    Packet packet = new Packet(Packet.JOIN_GAME, userInformation, sendGame);
                     System.out.println(game.getPlayer2Username());
                     clientConnection.getOutputStream().writeObject(packet);
-                    // Broadcast changes in game info
                     Packet broadcast = new Packet(Packet.GET_GAMES, null, service.getGames());
                     service.broadcast(broadcast);
                 } catch (Exception ex) {
