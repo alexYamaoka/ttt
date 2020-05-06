@@ -90,11 +90,13 @@ public class GameBoardController implements Initializable, GameListener {
     }
 
     public void quit(ActionEvent actionEvent) {
+        if (actionEvent.getSource() == quit) {
 
+        }
     }
 
     public void backToLobby(ActionEvent actionEvent) {
-        if (actionEvent.getSource() == quit) {
+        if (actionEvent.getSource() == backToLobby) {
             Stage stage = null;
             Parent root = null;
 
