@@ -1,72 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<?import java.net.URL?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0"
-            prefWidth="1025.0"
-            style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496) radial-gradient(radius 200%,#204060,#1d9496);"
-            xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="UI.Client.GameBoardController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1025.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496) radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.Client.GameBoardController">
     <children>
-        <ImageView fitHeight="63.0" fitWidth="87.0" layoutX="469.0" layoutY="25.0" pickOnBounds="true"
-                   preserveRatio="true">
+        <ImageView fitHeight="63.0" fitWidth="87.0" layoutX="469.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../../Resources/Icons/Logo.png"/>
+                <Image url="@../../Resources/Icons/Logo.png" />
             </image>
         </ImageView>
-        <HBox layoutX="75.0" layoutY="120.0" prefHeight="80.0" prefWidth="360.0"
-              style="-fx-background-color: #23374D#23374D #23374D#23374D;">
+        <HBox layoutX="75.0" layoutY="120.0" prefHeight="80.0" prefWidth="360.0" style="-fx-background-color: #23374D#23374D #23374D#23374D;">
             <children>
-                <Label fx:id="player1Name" alignment="CENTER" prefHeight="80.0" prefWidth="120.0" text="Player 1"
-                       textFill="WHITE">
+                <Label fx:id="player1Name" alignment="CENTER" prefHeight="80.0" prefWidth="120.0" text="Player 1" textFill="WHITE">
                     <font>
-                        <Font name="System Bold" size="20.0"/>
+                        <Font name="System Bold" size="20.0" />
                     </font>
                 </Label>
-                <Label fx:id="time" alignment="CENTER" layoutX="120.0" prefHeight="80.0" prefWidth="120.0" text="00:30"
-                       textFill="WHITE">
+                <Label fx:id="time" alignment="CENTER" layoutX="120.0" prefHeight="80.0" prefWidth="120.0" text="00:30" textFill="WHITE">
                     <font>
-                        <Font name="System Bold" size="20.0"/>
+                        <Font name="System Bold" size="20.0" />
                     </font>
                 </Label>
-                <Label fx:id="player2Name" alignment="CENTER" layoutX="240.0" prefHeight="80.0" prefWidth="120.0"
-                       text="Player 2" textFill="WHITE">
+                <Label fx:id="player2Name" alignment="CENTER" layoutX="240.0" prefHeight="80.0" prefWidth="120.0" text="Player 2" textFill="WHITE">
                     <font>
-                        <Font size="20.0"/>
+                        <Font size="20.0" />
                     </font>
                 </Label>
             </children>
         </HBox>
-        <Button fx:id="zZ" id="gameButton" layoutX="510.0" layoutY="120.0" mnemonicParsing="false"
-                onAction="#playerMovedzZ" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;"/>
-        <Button fx:id="zO" id="gameButton" layoutX="660.0" layoutY="120.0" mnemonicParsing="false"
-                onAction="#playerMovedzO" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;"/>
-        <Button fx:id="zT" id="gameButton" layoutX="810.0" layoutY="120.0" mnemonicParsing="false"
-                onAction="#playerMovedzT" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;"/>
-        <Button fx:id="oZ" id="gameButton" layoutX="510.0" layoutY="270.0" mnemonicParsing="false"
-                onAction="#playerMovedoZ" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;"/>
-        <Button fx:id="oO" id="gameButton" layoutX="660.0" layoutY="270.0" mnemonicParsing="false"
-                onAction="#playerMovedoO" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;"/>
-        <Button fx:id="oT" id="gameButton" layoutX="810.0" layoutY="270.0" mnemonicParsing="false"
-                onAction="#playerMovedoT" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;"/>
-        <Button fx:id="tZ" id="gameButton" layoutX="510.0" layoutY="420.0" mnemonicParsing="false"
-                onAction="#playerMovedtZ" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;"/>
-        <Button fx:id="tO" id="gameButton" layoutX="660.0" layoutY="420.0" mnemonicParsing="false"
-                onAction="#playerMovedtO" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;"/>
-        <Button fx:id="tT" id="gameButton" layoutX="810.0" layoutY="420.0" mnemonicParsing="false"
-                onAction="#playerMovedtT" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;"/>
-        <Button fx:id="backToLobby" layoutX="195.0" layoutY="250.0" mnemonicParsing="false" onAction="#backToLobby"
-                prefHeight="40.0" prefWidth="120.0" text="Back to Lobby"/>
-        <Button fx:id="rematch" layoutX="195.0" layoutY="340.0" mnemonicParsing="false" onAction="#rematch"
-                prefHeight="40.0" prefWidth="120.0" text="Rematch"/>
-        <Button fx:id="quit" layoutX="195.0" layoutY="428.0" mnemonicParsing="false" onAction="#quit" prefHeight="40.0"
-                prefWidth="120.0" text="Quit"/>
+        <Button id="gameButton" fx:id="zZ" layoutX="510.0" layoutY="120.0" mnemonicParsing="false" onAction="#playerMovedzZ" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" />
+        <Button id="gameButton" fx:id="zO" layoutX="660.0" layoutY="120.0" mnemonicParsing="false" onAction="#playerMovedzO" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" />
+        <Button id="gameButton" fx:id="zT" layoutX="810.0" layoutY="120.0" mnemonicParsing="false" onAction="#playerMovedzT" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" />
+        <Button id="gameButton" fx:id="oZ" layoutX="510.0" layoutY="270.0" mnemonicParsing="false" onAction="#playerMovedoZ" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" />
+        <Button id="gameButton" fx:id="oO" layoutX="660.0" layoutY="270.0" mnemonicParsing="false" onAction="#playerMovedoO" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" />
+        <Button id="gameButton" fx:id="oT" layoutX="810.0" layoutY="270.0" mnemonicParsing="false" onAction="#playerMovedoT" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" />
+        <Button id="gameButton" fx:id="tZ" layoutX="510.0" layoutY="420.0" mnemonicParsing="false" onAction="#playerMovedtZ" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" />
+        <Button id="gameButton" fx:id="tO" layoutX="660.0" layoutY="420.0" mnemonicParsing="false" onAction="#playerMovedtO" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" />
+        <Button id="gameButton" fx:id="tT" layoutX="810.0" layoutY="420.0" mnemonicParsing="false" onAction="#playerMovedtT" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" />
+        <Button fx:id="backToLobby" layoutX="195.0" layoutY="250.0" mnemonicParsing="false" onAction="#backToLobby" prefHeight="40.0" prefWidth="120.0" text="Back to Lobby" />
+        <Button fx:id="rematch" layoutX="195.0" layoutY="340.0" mnemonicParsing="false" onAction="#rematch" prefHeight="40.0" prefWidth="120.0" text="Rematch" />
+        <Button fx:id="quit" layoutX="195.0" layoutY="428.0" mnemonicParsing="false" onAction="#quit" prefHeight="40.0" prefWidth="120.0" text="Quit" />
+      <Label fx:id="gameStatus" mouseTransparent="true"  id="gameStatus" layoutX="474.0" layoutY="222.0" prefHeight="172.0" prefWidth="513.0" />
     </children>
     <stylesheets>
-        <URL value="@gameBoard.css"/>
+        <URL value="@gameBoard.css" />
     </stylesheets>
 </AnchorPane>

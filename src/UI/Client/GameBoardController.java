@@ -7,6 +7,8 @@ import Models.Move;
 import ObserverPatterns.GameListener;
 import Shared.Packet;
 import Shared.UserInformation;
+import javafx.animation.FadeTransition;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,7 +16,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import javafx.util.Pair;
 
 import java.net.URL;
@@ -24,7 +28,7 @@ import java.util.ResourceBundle;
 
 public class GameBoardController implements Initializable, GameListener {
     @FXML
-    Label player1Name, player2Name, time;
+    Label player1Name, player2Name, time, gameStatus;
     @FXML
     Button backToLobby, rematch, quit, zZ, zO, zT, oZ, oO, oT, tZ, tO, tT;
 
@@ -174,6 +178,11 @@ public class GameBoardController implements Initializable, GameListener {
     @Override
     public void updateStatus(String message) {
         System.out.println("GAME STATUS:" + message);
+        gameStatus.setText(message);
+        FadeTransition ft = new FadeTransition(Duration.millis(3000), gameStatus);
+        ft.setFromValue(1.0);
+        ft.setToValue(0);
+        ft.play();
     }
 
     @Override
@@ -207,5 +216,8 @@ public class GameBoardController implements Initializable, GameListener {
         this.game = game;
         this.gameId = game.getId();
         System.out.println("Set Game: " + this.game + " " + this.game.getId());
+    }
+
+    private void playWinAnimation() {
     }
 }
