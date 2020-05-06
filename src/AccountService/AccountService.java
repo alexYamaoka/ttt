@@ -5,24 +5,23 @@ import DataBase.sql.DatabaseManager;
 import Server.ClientConnection;
 import Server.Service;
 import Shared.Packet;
+import Shared.UserInformation;
 
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.UnknownHostException;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class AccountService implements Service, Runnable {
+    private final AtomicBoolean running = new AtomicBoolean(false);
     private Thread worker;
     private HashSet<ClientConnection> clientConnections = new HashSet<>();
     private HashSet<Service> serviceListeners = new HashSet<>();
-    private final AtomicBoolean running = new AtomicBoolean(false);
     private DataSource ds = DatabaseManager.getInstance();
+    private HashSet<UserInformation> playersOnline = new HashSet<>();
 
     public AccountService() {
     }
@@ -43,7 +42,7 @@ public class AccountService implements Service, Runnable {
         try {
             // Create a server socket for listening for requests
             ServerSocket serverSocket = new ServerSocket(8000, 0, InetAddress.getByName("localhost"));
-            var pool = Executors.newFixedThreadPool(100);
+            var pool = Executors.newFixedThreadPool(20);
             System.out.println("Account Service started");
             while (running.get()) {
                 Socket socket = serverSocket.accept();
@@ -67,8 +66,9 @@ public class AccountService implements Service, Runnable {
     }
 
     public void broadcast(Packet packet) {
-        for(ClientConnection connection : clientConnections) {
+        for (ClientConnection connection : clientConnections) {
             try {
+                connection.getOutputStream().reset();
                 connection.getOutputStream().writeObject(packet);
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -79,6 +79,18 @@ public class AccountService implements Service, Runnable {
         }
     }
 
+    public void addOnlinePlayer(UserInformation user) {
+        playersOnline.add(user);
+        Packet packet = new Packet(Packet.GET_ONLINE_PLAYERS, null, getPlayersOnline());
+        broadcast(packet);
+    }
+
+    public HashSet<UserInformation> getPlayersOnline() {
+        if (!playersOnline.isEmpty()) {
+            return playersOnline;
+        }
+        return null;
+    }
 
 
     public void update(Packet packet) {

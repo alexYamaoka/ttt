@@ -7,46 +7,58 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="590.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.Client.MainMenuController">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="590.0"
+            style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496);"
+            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="UI.Client.MainMenuController">
     <children>
-        <Label layoutX="222.5" layoutY="70.0" prefHeight="29.0" prefWidth="145.0" style="-fx-text-fill: #9fbfdf#9fbfdf;" text="Main Menu">
+        <Label layoutX="222.5" layoutY="70.0" prefHeight="29.0" prefWidth="145.0" style="-fx-text-fill: #9fbfdf#9fbfdf;"
+               text="Main Menu">
             <font>
-                <Font size="31.0" />
+                <Font size="31.0"/>
             </font>
         </Label>
 
         <!--Main Menu Buttons -->
-        <Button fx:id="playButton" layoutX="230.0" layoutY="127.25" mnemonicParsing="false" onAction="#onPlayButtonClicked" prefHeight="32.0" prefWidth="130.0" style="-fx-background-color: #132639; -fx-text-fill: #9fbfdf;" text="Play" />
-        <Button fx:id="watchMatchesButton" layoutX="230.0" layoutY="187.25" mnemonicParsing="false" onAction="#onWatchMatchesButtonClicked" prefHeight="32.0" prefWidth="130.0" style="-fx-background-color: #132639; -fx-text-fill: #9fbfdf;" text="Watch Matches" />
-        <Button fx:id="optionsButton" layoutX="230.0" layoutY="247.75" mnemonicParsing="false" onAction="#onOptionsButtonClicked" prefHeight="32.0" prefWidth="130.0" style="-fx-background-color: #132639; -fx-text-fill: #9fbfdf;" text="Options" />
-        <Button fx:id="exitButton" layoutX="230.0" layoutY="308.0" mnemonicParsing="false" onAction="#onExitButtonClicked" prefHeight="32.0" prefWidth="130.0" style="-fx-background-color: #132639; -fx-text-fill: #9fbfdf;" text="Exit" />
+        <Button fx:id="playButton" layoutX="230.0" layoutY="127.25" mnemonicParsing="false"
+                onAction="#onPlayButtonClicked" prefHeight="32.0" prefWidth="130.0"
+                style="-fx-background-color: #132639; -fx-text-fill: #9fbfdf;" text="Play"/>
+        <Button fx:id="watchMatchesButton" layoutX="230.0" layoutY="187.25" mnemonicParsing="false"
+                onAction="#onWatchMatchesButtonClicked" prefHeight="32.0" prefWidth="130.0"
+                style="-fx-background-color: #132639; -fx-text-fill: #9fbfdf;" text="Watch Matches"/>
+        <Button fx:id="optionsButton" layoutX="230.0" layoutY="247.75" mnemonicParsing="false"
+                onAction="#onOptionsButtonClicked" prefHeight="32.0" prefWidth="130.0"
+                style="-fx-background-color: #132639; -fx-text-fill: #9fbfdf;" text="Options"/>
+        <Button fx:id="exitButton" layoutX="230.0" layoutY="308.0" mnemonicParsing="false"
+                onAction="#onExitButtonClicked" prefHeight="32.0" prefWidth="130.0"
+                style="-fx-background-color: #132639; -fx-text-fill: #9fbfdf;" text="Exit"/>
 
         <!-- Icons of the Buttons for use in side navigation bar -->
 
         <ImageView layoutX="177.0" layoutY="231.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="file:/Users/harrison/Downloads/pngguru.com-2.png" />
+                <Image url="file:/Users/harrison/Downloads/pngguru.com-2.png"/>
             </image>
         </ImageView>
 
         <ImageView accessibleRole="BUTTON" fitHeight="32.0" fitWidth="32.0" layoutX="189.0" layoutY="127.25">
             <image>
-                <Image url="@../Resources/Icons/2x/baseline_play_arrow_black_18dp.png" />
+                <Image url="@../Resources/Icons/2x/baseline_play_arrow_black_18dp.png"/>
             </image>
         </ImageView>
         <ImageView accessibleRole="BUTTON" fitHeight="32.0" fitWidth="32.0" layoutX="189.0" layoutY="187.25">
             <image>
-                <Image url="@../Resources/Icons/2x/baseline_tv_black_18dp.png" />
+                <Image url="@../Resources/Icons/2x/baseline_tv_black_18dp.png"/>
             </image>
         </ImageView>
         <ImageView accessibleRole="BUTTON" fitHeight="32.0" fitWidth="32.0" layoutX="189.0" layoutY="247.75">
             <image>
-                <Image url="@../Resources/Icons/2x/baseline_settings_black_18dp.png" />
+                <Image url="@../Resources/Icons/2x/baseline_settings_black_18dp.png"/>
             </image>
         </ImageView>
         <ImageView accessibleRole="BUTTON" fitHeight="32.0" fitWidth="32.0" layoutX="189.0" layoutY="308.0">
             <image>
-                <Image url="@../Resources/Icons/2x/baseline_exit_to_app_black_18dp.png" />
+                <Image url="@../Resources/Icons/2x/baseline_exit_to_app_black_18dp.png"/>
             </image>
         </ImageView>
     </children>

@@ -1,5 +1,4 @@
 package ObserverPatterns;
 
-public class GameObserver
-{
+public class GameObserver {
 }

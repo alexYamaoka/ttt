@@ -3,7 +3,6 @@ package Shared;
 import Models.BaseModel;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 public class UserInformation extends BaseModel implements Serializable {
 
@@ -53,6 +52,7 @@ public class UserInformation extends BaseModel implements Serializable {
     public String getPassword() {
         return password;
     }
+
     public void setPassword(String password) {
         this.password = password;
     }

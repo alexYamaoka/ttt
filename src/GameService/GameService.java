@@ -6,7 +6,6 @@ import Models.Game;
 import Server.ClientConnection;
 import Server.Service;
 import Shared.Packet;
-import Shared.UserInformation;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -14,7 +13,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -27,7 +25,6 @@ public class GameService implements Runnable, Service {
     private HashSet<ClientConnection> clientConnections = new HashSet<>();
     private HashMap<String, Game> ongoingGameRooms = new HashMap<>();
     private HashMap<String, GameThread> gameThreadList = new HashMap<>();
-    private Set<UserInformation> playersOnline = new HashSet<>();
 
     public GameService() {
     }
@@ -47,7 +44,7 @@ public class GameService implements Runnable, Service {
         running.set(true);
         try {
             ServerSocket serverSocket = new ServerSocket(PORT_NUMBER, 0, InetAddress.getByName("localhost"));
-            var pool = Executors.newFixedThreadPool(100);
+            var pool = Executors.newFixedThreadPool(20);
             System.out.println("Game Service started");
             while (running.get()) {
                 Socket socket = serverSocket.accept();
@@ -69,19 +66,6 @@ public class GameService implements Runnable, Service {
     public Game getGame(String id) {
         return ongoingGameRooms.get(id);
     }
-
-
-    public void addOnlinePlayer(UserInformation user) {
-        playersOnline.add(user);
-    }
-
-    public HashSet<UserInformation> getPlayersOnline() {
-        if (!playersOnline.isEmpty()) {
-            return (HashSet<UserInformation>) playersOnline;
-        }
-        return null;
-    }
-
 
     public HashSet<Game> getGames() {
         if (!ongoingGameRooms.isEmpty()) {
@@ -108,6 +92,7 @@ public class GameService implements Runnable, Service {
     public void broadcast(Packet packet) {
         for (ClientConnection connection : clientConnections) {
             try {
+                connection.getOutputStream().reset();
                 connection.getOutputStream().writeObject(packet);
             } catch (IOException ex) {
                 ex.printStackTrace();

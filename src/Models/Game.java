@@ -1,10 +1,6 @@
 package Models;
 
 import DataBase.UUIDGenerator;
-import GameService.GameThread;
-import Models.BaseModel;
-import Models.Move;
-import Models.TTTBoard;
 import ObserverPatterns.GameObserver;
 import Server.ClientConnection;
 import Shared.Packet;
@@ -43,21 +39,17 @@ public class Game extends BaseModel implements Serializable {
         this.gameStatus = "WAITING FOR ANOTHER PLAYER";
     }
 
-//        public void start(){
-//        GameThread gameThread = new GameThread(player1,player2,GameObservers);
-//        gameThread.start();
-//        setStartTime();
-//    }
-
-    public void join(ClientConnection player2){
+    public void join(ClientConnection player2) {
         this.player2 = player2;
+        player2Info = player2.getInformation();
+        player2Username = player2Info.getUserName();
     }
 
-    public String getId(){
+    public String getId() {
         return this.id;
     }
 
-    public void addGameObserver(ClientConnection client){
+    public void addGameObserver(ClientConnection client) {
         GameObservers.add(client);
     }
 
@@ -80,21 +72,17 @@ public class Game extends BaseModel implements Serializable {
     }
 
 
-    public void addGameObserver(GameObserver observer)
-    {
+    public void addGameObserver(GameObserver observer) {
         gameObserversList.add(observer);
     }
 
-    public void notifyObservers(Packet packet)
-    {
-        for (GameObserver observer: gameObserversList)
-        {
+    public void notifyObservers(Packet packet) {
+        for (GameObserver observer : gameObserversList) {
             // observer.update(packet);     // broadcast packet with move or game status ex: tie game, winner
         }
     }
 
-    public void player1MakeMove(Move move)
-    {
+    public void player1MakeMove(Move move) {
         move.setToken("X");
 
         tttBoard.setX(move.getRow(), move.getColumn());
@@ -103,8 +91,7 @@ public class Game extends BaseModel implements Serializable {
         System.out.println();
     }
 
-    public void player2MakeMove(Move move)
-    {
+    public void player2MakeMove(Move move) {
         move.setToken("O");
         tttBoard.setO(move.getRow(), move.getColumn());
 
@@ -112,35 +99,31 @@ public class Game extends BaseModel implements Serializable {
         System.out.println();
     }
 
-    public char getCharInTile(int row, int col)
-    {
+    public char getCharInTile(int row, int col) {
         return tttBoard.getCharInCell(row, col);
     }
 
-    public boolean checkIfValidMove(Move move)
-    {
+    public boolean checkIfValidMove(Move move) {
         return tttBoard.isCellEmpty(move.getRow(), move.getColumn());
     }
 
-    public boolean isPlayer1Winner(Move move){
+    public boolean isPlayer1Winner(Move move) {
         return tttBoard.isWinner(move.getRow(), move.getColumn(), 'X');
     }
 
-    public boolean isPlayer2Winner(Move move)
-    {
+    public boolean isPlayer2Winner(Move move) {
         return tttBoard.isWinner(move.getRow(), move.getColumn(), 'O');
     }
 
-    public boolean isTieGame()
-    {
+    public boolean isTieGame() {
         return tttBoard.isTieGame();
     }
 
-    public boolean isOver(){
-        if(tttBoard.isOver()) {
+    public boolean isOver() {
+        if (tttBoard.isOver()) {
             setEndTime();
             return true;
-        }else return false;
+        } else return false;
 
     }
 
@@ -148,13 +131,13 @@ public class Game extends BaseModel implements Serializable {
         return player1Info;
     }
 
-    public UserInformation getPlayer2Info(){
-        return player2Info;
-    }
-
     public void setPlayer1Info(UserInformation player1Info) {
 
         this.player1Info = player1Info;
+    }
+
+    public UserInformation getPlayer2Info() {
+        return player2Info;
     }
 
     public void setPlayer2Info(UserInformation player2Info) {
@@ -162,13 +145,11 @@ public class Game extends BaseModel implements Serializable {
     }
 
 
-    public ClientConnection getPlayer1ClientConnection()
-    {
+    public ClientConnection getPlayer1ClientConnection() {
         return player1;
     }
 
-    public ClientConnection getPlayer2ClientConnection()
-    {
+    public ClientConnection getPlayer2ClientConnection() {
         return player2;
     }
 
@@ -186,5 +167,9 @@ public class Game extends BaseModel implements Serializable {
 
     public String getPlayer2Username() {
         return player2Username;
+    }
+
+    public TTTBoard getTttBoard() {
+        return tttBoard;
     }
 }
