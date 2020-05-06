@@ -39,6 +39,15 @@ public class Game extends BaseModel implements Serializable {
         this.gameStatus = "WAITING FOR ANOTHER PLAYER";
     }
 
+    public Game(Game game) {
+        this.player1Username = game.getPlayer1Username();
+        this.player2Username = game.getPlayer2Username();
+        this.id = game.getId();
+        this.gameStatus = game.getGameStatus();
+        this.startTime = game.getStartTime();
+        this.endTime = game.getEndTime();
+    }
+
     public void join(ClientConnection player2) {
         this.player2 = player2;
         player2Info = player2.getInformation();
