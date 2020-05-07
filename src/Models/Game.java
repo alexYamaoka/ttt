@@ -30,8 +30,6 @@ public class Game extends BaseModel implements Serializable {
     private String gameStatus;
     private Timestamp startTime;
     private Timestamp endTime;
-    private String nextMoveId;
-    private DataSource ds = DatabaseManager.getInstance();
     private String startingPlayerId;
     private String winningPlayerId;
 
