@@ -57,6 +57,8 @@ public class GameService implements Runnable, Service {
         }
     }
 
+
+
     public void addGame(Game game) {
         ongoingGameRooms.put(game.getId(), game);
         Packet packet = new Packet(Packet.GET_GAMES, null, getGames());
@@ -92,9 +94,11 @@ public class GameService implements Runnable, Service {
     public void broadcast(Packet packet) {
         for (ClientConnection connection : clientConnections) {
             try {
-                connection.getOutputStream().reset();
-                connection.getOutputStream().writeObject(packet);
-            } catch (IOException ex) {
+                connection.sendPacketToClient(packet);
+                //connection.getOutputStream().flush();
+                //connection.getOutputStream().writeObject(packet);
+                //connection.getOutputStream().flush();
+            } catch (Exception ex) {
                 ex.printStackTrace();
             }
         }
