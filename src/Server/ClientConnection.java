@@ -1,13 +1,17 @@
 package Server;
 
+import Models.Move;
 import Shared.Packet;
 import Shared.UserInformation;
+import com.sun.javafx.iio.ios.IosDescriptor;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ClientConnection implements Runnable {
@@ -18,10 +22,43 @@ public class ClientConnection implements Runnable {
     private ObjectInputStream input;
     private UserInformation information;
 
+    private BlockingQueue<Packet> packetsToSend = new LinkedBlockingQueue<>();
+
+
+
     public ClientConnection(Socket socket, Service service) {
         this.socket = socket;
         this.service = service;
     }
+
+
+
+
+    //***************************************************************************
+    public synchronized void sendPacketToClient(Packet packet)
+    {
+        packetsToSend.add(packet);
+        send();
+    }
+
+    private synchronized void send()
+    {
+        try
+        {
+            output.reset();
+            Packet packet = packetsToSend.take();
+            output.writeObject(packet);
+            output.flush();
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+    //***************************************************************************
+
+
+
 
     public void stop() {
         running.set(false);
