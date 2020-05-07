@@ -178,7 +178,22 @@ public class GameBoardController implements Initializable, GameListener {
     @Override
     public void updateStatus(String message) {
         System.out.println("GAME STATUS:" + message);
-        gameStatus.setText(message);
+        if (clientController.getAccountClient().getUserInformation().getUserName().equals(message)){
+            gameStatus.setStyle("-fx-background-color: green");
+            gameStatus.setText("You win!");
+        }
+        else if (message.equals("Tie!")){
+            gameStatus.setStyle("-fx-background-color: blue");
+            gameStatus.setText(message);
+        }
+        else if (message.equals("invalid-move")){
+            gameStatus.setText(message);
+        }
+        else{
+            gameStatus.setStyle("-fx-background-color: red");
+            gameStatus.setText("You lose!");
+        }
+
         FadeTransition ft = new FadeTransition(Duration.millis(3000), gameStatus);
         ft.setFromValue(1.0);
         ft.setToValue(0);
