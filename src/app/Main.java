@@ -14,18 +14,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        // start AccountService
-        AccountService service = new AccountService();
-        service.start();
-
-        // start gameservice
-        GameService gameService = new GameService();
-        gameService.start();
-
-
-        // start client
-        ClientController clientController = new ClientController(stage);
-        stage.setTitle("EndFrame TicTacToe");
-        clientController.run();
+        // start server ui
     }
 }
