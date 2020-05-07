@@ -115,13 +115,14 @@ public class GameThread implements Runnable {
 
                             if (game.isPlayer1Winner(newMove)) {
                                 System.out.println("Player 1 Wins!");
-                                Packet player1Wins = new Packet(Packet.GAME_STATUS, player1UserInformation, game.getId() + " " + "Player1-wins");
+                                String winner = game.getPlayer1Info().getUserName();
+                                Packet player1Wins = new Packet(Packet.GAME_STATUS, player1UserInformation, game.getId() + " " + winner);
 
                                 player1.sendPacketToClient(player1Wins);
                                 player2.sendPacketToClient(player1Wins);
                             } else if (game.isTieGame()) {
                                 System.out.println("Tie Game");
-                                Packet tieGame = new Packet(Packet.GAME_STATUS, null, game.getId() + " " + "Tie-Game");
+                                Packet tieGame = new Packet(Packet.GAME_STATUS, null, game.getId() + " " + "Tie!");
 
                                 player1.sendPacketToClient(tieGame);
                                 player2.sendPacketToClient(tieGame);
@@ -153,13 +154,14 @@ public class GameThread implements Runnable {
 
                             if (game.isPlayer2Winner(newMove)) {
                                 System.out.println("Player 2 Wins!");
-                                Packet player2Wins = new Packet(Packet.GAME_STATUS, player2UserInformation, game.getId() + " " + "Player2-wins");
+                                String winner = game.getPlayer2Info().getUserName();
+                                Packet player2Wins = new Packet(Packet.GAME_STATUS, player2UserInformation, game.getId() + " " + winner);
 
                                 player1.sendPacketToClient(player2Wins);
                                 player2.sendPacketToClient(player2Wins);
                             } else if (game.isTieGame()) {
                                 System.out.println("Tie Game");
-                                Packet tieGame = new Packet(Packet.GAME_STATUS, null, game.getId() + " " + "Tie-Game");
+                                Packet tieGame = new Packet(Packet.GAME_STATUS, null, game.getId() + " " + "Tie!");
 
                                 player1.sendPacketToClient(tieGame);
                                 player2.sendPacketToClient(tieGame);
