@@ -9,39 +9,28 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0"
-            prefWidth="1025.0"
-            style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496)radial-gradient(radius 200%,#204060,#1d9496);"
-            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="UI.Client.GameLobbyController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1025.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496)radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.Client.GameLobbyController">
     <children>
-        <ImageView fitHeight="63.0" fitWidth="87.0" layoutX="469.0" layoutY="25.0" pickOnBounds="true"
-                   preserveRatio="true">
+        <ImageView fitHeight="63.0" fitWidth="87.0" layoutX="469.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../../Resources/Icons/Logo.png"/>
+                <Image url="@../../Resources/Icons/Logo.png" />
             </image>
         </ImageView>
         <Label layoutX="384.0" layoutY="93.0" text="Active Games" textFill="WHITE">
             <font>
-                <Font size="40.0"/>
+                <Font size="40.0" />
             </font>
         </Label>
-        <TableView fx:id="activeGames" editable="true" layoutX="112.5" layoutY="160.0" prefHeight="400.0"
-                   prefWidth="800.0">
+        <TableView fx:id="activeGames" editable="true" layoutX="112.5" layoutY="160.0" prefHeight="400.0" prefWidth="800.0">
             <columns>
-                <TableColumn fx:id="player1Column" editable="false" prefWidth="200.0" text="Player 1"/>
-                <TableColumn fx:id="player2Column" editable="false" minWidth="8.440948486328125" prefWidth="200.0"
-                             text="Player 2"/>
-                <TableColumn fx:id="statusColumn" editable="false" prefWidth="200.0" text="Status"/>
-                <TableColumn fx:id="actionColumn" editable="false" prefWidth="200.0" text="Action"/>
+                <TableColumn fx:id="player1Column" editable="false" prefWidth="200.0" text="Player 1" />
+                <TableColumn fx:id="player2Column" editable="false" minWidth="8.440948486328125" prefWidth="200.0" text="Player 2" />
+                <TableColumn fx:id="statusColumn" editable="false" prefWidth="200.0" text="Status" />
+                <TableColumn fx:id="actionColumn" editable="false" prefWidth="200.0" text="Action" />
             </columns>
         </TableView>
-        <Button fx:id="updateTableButton" layoutX="927.5" layoutY="160.0" maxHeight="-Infinity" maxWidth="-Infinity"
-                minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#updateTableButtonClicked"
-                prefHeight="30.0" prefWidth="30.0" text="⟳"/>
-        <Button fx:id="newGameAgainstComputerButton" layoutX="772.5" layoutY="590.0" mnemonicParsing="false"
-                onAction="#onPlayAgainstComputerButtonClicked" prefWidth="140.0" text="Play against computer"/>
-        <Button fx:id="newGameButton" layoutX="617.5" layoutY="590.0" mnemonicParsing="false"
-                onAction="#onCreateGameButtonClicked" prefWidth="140.0" text="Create new game"/>
+        <Button fx:id="returnToMainMenuButton" layoutX="112.5" layoutY="590.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#returnToMainMenuButtonClicked" prefWidth="140.0" text="Return to main menu" />
+        <Button fx:id="newGameAgainstComputerButton" layoutX="772.5" layoutY="590.0" mnemonicParsing="false" onAction="#onPlayAgainstComputerButtonClicked" prefWidth="140.0" text="Play against computer" />
+        <Button fx:id="newGameButton" layoutX="617.5" layoutY="590.0" mnemonicParsing="false" onAction="#onCreateGameButtonClicked" prefWidth="140.0" text="Create new game" />
     </children>
 </AnchorPane>

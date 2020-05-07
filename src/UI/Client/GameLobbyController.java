@@ -41,7 +41,7 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
     @FXML
     private TableColumn<Game, Void> actionColumn;
     @FXML
-    private Button updateTableButton, newGameButton, newGameAgainstComputerButton;
+    private Button returnToMainMenuButton, newGameButton, newGameAgainstComputerButton;
     @FXML
     private ClientController clientController;
 
@@ -78,8 +78,8 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
 
     }
 
-    public void updateTableButtonClicked(ActionEvent actionEvent) {
-        // send packet to get list of games
+    public void returnToMainMenuButtonClicked(ActionEvent actionEvent) {
+        //return to main menu
     }
 
     @Override
