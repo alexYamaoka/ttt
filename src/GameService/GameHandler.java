@@ -76,7 +76,6 @@ public class GameHandler implements Runnable {
                     gameThread.start();
 
 
-
                     // Send successful join message
                     Game sendGame = new Game(joinGame);
                     Packet joinPacket = new Packet(Packet.JOIN_GAME, userInformation, sendGame);
@@ -115,6 +114,18 @@ public class GameHandler implements Runnable {
                 }
                 break;
 
+            case Packet.GAME_CLOSE:
+                try {
+                    Packet closePacket = null;
+                    if (service.removeGameFromLobby(data.toString())) {
+                        closePacket = new Packet(Packet.GAME_CLOSE, clientConnection.getInformation(), "SUCCESS");
+                    } else {
+                        closePacket = new Packet(Packet.GAME_CLOSE, clientConnection.getInformation(), "FAILED");
+                    }
+                    clientConnection.sendPacketToClient(closePacket);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
         }
 
         stop();
