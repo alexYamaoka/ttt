@@ -93,7 +93,8 @@ public class GameHandler implements Runnable {
                 break;
 
             case Packet.OBSERVE_GAME:
-                Game ObserverGame = service.getGame(data.toString());
+                Game observerGame = service.getGame(data.toString());
+                observerGame.addGameObserver(clientConnection);
                 break;
 
             case Packet.GAME_MOVE:
