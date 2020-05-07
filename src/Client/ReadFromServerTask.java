@@ -7,8 +7,7 @@ import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class ReadFromServerTask implements Runnable
-{
+public class ReadFromServerTask implements Runnable {
     private ObjectInputStream objectInputStream;
     private Socket socket;
     private Client client;
@@ -16,17 +15,13 @@ public class ReadFromServerTask implements Runnable
     private AtomicBoolean running = new AtomicBoolean(false);
 
 
-    public ReadFromServerTask(Socket socket, Client client)
-    {
+    public ReadFromServerTask(Socket socket, Client client) {
         this.socket = socket;
         this.client = client;
 
-        try
-        {
+        try {
             objectInputStream = new ObjectInputStream(socket.getInputStream());
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
@@ -41,33 +36,23 @@ public class ReadFromServerTask implements Runnable
     }
 
     @Override
-    public void run()
-    {
+    public void run() {
         running.set(true);
-        while (running.get())
-        {
-            try
-            {
+        while (running.get()) {
+            try {
                 Packet response = (Packet) objectInputStream.readObject();
                 client.addResponseFromServer(response);
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 ex.printStackTrace();
                 running.set(false);
             }
         }
 
-        try
-        {
+        try {
             socket.close();
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             ex.printStackTrace();
-        }
-        finally
-        {
+        } finally {
             running.set(false);
         }
     }

@@ -1,6 +1,5 @@
 package ObserverPatterns;
 
-public interface ServiceListener
-{
-    public void onDataChanged(String info);
+public interface ServiceListener {
+    void onDataChanged(String info);
 }

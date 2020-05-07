@@ -1,3 +1,2 @@
-public class GameLogic
-{
+public class GameLogic {
 }

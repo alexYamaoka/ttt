@@ -22,7 +22,6 @@ public class ClientController {
     private UI.Client.SignUpController signUpController;
     private UI.Client.Options options;
     private GameLobbyController gameLobby;
-    private GameBoardController gameBoardController;
 
     // Scenes
     private Pane signInPane;
@@ -30,7 +29,6 @@ public class ClientController {
     private Pane mainMenuPain;
     private Pane optionsPane;
     private Pane lobbyPane;
-    private Pane gameBoardPane;
 
     private ReadMessageBus readMessageBus;
 
@@ -73,14 +71,6 @@ public class ClientController {
             gameLobby = loader.getController();
             gameLobby.setClientController(this);
             Scene lobbyScene = new Scene(lobbyPane);
-
-
-            loader = new FXMLLoader(getClass().getResource("../UI/Client/GameBoard.fxml"));
-            gameBoardPane = loader.load();
-            gameBoardController = loader.getController();
-            gameBoardController.setClientController(this);
-            Scene gameBoardScene = new Scene(gameBoardPane);
-
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -148,14 +138,6 @@ public class ClientController {
 
     public Options getOptions() {
         return options;
-    }
-
-    public Pane getGameBoardPane() {
-        return gameBoardPane;
-    }
-
-    public GameBoardController getGameBoardController() {
-        return gameBoardController;
     }
 
     public Client getGameClient() {

@@ -32,8 +32,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class SignUpController implements Initializable, SignUpResultListener
-{
+public class SignUpController implements Initializable, SignUpResultListener {
     @FXML
     StackPane parentContainerSignUp;
     @FXML
@@ -52,34 +51,27 @@ public class SignUpController implements Initializable, SignUpResultListener
     private UI.Client.SignInController signInController;
 
     @FXML
-    public void OnEnterKeyPressed(KeyEvent keyEvent)
-    {
-        if (keyEvent.getCode().equals(KeyCode.ENTER))
-        {
+    public void OnEnterKeyPressed(KeyEvent keyEvent) {
+        if (keyEvent.getCode().equals(KeyCode.ENTER)) {
             String firstName = txtF_FirstName.getText().trim();
             String lastName = txtF_LastName.getText().trim();
             String username = txtF_Username.getText().trim();
             String password = txtF_Password.getText().trim();
             String confirmPassword = txtF_ConfirmPassword.getText().trim();
 
-            if (! checkPasswords(password, confirmPassword) && checkField(firstName, lastName, username, password, confirmPassword))
-            {
+            if (!checkPasswords(password, confirmPassword) && checkField(firstName, lastName, username, password, confirmPassword)) {
                 // notify user that text fields need to be fixed
 
                 System.out.println("Fields were not entered correctly");
 
 
-                Platform.runLater(new Runnable()
-                {
+                Platform.runLater(new Runnable() {
                     @Override
-                    public void run()
-                    {
+                    public void run() {
 
                     }
                 });
-            }
-            else
-            {
+            } else {
                 System.out.println("Registering new user");
                 registerNewUser(firstName, lastName, username, password);
             }
@@ -87,10 +79,8 @@ public class SignUpController implements Initializable, SignUpResultListener
     }
 
 
-
     @FXML
-    public void onSignUpButtonClicked(ActionEvent event) throws IOException
-    {
+    public void onSignUpButtonClicked(ActionEvent event) throws IOException {
         String first_Name = txtF_FirstName.getText().trim();
         String last_Name = txtF_LastName.getText().trim();
         String username = txtF_Username.getText().trim();
@@ -98,23 +88,19 @@ public class SignUpController implements Initializable, SignUpResultListener
         String confirm_Password = txtF_ConfirmPassword.getText().trim();
 
 
-        if(checkField(first_Name, last_Name, username, password, confirm_Password) && checkPasswords(password, confirm_Password)){
+        if (checkField(first_Name, last_Name, username, password, confirm_Password) && checkPasswords(password, confirm_Password)) {
             // notify user that text fields need to be fixed
 
             System.out.println("Fields were not entered correctly");
 
-            Platform.runLater(new Runnable()
-            {
+            Platform.runLater(new Runnable() {
                 @Override
-                public void run()
-                {
+                public void run() {
 
                 }
             });
 
-        }
-        else
-        {
+        } else {
             System.out.println("Registering new user");
             registerNewUser(first_Name, last_Name, username, password);
         }
@@ -122,8 +108,7 @@ public class SignUpController implements Initializable, SignUpResultListener
     }
 
 
-    private void registerNewUser(String firstName, String lastName, String username, String password)
-    {
+    private void registerNewUser(String firstName, String lastName, String username, String password) {
         // register new user and go to main menu scene
         String registerInfo = firstName + " " + lastName + " " + username + " " + password;
 
@@ -161,24 +146,24 @@ public class SignUpController implements Initializable, SignUpResultListener
         timeline.play();
     }
 
-    public boolean checkPasswords(String password, String confirmPassword){
-        if (!password.equals(confirmPassword)){
+    public boolean checkPasswords(String password, String confirmPassword) {
+        if (!password.equals(confirmPassword)) {
             confirmPasswordError.setText("Passwords do not match");
             confirmPasswordError.setTextFill(Color.RED);
             return false;
-        }
-        else{
+        } else {
             confirmPasswordError.setText("");
             return true;
         }
     }
-    public boolean checkField(String firstName,String lastName,String username,String password,String confirmPassword){
+
+    public boolean checkField(String firstName, String lastName, String username, String password, String confirmPassword) {
         boolean value_entered = true;
         if (firstName.isBlank()) {
             txtF_FirstName.setStyle("-fx-border-color: red;");
             firstNameError.setText("Enter first name");
             value_entered = false;
-        } else{
+        } else {
             txtF_FirstName.setStyle("");
             firstNameError.setText("");
             value_entered = false;
@@ -187,7 +172,7 @@ public class SignUpController implements Initializable, SignUpResultListener
             txtF_LastName.setStyle("-fx-border-color: red;");
             lastNameError.setText("Enter last name");
             value_entered = false;
-        } else{
+        } else {
             txtF_LastName.setStyle("");
             passwordError.setText("");
             value_entered = false;
@@ -196,7 +181,7 @@ public class SignUpController implements Initializable, SignUpResultListener
             txtF_Username.setStyle("-fx-border-color: red;");
             usernameError.setText("Enter an username");
             value_entered = false;
-        } else{
+        } else {
             txtF_Username.setStyle("");
             usernameError.setText("");
             value_entered = false;
@@ -205,7 +190,7 @@ public class SignUpController implements Initializable, SignUpResultListener
             txtF_Password.setStyle("-fx-border-color: red;");
             passwordError.setText("Enter a password");
             value_entered = false;
-        } else{
+        } else {
             txtF_Password.setStyle("");
             passwordError.setText("");
             value_entered = false;
@@ -214,7 +199,7 @@ public class SignUpController implements Initializable, SignUpResultListener
             txtF_ConfirmPassword.setStyle("-fx-border-color: red;");
             confirmPasswordError.setText("Confirm your password");
             value_entered = false;
-        } else{
+        } else {
             txtF_ConfirmPassword.setStyle("");
             confirmPasswordError.setText("");
             value_entered = false;
@@ -233,18 +218,15 @@ public class SignUpController implements Initializable, SignUpResultListener
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println("Sign up Initialized");
+
     }
 
     @Override
-    public void updateSignInResult(String message)
-    {
-        Platform.runLater(new Runnable()
-        {
+    public void updateSignInResult(String message) {
+        Platform.runLater(new Runnable() {
             @Override
-            public void run()
-            {
-                if(!message.contains("FAIL")) {
+            public void run() {
+                if (!message.contains("FAIL")) {
                     // The middle anchorpane of the borderpane
                     AnchorPane middleAnchorPane = signInController.getMiddleAnchorPane();
 

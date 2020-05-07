@@ -1,0 +1,11 @@
+#gameButton {
+    -fx-font-size: 55px;
+    -fx-font-weight: 700;
+}
+
+#gameStatus {
+    -fx-font-size: 40px;
+    -fx-font-weight: 700;
+    -fx-text-fill: RED;
+    -fx-background-color: transparent;
+}

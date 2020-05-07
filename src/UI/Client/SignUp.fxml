@@ -8,57 +8,77 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="parentContainerSignUp" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.Client.SignUpController">
-   <children>
-      <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0">
-          <children>
-              <Label layoutX="48.25" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="29.0" prefWidth="203.5" text="Create your account">
-                  <font>
-                      <Font size="24.0" />
-                  </font>
-              </Label>
-              <TextField fx:id="txtF_FirstName" layoutX="67.5" layoutY="90.0" prefHeight="29.0" prefWidth="81.0" promptText="First name" />
-              <Label fx:id="firstNameError" layoutX="67.5" layoutY="120.0" prefHeight="17.0" prefWidth="234.0" style="-fx-text-fill: red;">
-                  <font>
-                      <Font size="10.0" />
-                  </font>
-              </Label>
-              <TextField fx:id="txtF_LastName" layoutX="151.5" layoutY="90.0" prefHeight="29.0" prefWidth="81.0" promptText="Last name" />
-              <Label fx:id="lastNameError" layoutX="151.5" layoutY="120.0" prefHeight="17.0" prefWidth="234.0" style="-fx-text-fill: red;">
-                  <font>
-                      <Font size="10.0" />
-                  </font>
-              </Label>
-              <TextField fx:id="txtF_Username" layoutX="67.5" layoutY="138.0" prefHeight="29.0" prefWidth="165.0" promptText="Username" />
-              <Label fx:id="usernameError" layoutX="67.5" layoutY="168.0" prefHeight="17.0" prefWidth="234.0" style="-fx-text-fill: red;">
-                  <font>
-                      <Font size="10.0" />
-                  </font>
-              </Label>
-              <PasswordField fx:id="txtF_Password" accessibleRole="PASSWORD_FIELD" layoutX="67.5" layoutY="186.0" prefHeight="29.0" prefWidth="81.0" promptText="Password">
-                  <font>
-                      <Font name="System Font" size="13.0" />
-                  </font>
-              </PasswordField>
-              <Label fx:id="passwordError" layoutX="67.5" layoutY="216.0" prefHeight="17.0" prefWidth="234.0" style="-fx-text-fill: red;">
-                  <font>
-                      <Font size="10.0" />
-                  </font>
-              </Label>
-              <PasswordField fx:id="txtF_ConfirmPassword" accessibleRole="PASSWORD_FIELD" layoutX="151.5" layoutY="186.0" prefHeight="29.0" prefWidth="81.0" promptText="Confirm">
-                  <font>
-                      <Font name="System Font" size="13.0" />
-                  </font>
-              </PasswordField>
-              <Label fx:id="confirmPasswordError" layoutX="151.5" layoutY="216.0" prefHeight="17.0" prefWidth="234.0" style="-fx-text-fill: red;">
-                  <font>
-                      <Font size="10.0" />
-                  </font>
-              </Label>
-              <Button fx:id="btn_SignIn" layoutX="57.0" layoutY="252.0" mnemonicParsing="false" onAction="#onSignInButtonClicked" prefHeight="27.0" prefWidth="57.0" style="-fx-background-color: white; -fx-text-fill: #204060; -fx-border-color: white;" text="Sign in" />
-              <Button fx:id="btn_SignUp" layoutX="131.0" layoutY="252.0" mnemonicParsing="false" onAction="#onSignUpButtonClicked" onKeyPressed="#OnEnterKeyPressed" prefHeight="32.0" prefWidth="101.5" style="-fx-background-color: #204060; -fx-text-fill: white;" text="Create account" />
-            <Label fx:id="registrationError" layoutX="72.0" layoutY="225.0" prefHeight="17.0" prefWidth="158.0" style="-fx-text-fill: red" />
-          </children>
-      </AnchorPane>
-   </children>
+<StackPane fx:id="parentContainerSignUp" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="UI.Client.SignUpController">
+    <children>
+        <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+                    minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0">
+            <children>
+                <Label layoutX="48.25" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+                       minWidth="-Infinity" prefHeight="29.0" prefWidth="203.5" text="Create your account">
+                    <font>
+                        <Font size="24.0"/>
+                    </font>
+                </Label>
+                <TextField fx:id="txtF_FirstName" layoutX="67.5" layoutY="90.0" prefHeight="29.0" prefWidth="81.0"
+                           promptText="First name"/>
+                <Label fx:id="firstNameError" layoutX="67.5" layoutY="120.0" prefHeight="17.0" prefWidth="234.0"
+                       style="-fx-text-fill: red;">
+                    <font>
+                        <Font size="10.0"/>
+                    </font>
+                </Label>
+                <TextField fx:id="txtF_LastName" layoutX="151.5" layoutY="90.0" prefHeight="29.0" prefWidth="81.0"
+                           promptText="Last name"/>
+                <Label fx:id="lastNameError" layoutX="151.5" layoutY="120.0" prefHeight="17.0" prefWidth="234.0"
+                       style="-fx-text-fill: red;">
+                    <font>
+                        <Font size="10.0"/>
+                    </font>
+                </Label>
+                <TextField fx:id="txtF_Username" layoutX="67.5" layoutY="138.0" prefHeight="29.0" prefWidth="165.0"
+                           promptText="Username"/>
+                <Label fx:id="usernameError" layoutX="67.5" layoutY="168.0" prefHeight="17.0" prefWidth="234.0"
+                       style="-fx-text-fill: red;">
+                    <font>
+                        <Font size="10.0"/>
+                    </font>
+                </Label>
+                <PasswordField fx:id="txtF_Password" accessibleRole="PASSWORD_FIELD" layoutX="67.5" layoutY="186.0"
+                               prefHeight="29.0" prefWidth="81.0" promptText="Password">
+                    <font>
+                        <Font name="System Font" size="13.0"/>
+                    </font>
+                </PasswordField>
+                <Label fx:id="passwordError" layoutX="67.5" layoutY="216.0" prefHeight="17.0" prefWidth="234.0"
+                       style="-fx-text-fill: red;">
+                    <font>
+                        <Font size="10.0"/>
+                    </font>
+                </Label>
+                <PasswordField fx:id="txtF_ConfirmPassword" accessibleRole="PASSWORD_FIELD" layoutX="151.5"
+                               layoutY="186.0" prefHeight="29.0" prefWidth="81.0" promptText="Confirm">
+                    <font>
+                        <Font name="System Font" size="13.0"/>
+                    </font>
+                </PasswordField>
+                <Label fx:id="confirmPasswordError" layoutX="151.5" layoutY="216.0" prefHeight="17.0" prefWidth="234.0"
+                       style="-fx-text-fill: red;">
+                    <font>
+                        <Font size="10.0"/>
+                    </font>
+                </Label>
+                <Button fx:id="btn_SignIn" layoutX="57.0" layoutY="252.0" mnemonicParsing="false"
+                        onAction="#onSignInButtonClicked" prefHeight="27.0" prefWidth="57.0"
+                        style="-fx-background-color: white; -fx-text-fill: #204060; -fx-border-color: white;"
+                        text="Sign in"/>
+                <Button fx:id="btn_SignUp" layoutX="131.0" layoutY="252.0" mnemonicParsing="false"
+                        onAction="#onSignUpButtonClicked" onKeyPressed="#OnEnterKeyPressed" prefHeight="32.0"
+                        prefWidth="101.5" style="-fx-background-color: #204060; -fx-text-fill: white;"
+                        text="Create account"/>
+                <Label fx:id="registrationError" layoutX="72.0" layoutY="225.0" prefHeight="17.0" prefWidth="158.0"
+                       style="-fx-text-fill: red"/>
+            </children>
+        </AnchorPane>
+    </children>
 </StackPane>

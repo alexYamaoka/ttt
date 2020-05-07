@@ -1,4 +1,5 @@
 package Server;
+
 import Shared.Packet;
 import Shared.UserInformation;
 
@@ -10,10 +11,9 @@ import java.net.Socket;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ClientConnection implements Runnable {
+    private final AtomicBoolean running = new AtomicBoolean(false);
     private Socket socket;
     private Server.Service service;
-
-    private final AtomicBoolean running = new AtomicBoolean(false);
     private ObjectOutputStream output;
     private ObjectInputStream input;
     private UserInformation information;
@@ -35,13 +35,13 @@ public class ClientConnection implements Runnable {
             output = new ObjectOutputStream(socket.getOutputStream());
             input = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
 
-            while(running.get()) {
-               Packet packet = (Packet) input.readObject();     // retrieves userinformation thats updated from account service
-               information = packet.getInformation();
-               service.handle(this, packet);
+            while (running.get()) {
+                Packet packet = (Packet) input.readObject();     // retrieves userinformation thats updated from account service
+                information = packet.getInformation();
+                service.handle(this, packet);
             }
         } catch (IOException | ClassNotFoundException ex) {
-            ex.printStackTrace();
+            stop();
         }
     }
 
@@ -57,8 +57,7 @@ public class ClientConnection implements Runnable {
         return output;
     }
 
-    public ObjectInputStream getInputStream()
-    {
+    public ObjectInputStream getInputStream() {
         return input;
     }
 

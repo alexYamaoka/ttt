@@ -1,11 +1,13 @@
 package DataBase.sql;
+
 import DataBase.UUIDGenerator;
-import Models.Game;
 import Models.BaseModel;
+import Models.Game;
 import Shared.UserInformation;
 
 import java.sql.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseManager implements DataSource {  // subscribing to sign in for sign in info
 
@@ -15,21 +17,21 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
     private PreparedStatement UserStatement;
     private PreparedStatement GameStatement;
 
-    private DatabaseManager(){
+    private DatabaseManager() {
         String url = "jdbc:mysql://localhost:3306/tictactoe?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST";
         String username = "test";
         String password = "test123password";
-        try{
-            myConn = DriverManager.getConnection(url,username,password);
+        try {
+            myConn = DriverManager.getConnection(url, username, password);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public static DatabaseManager getInstance(){
-        if(instance == null){
-            synchronized (DatabaseManager.class){
-                if(instance == null){
+    public static DatabaseManager getInstance() {
+        if (instance == null) {
+            synchronized (DatabaseManager.class) {
+                if (instance == null) {
                     instance = new DatabaseManager();
                     System.out.println("DatabaseManager: Connection made");
                 }
@@ -38,26 +40,26 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         return instance;
     }
 
-    public void disconnect(){
-        if(myConn != null){
-            try{
+    public void disconnect() {
+        if (myConn != null) {
+            try {
                 myConn.close();
-            }catch (SQLException e){
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }
 
     @Override
-    public boolean delete(String username, String firstname, String lastname,String password) throws SQLException {
-            StringBuilder query = new StringBuilder();
-            query.append("UPDATE user SET");
-            query.append("isDeleted = 1");
-            query.append("WHERE ");
-            query.append("username = '" + username + "' AND password = '" + password + "'");
-            UserStatement = myConn.prepareStatement(query.toString());
-            UserStatement.executeUpdate(query.toString());
-            System.out.println(query.toString());
+    public boolean delete(String username, String firstname, String lastname, String password) throws SQLException {
+        StringBuilder query = new StringBuilder();
+        query.append("UPDATE user SET");
+        query.append("isDeleted = 1");
+        query.append("WHERE ");
+        query.append("username = '" + username + "' AND password = '" + password + "'");
+        UserStatement = myConn.prepareStatement(query.toString());
+        UserStatement.executeUpdate(query.toString());
+        System.out.println(query.toString());
 
         return true;
     }
@@ -83,13 +85,13 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
     public ArrayList<UserInformation> get(String password) throws SQLException {
         StringBuilder query = new StringBuilder();
         query.append("SELECT * FROM user WHERE password = ").append(password);
-        System.out.println("Print out "+query.toString());
+        System.out.println("Print out " + query.toString());
 
         UserStatement = myConn.prepareStatement(query.toString());
         ResultSet rs;
         rs = UserStatement.executeQuery(query.toString());
         ArrayList<UserInformation> items = new ArrayList<>();
-        while(rs.next()) {
+        while (rs.next()) {
             UserInformation u = new UserInformation();
             u.setId(rs.getString(1));
             u.setUserName(rs.getString(2));
@@ -117,19 +119,16 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         query.append("values (?,?,?,?,?,?,?)");
         GameStatement = myConn.prepareStatement(query.toString());
         System.out.println(query.toString());
-        GameStatement.setString(1,game.getId());
-        GameStatement.setTimestamp(2,game.getStartTime());
-        GameStatement.setTimestamp(3,game.getEndTime());
-        GameStatement.setString(4,game.getPlayer1Info().getId());
-        GameStatement.setString(5,game.getPlayer2Info().getId());
+        GameStatement.setString(1, game.getId());
+        GameStatement.setTimestamp(2, game.getStartTime());
+        GameStatement.setTimestamp(3, game.getEndTime());
+        GameStatement.setString(4, game.getPlayer1Info().getId());
+        GameStatement.setString(5, game.getPlayer2Info().getId());
 
         row = UserStatement.executeUpdate();
         System.out.println("Row = " + row);
 
-        if(row == 0){
-            return false;
-        }else
-            return true;
+        return row != 0;
     }
 
     @Override
@@ -138,21 +137,21 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         query.append("INSERT INTO ");
         int row = 0;
 
-        if(obj instanceof UserInformation){
+        if (obj instanceof UserInformation) {
             UserInformation userObj = (UserInformation) obj;
             UUIDGenerator newID = new UUIDGenerator();
-            System.out.println("Name "+userObj.getUserName());
+            System.out.println("Name " + userObj.getUserName());
             query.append("user ");
             query.append("(id, username, password, FirstName, LastName, isDeleted)");
             query.append("values (?,?,?,?,?,?)");
             UserStatement = myConn.prepareStatement(query.toString());
             System.out.println(query.toString());
-            UserStatement.setString(1,newID.getNewId());
-            UserStatement.setString(2,userObj.getUserName());
-            UserStatement.setString(3,userObj.getPassword());
-            UserStatement.setString(4,userObj.getFirstName());
-            UserStatement.setString(5,userObj.getLastName());
-            UserStatement.setInt(6,userObj.getIsDeleted());
+            UserStatement.setString(1, newID.getNewId());
+            UserStatement.setString(2, userObj.getUserName());
+            UserStatement.setString(3, userObj.getPassword());
+            UserStatement.setString(4, userObj.getFirstName());
+            UserStatement.setString(5, userObj.getLastName());
+            UserStatement.setInt(6, userObj.getIsDeleted());
             System.out.println(UserStatement.toString());
             System.out.println(query.toString());
             row = UserStatement.executeUpdate();
@@ -160,22 +159,20 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         }
 
 
-        if(row == 0){
-            return false;
-        }else
-        return true;
+        return row != 0;
     }
 
     @Override
     public List<BaseModel> query(Class obj, String filter) throws SQLException {
         StringBuilder query = new StringBuilder();
         query.append("SELECT * FROM ");
-        System.out.println("Class obj = "+obj.toString());
-        if(obj.getCanonicalName().equalsIgnoreCase("Shared.UserInformation")){
+        System.out.println("Class obj = " + obj.toString());
+        if (obj.getCanonicalName().equalsIgnoreCase("Shared.UserInformation")) {
             query.append("user ");
-        }else if(obj.getCanonicalName().equalsIgnoreCase("Models.Game")){
+        } else if (obj.getCanonicalName().equalsIgnoreCase("Models.Game")) {
             query.append("games");
-        }if(!filter.trim().equals("")){
+        }
+        if (!filter.trim().equals("")) {
             query.append("WHERE " + filter);
         }
         System.out.println(query.toString());
@@ -185,8 +182,8 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         System.out.println(" RS = " + rs.toString());
 
         List<BaseModel> items = new ArrayList<>();
-        while(rs.next()){
-            if(obj.getCanonicalName().equalsIgnoreCase("Shared.UserInformation")){
+        while (rs.next()) {
+            if (obj.getCanonicalName().equalsIgnoreCase("Shared.UserInformation")) {
                 UserInformation u = new UserInformation();
                 u.setId(rs.getString(1));
                 u.setUserName(rs.getString(2));

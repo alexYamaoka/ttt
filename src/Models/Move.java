@@ -1,7 +1,6 @@
 package Models;
 
 import Shared.UserInformation;
-import javafx.util.Pair;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -13,59 +12,52 @@ public class Move extends BaseModel {
     private int column;
     private UserInformation userInformation;
     private String dateAndTime;
-    private String gameName;
+    private String gameId;
 
-    public Move(int row, int column, UserInformation userInformation, String gameName)
-    {
+    public Move(int row, int column, UserInformation userInformation, String gameId) {
         this.row = row;
         this.column = column;
         this.userInformation = userInformation;
-        this.gameName = gameName;
+        this.gameId = gameId;
         dateAndTime = createDateAndTime();
     }
 
-    private String createDateAndTime()
-    {
+    private String createDateAndTime() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
         return dateFormat.format(date);
     }
 
 
-    public int getRow()
-    {
+    public int getRow() {
         return row;
     }
 
-    public int getColumn()
-    {
+    public int getColumn() {
         return column;
     }
 
-    public String getDateAndTime()
-    {
+    public String getDateAndTime() {
         return dateAndTime;
     }
 
-    public UserInformation getUserInformation()
-    {
+    public UserInformation getUserInformation() {
         return userInformation;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 
     public String getToken() {
         return token;
     }
 
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     public String getMove() {
         return row + " " + column + " " + token;
     }
 
-    public String getGameName()
-    {
-        return gameName;
+    public String getGameId() {
+        return gameId;
     }
 }

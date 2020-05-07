@@ -11,63 +11,83 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="parentContainerSignIn" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="590.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496) radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.Client.SignInController">
+<BorderPane fx:id="parentContainerSignIn" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="400.0" prefWidth="590.0"
+            style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496) radial-gradient(radius 200%,#204060,#1d9496);"
+            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="UI.Client.SignInController">
     <top>
-        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="590.0" BorderPane.alignment="CENTER" />
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+                    prefHeight="50.0" prefWidth="590.0" BorderPane.alignment="CENTER"/>
     </top>
     <left>
-        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="145.0" BorderPane.alignment="CENTER" />
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+                    prefHeight="300.0" prefWidth="145.0" BorderPane.alignment="CENTER"/>
     </left>
     <right>
-        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="145.0" BorderPane.alignment="CENTER" />
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+                    prefHeight="300.0" prefWidth="145.0" BorderPane.alignment="CENTER"/>
     </right>
     <bottom>
-        <AnchorPane prefHeight="50.0" prefWidth="590.0" BorderPane.alignment="CENTER" />
+        <AnchorPane prefHeight="50.0" prefWidth="590.0" BorderPane.alignment="CENTER"/>
     </bottom>
     <center>
         <!-- The Middle Anchor Pane -->
-        <AnchorPane fx:id="middleAnchorPane" layoutX="145.0" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+        <AnchorPane fx:id="middleAnchorPane" layoutX="145.0" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity"
+                    minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0"
+                    style="-fx-background-color: white;" BorderPane.alignment="CENTER">
             <StackPane fx:id="signInPane">
                 <children>
-                    <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0">
+                    <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+                                minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0">
                         <children>
                             <Label layoutX="116.0" layoutY="50.0" prefHeight="29.0" prefWidth="68.0" text="Sign in">
                                 <font>
-                                    <Font size="24.0" />
+                                    <Font size="24.0"/>
                                 </font>
                             </Label>
-                            <TextField fx:id="txtF_Username" layoutX="67.5" layoutY="90.0" prefHeight="29.0" prefWidth="165.0" promptText="Username" />
-                            <Label fx:id="usernameError" layoutX="67.5" layoutY="120.0" prefHeight="17.0" prefWidth="234.0" style="-fx-text-fill: red;">
+                            <TextField fx:id="txtF_Username" layoutX="67.5" layoutY="90.0" prefHeight="29.0"
+                                       prefWidth="165.0" promptText="Username"/>
+                            <Label fx:id="usernameError" layoutX="67.5" layoutY="120.0" prefHeight="17.0"
+                                   prefWidth="234.0" style="-fx-text-fill: red;">
                                 <font>
-                                    <Font size="10.0" />
+                                    <Font size="10.0"/>
                                 </font>
                             </Label>
-                            <PasswordField fx:id="txtF_Password" accessibleRole="PASSWORD_FIELD" layoutX="67.5" layoutY="138.0" prefHeight="29.0" prefWidth="165.0" promptText="Password">
+                            <PasswordField fx:id="txtF_Password" accessibleRole="PASSWORD_FIELD" layoutX="67.5"
+                                           layoutY="138.0" prefHeight="29.0" prefWidth="165.0" promptText="Password">
                                 <font>
-                                    <Font name="System Font" size="13.0" />
+                                    <Font name="System Font" size="13.0"/>
                                 </font>
                             </PasswordField>
-                            <Label fx:id="passwordError" layoutX="67.5" layoutY="168.0" prefHeight="17.0" prefWidth="234.0" style="-fx-text-fill: red;">
+                            <Label fx:id="passwordError" layoutX="67.5" layoutY="168.0" prefHeight="17.0"
+                                   prefWidth="234.0" style="-fx-text-fill: red;">
                                 <font>
-                                    <Font size="10.0" />
+                                    <Font size="10.0"/>
                                 </font>
                             </Label>
-                            <Button fx:id="btn_SignUp" layoutX="54.0" layoutY="204.0" mnemonicParsing="false" onAction="#signUp" prefHeight="27.0" prefWidth="110.0" style="-fx-background-color: white; -fx-text-fill: #204060; -fx-border-color: white;" text="Create account" />
-                            <Button fx:id="btn_LogIn" layoutX="181.0" layoutY="204.0" mnemonicParsing="false" onAction="#signIn" prefHeight="32.0" prefWidth="51.5" style="-fx-background-color: #204060; -fx-text-fill: white;" text="Log In" />
-                            <Label fx:id="logInError" layoutX="67.5" layoutY="185.0" prefHeight="17.0" prefWidth="234.0" style="-fx-text-fill: red;">
+                            <Button fx:id="btn_SignUp" layoutX="54.0" layoutY="204.0" mnemonicParsing="false"
+                                    onAction="#signUp" prefHeight="27.0" prefWidth="110.0"
+                                    style="-fx-background-color: white; -fx-text-fill: #204060; -fx-border-color: white;"
+                                    text="Create account"/>
+                            <Button fx:id="btn_LogIn" layoutX="181.0" layoutY="204.0" mnemonicParsing="false"
+                                    onAction="#signIn" prefHeight="32.0" prefWidth="51.5"
+                                    style="-fx-background-color: #204060; -fx-text-fill: white;" text="Log In"/>
+                            <Label fx:id="logInError" layoutX="67.5" layoutY="185.0" prefHeight="17.0" prefWidth="234.0"
+                                   style="-fx-text-fill: red;">
                                 <font>
-                                    <Font size="10.0" />
+                                    <Font size="10.0"/>
                                 </font>
                             </Label>
                         </children>
                     </AnchorPane>
                 </children>
             </StackPane>
-         <ImageView fitHeight="63.0" fitWidth="87.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-               <Image url="@../../Resources/Icons/Logo.png" />
-            </image>
-         </ImageView>
+            <ImageView fitHeight="63.0" fitWidth="87.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@../../Resources/Icons/Logo.png"/>
+                </image>
+            </ImageView>
         </AnchorPane>
     </center>
 </BorderPane>

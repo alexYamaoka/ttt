@@ -3,10 +3,10 @@ package AccountService;
 import DataBase.sql.DataSource;
 import DataBase.sql.DatabaseManager;
 import Models.BaseModel;
+import Server.ClientConnection;
 import Shared.Packet;
 import Shared.UserInformation;
 import app.Server;
-//import com.mysql.cj.protocol.Resultset;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -14,22 +14,24 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
-import Server.ClientConnection;
+
+//import com.mysql.cj.protocol.Resultset;
 
 public class AccountHandler implements Runnable {
+    private final AtomicBoolean running = new AtomicBoolean(false);
     private Packet packet;
     private ObjectOutputStream outputStream;
     private Thread worker;
     private DataSource ds = DatabaseManager.getInstance();
     private Server server = new Server();
     private ClientConnection clientConnection;
-
-    private final AtomicBoolean running = new AtomicBoolean(false);
+    private AccountService service;
 
     public AccountHandler(ClientConnection clientConnection, Packet packet) {
         this.packet = packet;
         this.clientConnection = clientConnection;
         this.outputStream = clientConnection.getOutputStream();
+        this.service = (AccountService) clientConnection.getService();
     }
 
     public void start() {
@@ -37,7 +39,7 @@ public class AccountHandler implements Runnable {
         worker.start();
     }
 
-    public void stop(){
+    public void stop() {
         running.set(false);
         System.out.println("AccountHandler has stopped!");
     }
@@ -49,8 +51,7 @@ public class AccountHandler implements Runnable {
         String request = packet.getRequest();
         UserInformation userInformation = packet.getInformation();
         Serializable data = packet.getData();
-        switch(request)
-        {
+        switch (request) {
             case Packet.SIGN_IN:
                 String SignInStr = data.toString();
                 String[] str = SignInStr.trim().split("\\s+");
@@ -59,20 +60,21 @@ public class AccountHandler implements Runnable {
 
                 Packet packet;
                 try {
-                    if(server.login(userName,password)){ //if true the DB found user record
+                    if (server.login(userName, password)) { //if true the DB found user record
                         System.out.println("Successfully Logged In!");
                         List<BaseModel> items;
-                        items = ds.query(UserInformation.class," username = '" + userName + "' AND password = '" + password + "'");
-                        packet = new Packet(Packet.SIGN_IN,userInformation, items.get(0));
+                        items = ds.query(UserInformation.class, " username = '" + userName + "' AND password = '" + password + "'");
+                        packet = new Packet(Packet.SIGN_IN, userInformation, items.get(0));
                         outputStream.writeObject(packet);
-                        clientConnection.setInformation((UserInformation)items.get(0));
+                        clientConnection.setInformation((UserInformation) items.get(0));
+                        service.addOnlinePlayer((UserInformation) items.get(0));
                     } else {
                         packet = new Packet(Packet.SIGN_IN, userInformation, "FAIL");
                         outputStream.writeObject(packet);
                     }
 
                 } catch (SQLException | IOException e) {
-                    e.printStackTrace();
+                    stop();
                 }
                 break;
             case Packet.SIGN_OUT:
@@ -87,7 +89,7 @@ public class AccountHandler implements Runnable {
                 String newPassword = str2[3];
                 Packet regPacket = new Packet();
                 try {
-                    if(server.registerUser(newFirstName,newLastName,newUserName,newPassword)) {
+                    if (server.registerUser(newFirstName, newLastName, newUserName, newPassword)) {
                         regPacket = new Packet(Packet.REGISTER_CLIENT, userInformation, data);
                     }
                 } catch (SQLException e) {
@@ -96,7 +98,7 @@ public class AccountHandler implements Runnable {
                 try {
                     outputStream.writeObject(regPacket);
                 } catch (IOException ex) {
-                    ex.printStackTrace();
+                    stop();
                 }
 
                 break;
@@ -114,10 +116,10 @@ public class AccountHandler implements Runnable {
                 user.setUserName(UpdateUserName);
                 user.setPassword(UpdatePassword);
                 try {
-                    if(server.updateUser(user))
-                    outputStream.writeObject(new UserInformation(UpdateFirstName, UpdateLastName, UpdateUserName, UpdateEmail, UpdatePassword));
+                    if (server.updateUser(user))
+                        outputStream.writeObject(new UserInformation(UpdateFirstName, UpdateLastName, UpdateUserName, UpdateEmail, UpdatePassword));
                 } catch (IOException | SQLException ex) {
-                    ex.printStackTrace();
+                    stop();
                 }
                 break;
 
@@ -131,14 +133,21 @@ public class AccountHandler implements Runnable {
                 String DeletePassword = str4[4];
                 Packet deletePacket;
                 try {
-                    if(server.DeleteUser(DeleteUserName,DeleteFirstName,DeleteLastName,DeletePassword)){
-                        deletePacket = new Packet(Packet.DELETE_ACCOUNT, userInformation, data );
+                    if (server.DeleteUser(DeleteUserName, DeleteFirstName, DeleteLastName, DeletePassword)) {
+                        deletePacket = new Packet(Packet.DELETE_ACCOUNT, userInformation, data);
                         outputStream.writeObject(deletePacket);
                     }
                 } catch (SQLException | IOException e) {
-                    e.printStackTrace();
+                    stop();
                 }
+                break;
 
+            case Packet.GET_ONLINE_PLAYERS:
+                try {
+                    clientConnection.getOutputStream().writeObject(new Packet(Packet.GET_ONLINE_PLAYERS, userInformation, service.getPlayersOnline())); // list of online players
+                } catch (IOException e) {
+                    stop();
+                }
                 break;
         }
 
