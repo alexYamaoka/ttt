@@ -3,12 +3,14 @@ package Client;
 import Shared.Packet;
 
 import java.io.IOException;
+import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ReadFromServerTask implements Runnable {
     private ObjectInputStream objectInputStream;
+
     private Socket socket;
     private Client client;
     private Thread thread;
@@ -39,13 +41,18 @@ public class ReadFromServerTask implements Runnable {
     public void run() {
         running.set(true);
         while (running.get()) {
-            try {
+
+            try
+            {
                 Packet response = (Packet) objectInputStream.readObject();
                 client.addResponseFromServer(response);
-            } catch (Exception ex) {
+
+            } catch (Exception ex)
+            {
                 ex.printStackTrace();
                 running.set(false);
             }
+
         }
 
         try {
