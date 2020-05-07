@@ -65,15 +65,19 @@ public class AccountHandler implements Runnable {
                         List<BaseModel> items;
                         items = ds.query(UserInformation.class, " username = '" + userName + "' AND password = '" + password + "'");
                         packet = new Packet(Packet.SIGN_IN, userInformation, items.get(0));
-                        outputStream.writeObject(packet);
+
+                        clientConnection.sendPacketToClient(packet);
+                        //outputStream.writeObject(packet);
                         clientConnection.setInformation((UserInformation) items.get(0));
                         service.addOnlinePlayer((UserInformation) items.get(0));
                     } else {
                         packet = new Packet(Packet.SIGN_IN, userInformation, "FAIL");
-                        outputStream.writeObject(packet);
+
+                        clientConnection.sendPacketToClient(packet);
+                        //outputStream.writeObject(packet);
                     }
 
-                } catch (SQLException | IOException e) {
+                } catch (SQLException e) {
                     stop();
                 }
                 break;
@@ -95,12 +99,9 @@ public class AccountHandler implements Runnable {
                 } catch (SQLException e) {
                     regPacket = new Packet(Packet.REGISTER_CLIENT, userInformation, "FAIL");
                 }
-                try {
-                    outputStream.writeObject(regPacket);
-                } catch (IOException ex) {
-                    stop();
-                }
 
+                clientConnection.sendPacketToClient(regPacket);
+                //outputStream.writeObject(regPacket);
                 break;
             case Packet.UPDATE_USER:
                 String UpdateString = data.toString();
@@ -115,9 +116,15 @@ public class AccountHandler implements Runnable {
                 user.setLastName(UpdateLastName);
                 user.setUserName(UpdateUserName);
                 user.setPassword(UpdatePassword);
+
+
+                // **** fix the write object line
                 try {
                     if (server.updateUser(user))
+                    {
                         outputStream.writeObject(new UserInformation(UpdateFirstName, UpdateLastName, UpdateUserName, UpdateEmail, UpdatePassword));
+                    }
+
                 } catch (IOException | SQLException ex) {
                     stop();
                 }
@@ -135,19 +142,19 @@ public class AccountHandler implements Runnable {
                 try {
                     if (server.DeleteUser(DeleteUserName, DeleteFirstName, DeleteLastName, DeletePassword)) {
                         deletePacket = new Packet(Packet.DELETE_ACCOUNT, userInformation, data);
-                        outputStream.writeObject(deletePacket);
+
+                        clientConnection.sendPacketToClient(deletePacket);
+                        //outputStream.writeObject(deletePacket);
                     }
-                } catch (SQLException | IOException e) {
+                } catch (SQLException e) {
                     stop();
                 }
                 break;
 
             case Packet.GET_ONLINE_PLAYERS:
-                try {
-                    clientConnection.getOutputStream().writeObject(new Packet(Packet.GET_ONLINE_PLAYERS, userInformation, service.getPlayersOnline())); // list of online players
-                } catch (IOException e) {
-                    stop();
-                }
+                Packet packet1 = new Packet(Packet.GET_ONLINE_PLAYERS, userInformation, service.getPlayersOnline());
+                clientConnection.sendPacketToClient(packet1);
+                //clientConnection.getOutputStream().writeObject(new Packet(Packet.GET_ONLINE_PLAYERS, userInformation, service.getPlayersOnline())); // list of online players
                 break;
         }
 
