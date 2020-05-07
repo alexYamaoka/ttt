@@ -81,7 +81,15 @@ public class GameBoardController implements Initializable, GameListener {
 
     public void quit(ActionEvent actionEvent) {
         if (actionEvent.getSource() == quit) {
+            Stage stage = null;
+            Parent root = null;
+            Packet packet = new Packet(Packet.GAME_CLOSE, clientController.getAccountClient().getUserInformation() , gameId);
+            clientController.getGameClient().addRequestToServer(packet);
 
+            stage = (Stage) quit.getScene().getWindow();
+            root = clientController.getLobbyPane();
+            stage.setScene(root.getScene());
+            stage.show();
         }
     }
 

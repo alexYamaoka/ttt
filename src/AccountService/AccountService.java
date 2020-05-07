@@ -16,6 +16,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class AccountService implements Service, Runnable {
+    private static AccountService instance = null;
+
     private final AtomicBoolean running = new AtomicBoolean(false);
     private Thread worker;
     private HashSet<ClientConnection> clientConnections = new HashSet<>();
@@ -24,6 +26,18 @@ public class AccountService implements Service, Runnable {
     private HashSet<UserInformation> playersOnline = new HashSet<>();
 
     public AccountService() {
+        start();
+    }
+
+    public static AccountService getInstance() {
+        if (instance == null) {
+            synchronized (AccountService.class) {
+                if(instance == null) {
+                    instance = new AccountService();
+                }
+            }
+        }
+        return instance;
     }
 
     public void start() {

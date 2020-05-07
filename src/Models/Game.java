@@ -1,11 +1,14 @@
 package Models;
 
 import DataBase.UUIDGenerator;
+import DataBase.sql.DataSource;
+import DataBase.sql.DatabaseManager;
 import ObserverPatterns.GameObserver;
 import Server.ClientConnection;
 import Shared.Packet;
 import Shared.UserInformation;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -27,6 +30,8 @@ public class Game extends BaseModel implements Serializable {
     private String gameStatus;
     private Timestamp startTime;
     private Timestamp endTime;
+    private String startingPlayerId;
+    private String winningPlayerId;
 
 
     public Game(ClientConnection player1) {
@@ -52,6 +57,14 @@ public class Game extends BaseModel implements Serializable {
         this.player2 = player2;
         player2Info = player2.getInformation();
         player2Username = player2Info.getUserName();
+    }
+
+    public String getWinningPlayerId() {
+        return winningPlayerId;
+    }
+
+    public void setWinningPlayerId(String winningPlayerId) {
+        this.winningPlayerId = winningPlayerId;
     }
 
     public String getId() {
@@ -86,8 +99,12 @@ public class Game extends BaseModel implements Serializable {
     }
 
     public void notifyObservers(Packet packet) {
-        for (GameObserver observer : gameObserversList) {
-            // observer.update(packet);     // broadcast packet with move or game status ex: tie game, winner
+        try {
+            for (ClientConnection clientConnection : GameObservers) {
+                clientConnection.getOutputStream().writeObject(packet);
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
 

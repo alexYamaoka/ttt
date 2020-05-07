@@ -18,6 +18,7 @@ public class Packet implements Serializable {
     public static final String PLAYER_ONE_USERNAME = "PLAYER-ONE-USERNAME";
     public static final String PLAYER_TWO_USERNAME = "PLAYER-TWO-USERNAME";
     public static final String GAME_STATUS = "GAME_STATUS";
+    public static final String GAME_CLOSE = "GAME_CLOSE";
 
     private Serializable data;
     private String request;
