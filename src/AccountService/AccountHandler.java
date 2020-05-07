@@ -67,14 +67,12 @@ public class AccountHandler implements Runnable {
                         packet = new Packet(Packet.SIGN_IN, userInformation, items.get(0));
 
                         clientConnection.sendPacketToClient(packet);
-                        //outputStream.writeObject(packet);
                         clientConnection.setInformation((UserInformation) items.get(0));
                         service.addOnlinePlayer((UserInformation) items.get(0));
                     } else {
                         packet = new Packet(Packet.SIGN_IN, userInformation, "FAIL");
 
                         clientConnection.sendPacketToClient(packet);
-                        //outputStream.writeObject(packet);
                     }
 
                 } catch (SQLException e) {
@@ -101,7 +99,6 @@ public class AccountHandler implements Runnable {
                 }
 
                 clientConnection.sendPacketToClient(regPacket);
-                //outputStream.writeObject(regPacket);
                 break;
             case Packet.UPDATE_USER:
                 String UpdateString = data.toString();
@@ -144,7 +141,6 @@ public class AccountHandler implements Runnable {
                         deletePacket = new Packet(Packet.DELETE_ACCOUNT, userInformation, data);
 
                         clientConnection.sendPacketToClient(deletePacket);
-                        //outputStream.writeObject(deletePacket);
                     }
                 } catch (SQLException e) {
                     stop();
@@ -154,7 +150,6 @@ public class AccountHandler implements Runnable {
             case Packet.GET_ONLINE_PLAYERS:
                 Packet packet1 = new Packet(Packet.GET_ONLINE_PLAYERS, userInformation, service.getPlayersOnline());
                 clientConnection.sendPacketToClient(packet1);
-                //clientConnection.getOutputStream().writeObject(new Packet(Packet.GET_ONLINE_PLAYERS, userInformation, service.getPlayersOnline())); // list of online players
                 break;
         }
 

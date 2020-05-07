@@ -95,9 +95,6 @@ public class GameService implements Runnable, Service {
         for (ClientConnection connection : clientConnections) {
             try {
                 connection.sendPacketToClient(packet);
-                //connection.getOutputStream().flush();
-                //connection.getOutputStream().writeObject(packet);
-                //connection.getOutputStream().flush();
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

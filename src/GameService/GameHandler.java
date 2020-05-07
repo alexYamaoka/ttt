@@ -57,7 +57,6 @@ public class GameHandler implements Runnable {
             case Packet.GET_GAMES:
 
                 clientConnection.sendPacketToClient(new Packet(Packet.GET_GAMES, userInformation, service.getGames()));
-                //clientConnection.getOutputStream().writeObject(new Packet(Packet.GET_GAMES, userInformation, service.getGames())); // list of current games
                 break;
 
             case Packet.NEW_GAME_CREATED:
@@ -66,7 +65,6 @@ public class GameHandler implements Runnable {
                 Packet packet = new Packet(Packet.NEW_GAME_CREATED, clientConnection.getInformation(), game);
 
                 clientConnection.sendPacketToClient(packet);
-                //clientConnection.getOutputStream().writeObject(packet);
                 break;
 
             case Packet.JOIN_GAME:
@@ -85,31 +83,9 @@ public class GameHandler implements Runnable {
                     System.out.println(joinGame.getPlayer2Username());
 
                     clientConnection.sendPacketToClient(joinPacket);
-                    //clientConnection.getOutputStream().writeObject(packet);
-                    //clientConnection.getOutputStream().flush();
-                   // clientConnection.writePacket(packet);
 
                     Packet broadcast = new Packet(Packet.GET_GAMES, clientConnection.getInformation(), service.getGames());
-
-
-                    // different thread - possibly sending two things at the same time.
-                    // create a queue inside client connection.
-                    // colliding
-                    // client connection is getting two packets mixed as one.
-                    // flush before writing any data
-
-                   /* try
-                    {
-                        Thread.sleep(2500);
-                    }
-                    catch (Exception ex)
-                    {
-                        ex.printStackTrace();
-                    }*/
-
                     service.broadcast(broadcast);
-
-
 
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());
@@ -132,7 +108,6 @@ public class GameHandler implements Runnable {
                         // else statement is for when opponent has not been found yet.
                         Packet errorPacket = new Packet(Packet.GAME_STATUS, clientConnection.getInformation(), newMove.getGameId() + " " + "No-Opponent-Found");
                         clientConnection.sendPacketToClient(errorPacket);
-                        //clientConnection.getOutputStream().writeObject(errorPacket);
                     }
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());

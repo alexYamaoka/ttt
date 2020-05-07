@@ -45,6 +45,7 @@ public class ClientConnection implements Runnable {
     {
         try
         {
+            output.reset();
             Packet packet = packetsToSend.take();
             output.writeObject(packet);
             output.flush();
