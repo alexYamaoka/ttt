@@ -1,13 +1,14 @@
 package DataBase.sql;
 
 import DataBase.UUIDGenerator;
-import Models.BaseModel;
 import Models.Game;
+import Models.BaseModel;
+import Models.Move;
+import Server.ClientConnection;
 import Shared.UserInformation;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class DatabaseManager implements DataSource {  // subscribing to sign in for sign in info
 
@@ -16,6 +17,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
     private Statement myState;
     private PreparedStatement UserStatement;
     private PreparedStatement GameStatement;
+    private PreparedStatement MoveStatement;
 
     private DatabaseManager() {
         String url = "jdbc:mysql://localhost:3306/tictactoe?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=PST";
@@ -109,23 +111,72 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
 
 
     @Override
-    public boolean insertGame(Game obj) throws SQLException {
+    public boolean addGameViewers(BaseModel obj) throws SQLException {
         StringBuilder query = new StringBuilder();
-        Game game = obj;
-        query.append("INSERT INTO game");
+        Game game = (Game) obj;
+        query.append("INSERT INTO game ");
         int row = 0;
-        System.out.println("Game Id: " + game.getId());
-        query.append("(gameID, StartTime, EndTime, Player1Id, Player2Id, StartingPlayerId, WinningPlayerId");
-        query.append("values (?,?,?,?,?,?,?)");
+        query.append("(gameId, UserId)");
+        query.append(" values (?,?)");
         GameStatement = myConn.prepareStatement(query.toString());
         System.out.println(query.toString());
         GameStatement.setString(1, game.getId());
+        //GameStatement.setString(2,game.);
+        System.out.println(GameStatement);
+        row = GameStatement.executeUpdate();
+        System.out.println("Row = " + row);
+
+        return row != 0;
+
+    }
+
+    @Override
+    public boolean insertGame(BaseModel obj) throws SQLException {
+        StringBuilder query = new StringBuilder();
+        Game game = (Game) obj;
+        query.append("INSERT INTO game ");
+        int row = 0;
+        query.append("(gameID, StartTime, EndTime, Player1Id, Player2Id, StartingPlayerId, WinningPlayerId)");
+        query.append(" values (?,?,?,?,?,?,?)");
+        GameStatement = myConn.prepareStatement(query.toString());
+        System.out.println(query.toString());
+
+        GameStatement.setString(1, game.getId());
         GameStatement.setTimestamp(2, game.getStartTime());
         GameStatement.setTimestamp(3, game.getEndTime());
-        GameStatement.setString(4, game.getPlayer1Info().getId());
-        GameStatement.setString(5, game.getPlayer2Info().getId());
+        GameStatement.setString(4, game.getPlayer1ClientConnection().getInformation().getId());
+        GameStatement.setString(5, game.getPlayer2ClientConnection().getInformation().getId());
+        GameStatement.setString(6, game.getPlayer1ClientConnection().getInformation().getId());
+        GameStatement.setString(7, game.getWinningPlayerId());
 
-        row = UserStatement.executeUpdate();
+        System.out.println(GameStatement);
+        row = GameStatement.executeUpdate();
+        System.out.println("Row = " + row);
+
+        return row != 0;
+    }
+
+    @Override
+    public boolean insertMove(Move obj, String gameId) throws SQLException {
+        StringBuilder query = new StringBuilder();
+        Move move = obj;
+        query.append("INSERT INTO moves");
+        int row = 0;
+
+        System.out.println("Id:  " + move.getGameId() + move.getId());
+        query.append("(GameId, PlayerId, X_coord, Y_coord, Time)");
+        query.append(" values (?,?,?,?,?)");
+
+        MoveStatement = myConn.prepareStatement(query.toString());
+        System.out.println(query.toString());
+        MoveStatement.setString(1, gameId);
+        MoveStatement.setString(2, move.getUserInformation().getId());
+        MoveStatement.setInt(3, move.getColumn());
+        MoveStatement.setInt(4, move.getRow());
+        MoveStatement.setTimestamp(5, move.getMoveTime());
+
+        System.out.println(MoveStatement.toString());
+        row = MoveStatement.executeUpdate();
         System.out.println("Row = " + row);
 
         return row != 0;
@@ -143,7 +194,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
             System.out.println("Name " + userObj.getUserName());
             query.append("user ");
             query.append("(id, username, password, FirstName, LastName, isDeleted)");
-            query.append("values (?,?,?,?,?,?)");
+            query.append(" values (?,?,?,?,?,?)");
             UserStatement = myConn.prepareStatement(query.toString());
             System.out.println(query.toString());
             UserStatement.setString(1, newID.getNewId());

@@ -10,19 +10,20 @@ import Shared.UserInformation;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Game extends BaseModel implements Serializable {
 
-    private transient List<GameObserver> gameObserversList;
     private transient ArrayList<ClientConnection> GameObservers = new ArrayList<>();
     private transient TTTBoard tttBoard;
     private transient ClientConnection player1;
     private transient ClientConnection player2;
     private transient UserInformation player1Info;
     private transient UserInformation player2Info;
+    private transient DataSource ds = DatabaseManager.getInstance();
 
     private String player1Username;
     private String player2Username;
@@ -32,6 +33,7 @@ public class Game extends BaseModel implements Serializable {
     private Timestamp endTime;
     private String startingPlayerId;
     private String winningPlayerId;
+    private String nextMoveId;
 
 
     public Game(ClientConnection player1) {
@@ -93,35 +95,35 @@ public class Game extends BaseModel implements Serializable {
         this.endTime = endTime;
     }
 
-
-    public void addGameObserver(GameObserver observer) {
-        gameObserversList.add(observer);
-    }
-
     public void notifyObservers(Packet packet) {
-        try {
-            for (ClientConnection clientConnection : GameObservers) {
-                clientConnection.getOutputStream().writeObject(packet);
-            }
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        for (ClientConnection clientConnection : GameObservers) {
+            clientConnection.sendPacketToClient(packet);
         }
     }
 
     public void player1MakeMove(Move move) {
         move.setToken("X");
-
         tttBoard.setX(move.getRow(), move.getColumn());
-
+        try {
+            ds.insertMove(move, getId());
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
         tttBoard.printBoard();
+        nextMoveId = player2.getInformation().getId();
         System.out.println();
     }
 
     public void player2MakeMove(Move move) {
         move.setToken("O");
         tttBoard.setO(move.getRow(), move.getColumn());
-
+        try {
+            ds.insertMove(move, getId());
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
         tttBoard.printBoard();
+        nextMoveId = player1.getInformation().getId();
         System.out.println();
     }
 
@@ -134,11 +136,19 @@ public class Game extends BaseModel implements Serializable {
     }
 
     public boolean isPlayer1Winner(Move move) {
-        return tttBoard.isWinner(move.getRow(), move.getColumn(), 'X');
+        boolean isWinner = tttBoard.isWinner(move.getRow(), move.getColumn(), 'X');
+        if (isWinner) {
+            setWinningPlayerId(player1.getInformation().getId());
+        }
+        return isWinner;
     }
 
     public boolean isPlayer2Winner(Move move) {
-        return tttBoard.isWinner(move.getRow(), move.getColumn(), 'O');
+        boolean isWinner = tttBoard.isWinner(move.getRow(), move.getColumn(), 'o');
+        if (isWinner) {
+            setWinningPlayerId(player2.getInformation().getId());
+        }
+        return isWinner;
     }
 
     public boolean isTieGame() {
