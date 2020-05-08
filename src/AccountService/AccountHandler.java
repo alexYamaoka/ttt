@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -26,6 +28,9 @@ public class AccountHandler implements Runnable {
     private Server server = new Server();
     private ClientConnection clientConnection;
     private AccountService service;
+
+    private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+    private LocalDateTime now;
 
     public AccountHandler(ClientConnection clientConnection, Packet packet) {
         this.packet = packet;
@@ -69,6 +74,14 @@ public class AccountHandler implements Runnable {
                         clientConnection.sendPacketToClient(packet);
                         clientConnection.setInformation((UserInformation) items.get(0));
                         service.addOnlinePlayer((UserInformation) items.get(0));
+
+
+                        // update server display
+                        now = LocalDateTime.now();
+                        Packet notifyLoginSuccessful = new Packet(Packet.SIGN_IN, clientConnection.getInformation(), " : " + dtf.format(now));
+                        service.notifyServerDisplay(notifyLoginSuccessful);
+
+
                     } else {
                         packet = new Packet(Packet.SIGN_IN, userInformation, "FAIL");
 
@@ -80,6 +93,12 @@ public class AccountHandler implements Runnable {
                 }
                 break;
             case Packet.SIGN_OUT:
+
+                // update server display
+                now = LocalDateTime.now();
+                Packet notifySignOut = new Packet(Packet.SIGN_OUT, clientConnection.getInformation(), " : " + dtf.format(now));
+                service.notifyServerDisplay(notifySignOut);
+
                 break;
             case Packet.REGISTER_CLIENT:
                 String registerString = data.toString();
@@ -93,6 +112,11 @@ public class AccountHandler implements Runnable {
                 try {
                     if (server.registerUser(newFirstName, newLastName, newUserName, newPassword)) {
                         regPacket = new Packet(Packet.REGISTER_CLIENT, userInformation, data);
+
+                        // update server display
+                        now = LocalDateTime.now();
+                        Packet notifyRegistration = new Packet(Packet.REGISTER_CLIENT, clientConnection.getInformation(), " : " + dtf.format(now));
+                        service.notifyServerDisplay(notifyRegistration);
                     }
                 } catch (SQLException e) {
                     regPacket = new Packet(Packet.REGISTER_CLIENT, userInformation, "FAIL");

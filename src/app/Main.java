@@ -39,6 +39,7 @@ public class Main extends Application
         serverDisplayController = loader.getController();
         serverDisplayController.setMain(this);
 
+        accountService.addServiceListener(serverDisplayController);
         gameService.addServiceListener(serverDisplayController);
 
         Scene scene = new Scene(root, 1100, 580);
