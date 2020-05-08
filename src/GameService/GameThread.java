@@ -1,5 +1,7 @@
 package GameService;
 
+import DataBase.sql.DataSource;
+import DataBase.sql.DatabaseManager;
 import Models.Game;
 import Models.Move;
 import Server.ClientConnection;
@@ -22,15 +24,12 @@ public class GameThread implements Runnable {
     private AtomicBoolean isRunning = new AtomicBoolean(false);
     private ArrayList<ClientConnection> GameObservers;
     private Game game;
+    private DataSource ds = DatabaseManager.getInstance();
 
     private ClientConnection player1;
     private ClientConnection player2;
     private UserInformation player1UserInformation;
     private UserInformation player2UserInformation;
-    private ObjectOutputStream outputToPlayer1;
-    private ObjectOutputStream outputToPlayer2;
-    private ObjectInputStream inputFromPlayer1;
-    private ObjectInputStream inputFromPlayer2;
     private boolean isPlayer1Turn = true;
     private boolean hasPlayerMadeMove = true;
 
@@ -43,11 +42,6 @@ public class GameThread implements Runnable {
         this.player2 = player2;
         player1UserInformation = player1.getInformation();
         player2UserInformation = player2.getInformation();
-
-        outputToPlayer1 = player1.getOutputStream();
-        outputToPlayer2 = player2.getOutputStream();
-        inputFromPlayer1 = player1.getInputStream();
-        inputFromPlayer2 = player2.getInputStream();
     }
 
     public synchronized void addMove(Move move) throws InterruptedException {
