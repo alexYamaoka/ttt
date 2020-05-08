@@ -9,6 +9,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -34,6 +35,43 @@ public class ServerDisplay implements ServiceListener {
     private BlockingQueue<Packet> packetsReceived = new LinkedBlockingQueue<>();
 
 
+
+
+    @FXML
+    private void onOnlinePlayerClicked(MouseEvent event)
+    {
+        if (event.getClickCount() == 2)
+        {
+             String username = playersOnline.getSelectionModel().getSelectedItems().toString();
+        }
+    }
+
+    @FXML
+    private void onAccountClicked(MouseEvent event)
+    {
+        if (event.getClickCount() == 2)
+        {
+            String username = playersOnline.getSelectionModel().getSelectedItems().toString();
+        }
+    }
+
+    @FXML
+    private void onActiveGameClicked(MouseEvent event)
+    {
+        if (event.getClickCount() == 2)
+        {
+            String game = playersOnline.getSelectionModel().getSelectedItems().toString();
+        }
+    }
+
+    @FXML
+    private void onAllGameClicked(MouseEvent event)
+    {
+        if (event.getClickCount() == 2)
+        {
+            String game = playersOnline.getSelectionModel().getSelectedItems().toString();
+        }
+    }
 
 
 
