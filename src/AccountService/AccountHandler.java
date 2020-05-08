@@ -29,9 +29,6 @@ public class AccountHandler implements Runnable {
     private ClientConnection clientConnection;
     private AccountService service;
 
-    private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-    private LocalDateTime now;
-
     public AccountHandler(ClientConnection clientConnection, Packet packet) {
         this.packet = packet;
         this.clientConnection = clientConnection;
@@ -77,8 +74,7 @@ public class AccountHandler implements Runnable {
 
 
                         // update server display
-                        now = LocalDateTime.now();
-                        Packet notifyLoginSuccessful = new Packet(Packet.SIGN_IN, clientConnection.getInformation(), " : " + dtf.format(now));
+                        Packet notifyLoginSuccessful = new Packet(Packet.SIGN_IN, null, clientConnection.getInformation().getUserName());
                         service.notifyServerDisplay(notifyLoginSuccessful);
 
 
@@ -95,8 +91,7 @@ public class AccountHandler implements Runnable {
             case Packet.SIGN_OUT:
 
                 // update server display
-                now = LocalDateTime.now();
-                Packet notifySignOut = new Packet(Packet.SIGN_OUT, clientConnection.getInformation(), " : " + dtf.format(now));
+                Packet notifySignOut = new Packet(Packet.SIGN_OUT, null, clientConnection.getInformation().getUserName());
                 service.notifyServerDisplay(notifySignOut);
 
                 break;
@@ -114,8 +109,7 @@ public class AccountHandler implements Runnable {
                         regPacket = new Packet(Packet.REGISTER_CLIENT, userInformation, data);
 
                         // update server display
-                        now = LocalDateTime.now();
-                        Packet notifyRegistration = new Packet(Packet.REGISTER_CLIENT, clientConnection.getInformation(), " : " + dtf.format(now));
+                        Packet notifyRegistration = new Packet(Packet.REGISTER_CLIENT, null, userInformation.getUserName());
                         service.notifyServerDisplay(notifyRegistration);
                     }
                 } catch (SQLException e) {

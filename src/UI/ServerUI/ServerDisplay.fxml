@@ -5,18 +5,30 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="570.0" prefWidth="1090.0" style="-fx-background-color: radial-gradient(radius 200%,#003566,#002E59)radial-gradient(radius 200%,#003566,#002E59);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.ServerUI.ServerDisplay">
+<AnchorPane prefHeight="717.0" prefWidth="1090.0" style="-fx-background-color: radial-gradient(radius 200%,#003566,#002E59)radial-gradient(radius 200%,#003566,#002E59);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.ServerUI.ServerDisplay">
    <children>
-      <ListView fx:id="serverMessages" layoutX="34.0" layoutY="92.0" prefHeight="434.0" prefWidth="724.0" />
-      <Label alignment="CENTER" layoutX="162.0" layoutY="21.0" prefHeight="44.0" prefWidth="481.0" text="Log" textFill="WHITE">
+      <ListView fx:id="activeGames" layoutX="48.0" layoutY="82.0" prefHeight="266.0" prefWidth="443.0" />
+      <Label alignment="CENTER" layoutX="190.0" layoutY="24.0" prefHeight="44.0" prefWidth="133.0" text="Active Games" textFill="WHITE">
          <font>
-            <Font size="21.0" />
+            <Font size="20.0" />
          </font>
       </Label>
-      <ListView fx:id="onlinePlayers" layoutX="788.0" layoutY="92.0" prefHeight="434.0" prefWidth="273.0" />
-      <Label alignment="CENTER" layoutX="805.0" layoutY="25.0" prefHeight="36.0" prefWidth="239.0" text="Players Online" textFill="WHITE">
+      <ListView fx:id="playersOnline" layoutX="582.0" layoutY="82.0" prefHeight="266.0" prefWidth="468.0" />
+      <Label alignment="CENTER" layoutX="750.0" layoutY="28.0" prefHeight="36.0" prefWidth="133.0" text="Players Online" textFill="WHITE">
          <font>
-            <Font size="21.0" />
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <ListView fx:id="allGames" layoutX="48.0" layoutY="403.0" prefHeight="280.0" prefWidth="443.0" />
+      <Label layoutX="227.0" layoutY="375.0" text="All Games" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <ListView fx:id="allAccounts" layoutX="583.0" layoutY="401.0" prefHeight="288.0" prefWidth="468.0" />
+      <Label layoutX="765.0" layoutY="362.0" text="All Accounts" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
          </font>
       </Label>
    </children>
