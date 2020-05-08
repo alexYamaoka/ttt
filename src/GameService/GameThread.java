@@ -41,7 +41,6 @@ public class GameThread implements Runnable {
         this.game = game;
         this.player1 = player1;
         this.player2 = player2;
-
         player1UserInformation = player1.getInformation();
         player2UserInformation = player2.getInformation();
 
@@ -70,6 +69,11 @@ public class GameThread implements Runnable {
     @Override
     public void run() {
         isRunning.set(true);
+        // Update game Status
+        game.setGameStatus("IN PROGRESS");
+        GameService gameService = (GameService)player1.getService();
+        Packet gameStatus = new Packet(Packet.GET_GAMES, null, gameService.getGames());
+        gameService.broadcast(gameStatus);
 
         // sends the username of player1
         Packet whoIsPlayer1 = new Packet(Packet.PLAYER_ONE_USERNAME, player1UserInformation, game.getId() + " " + player1UserInformation.getUserName());
@@ -80,7 +84,6 @@ public class GameThread implements Runnable {
 
         // sends the username of player2
         Packet whoIsPlayer2 = new Packet(Packet.PLAYER_TWO_USERNAME, player2UserInformation, game.getId() + " " + player2UserInformation.getUserName());
-
         player1.sendPacketToClient(whoIsPlayer2);
         player2.sendPacketToClient(whoIsPlayer2);
         System.out.println("sending packet about player2");
