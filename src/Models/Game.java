@@ -17,7 +17,6 @@ import java.util.List;
 
 public class Game extends BaseModel implements Serializable {
 
-    private transient List<GameObserver> gameObserversList;
     private transient ArrayList<ClientConnection> GameObservers = new ArrayList<>();
     private transient TTTBoard tttBoard;
     private transient ClientConnection player1;
@@ -96,18 +95,9 @@ public class Game extends BaseModel implements Serializable {
         this.endTime = endTime;
     }
 
-
-    public void addGameObserver(GameObserver observer) {
-        gameObserversList.add(observer);
-    }
-
     public void notifyObservers(Packet packet) {
-        try {
-            for (ClientConnection clientConnection : GameObservers) {
-                clientConnection.getOutputStream().writeObject(packet);
-            }
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        for (ClientConnection clientConnection : GameObservers) {
+            clientConnection.sendPacketToClient(packet);
         }
     }
 
@@ -147,7 +137,7 @@ public class Game extends BaseModel implements Serializable {
 
     public boolean isPlayer1Winner(Move move) {
         boolean isWinner = tttBoard.isWinner(move.getRow(), move.getColumn(), 'X');
-        if(isWinner) {
+        if (isWinner) {
             setWinningPlayerId(player1.getInformation().getId());
         }
         return isWinner;
@@ -155,7 +145,7 @@ public class Game extends BaseModel implements Serializable {
 
     public boolean isPlayer2Winner(Move move) {
         boolean isWinner = tttBoard.isWinner(move.getRow(), move.getColumn(), 'o');
-        if(isWinner) {
+        if (isWinner) {
             setWinningPlayerId(player2.getInformation().getId());
         }
         return isWinner;

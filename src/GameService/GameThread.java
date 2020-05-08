@@ -1,5 +1,7 @@
 package GameService;
 
+import DataBase.sql.DataSource;
+import DataBase.sql.DatabaseManager;
 import Models.Game;
 import Models.Move;
 import Server.ClientConnection;
@@ -9,6 +11,7 @@ import Shared.UserInformation;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -17,20 +20,16 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GameThread implements Runnable {
     // takes in two players
-
     private Thread thread;
     private AtomicBoolean isRunning = new AtomicBoolean(false);
-    private ArrayList<ClientConnection> GameObservers;
+    private ArrayList<ClientConnection> gameObservers;
     private Game game;
+    private DataSource ds = DatabaseManager.getInstance();
 
     private ClientConnection player1;
     private ClientConnection player2;
     private UserInformation player1UserInformation;
     private UserInformation player2UserInformation;
-    private ObjectOutputStream outputToPlayer1;
-    private ObjectOutputStream outputToPlayer2;
-    private ObjectInputStream inputFromPlayer1;
-    private ObjectInputStream inputFromPlayer2;
     private boolean isPlayer1Turn = true;
     private boolean hasPlayerMadeMove = true;
 
@@ -43,11 +42,6 @@ public class GameThread implements Runnable {
         this.player2 = player2;
         player1UserInformation = player1.getInformation();
         player2UserInformation = player2.getInformation();
-
-        outputToPlayer1 = player1.getOutputStream();
-        outputToPlayer2 = player2.getOutputStream();
-        inputFromPlayer1 = player1.getInputStream();
-        inputFromPlayer2 = player2.getInputStream();
     }
 
     public synchronized void addMove(Move move) throws InterruptedException {
@@ -120,31 +114,35 @@ public class GameThread implements Runnable {
                                 System.out.println("Player 1 Wins!");
                                 String winner = game.getPlayer1Info().getUserName();
                                 Packet player1Wins = new Packet(Packet.GAME_STATUS, player1UserInformation, game.getId() + " " + winner);
-
                                 player1.sendPacketToClient(player1Wins);
                                 player2.sendPacketToClient(player1Wins);
+                                game.notifyObservers(player1Wins);
+                                game.setEndTime();
 
                                 // Update Game Status
                                 game.setGameStatus("Player 1 Wins!");
                                 gameStatus = new Packet(Packet.GET_GAMES, null, gameService.getGames());
                                 gameService.broadcast(gameStatus);
+
+                                // add game to database
+                                try {
+                                    ds.insertGame(game);
+                                } catch (SQLException ex) {
+                                    ex.printStackTrace();
+                                }
                             } else if (game.isTieGame()) {
                                 System.out.println("Tie Game");
                                 Packet tieGame = new Packet(Packet.GAME_STATUS, null, game.getId() + " " + "Tie!");
 
                                 player1.sendPacketToClient(tieGame);
                                 player2.sendPacketToClient(tieGame);
+                                game.notifyObservers(tieGame);
                             }
                         } else {
                             System.out.println("Not a valid move");
                             Packet invalidMove = new Packet(Packet.GAME_STATUS, null, game.getId() + " " + "invalid-move");
-
                             player1.sendPacketToClient(invalidMove);
-                            player2.sendPacketToClient(invalidMove);
-
                         }
-
-
                     } else if (newMove.getUserInformation() == player2UserInformation && !isPlayer1Turn) {
                         System.out.println("game player2.make move is called");
 
@@ -163,26 +161,33 @@ public class GameThread implements Runnable {
                                 System.out.println("Player 2 Wins!");
                                 String winner = game.getPlayer2Info().getUserName();
                                 Packet player2Wins = new Packet(Packet.GAME_STATUS, player2UserInformation, game.getId() + " " + winner);
-
                                 player1.sendPacketToClient(player2Wins);
                                 player2.sendPacketToClient(player2Wins);
+                                game.notifyObservers(player2Wins);
+                                game.setEndTime();
 
                                 // Update Game Status
                                 game.setGameStatus("Player 2 Wins!");
                                 gameStatus = new Packet(Packet.GET_GAMES, null, gameService.getGames());
                                 gameService.broadcast(gameStatus);
+
+                                // add game to database
+                                try {
+                                    ds.insertGame(game);
+                                } catch (SQLException ex) {
+                                    ex.printStackTrace();
+                                }
                             } else if (game.isTieGame()) {
                                 System.out.println("Tie Game");
                                 Packet tieGame = new Packet(Packet.GAME_STATUS, null, game.getId() + " " + "Tie!");
 
                                 player1.sendPacketToClient(tieGame);
                                 player2.sendPacketToClient(tieGame);
+                                game.notifyObservers(tieGame);
                             }
                         } else {
                             System.out.println("Not a valid move");
                             Packet invalidMove = new Packet(Packet.GAME_STATUS, null, game.getId() + " " + "invalid-move");
-
-                            player1.sendPacketToClient(invalidMove);
                             player2.sendPacketToClient(invalidMove);
                         }
                     } else {
