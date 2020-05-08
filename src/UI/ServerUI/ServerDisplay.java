@@ -21,7 +21,7 @@ public class ServerDisplay implements ServiceListener {
     private ListView playersOnline = new ListView();
 
     @FXML
-    private ListView allGames = new ListView();
+    private ListView allGames = new ListView();git
 
     @FXML
     private ListView allAccounts = new ListView();
