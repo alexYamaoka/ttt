@@ -15,10 +15,19 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class ServerDisplay implements ServiceListener {
 
     @FXML
-    private ListView serverMessages = new ListView();
+    private ListView activeGames = new ListView();
 
     @FXML
-    private ListView onlinePlayers = new ListView();
+    private ListView playersOnline = new ListView();
+
+    @FXML
+    private ListView allGames = new ListView();
+
+    @FXML
+    private ListView allAccounts = new ListView();
+
+
+
 
     private Main main;
 
@@ -46,29 +55,54 @@ public class ServerDisplay implements ServiceListener {
 
     private synchronized void updateUI()
     {
-        try
+        Platform.runLater(new Runnable()
         {
-            Packet packet = packetsReceived.take();
-
-            Platform.runLater(new Runnable()
+            @Override
+            public void run()
             {
-                @Override
-                public void run()
+                Packet packet = null;
+                try
                 {
-                    StringBuffer sb = new StringBuffer();
-                    sb.append(packet.getInformation().getUserName());
-                    sb.append("  :  ");
-                    sb.append(packet.getRequest());
-                    sb.append("  :  ");
-                    sb.append(packet.getData().toString());
+                    packet = packetsReceived.take();
 
-                    serverMessages.getItems().add(sb.toString());
+                    String message = packet.getData().toString();
+
+
+                    switch (packet.getRequest())
+                    {
+                        case Packet.REGISTER_CLIENT:
+                            allAccounts.getItems().add(message);
+
+                        case Packet.SIGN_IN:
+                            playersOnline.getItems().add(message);
+                            break;
+
+                        case Packet.SIGN_OUT:
+                            playersOnline.getItems().remove(message);
+                            break;
+
+                        case Packet.ACTIVE_GAME:
+                            activeGames.getItems().add(message);
+                            allGames.getItems().add(message);
+                            break;
+
+                        case Packet.GAME_CLOSE:
+                            activeGames.getItems().remove(message);
+
+                    }
+
+
+
+                    //serverMessages.getItems().add(sb.toString());
                 }
-            });
-        } catch (InterruptedException e)
-        {
-            e.printStackTrace();
-        }
+                catch (InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
+
+
+            }
+        });
 
     }
 
