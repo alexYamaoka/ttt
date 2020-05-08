@@ -126,7 +126,6 @@ public class GameService implements Runnable, Service {
     public void notifyServerDisplay(Packet packet)
     {
         for (ServiceListener serviceListener : serviceListeners) {
-            System.out.println("inside broadcast: " + packet.getRequest());
             serviceListener.onDataChanged(packet);
         }
     }

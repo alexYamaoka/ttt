@@ -57,9 +57,9 @@ public class ServerDisplay implements ServiceListener {
                 {
                     StringBuffer sb = new StringBuffer();
                     sb.append(packet.getInformation().getUserName());
-                    sb.append(" : ");
+                    sb.append("  :  ");
                     sb.append(packet.getRequest());
-                    sb.append(" : ");
+                    sb.append("  :  ");
                     sb.append(packet.getData().toString());
 
                     serverMessages.getItems().add(sb.toString());

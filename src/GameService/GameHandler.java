@@ -74,7 +74,7 @@ public class GameHandler implements Runnable {
 
                 // update server display
                 now = LocalDateTime.now();
-                Packet notifyNewGameCreated = new Packet(Packet.NEW_GAME_CREATED, clientConnection.getInformation(), "" + dtf.format(now));
+                Packet notifyNewGameCreated = new Packet(Packet.NEW_GAME_CREATED, clientConnection.getInformation(), "Game ID: " + game.getId() + " : " + dtf.format(now));
                 service.notifyServerDisplay(notifyNewGameCreated);
                 break;
 
@@ -102,7 +102,7 @@ public class GameHandler implements Runnable {
 
                     // update server display
                     now = LocalDateTime.now();
-                    Packet notifyGameJoined = new Packet(Packet.JOIN_GAME, clientConnection.getInformation(), "" + dtf.format(now));
+                    Packet notifyGameJoined = new Packet(Packet.JOIN_GAME, clientConnection.getInformation(), "Game ID: " + sendGame.getId() + " : " + dtf.format(now));
                     service.notifyServerDisplay(notifyGameJoined);
 
 
@@ -126,13 +126,18 @@ public class GameHandler implements Runnable {
 
                         // update server display
                         now = LocalDateTime.now();
-                        Packet notifyGameMove = new Packet(Packet.GAME_MOVE, clientConnection.getInformation(), "" + dtf.format(now));
+                        Packet notifyGameMove = new Packet(Packet.GAME_MOVE, clientConnection.getInformation(),  "Game ID: " + newMove.getGameId() + " : " + dtf.format(now));
                         service.notifyServerDisplay(notifyGameMove);
 
                     } else {
                         // else statement is for when opponent has not been found yet.
                         Packet errorPacket = new Packet(Packet.GAME_STATUS, clientConnection.getInformation(), newMove.getGameId() + " " + "No-Opponent-Found");
                         clientConnection.sendPacketToClient(errorPacket);
+
+                        // update server display
+                        now = LocalDateTime.now();
+                        Packet notifyGameMove = new Packet(Packet.GAME_STATUS, clientConnection.getInformation(),  "Game ID: " + newMove.getGameId() + " : " + dtf.format(now));
+                        service.notifyServerDisplay(notifyGameMove);
                     }
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());
