@@ -117,18 +117,15 @@ public class GameHandler implements Runnable {
 
             case Packet.GAME_CLOSE:
                 try {
-                    Packet closePacket = null;
                     if (service.removeGameFromLobby(data.toString())) {
-                        closePacket = new Packet(Packet.GAME_CLOSE, clientConnection.getInformation(), "SUCCESS");
+                        System.out.println("Game closed!");
                     } else {
-                        closePacket = new Packet(Packet.GAME_CLOSE, clientConnection.getInformation(), "FAILED");
+                        System.out.println("Game not closed");
                     }
-                    clientConnection.sendPacketToClient(closePacket);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
         }
-
         stop();
     }
 

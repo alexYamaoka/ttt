@@ -57,6 +57,12 @@ public class GameThread implements Runnable {
 
     public void stop() {
         isRunning.set(false);
+        game.setGameStatus("GAME ENDED");
+        // Notify users game has stopped
+        Packet packet = new Packet(Packet.GAME_CLOSE, null, "GAME ENDED");
+        player1.sendPacketToClient(packet);
+        player2.sendPacketToClient(packet);
+        game.notifyObservers(packet);
     }
 
 
