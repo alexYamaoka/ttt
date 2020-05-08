@@ -11,6 +11,8 @@ import app.Server;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -23,6 +25,9 @@ public class GameHandler implements Runnable {
     private Server server = new Server();
     private GameService service;
     private ClientConnection clientConnection;
+
+    private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+    private LocalDateTime now;
 
 
     public GameHandler(ClientConnection clientConnection, Packet packet, GameService service) {
@@ -55,7 +60,6 @@ public class GameHandler implements Runnable {
 
         switch (request) {
             case Packet.GET_GAMES:
-
                 clientConnection.sendPacketToClient(new Packet(Packet.GET_GAMES, userInformation, service.getGames()));
                 break;
 
@@ -65,6 +69,13 @@ public class GameHandler implements Runnable {
                 Packet packet = new Packet(Packet.NEW_GAME_CREATED, clientConnection.getInformation(), game);
 
                 clientConnection.sendPacketToClient(packet);
+
+
+
+                // update server display
+                now = LocalDateTime.now();
+                Packet notifyNewGameCreated = new Packet(Packet.NEW_GAME_CREATED, clientConnection.getInformation(), "" + dtf.format(now));
+                service.notifyServerDisplay(notifyNewGameCreated);
                 break;
 
             case Packet.JOIN_GAME:
@@ -85,7 +96,15 @@ public class GameHandler implements Runnable {
                     clientConnection.sendPacketToClient(joinPacket);
 
                     Packet broadcast = new Packet(Packet.GET_GAMES, clientConnection.getInformation(), service.getGames());
+                    System.out.println("right before service.broadcast()");
                     service.broadcast(broadcast);
+
+
+                    // update server display
+                    now = LocalDateTime.now();
+                    Packet notifyGameJoined = new Packet(Packet.JOIN_GAME, clientConnection.getInformation(), "" + dtf.format(now));
+                    service.notifyServerDisplay(notifyGameJoined);
+
 
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());
@@ -104,6 +123,12 @@ public class GameHandler implements Runnable {
                     if (gameThreadList.containsKey(newMove.getGameId())) {
                         GameThread gameThreadForMove = gameThreadList.get(newMove.getGameId());
                         gameThreadForMove.addMove(newMove);
+
+                        // update server display
+                        now = LocalDateTime.now();
+                        Packet notifyGameMove = new Packet(Packet.GAME_MOVE, clientConnection.getInformation(), "" + dtf.format(now));
+                        service.notifyServerDisplay(notifyGameMove);
+
                     } else {
                         // else statement is for when opponent has not been found yet.
                         Packet errorPacket = new Packet(Packet.GAME_STATUS, clientConnection.getInformation(), newMove.getGameId() + " " + "No-Opponent-Found");
@@ -114,7 +139,6 @@ public class GameHandler implements Runnable {
                     running.set(false);
                 }
                 break;
-
         }
 
         stop();
