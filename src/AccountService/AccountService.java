@@ -26,7 +26,7 @@ public class AccountService implements Service, Runnable {
     private DataSource ds = DatabaseManager.getInstance();
     private HashSet<UserInformation> playersOnline = new HashSet<>();
 
-    public AccountService() {
+    private AccountService() {
         start();
     }
 
