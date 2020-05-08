@@ -2,6 +2,7 @@ package Models;
 
 import Shared.UserInformation;
 
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,7 +12,7 @@ public class Move extends BaseModel {
     private int row;
     private int column;
     private UserInformation userInformation;
-    private String dateAndTime;
+    private Timestamp moveTime;
     private String gameId;
 
     public Move(int row, int column, UserInformation userInformation, String gameId) {
@@ -19,7 +20,7 @@ public class Move extends BaseModel {
         this.column = column;
         this.userInformation = userInformation;
         this.gameId = gameId;
-        dateAndTime = createDateAndTime();
+        moveTime = new Timestamp(System.currentTimeMillis());
     }
 
     private String createDateAndTime() {
@@ -37,8 +38,8 @@ public class Move extends BaseModel {
         return column;
     }
 
-    public String getDateAndTime() {
-        return dateAndTime;
+    public Timestamp getMoveTime() {
+        return moveTime;
     }
 
     public UserInformation getUserInformation() {

@@ -2,6 +2,7 @@ package DataBase.sql;
 
 import Models.BaseModel;
 import Models.Game;
+import Models.Move;
 import Shared.UserInformation;
 
 import java.sql.SQLException;
@@ -9,7 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface DataSource {
-    boolean insertGame(Game obj) throws SQLException;
+    boolean addGameViewers(BaseModel obj) throws SQLException;
+
+    boolean insertGame(BaseModel obj) throws SQLException;
+
+    boolean insertMove(Move obj, String gameId) throws SQLException;
 
     boolean insert(BaseModel obj) throws SQLException;
 

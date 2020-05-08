@@ -58,11 +58,22 @@ public class GameService implements Runnable, Service {
     }
 
 
-
     public void addGame(Game game) {
         ongoingGameRooms.put(game.getId(), game);
         Packet packet = new Packet(Packet.GET_GAMES, null, getGames());
         broadcast(packet);
+    }
+
+    public boolean removeGameFromLobby(String gameName) throws IOException {
+        if (ongoingGameRooms.containsKey(gameName)) {
+            ongoingGameRooms.remove(gameName);
+            gameThreadList.get(gameName).stop();
+            gameThreadList.remove(gameName);
+            Packet packet = new Packet(Packet.GET_GAMES, null, getGames()); // Refresh List with new Games/Removed games
+            broadcast(packet);
+            return true;
+        }
+        return false;
     }
 
     public Game getGame(String id) {
