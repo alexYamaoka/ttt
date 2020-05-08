@@ -81,12 +81,7 @@ public class AccountService implements Service, Runnable {
 
     public void broadcast(Packet packet) {
         for (ClientConnection connection : clientConnections) {
-            try {
-                connection.getOutputStream().reset();
-                connection.getOutputStream().writeObject(packet);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
+                connection.sendPacketToClient(packet);
         }
         for (Service service : serviceListeners) {
             service.update(packet);
