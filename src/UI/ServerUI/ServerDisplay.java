@@ -4,12 +4,13 @@ import ObserverPatterns.ServiceListener;
 import Shared.Packet;
 import app.Main;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
+
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -28,48 +29,49 @@ public class ServerDisplay implements ServiceListener {
     private ListView allAccounts = new ListView();
 
 
-
-
     private Main main;
-
     private BlockingQueue<Packet> packetsReceived = new LinkedBlockingQueue<>();
 
 
 
 
     @FXML
-    private void onOnlinePlayerClicked(MouseEvent event)
+    public void onOnlinePlayerClicked(MouseEvent event)
     {
         if (event.getClickCount() == 2)
         {
-             String username = playersOnline.getSelectionModel().getSelectedItems().toString();
+            String username = playersOnline.getSelectionModel().getSelectedItem().toString();
+            System.out.println("username selected: " + username);
         }
     }
 
     @FXML
-    private void onAccountClicked(MouseEvent event)
+    public void onAccountClicked(MouseEvent event)
     {
         if (event.getClickCount() == 2)
         {
-            String username = playersOnline.getSelectionModel().getSelectedItems().toString();
+            String username = allAccounts.getSelectionModel().getSelectedItem().toString();
+            System.out.println("username selected: " + username);
         }
     }
 
     @FXML
-    private void onActiveGameClicked(MouseEvent event)
+    public void onActiveGameClicked(MouseEvent event)
     {
         if (event.getClickCount() == 2)
         {
-            String game = playersOnline.getSelectionModel().getSelectedItems().toString();
+            String game = activeGames.getSelectionModel().getSelectedItem().toString();
+            System.out.println("game selected: " + game);
         }
     }
 
     @FXML
-    private void onAllGameClicked(MouseEvent event)
+    public void onAllGameClicked(MouseEvent event)
     {
         if (event.getClickCount() == 2)
         {
-            String game = playersOnline.getSelectionModel().getSelectedItems().toString();
+            String game = allGames.getSelectionModel().getSelectedItem().toString();
+            System.out.println("game selected: " + game);
         }
     }
 
