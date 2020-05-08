@@ -123,13 +123,17 @@ public class GameThread implements Runnable {
 
                                 player1.sendPacketToClient(player1Wins);
                                 player2.sendPacketToClient(player1Wins);
+
+                                // Update Game Status
+                                game.setGameStatus("Player 1 Wins!");
+                                gameStatus = new Packet(Packet.GET_GAMES, null, gameService.getGames());
+                                gameService.broadcast(gameStatus);
                             } else if (game.isTieGame()) {
                                 System.out.println("Tie Game");
                                 Packet tieGame = new Packet(Packet.GAME_STATUS, null, game.getId() + " " + "Tie!");
 
                                 player1.sendPacketToClient(tieGame);
                                 player2.sendPacketToClient(tieGame);
-
                             }
                         } else {
                             System.out.println("Not a valid move");
@@ -162,6 +166,11 @@ public class GameThread implements Runnable {
 
                                 player1.sendPacketToClient(player2Wins);
                                 player2.sendPacketToClient(player2Wins);
+
+                                // Update Game Status
+                                game.setGameStatus("Player 2 Wins!");
+                                gameStatus = new Packet(Packet.GET_GAMES, null, gameService.getGames());
+                                gameService.broadcast(gameStatus);
                             } else if (game.isTieGame()) {
                                 System.out.println("Tie Game");
                                 Packet tieGame = new Packet(Packet.GAME_STATUS, null, game.getId() + " " + "Tie!");
