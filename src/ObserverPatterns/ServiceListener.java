@@ -1,5 +1,7 @@
 package ObserverPatterns;
 
+import Shared.Packet;
+
 public interface ServiceListener {
-    void onDataChanged(String info);
+    void onDataChanged(Packet packet);
 }

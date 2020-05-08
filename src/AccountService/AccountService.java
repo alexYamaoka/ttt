@@ -2,6 +2,7 @@ package AccountService;
 
 import DataBase.sql.DataSource;
 import DataBase.sql.DatabaseManager;
+import ObserverPatterns.ServiceListener;
 import Server.ClientConnection;
 import Server.Service;
 import Shared.Packet;
@@ -21,7 +22,7 @@ public class AccountService implements Service, Runnable {
     private final AtomicBoolean running = new AtomicBoolean(false);
     private Thread worker;
     private HashSet<ClientConnection> clientConnections = new HashSet<>();
-    private HashSet<Service> serviceListeners = new HashSet<>();
+    private HashSet<ServiceListener> serviceListeners = new HashSet<>();
     private DataSource ds = DatabaseManager.getInstance();
     private HashSet<UserInformation> playersOnline = new HashSet<>();
 
@@ -75,16 +76,23 @@ public class AccountService implements Service, Runnable {
         handler.start();
     }
 
-    public void addServiceListener(Service service) {
-        serviceListeners.add(service);
+    public void addServiceListener(ServiceListener serviceListener) {
+        serviceListeners.add(serviceListener);
     }
 
     public void broadcast(Packet packet) {
         for (ClientConnection connection : clientConnections) {
                 connection.sendPacketToClient(packet);
         }
-        for (Service service : serviceListeners) {
-            service.update(packet);
+//        for (ServiceListener serviceListener : serviceListeners) {
+//            serviceListener.onDataChanged(packet);
+//        }
+    }
+
+    public void notifyServerDisplay(Packet packet)
+    {
+        for (ServiceListener serviceListener : serviceListeners) {
+            serviceListener.onDataChanged(packet);
         }
     }
 

@@ -1,35 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="417.0" prefWidth="651.0"
-            style="-fx-background-color: radial-gradient(radius 200%,#003566,#002E59)radial-gradient(radius 200%,#003566,#002E59);"
-            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="UI.ServerUI.ServerDisplay">
-    <children>
-        <SplitPane dividerPositions="0.5137318255250404" layoutX="15.0" layoutY="48.0" prefHeight="306.0"
-                   prefWidth="621.0" style="-fx-background-color: #00325F#00325F;">
-            <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="304.0" prefWidth="179.0"
-                            style="-fx-background-color: #002C54#002C54;">
-                    <children>
-                        <ScrollPane layoutX="7.0" layoutY="8.0" prefHeight="286.0" prefWidth="297.0">
-                            <content>
-                                <Label alignment="TOP_LEFT" prefHeight="544.0" prefWidth="273.0" text="server "/>
-                            </content>
-                        </ScrollPane>
-                    </children>
-                </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="299.0" prefWidth="370.0"
-                            style="-fx-background-color: #002C54#002C54;">
-                    <children>
-                        <ScrollPane layoutX="11.0" layoutY="5.0" prefHeight="292.0" prefWidth="276.0"/>
-                    </children>
-                </AnchorPane>
-            </items>
-        </SplitPane>
-    </children>
+<AnchorPane prefHeight="570.0" prefWidth="1090.0" style="-fx-background-color: radial-gradient(radius 200%,#003566,#002E59)radial-gradient(radius 200%,#003566,#002E59);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.ServerUI.ServerDisplay">
+   <children>
+      <ListView fx:id="serverMessages" layoutX="34.0" layoutY="92.0" prefHeight="434.0" prefWidth="724.0" />
+      <Label alignment="CENTER" layoutX="162.0" layoutY="21.0" prefHeight="44.0" prefWidth="481.0" text="Log" textFill="WHITE">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+      <ListView fx:id="onlinePlayers" layoutX="788.0" layoutY="92.0" prefHeight="434.0" prefWidth="273.0" />
+      <Label alignment="CENTER" layoutX="805.0" layoutY="25.0" prefHeight="36.0" prefWidth="239.0" text="Players Online" textFill="WHITE">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+   </children>
 </AnchorPane>

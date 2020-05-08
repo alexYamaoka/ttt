@@ -1,8 +1,10 @@
 package GameService;
 
+import AccountService.AccountService;
 import DataBase.sql.DataSource;
 import DataBase.sql.DatabaseManager;
 import Models.Game;
+import ObserverPatterns.ServiceListener;
 import Server.ClientConnection;
 import Server.Service;
 import Shared.Packet;
@@ -17,16 +19,31 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GameService implements Runnable, Service {
+    public static GameService instance = null;
+
     private final AtomicBoolean running = new AtomicBoolean(false);
     private final int PORT_NUMBER = 8080;
     private Thread worker;
-    private HashSet<Service> serviceListeners = new HashSet<>();
+    private HashSet<ServiceListener> serviceListeners = new HashSet<>();
     private DataSource ds = DatabaseManager.getInstance();
     private HashSet<ClientConnection> clientConnections = new HashSet<>();
     private HashMap<String, Game> ongoingGameRooms = new HashMap<>();
     private HashMap<String, GameThread> gameThreadList = new HashMap<>();
 
     public GameService() {
+        start();
+    }
+
+    public static GameService getInstance()
+    {
+        if (instance == null) {
+            synchronized (GameService.class) {
+                if(instance == null) {
+                    instance = new GameService();
+                }
+            }
+        }
+        return instance;
     }
 
     public void start() {
@@ -98,8 +115,8 @@ public class GameService implements Runnable, Service {
         handler.start();
     }
 
-    public void addServiceListener(Service service) {
-        serviceListeners.add(service);
+    public void addServiceListener(ServiceListener serviceListener) {
+        serviceListeners.add(serviceListener);
     }
 
     public void broadcast(Packet packet) {
@@ -110,8 +127,17 @@ public class GameService implements Runnable, Service {
                 ex.printStackTrace();
             }
         }
-        for (Service service : serviceListeners) {
-            service.update(packet);
+//        for (ServiceListener serviceListener : serviceListeners) {
+//
+//            System.out.println("inside broadcast: " + packet.getRequest());
+//            serviceListener.onDataChanged(packet);
+//        }
+    }
+
+    public void notifyServerDisplay(Packet packet)
+    {
+        for (ServiceListener serviceListener : serviceListeners) {
+            serviceListener.onDataChanged(packet);
         }
     }
 
