@@ -114,6 +114,8 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
         });
     }
 
+
+
     @Override
     public void getListOfOnlinePlayers(HashSet<UserInformation> listOfOnlinePlayers) {
         Platform.runLater(() -> {

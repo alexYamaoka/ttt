@@ -44,6 +44,11 @@ public class Game extends BaseModel implements Serializable {
         this.player1Username = player1Info.getUserName();
         tttBoard = new TTTBoard();
         this.gameStatus = "WAITING FOR ANOTHER PLAYER";
+        try {
+            ds.addGameViewers(this,player1Info);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public Game(Game game) {
@@ -53,12 +58,18 @@ public class Game extends BaseModel implements Serializable {
         this.gameStatus = game.getGameStatus();
         this.startTime = game.getStartTime();
         this.endTime = game.getEndTime();
+
     }
 
     public void join(ClientConnection player2) {
         this.player2 = player2;
         player2Info = player2.getInformation();
         player2Username = player2Info.getUserName();
+        try {
+            ds.addGameViewers(this,player2Info);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getWinningPlayerId() {
@@ -75,6 +86,11 @@ public class Game extends BaseModel implements Serializable {
 
     public void addGameObserver(ClientConnection client) {
         GameObservers.add(client);
+        try {
+            ds.addGameViewers(this,client.getInformation());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public Timestamp getStartTime() {

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface DataSource {
-    boolean addGameViewers(BaseModel obj) throws SQLException;
+    boolean addGameViewers(BaseModel gameObj,BaseModel userObj) throws SQLException;
 
     boolean insertGame(BaseModel obj) throws SQLException;
 

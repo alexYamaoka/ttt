@@ -127,7 +127,6 @@ public class GameBoardController implements Initializable, GameListener {
             int col = move.getColumn();
             UserInformation userInformation = move.getUserInformation();
 
-
             // used players username to determine who is X and who is O.
             if (player1Username.equals(userInformation.getUserName())) {
                 System.out.println("move was  mine");

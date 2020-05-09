@@ -64,7 +64,6 @@ public class GameHandler implements Runnable {
                 Game game = new Game(clientConnection);
                 service.addGame(game); // add game to game list and broadcast
                 Packet packet = new Packet(Packet.NEW_GAME_CREATED, clientConnection.getInformation(), game);
-
                 clientConnection.sendPacketToClient(packet);
 
                 break;
