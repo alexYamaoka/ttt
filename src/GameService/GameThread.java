@@ -78,6 +78,7 @@ public class GameThread implements Runnable {
         // sends the username of player1
         Packet whoIsPlayer1 = new Packet(Packet.PLAYER_ONE_USERNAME, player1UserInformation, game.getId() + " " + player1UserInformation.getUserName());
 
+
         player1.sendPacketToClient(whoIsPlayer1);
         player2.sendPacketToClient(whoIsPlayer1);
         System.out.println("sending packet about player1");
@@ -90,7 +91,6 @@ public class GameThread implements Runnable {
 
         isPlayer1Turn = true;
 
-
         while (isRunning.get()) {
 
             Move newMove = null;
@@ -99,7 +99,7 @@ public class GameThread implements Runnable {
                 if (!moveQueue.isEmpty()) {
                     System.out.println("Inside game thread, removing move from the queue ");
                     newMove = moveQueue.take();
-
+                    game.setStartTime();
 
                     if (newMove.getUserInformation() == player1UserInformation && isPlayer1Turn) {
                         System.out.println("game player1.make move is called");
@@ -114,7 +114,6 @@ public class GameThread implements Runnable {
                             System.out.println("move is outputted to both players");
 
                             isPlayer1Turn = false;
-
 
                             if (game.isPlayer1Winner(newMove)) {
                                 System.out.println("Player 1 Wins!");
@@ -132,6 +131,7 @@ public class GameThread implements Runnable {
 
                                 // add game to database
                                 try {
+                                    System.out.println("InSert Game try");
                                     ds.insertGame(game);
                                 } catch (SQLException ex) {
                                     ex.printStackTrace();
@@ -143,6 +143,7 @@ public class GameThread implements Runnable {
                                 player1.sendPacketToClient(tieGame);
                                 player2.sendPacketToClient(tieGame);
                                 game.notifyObservers(tieGame);
+                                game.setEndTime();
                             }
                         } else {
                             System.out.println("Not a valid move");
@@ -190,6 +191,7 @@ public class GameThread implements Runnable {
                                 player1.sendPacketToClient(tieGame);
                                 player2.sendPacketToClient(tieGame);
                                 game.notifyObservers(tieGame);
+                                game.setEndTime();
                             }
                         } else {
                             System.out.println("Not a valid move");
