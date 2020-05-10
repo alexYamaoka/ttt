@@ -45,7 +45,6 @@ public class Game extends BaseModel implements Serializable {
         tttBoard = new TTTBoard();
         this.gameStatus = "WAITING FOR ANOTHER PLAYER";
     }
-
     public Game(Game game) {
         this.player1Username = game.getPlayer1Username();
         this.player2Username = game.getPlayer2Username();
@@ -61,38 +60,8 @@ public class Game extends BaseModel implements Serializable {
         player2Username = player2Info.getUserName();
     }
 
-    public String getWinningPlayerId() {
-        return winningPlayerId;
-    }
-
-    public void setWinningPlayerId(String winningPlayerId) {
-        this.winningPlayerId = winningPlayerId;
-    }
-
-    public String getId() {
-        return this.id;
-    }
-
     public void addGameObserver(ClientConnection client) {
         GameObservers.add(client);
-    }
-
-    public Timestamp getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime() {
-        Timestamp startTime = new Timestamp(System.currentTimeMillis());
-        this.startTime = startTime;
-    }
-
-    public Timestamp getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime() {
-        Timestamp endTime = new Timestamp(System.currentTimeMillis());
-        this.endTime = endTime;
     }
 
     public void notifyObservers(Packet packet) {
@@ -159,23 +128,51 @@ public class Game extends BaseModel implements Serializable {
         if (tttBoard.isOver()) {
             setEndTime();
             return true;
-        } else return false;
+        }
+        else
+            return false;
+    }
 
+    public String getWinningPlayerId() {
+        return winningPlayerId;
+    }
+    public void setWinningPlayerId(String winningPlayerId) {
+        this.winningPlayerId = winningPlayerId;
+    }
+
+    public String getId() {
+        return this.id;
+    }
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Timestamp getStartTime() {
+        return startTime;
+    }
+    public void setStartTime() {
+        Timestamp startTime = new Timestamp(System.currentTimeMillis());
+        this.startTime = startTime;
+    }
+
+    public Timestamp getEndTime() {
+        return endTime;
+    }
+    public void setEndTime() {
+        Timestamp endTime = new Timestamp(System.currentTimeMillis());
+        this.endTime = endTime;
     }
 
     public UserInformation getPlayer1Info() {
         return player1Info;
     }
-
     public void setPlayer1Info(UserInformation player1Info) {
-
         this.player1Info = player1Info;
     }
 
     public UserInformation getPlayer2Info() {
         return player2Info;
     }
-
     public void setPlayer2Info(UserInformation player2Info) {
         this.player2Info = player2Info;
     }
@@ -184,7 +181,6 @@ public class Game extends BaseModel implements Serializable {
     public ClientConnection getPlayer1ClientConnection() {
         return player1;
     }
-
     public ClientConnection getPlayer2ClientConnection() {
         return player2;
     }
@@ -192,7 +188,6 @@ public class Game extends BaseModel implements Serializable {
     public String getGameStatus() {
         return gameStatus;
     }
-
     public void setGameStatus(String gameStatus) {
         this.gameStatus = gameStatus;
     }
@@ -200,7 +195,6 @@ public class Game extends BaseModel implements Serializable {
     public String getPlayer1Username() {
         return player1Username;
     }
-
     public String getPlayer2Username() {
         return player2Username;
     }

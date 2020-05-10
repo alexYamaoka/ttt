@@ -1,35 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="717.0" prefWidth="955.0" style="-fx-background-color: radial-gradient(radius 200%,#003566,#002E59)radial-gradient(radius 200%,#003566,#002E59);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.ServerUI.ServerDisplay">
-   <children>
-      <ListView fx:id="activeGames" layoutX="48.0" layoutY="82.0" onMouseClicked="#onActiveGameClicked" prefHeight="266.0" prefWidth="443.0" />
-      <Label alignment="CENTER" layoutX="190.0" layoutY="24.0" prefHeight="44.0" prefWidth="133.0" text="Active Games" textFill="WHITE">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <ListView fx:id="playersOnline" layoutX="631.0" layoutY="82.0" onMouseClicked="#onOnlinePlayerClicked" prefHeight="266.0" prefWidth="264.0" />
-      <Label alignment="CENTER" layoutX="697.0" layoutY="28.0" prefHeight="36.0" prefWidth="133.0" text="Players Online" textFill="WHITE">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <ListView fx:id="allGames" layoutX="48.0" layoutY="403.0" onMouseClicked="#onAllGameClicked" prefHeight="280.0" prefWidth="443.0" />
-      <Label layoutX="227.0" layoutY="362.0" text="All Games" textFill="WHITE">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <ListView fx:id="allAccounts" layoutX="632.0" layoutY="401.0" onMouseClicked="#onAccountClicked" prefHeight="288.0" prefWidth="264.0" />
-      <Label layoutX="712.0" layoutY="362.0" text="All Accounts" textFill="WHITE">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-   </children>
-</AnchorPane>
+<TabPane side="LEFT" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496)radial-gradient(radius 200%,#204060,#1d9496);" tabClosingPolicy="UNAVAILABLE" tabMinWidth="100.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.ServerUI.ServerDisplay">
+   <tabs>
+      <Tab closable="false" text="Active Games">
+         <content>
+            <AnchorPane prefHeight="717.0" prefWidth="952.0">
+               <children>
+                  <TableView fx:id="activeGames" editable="true" prefHeight="717.0" prefWidth="952.0">
+                    <columns>
+                      <TableColumn fx:id="gameID_AG" prefWidth="238.0" text="Game ID" />
+                      <TableColumn fx:id="player1_AG" prefWidth="238.0" text="Player 1" />
+                        <TableColumn fx:id="player2_AG" prefWidth="238.0" text="Player 2" />
+                        <TableColumn fx:id="startTime_AG" prefWidth="238.0" text="Start Time" />
+                    </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+      <Tab text="Active Players">
+        <content>
+          <AnchorPane prefHeight="717.0" prefWidth="952.0">
+               <children>
+                  <TableView fx:id="activePlayers" editable="true" prefHeight="717.0" prefWidth="952.0">
+                     <columns>
+                        <TableColumn fx:id="username_AP" prefWidth="476.0" text="Username" />
+                        <TableColumn fx:id="status_AP" prefWidth="476.0" text="Status" />
+                     </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+        </content>
+      </Tab>
+      <Tab text="Games">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="717.0" prefWidth="952.0">
+               <children>
+                  <TableView fx:id="games" editable="true" prefHeight="717.0" prefWidth="952.0">
+                     <columns>
+                        <TableColumn fx:id="gameID_G" prefWidth="136.0" text="Game ID" />
+                        <TableColumn fx:id="player1_G" prefWidth="136.0" text="Player 1" />
+                        <TableColumn fx:id="player2_G" prefWidth="136.0" text="Player 2" />
+                        <TableColumn fx:id="startTime_G" prefWidth="136.0" text="Start Time" />
+                        <TableColumn fx:id="endTime_G" prefWidth="136.0" text="End Time" />
+                        <TableColumn fx:id="result_G" prefWidth="136.0" text="Result" />
+                        <TableColumn fx:id="spectators_G" prefWidth="136.0" text="Spectators" />
+                     </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+        </content>
+      </Tab>
+      <Tab text="Accounts">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="717.0" prefWidth="952.0">
+               <children>
+                  <TableView fx:id="accounts" editable="true" prefHeight="717.0" prefWidth="952.0">
+                     <columns>
+                        <TableColumn fx:id="username_A" prefWidth="190.4" text="Username" />
+                        <TableColumn fx:id="password_A" minWidth="190.4" prefWidth="75.0" text="Password" />
+                        <TableColumn fx:id="firstName_A" minWidth="190.4" prefWidth="75.0" text="First Name" />
+                        <TableColumn fx:id="lastName_A" minWidth="190.4" prefWidth="75.0" text="Last Name" />
+                        <TableColumn fx:id="status_A" minWidth="190.4" prefWidth="75.0" text="Status" />
+                     </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+        </content>
+      </Tab>
+   </tabs>
+</TabPane>
