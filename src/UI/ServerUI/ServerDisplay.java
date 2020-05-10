@@ -40,6 +40,7 @@ public class ServerDisplay implements Initializable, ServiceListener {
     private Main main;
     private BlockingQueue<Packet> packetsReceived = new LinkedBlockingQueue<>();
 
+    /*
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializeAGTable();
@@ -108,7 +109,7 @@ public class ServerDisplay implements Initializable, ServiceListener {
         });
         status_AP.setCellFactory(TextFieldTableCell.forTableColumn());
         status_AP.setOnEditCommit(e -> {
-            e.getTableView().getItems().get(e.getTablePosition().getRow()).setStatus(e.getNewValue());
+            //e.getTableView().getItems().get(e.getTablePosition().getRow()).setStatus(e.getNewValue());
         });
     }
     private void editableGCols(){
@@ -122,7 +123,7 @@ public class ServerDisplay implements Initializable, ServiceListener {
         });
         player2_G.setCellFactory(TextFieldTableCell.forTableColumn());
         player2_G.setOnEditCommit(e -> {
-            e.getTableView().getItems().get(e.getTablePosition().getRow()).setPlayer2Info(e.getNewValue());
+            //e.getTableView().getItems().get(e.getTablePosition().getRow()).setPlayer2Info(e.getNewValue());
         });
         startTime_G.setCellFactory(TextFieldTableCell.forTableColumn());
         startTime_G.setOnEditCommit(e -> {
@@ -163,6 +164,8 @@ public class ServerDisplay implements Initializable, ServiceListener {
             e.getTableView().getItems().get(e.getTablePosition().getRow()).setStatus(e.getNewValue());
         });
     }
+
+     */
 
 
     @FXML
@@ -272,5 +275,11 @@ public class ServerDisplay implements Initializable, ServiceListener {
     public void setMain(Main main)
     {
         this.main = main;
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle)
+    {
+
     }
 }
