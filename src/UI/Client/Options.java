@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
@@ -116,37 +117,39 @@ public class Options implements Initializable, UpdateUserinformationListener {
         String lastName = this.lastName.getText();
         String username = this.userName.getText();
 
+        firstName = controller.getAccountClient().getUserInformation().getFirstName();
+        lastName = controller.getAccountClient().getUserInformation().getLastName();
+        username = controller.getAccountClient().getUserInformation().getUserName();
+        String id = controller.getAccountClient().getUserInformation().getId();
+        String oldPassword = this.btnOldpass.getText();
+        String newPassword = this.btnNewpass.getText();
+        String confirmPassword = this.btnConfirmPass.getText();
+
+
         Properties properties = new Properties();
         properties.setProperty("firstName", firstName);
         properties.setProperty("lastName", lastName);
         properties.setProperty("username", username);
+        properties.setProperty("newPassword", newPassword);
+        properties.setProperty("id",id);
 
-        Packet packet = new Packet(Packet.UPDATE_USER, controller.getAccountClient().getUserInformation(), properties);
-        controller.getAccountClient().addRequestToServer(packet);
-    }
+        System.out.println(" \nProperties " +properties.toString());
 
-
-    public void passwordSaved(ActionEvent event) {
-
-            String oldPassword = this.btnOldpass.getText();
-            String newPassword = this.btnNewpass.getText();
-            String confirmPassword = this.btnConfirmPass.getText();
-
-            if (oldPassword.equals(controller.getAccountClient().getUserInformation().getPassword())) {
-                if (newPassword.equals(confirmPassword)) {
-                    Packet packet = new Packet(Packet.UPDATE_USER, controller.getAccountClient().getUserInformation(), newPassword);
-                    controller.getAccountClient().addRequestToServer(packet);
-                } else {
-                    updateError.setTextFill(Color.RED);
-                    updateError.setText("New passwords do not match!");
-                }
+        if(oldPassword.equalsIgnoreCase(controller.getAccountClient().getUserInformation().getPassword())){
+            if(newPassword.equals(confirmPassword)){
+                Packet packet = new Packet(Packet.UPDATE_USER, controller.getAccountClient().getUserInformation(), properties);
+                controller.getAccountClient().addRequestToServer(packet);
             } else {
                 updateError.setTextFill(Color.RED);
-                updateError.setText("You did not enter the correct old password!");
+                updateError.setText("New passwords do not match!");
             }
-
-
+        } else {
+            updateError.setTextFill(Color.RED);
+            updateError.setText("You did not enter the correct old password!");
+        }
     }
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -160,6 +163,7 @@ public class Options implements Initializable, UpdateUserinformationListener {
             public void run() {
                 if (!message.equalsIgnoreCase("FAIL")) {
                     String[] str = message.trim().split("\\s+");
+                    System.out.println( "Array to string " +Arrays.toString(str));
                     String id = str[0];
                     String firstName = str[1];
                     String lastName = str[2];

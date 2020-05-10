@@ -39,7 +39,6 @@ public class ReadMessageBus implements Runnable {
         running.set(false);
     }
 
-
     @Override
     public void run() {
         try {

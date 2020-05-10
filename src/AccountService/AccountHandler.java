@@ -138,10 +138,14 @@ public class AccountHandler implements Runnable {
                 user.setUserName(UpdateUserName);
                 user.setPassword(UpdatePassword);
 
+                System.out.println("\nUser to string" + user.toString());
+
                 // **** fix the write object line
                 try {
                     if (server.updateUser(user))
                     {
+                        Packet packet1 = new Packet(Packet.UPDATE_USER,userInformation,new UserInformation(UpdateFirstName,UpdateLastName,UpdateUserName,null,UpdatePassword));
+                        clientConnection.sendPacketToClient(packet1);
                         outputStream.writeObject(new UserInformation(UpdateFirstName, UpdateLastName, UpdateUserName, "email", UpdatePassword));
                     }
 
