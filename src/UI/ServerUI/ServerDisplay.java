@@ -1,5 +1,7 @@
 package UI.ServerUI;
 
+import DataBase.sql.DataSource;
+import DataBase.sql.DatabaseManager;
 import ObserverPatterns.ServiceListener;
 import Shared.Packet;
 import app.Main;
@@ -27,7 +29,7 @@ public class ServerDisplay implements ServiceListener {
 
     @FXML
     private ListView allAccounts = new ListView();
-    
+    private DataSource ds = DatabaseManager.getInstance();
 
     private Main main;
     private BlockingQueue<Packet> packetsReceived = new LinkedBlockingQueue<>();
@@ -50,6 +52,7 @@ public class ServerDisplay implements ServiceListener {
         {
             String username = allAccounts.getSelectionModel().getSelectedItem().toString();
             System.out.println("username selected: " + username);
+
         }
     }
 

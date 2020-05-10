@@ -23,7 +23,10 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class Options implements Initializable, UpdateUserinformationListener {
-    @FXML
+    public Button btn1Save;
+    public Button btn2Save;
+    public Button SaveButton;
+
     private AnchorPane Ach_pane3;
     @FXML
     private AnchorPane Ach_Pane1;
@@ -63,6 +66,11 @@ public class Options implements Initializable, UpdateUserinformationListener {
     private ClientController controller;
 
 
+    public TextField btnOldpass;
+    public TextField btnNewpass;
+    public TextField btnConfirmPass;
+
+
     public void UserDetailButton(ActionEvent event) {
         Pane2.setVisible(false);
         Pane1.managedProperty().bind(Pane1.visibleProperty());
@@ -94,6 +102,7 @@ public class Options implements Initializable, UpdateUserinformationListener {
     }
 
     public void updateInfo() {
+
         UserInformation information = controller.getAccountClient().getUserInformation();
         firstName.setPromptText(information.getFirstName());
         lastName.setPromptText(information.getLastName());
@@ -116,23 +125,27 @@ public class Options implements Initializable, UpdateUserinformationListener {
         controller.getAccountClient().addRequestToServer(packet);
     }
 
-    public void passwordSaved(ActionEvent event) {
-        String oldPassword = this.oldPassword.getText();
-        String newPassword = this.newPassword.getText();
-        String confirmPassword = this.confirmPassword.getText();
 
-        if (oldPassword.equals(controller.getAccountClient().getUserInformation().getPassword())) {
-            if (newPassword.equals(confirmPassword)) {
-                Packet packet = new Packet(Packet.UPDATE_USER, controller.getAccountClient().getUserInformation(), newPassword);
-                controller.getAccountClient().addRequestToServer(packet);
+    public void passwordSaved(ActionEvent event) {
+
+            String oldPassword = this.btnOldpass.getText();
+            String newPassword = this.btnNewpass.getText();
+            String confirmPassword = this.btnConfirmPass.getText();
+
+            if (oldPassword.equals(controller.getAccountClient().getUserInformation().getPassword())) {
+                if (newPassword.equals(confirmPassword)) {
+                    Packet packet = new Packet(Packet.UPDATE_USER, controller.getAccountClient().getUserInformation(), newPassword);
+                    controller.getAccountClient().addRequestToServer(packet);
+                } else {
+                    updateError.setTextFill(Color.RED);
+                    updateError.setText("New passwords do not match!");
+                }
             } else {
                 updateError.setTextFill(Color.RED);
-                updateError.setText("New passwords do not match!");
+                updateError.setText("You did not enter the correct old password!");
             }
-        } else {
-            updateError.setTextFill(Color.RED);
-            updateError.setText("You did not enter the correct old password!");
-        }
+
+
     }
 
     @Override

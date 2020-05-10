@@ -119,25 +119,30 @@ public class AccountHandler implements Runnable {
                 clientConnection.sendPacketToClient(regPacket);
                 break;
             case Packet.UPDATE_USER:
+
                 String UpdateString = data.toString();
+                System.out.println("DataToString  = " + data.toString());
                 UserInformation user = new UserInformation();
                 String[] str3 = UpdateString.trim().split("\\s+");
+                System.out.println(str3[0]);
+                System.out.println(str3[1]);
+                System.out.println(str3[2]);
+                System.out.println(str3[3]);
+
                 String UpdateFirstName = str3[0];
                 String UpdateLastName = str3[1];
                 String UpdateUserName = str3[2];
-                String UpdateEmail = str3[3];
-                String UpdatePassword = str3[4];
+                String UpdatePassword = str3[3];
                 user.setFirstName(UpdateFirstName);
                 user.setLastName(UpdateLastName);
                 user.setUserName(UpdateUserName);
                 user.setPassword(UpdatePassword);
 
-
                 // **** fix the write object line
                 try {
                     if (server.updateUser(user))
                     {
-                        outputStream.writeObject(new UserInformation(UpdateFirstName, UpdateLastName, UpdateUserName, UpdateEmail, UpdatePassword));
+                        outputStream.writeObject(new UserInformation(UpdateFirstName, UpdateLastName, UpdateUserName, "email", UpdatePassword));
                     }
 
                 } catch (IOException | SQLException ex) {
