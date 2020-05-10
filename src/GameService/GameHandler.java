@@ -87,7 +87,7 @@ public class GameHandler implements Runnable {
                     service.broadcast(broadcast);
 
                     // update server display
-                    Packet notifyGameJoined = new Packet(Packet.ACTIVE_GAME, null, "Game ID: " + sendGame.getId());
+                    Packet notifyGameJoined = new Packet(Packet.ACTIVE_GAME, null, sendGame);
                     service.notifyServerDisplay(notifyGameJoined);
 
 

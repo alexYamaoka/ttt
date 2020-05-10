@@ -74,13 +74,12 @@ public class AccountHandler implements Runnable {
 
 
                         // update server display
-                        Packet notifyLoginSuccessful = new Packet(Packet.SIGN_IN, null, clientConnection.getInformation().getUserName());
+                        Packet notifyLoginSuccessful = new Packet(Packet.SIGN_IN, null, clientConnection.getInformation());
                         service.notifyServerDisplay(notifyLoginSuccessful);
 
 
                     } else {
                         packet = new Packet(Packet.SIGN_IN, userInformation, "FAIL");
-
                         clientConnection.sendPacketToClient(packet);
                     }
 
@@ -91,7 +90,7 @@ public class AccountHandler implements Runnable {
             case Packet.SIGN_OUT:
 
                 // update server display
-                Packet notifySignOut = new Packet(Packet.SIGN_OUT, null, clientConnection.getInformation().getUserName());
+                Packet notifySignOut = new Packet(Packet.SIGN_OUT, null, clientConnection.getInformation();
                 service.notifyServerDisplay(notifySignOut);
 
                 break;
@@ -109,7 +108,8 @@ public class AccountHandler implements Runnable {
                         regPacket = new Packet(Packet.REGISTER_CLIENT, userInformation, data);
 
                         // update server display
-                        Packet notifyRegistration = new Packet(Packet.REGISTER_CLIENT, null, userInformation.getUserName());
+                        UserInformation newRegisteredUser = new UserInformation(newFirstName, newLastName, newUserName, null, newPassword);
+                        Packet notifyRegistration = new Packet(Packet.REGISTER_CLIENT, null, newRegisteredUser);
                         service.notifyServerDisplay(notifyRegistration);
                     }
                 } catch (SQLException e) {

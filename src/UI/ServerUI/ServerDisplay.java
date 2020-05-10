@@ -231,35 +231,27 @@ public class ServerDisplay implements Initializable, ServiceListener {
                 {
                     packet = packetsReceived.take();
 
-                    String message = packet.getData().toString();
-
-
                     switch (packet.getRequest())
                     {
                         case Packet.REGISTER_CLIENT:
-                            accounts.getItems().add(message);
+                            UserInformation newRegisteredClient = (UserInformation) packet.getData();
 
                         case Packet.SIGN_IN:
-                            accounts.getItems().add(message);
+                            UserInformation newSignedInUser = (UserInformation) packet.getData();
                             break;
 
                         case Packet.SIGN_OUT:
-                            accounts.getItems().remove(message);
+                            UserInformation newSignedOutUser = (UserInformation) packet.getData();
                             break;
 
                         case Packet.ACTIVE_GAME:
-                            activeGames.getItems().add(message);
-                            accounts.getItems().add(message);
+                            Game newCreatedGame = (Game) packet.getData();
                             break;
 
                         case Packet.GAME_CLOSE:
-                            activeGames.getItems().remove(message);
+                            Game newClosedGame = (Game) packet.getData();
 
                     }
-
-
-
-                    //serverMessages.getItems().add(sb.toString());
                 }
                 catch (InterruptedException e)
                 {
