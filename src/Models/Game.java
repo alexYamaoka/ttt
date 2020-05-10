@@ -174,7 +174,7 @@ public class Game extends BaseModel implements Serializable {
     }
 
     public boolean isPlayer2Winner(Move move) {
-        boolean isWinner = tttBoard.isWinner(move.getRow(), move.getColumn(), 'o');
+        boolean isWinner = tttBoard.isWinner(move.getRow(), move.getColumn(), 'O');
         if (isWinner) {
             setWinningPlayerId(player2.getInformation().getId());
         }
