@@ -62,7 +62,6 @@ public class MainMenuController implements Initializable {
         stage.show();
     }
 
-
     @FXML
     public void onExitButtonClicked(ActionEvent event) {
         System.out.println("Exit Button Clicked!");

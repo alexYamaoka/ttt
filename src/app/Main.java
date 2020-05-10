@@ -22,13 +22,9 @@ public class Main extends Application
     private GameService gameService = GameService.getInstance();
     private ServerDisplay serverDisplayController;
 
-
-
-
     public static void main(String[] args) {
         launch(args);
     }
-
 
     @Override
     public void start(Stage stage) throws Exception {

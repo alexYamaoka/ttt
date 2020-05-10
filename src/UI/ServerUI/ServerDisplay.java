@@ -27,12 +27,10 @@ public class ServerDisplay implements ServiceListener {
 
     @FXML
     private ListView allAccounts = new ListView();
-
+    
 
     private Main main;
     private BlockingQueue<Packet> packetsReceived = new LinkedBlockingQueue<>();
-
-
 
 
     @FXML
@@ -76,9 +74,6 @@ public class ServerDisplay implements ServiceListener {
     }
 
 
-
-
-
     public void display(ActionEvent event) {
 
     }
@@ -89,8 +84,6 @@ public class ServerDisplay implements ServiceListener {
 
         packetsReceived.add(packet);
         updateUI();
-
-
     }
 
     private synchronized void updateUI()
@@ -107,7 +100,6 @@ public class ServerDisplay implements ServiceListener {
 
                     String message = packet.getData().toString();
 
-
                     switch (packet.getRequest())
                     {
                         case Packet.REGISTER_CLIENT:
@@ -115,6 +107,7 @@ public class ServerDisplay implements ServiceListener {
 
                         case Packet.SIGN_IN:
                             playersOnline.getItems().add(message);
+
                             break;
 
                         case Packet.SIGN_OUT:
@@ -131,8 +124,6 @@ public class ServerDisplay implements ServiceListener {
 
                     }
 
-
-
                     //serverMessages.getItems().add(sb.toString());
                 }
                 catch (InterruptedException e)
@@ -140,16 +131,10 @@ public class ServerDisplay implements ServiceListener {
                     e.printStackTrace();
                 }
 
-
             }
         });
 
     }
-
-
-
-
-
 
     public void setMain(Main main)
     {

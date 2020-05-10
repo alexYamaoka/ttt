@@ -31,9 +31,6 @@ public class ClientConnection implements Runnable {
         this.service = service;
     }
 
-
-
-
     //***************************************************************************
     public synchronized void sendPacketToClient(Packet packet)
     {

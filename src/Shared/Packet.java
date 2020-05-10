@@ -20,6 +20,8 @@ public class Packet implements Serializable {
     public static final String GAME_STATUS = "GAME_STATUS";
     public static final String GAME_CLOSE = "GAME_CLOSE";
 
+    public static final String DATABASE_STATUS = "DB STATUS";
+
     public static final String ACTIVE_GAME = "ACTIVE-GAME";
 
     private Serializable data;

@@ -7,6 +7,7 @@ import Models.Move;
 import Server.ClientConnection;
 import Shared.Packet;
 import Shared.UserInformation;
+import app.Server;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -78,7 +79,6 @@ public class GameThread implements Runnable {
         // sends the username of player1
         Packet whoIsPlayer1 = new Packet(Packet.PLAYER_ONE_USERNAME, player1UserInformation, game.getId() + " " + player1UserInformation.getUserName());
 
-
         player1.sendPacketToClient(whoIsPlayer1);
         player2.sendPacketToClient(whoIsPlayer1);
         System.out.println("sending packet about player1");
@@ -131,7 +131,6 @@ public class GameThread implements Runnable {
 
                                 // add game to database
                                 try {
-                                    System.out.println("InSert Game try");
                                     ds.insertGame(game);
                                 } catch (SQLException ex) {
                                     ex.printStackTrace();

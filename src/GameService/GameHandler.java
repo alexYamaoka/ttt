@@ -26,7 +26,6 @@ public class GameHandler implements Runnable {
     private GameService service;
     private ClientConnection clientConnection;
 
-
     public GameHandler(ClientConnection clientConnection, Packet packet, GameService service) {
         this.service = service;
         this.packet = packet;
