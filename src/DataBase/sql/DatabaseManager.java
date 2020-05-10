@@ -67,25 +67,17 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
     }
 
     @Override
-    public BaseModel update(BaseModel obj) throws SQLException {
+    public Boolean update(String UpdatePassword,String UpdateLastName,String UpdateFirstName,String Id,String UpdateUserName) throws SQLException {
         StringBuilder query = new StringBuilder();
-        List<BaseModel> items = new ArrayList<>();
-        if (obj instanceof UserInformation) {
-            UserInformation user = (UserInformation) obj;
-            System.out.println(user.toString());
-            query.append("UPDATE ");
-            //query.append("user SET username = ? WHERE id = ? ");
-            query.append("user SET username = " + user.getUserName() + " password = " + user.getPassword() + " FirstName = " + user.getFirstName()
-                    + " LastName = " + user.getLastName() + " isDeleted = " + user.getIsDeleted());
 
-            query.append(" WHERE id =" + user.getId());
+        query.append("UPDATE ");
+        query.append("user SET username = '" + UpdateUserName + "' password = '" + UpdatePassword + "' FirstName = '"
+                + UpdateFirstName + "' LastName = '" + UpdateLastName + "' WHERE id = '" + Id );
 
             UserStatement = myConn.prepareStatement(query.toString());
             System.out.println( "\nQuery to string   " + query.toString());
             UserStatement.executeQuery(query.toString());
-            items.add(user);
-        }
-        return (BaseModel) items;
+            return true;
     }
 
     @Override

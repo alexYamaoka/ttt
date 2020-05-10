@@ -121,37 +121,32 @@ public class AccountHandler implements Runnable {
             case Packet.UPDATE_USER:
 
                 String UpdateString = data.toString();
-                System.out.println("DataToString  = " + data.toString());
-                UserInformation user = new UserInformation();
-                String[] str3 = UpdateString.trim().split("\\s+");
-                System.out.println(str3[0]);
-                System.out.println(str3[1]);
-                System.out.println(str3[2]);
-                System.out.println(str3[3]);
+                System.out.println("DataToString  = " + data.toString()); // This comes in fine
 
+                String[] str3 = UpdateString.trim().split("\\s+");
                 String UpdateFirstName = str3[0];
                 String UpdateLastName = str3[1];
                 String UpdateUserName = str3[2];
-                String UpdatePassword = str3[3];
-                user.setFirstName(UpdateFirstName);
-                user.setLastName(UpdateLastName);
-                user.setUserName(UpdateUserName);
-                user.setPassword(UpdatePassword);
+                String Id = str3[3];
+                String UpdatePassword = str3[4];
 
-                System.out.println("\nUser to string" + user.toString());
-
-                // **** fix the write object line
                 try {
-                    if (server.updateUser(user))
-                    {
-                        Packet packet1 = new Packet(Packet.UPDATE_USER,userInformation,new UserInformation(UpdateFirstName,UpdateLastName,UpdateUserName,null,UpdatePassword));
-                        clientConnection.sendPacketToClient(packet1);
-                        outputStream.writeObject(new UserInformation(UpdateFirstName, UpdateLastName, UpdateUserName, "email", UpdatePassword));
-                    }
-
-                } catch (IOException | SQLException ex) {
-                    stop();
+                    ds.update(UpdatePassword,UpdateLastName,UpdateFirstName,Id,UpdateUserName);
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
+
+               // try {
+                   // if (server.updateUser(UpdatePassword,UpdateLastName,UpdateFirstName,Id,UpdateUserName))
+                    //{
+                       // Packet packet1 = new Packet(Packet.UPDATE_USER,userInformation,new UserInformation(UpdateFirstName,UpdateLastName,UpdateUserName,null,UpdatePassword));
+                        //clientConnection.sendPacketToClient(packet1);
+                       // outputStream.writeObject(new UserInformation(UpdateFirstName, UpdateLastName, UpdateUserName, "email", UpdatePassword));
+                   //}
+
+                //} catch (SQLException ex) {
+                    stop();
+               // }
                 break;
 
             case Packet.DELETE_ACCOUNT:

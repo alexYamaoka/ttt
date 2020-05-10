@@ -18,10 +18,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.Properties;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class Options implements Initializable, UpdateUserinformationListener {
     public Button btn1Save;
@@ -112,32 +111,26 @@ public class Options implements Initializable, UpdateUserinformationListener {
 
 
     public void userDetailsSaved(ActionEvent event) {
+        List<String> user = new ArrayList<>();
 
         String firstName = this.firstName.getText();
         String lastName = this.lastName.getText();
         String username = this.userName.getText();
+        String id =  controller.getAccountClient().getUserInformation().getId();
 
-        firstName = controller.getAccountClient().getUserInformation().getFirstName();
-        lastName = controller.getAccountClient().getUserInformation().getLastName();
-        username = controller.getAccountClient().getUserInformation().getUserName();
-        String id = controller.getAccountClient().getUserInformation().getId();
         String oldPassword = this.btnOldpass.getText();
         String newPassword = this.btnNewpass.getText();
         String confirmPassword = this.btnConfirmPass.getText();
 
-
-        Properties properties = new Properties();
-        properties.setProperty("firstName", firstName);
-        properties.setProperty("lastName", lastName);
-        properties.setProperty("username", username);
-        properties.setProperty("newPassword", newPassword);
-        properties.setProperty("id",id);
-
-        System.out.println(" \nProperties " +properties.toString());
+        user.add(firstName = controller.getAccountClient().getUserInformation().getFirstName());
+        user.add(lastName = controller.getAccountClient().getUserInformation().getLastName());
+        user.add(username = controller.getAccountClient().getUserInformation().getUserName());
+        user.add(id);
+        user.add(newPassword);
 
         if(oldPassword.equalsIgnoreCase(controller.getAccountClient().getUserInformation().getPassword())){
             if(newPassword.equals(confirmPassword)){
-                Packet packet = new Packet(Packet.UPDATE_USER, controller.getAccountClient().getUserInformation(), properties);
+                Packet packet = new Packet(Packet.UPDATE_USER, controller.getAccountClient().getUserInformation(), (Serializable) user);
                 controller.getAccountClient().addRequestToServer(packet);
             } else {
                 updateError.setTextFill(Color.RED);
@@ -148,8 +141,6 @@ public class Options implements Initializable, UpdateUserinformationListener {
             updateError.setText("You did not enter the correct old password!");
         }
     }
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
