@@ -86,8 +86,6 @@ public class GameService implements Runnable, Service {
             ongoingGameRooms.remove(gameName);
             gameThreadList.get(gameName).stop();
             gameThreadList.remove(gameName);
-            Packet packet = new Packet(Packet.GET_GAMES, null, getGames()); // Refresh List with new Games/Removed games
-            broadcast(packet);
             return true;
         }
         return false;

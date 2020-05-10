@@ -13,4 +13,6 @@ public interface LobbyListener extends GameListener {
     void getListOfOnlinePlayers(HashSet<UserInformation> listOfOnlinePlayers);
 
     void joinGame(Game game);
+
+    void clearGameList();
 }

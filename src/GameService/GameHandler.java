@@ -125,6 +125,8 @@ public class GameHandler implements Runnable {
                 try {
                     if (service.removeGameFromLobby(data.toString())) {
                         System.out.println("Game closed!");
+                        Packet closePacket = new Packet(Packet.GET_GAMES, null, service.getGames()); // Refresh List with new Games/Removed games
+                        service.broadcast(closePacket);
                     } else {
                         System.out.println("Game not closed");
                     }

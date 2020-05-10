@@ -183,6 +183,11 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
         });
     }
 
+    @Override
+    public void clearGameList() {
+        activeGames.getItems().clear();
+    }
+
     private void addButtonsToTable() {
         Callback<TableColumn<Game, Void>, TableCell<Game, Void>> cellFactory = new Callback<>() {
             @Override
