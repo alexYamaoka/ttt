@@ -128,23 +128,18 @@ public class AccountHandler implements Runnable {
                 String Id = str3[3];
                 String UpdatePassword = str3[4];
 
+
                 try {
-                    ds.update(UpdateFirstName,UpdateLastName,UpdateUserName,Id,UpdatePassword);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                    if (ds.update(UpdateFirstName,UpdateLastName,UpdateUserName,Id,UpdatePassword))
+                    {
+                        Packet packet1 = new Packet(Packet.UPDATE_USER,userInformation,new UserInformation(UpdateFirstName,UpdateLastName,UpdateUserName,null,UpdatePassword));
+                        clientConnection.sendPacketToClient(packet1);
+                        //outputStream.writeObject(new UserInformation(UpdateFirstName, UpdateLastName, UpdateUserName, "email", UpdatePassword));
+                   }
 
-               // try {
-                   // if (server.updateUser(UpdatePassword,UpdateLastName,UpdateFirstName,Id,UpdateUserName))
-                    //{
-                       // Packet packet1 = new Packet(Packet.UPDATE_USER,userInformation,new UserInformation(UpdateFirstName,UpdateLastName,UpdateUserName,null,UpdatePassword));
-                        //clientConnection.sendPacketToClient(packet1);
-                       // outputStream.writeObject(new UserInformation(UpdateFirstName, UpdateLastName, UpdateUserName, "email", UpdatePassword));
-                   //}
-
-                //} catch (SQLException ex) {
+                } catch (SQLException ex) {
                     stop();
-               // }
+               }
                 break;
 
             case Packet.DELETE_ACCOUNT:

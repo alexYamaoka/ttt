@@ -69,14 +69,11 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
 
     @Override
     public Boolean update(String UpdateFirstName,String UpdateLastName,String UpdateUserName,String Id,String UpdatePassword) throws SQLException {
-        StringBuilder query = new StringBuilder();
+        String sql = "UPDATE user " + "SET FirstName = ? , LastName = ? , username = ? , password = ? WHERE id = ?";
         int row = 0;
 
-        query.append("UPDATE user ").append("SET FirstName = ?").append(" LastName = ?").append(" UserName = ?").append(" password = ?");
-        query.append(" WHERE id = ?");
-
-        UserStatement = myConn.prepareStatement(String.valueOf(query));
-        System.out.println(query.toString());
+        UserStatement = myConn.prepareStatement(sql);
+        System.out.println(sql.toString());
 
         System.out.println("\n");
         System.out.println("FirstName "+UpdateFirstName);
@@ -92,7 +89,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         UserStatement.setString(4,UpdatePassword);
         UserStatement.setString(5,Id);
 
-        row = UserStatement.executeUpdate(UserStatement.toString());
+        row = UserStatement.executeUpdate();
         System.out.println(String.format("Rows affected %d",row));
 
         return row > 0;

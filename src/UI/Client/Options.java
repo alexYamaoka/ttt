@@ -121,9 +121,9 @@ public class Options implements Initializable, UpdateUserinformationListener {
         String newPassword = this.btnNewpass.getText();
         String confirmPassword = this.btnConfirmPass.getText();
 
-        user.add(firstName = controller.getAccountClient().getUserInformation().getFirstName());
-        user.add(lastName = controller.getAccountClient().getUserInformation().getLastName());
-        user.add(username = controller.getAccountClient().getUserInformation().getUserName());
+        user.add(firstName);
+        user.add(lastName);
+        user.add(username);
         user.add(id);
         user.add(newPassword);
 
