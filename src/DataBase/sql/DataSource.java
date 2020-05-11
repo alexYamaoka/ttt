@@ -18,7 +18,7 @@ public interface DataSource {
 
     boolean insert(BaseModel obj) throws SQLException;
 
-    boolean delete(String username, String firstname, String lastname, String password) throws SQLException;
+    boolean delete(String Id) throws SQLException;
 
     Boolean update(String UpdateFirstName,String UpdateLastName,String UpdateUserName,String Id,String UpdatePassword) throws SQLException;
 

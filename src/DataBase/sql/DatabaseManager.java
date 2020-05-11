@@ -54,17 +54,19 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
     }
 
     @Override
-    public boolean delete(String username, String firstname, String lastname, String password) throws SQLException {
+    public boolean delete(String Id) throws SQLException {
         StringBuilder query = new StringBuilder();
-        query.append("UPDATE user SET");
-        query.append("isDeleted = 1");
-        query.append("WHERE ");
-        query.append("username = '" + username + "' AND password = '" + password + "'");
-        UserStatement = myConn.prepareStatement(query.toString());
-        UserStatement.executeUpdate(query.toString());
-        System.out.println(query.toString());
+        String sql = "UPDATE user SET isDeleted = ? WHERE id = ?";
+        int row = 0;
 
-        return true;
+        System.out.println(sql);
+        UserStatement = myConn.prepareStatement(sql);
+        UserStatement.setInt(1,1);
+        UserStatement.setString(2,Id);
+        row = UserStatement.executeUpdate();
+        System.out.println(query.toString());
+        System.out.println(String.format("Rows affected %d",row));
+        return row > 0;
     }
 
     @Override
@@ -140,7 +142,6 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         System.out.println("Row = " + row);
 
         return row != 0;
-
     }
 
     @Override

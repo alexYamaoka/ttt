@@ -3,6 +3,7 @@ package UI.Client;
 import Client.Client;
 import Client.ClientController;
 import Shared.Packet;
+import Shared.UserInformation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

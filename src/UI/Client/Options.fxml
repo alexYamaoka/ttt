@@ -17,6 +17,7 @@
                     <children>
                         <Button fx:id="btn_UserDetails" layoutX="19.0" layoutY="154.0" mnemonicParsing="false" onAction="#UserDetailButton" prefHeight="27.0" prefWidth="118.0" text="User Details" />
                         <Button fx:id="btn_MainMenu" layoutX="20.0" layoutY="193.0" mnemonicParsing="false" onAction="#MainMenu" prefHeight="27.0" prefWidth="118.0" text="MainMenu" textAlignment="CENTER" />
+                  <Button fx:id="DeactivateAccount" layoutX="19.0" layoutY="233.0" mnemonicParsing="false" onAction="#DeactivateAccount" prefHeight="27.0" prefWidth="118.0" text="Deactive Account" />
                     </children>
                 </AnchorPane>
                 <AnchorPane fx:id="split2" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: radial-gradient(radius 200%,#132639,#1d9496)radial-gradient(radius 200%,#132639,#1d9496); -fx-border-color: #000000#000000;">

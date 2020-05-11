@@ -1,6 +1,7 @@
 package UI.Client;
 
 import Client.ClientController;
+import Client.Main;
 import ObserverPatterns.UpdateUserinformationListener;
 import Shared.Packet;
 import Shared.UserInformation;
@@ -26,6 +27,7 @@ public class Options implements Initializable, UpdateUserinformationListener {
     public Button btn1Save;
     public Button btn2Save;
     public Button SaveButton;
+    public Button DeactivateAccount;
 
     private AnchorPane Ach_pane3;
     @FXML
@@ -70,7 +72,6 @@ public class Options implements Initializable, UpdateUserinformationListener {
     public TextField btnNewpass;
     public TextField btnConfirmPass;
 
-
     public void UserDetailButton(ActionEvent event) {
         Pane2.setVisible(false);
         Pane1.managedProperty().bind(Pane1.visibleProperty());
@@ -109,42 +110,53 @@ public class Options implements Initializable, UpdateUserinformationListener {
         userName.setPromptText(information.getUserName());
     }
 
-    public void userDetailsSaved(ActionEvent event) {
+    public void DeactivateAccount(ActionEvent event){
+
+        String id = controller.getAccountClient().getUserInformation().getId();
         List<String> user = new ArrayList<>();
-
-        String firstName = this.firstName.getText();
-        String lastName = this.lastName.getText();
-        String username = this.userName.getText();
-        String id =  controller.getAccountClient().getUserInformation().getId();
-
-        String oldPassword = this.btnOldpass.getText();
-        String newPassword = this.btnNewpass.getText();
-        String confirmPassword = this.btnConfirmPass.getText();
-
-        user.add(firstName);
-        user.add(lastName);
-        user.add(username);
         user.add(id);
-        user.add(newPassword);
-
         String data = String.join(" ", user);
+        System.out.println("User in deactivate " + user);
+        Packet packet = new Packet(Packet.DELETE_ACCOUNT, controller.getAccountClient().getUserInformation(), data);
+        controller.getAccountClient().addRequestToServer(packet);
 
-        if(oldPassword.equalsIgnoreCase(controller.getAccountClient().getUserInformation().getPassword())){
-            if(newPassword.equals(confirmPassword)){
-                Packet packet = new Packet(Packet.UPDATE_USER, controller.getAccountClient().getUserInformation(),data);
-                controller.getAccountClient().addRequestToServer(packet);
-            } else {
-                updateError.setTextFill(Color.RED);
-                updateError.setText("New passwords do not match!");
-            }
-        } else {
-            updateError.setTextFill(Color.RED);
-            updateError.setText("You did not enter the correct old password!");
-        }
+
     }
+
+    public void userDetailsSaved(ActionEvent event) {
+
+                List<String> user = new ArrayList<>();
+                String firstName = this.firstName.getText();
+                String lastName = this.lastName.getText();
+                String username = this.userName.getText();
+                String id = controller.getAccountClient().getUserInformation().getId();
+                String oldPassword = this.btnOldpass.getText();
+                String newPassword = this.btnNewpass.getText();
+                String confirmPassword = this.btnConfirmPass.getText();
+                user.add(firstName);
+                user.add(lastName);
+                user.add(username);
+                user.add(id);
+                user.add(newPassword);
+                String data = String.join(" ", user);
+
+                if (oldPassword.equalsIgnoreCase(controller.getAccountClient().getUserInformation().getPassword())) {
+                    if (newPassword.equals(confirmPassword)) {
+                        Packet packet = new Packet(Packet.UPDATE_USER, controller.getAccountClient().getUserInformation(), data);
+                        controller.getAccountClient().addRequestToServer(packet);
+                    } else {
+                        updateError.setTextFill(Color.RED);
+                        updateError.setText("New passwords do not match!");
+                    }
+                } else {
+                    updateError.setTextFill(Color.RED);
+                    updateError.setText("You did not enter the correct old password!");
+                }
+            }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
 
     }
 

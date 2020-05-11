@@ -127,14 +127,11 @@ public class AccountHandler implements Runnable {
                 String UpdateUserName = str3[2];
                 String Id = str3[3];
                 String UpdatePassword = str3[4];
-
-
                 try {
                     if (ds.update(UpdateFirstName,UpdateLastName,UpdateUserName,Id,UpdatePassword))
                     {
                         Packet packet1 = new Packet(Packet.UPDATE_USER,userInformation,new UserInformation(UpdateFirstName,UpdateLastName,UpdateUserName,null,UpdatePassword));
                         clientConnection.sendPacketToClient(packet1);
-                        //outputStream.writeObject(new UserInformation(UpdateFirstName, UpdateLastName, UpdateUserName, "email", UpdatePassword));
                    }
 
                 } catch (SQLException ex) {
@@ -145,16 +142,11 @@ public class AccountHandler implements Runnable {
             case Packet.DELETE_ACCOUNT:
                 String DeleteUserString = data.toString();
                 String[] str4 = DeleteUserString.trim().split("\\s+");
-                String DeleteFirstName = str4[0];
-                String DeleteLastName = str4[1];
-                String DeleteUserName = str4[2];
-                String DeleteEmail = str4[3];
-                String DeletePassword = str4[4];
+                String DeleteID = str4[0];
                 Packet deletePacket;
                 try {
-                    if (server.DeleteUser(DeleteUserName, DeleteFirstName, DeleteLastName, DeletePassword)) {
+                    if (server.DeleteUser(DeleteID)) {
                         deletePacket = new Packet(Packet.DELETE_ACCOUNT, userInformation, data);
-
                         clientConnection.sendPacketToClient(deletePacket);
                     }
                 } catch (SQLException e) {

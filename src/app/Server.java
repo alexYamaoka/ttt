@@ -15,9 +15,8 @@ public class Server {
 
     private DataSource ds = DatabaseManager.getInstance();
 
-    public boolean DeleteUser(String username, String firstname, String lastname,String password) throws SQLException {
-        ds.delete(username,firstname,lastname,password);
-        return true;
+    public boolean DeleteUser(String Id) throws SQLException {
+        return ds.delete(Id);
     }
 
     public boolean login(String username, String password) throws SQLException {
