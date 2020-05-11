@@ -9,6 +9,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
@@ -111,7 +112,6 @@ public class Options implements Initializable, UpdateUserinformationListener {
     }
 
     public void DeactivateAccount(ActionEvent event){
-
         String id = controller.getAccountClient().getUserInformation().getId();
         List<String> user = new ArrayList<>();
         user.add(id);
@@ -119,8 +119,6 @@ public class Options implements Initializable, UpdateUserinformationListener {
         System.out.println("User in deactivate " + user);
         Packet packet = new Packet(Packet.DELETE_ACCOUNT, controller.getAccountClient().getUserInformation(), data);
         controller.getAccountClient().addRequestToServer(packet);
-
-
     }
 
     public void userDetailsSaved(ActionEvent event) {
@@ -184,6 +182,19 @@ public class Options implements Initializable, UpdateUserinformationListener {
                     updateError.setTextFill(Color.RED);
                     updateError.setText("Username has already been taken!");
                 }
+            }
+        });
+    }
+
+    @Override
+    public void deactivateAccount(String message) {
+        Platform.runLater(()->{
+            if(message.equals("SUCCESS")) {
+                controller.getAccountClient().getUserInformation().setIsDeleted(1);
+                Stage stage = (Stage)DeactivateAccount.getScene().getWindow();
+                Parent root = controller.getSignInPane();
+                stage.setScene(root.getScene());
+                stage.show();
             }
         });
     }

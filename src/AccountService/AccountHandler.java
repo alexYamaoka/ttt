@@ -146,7 +146,7 @@ public class AccountHandler implements Runnable {
                 Packet deletePacket;
                 try {
                     if (server.DeleteUser(DeleteID)) {
-                        deletePacket = new Packet(Packet.DELETE_ACCOUNT, userInformation, data);
+                        deletePacket = new Packet(Packet.DELETE_ACCOUNT, userInformation, "SUCCESS");
                         clientConnection.sendPacketToClient(deletePacket);
                     }
                 } catch (SQLException e) {
