@@ -28,7 +28,10 @@ public class AiPlayer implements Runnable {
         // mimic a real player
         try {
             userInformation = new UserInformation("Computer", "Computer", "Computer", "Computer", "Computer");
+            userInformation.setId("Computer");
             socket = new Socket("localhost", 8080);
+            outputStream = new ObjectOutputStream(socket.getOutputStream());
+            inputStream = new ObjectInputStream(socket.getInputStream());
 
             // join the game
             Packet packet = new Packet(Packet.JOIN_GAME, userInformation, game.getId());
@@ -49,6 +52,7 @@ public class AiPlayer implements Runnable {
 
     @Override
     public void run() {
+        System.out.print("AiPlayerStarted");
         running.set(true);
         while (running.get()) {
             try {

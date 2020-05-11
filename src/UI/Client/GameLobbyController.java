@@ -68,6 +68,10 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
     }
 
     public void onPlayAgainstComputerButtonClicked(ActionEvent event) {
+        if(event.getSource() == newGameAgainstComputerButton) {
+            Packet packet = new Packet(Packet.AI_GAME, clientController.getAccountClient().getUserInformation(), "NEW-GAME");
+            clientController.getGameClient().addRequestToServer(packet);
+        }
     }
 
     public void onCreateGameButtonClicked(ActionEvent event) {

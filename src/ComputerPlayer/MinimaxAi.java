@@ -1,15 +1,22 @@
 package ComputerPlayer;
 
 import Models.Game;
-import Models.Move;
-import Shared.UserInformation;
-
-import java.util.ArrayList;
 
 public class MinimaxAi implements Playable {
     static char opponent = 'X', player = 'O';
 
+    @Override
+    public Move play(Game game) {
+        char[][] board = game.getTttBoard().getBoard();
+        printBoard(board);
+        Move bestMove = findBestMove(board);
+        System.out.printf("The Optimal Move is :\n");
+        System.out.printf("ROW: %d COL: %d\n\n", bestMove.row, bestMove.col);
+        return bestMove;
+    }
+
     private static void printBoard(char[][] board) {
+        System.out.println("Printing board from ai");
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (board[i][j] == 0) {
@@ -168,16 +175,6 @@ public class MinimaxAi implements Playable {
         }
 
         System.out.printf("The value of the best Move " + "is : %d\n\n", bestVal);
-        return bestMove;
-    }
-
-    @Override
-    public Move play(Game game) {
-        char[][] board = game.getTttBoard().getBoard();
-        printBoard(board);
-        Move bestMove = findBestMove(board);
-        System.out.printf("The Optimal Move is :\n");
-        System.out.printf("ROW: %d COL: %d\n\n", bestMove.row, bestMove.col);
         return bestMove;
     }
 
