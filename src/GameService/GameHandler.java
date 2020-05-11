@@ -109,7 +109,11 @@ public class GameHandler implements Runnable {
 
             case Packet.OBSERVE_GAME:
                 Game observerGame = service.getGame(data.toString());
-                observerGame.addGameObserver(clientConnection);
+                if(observerGame.addGameObserver(clientConnection)) {
+                    Packet observe = new Packet(Packet.OBSERVE_GAME, userInformation, observerGame);
+                    clientConnection.sendPacketToClient(observe);
+                }
+
                 break;
 
             case Packet.GAME_MOVE:

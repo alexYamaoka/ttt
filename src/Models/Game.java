@@ -85,13 +85,17 @@ public class Game extends BaseModel implements Serializable {
         return this.id;
     }
 
-    public void addGameObserver(ClientConnection client) {
+    public boolean addGameObserver(ClientConnection client) {
+        if (GameObservers.contains(client)) {
+            return false;
+        }
         GameObservers.add(client);
         try {
             ds.addGameViewers(this, client.getInformation());
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return true;
     }
 
     public Timestamp getStartTime() {

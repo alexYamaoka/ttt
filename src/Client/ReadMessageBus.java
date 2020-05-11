@@ -42,10 +42,11 @@ public class ReadMessageBus implements Runnable {
 
     @Override
     public void run() {
+        Packet response = null;
         try {
             running.set(true);
             while (running.get()) {
-                Packet response = clientController.getNextResponse();
+                response = clientController.getNextResponse();
 
                 if (response != null) {
                     switch (response.getRequest()) {
@@ -88,6 +89,11 @@ public class ReadMessageBus implements Runnable {
                             }
                             break;
 
+                        case Packet.OBSERVE_GAME:
+                            if(response.getData() != null) {
+                                lobbyListener.spectateGame((Game) response.getData());
+                            }
+                            break;
 
                         case Packet.GAME_MOVE:
                             lobbyListener.updateMove((Move) response.getData());
@@ -117,6 +123,8 @@ public class ReadMessageBus implements Runnable {
             }
         } catch (Exception ex) {
             System.out.println("Read Message Exception: " + ex.getMessage());
+            System.out.println("Type: " + response.getRequest());
+            System.out.println("Data: " + response.getData());
         }
     }
 }
