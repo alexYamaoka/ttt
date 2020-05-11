@@ -1,38 +1,20 @@
 package ComputerPlayer;
 
 import Models.Game;
+import Models.Move;
+import Shared.UserInformation;
 
 import java.util.ArrayList;
 
-public class MinimaxAi implements Ai {
-    static class Move
-    {
-        int row, col;
-    };
-
+public class MinimaxAi implements Playable {
     static char opponent = 'X', player = 'O';
 
-    @Override
-    public Models.Move play(Game game) {
-        char board[][] = game.getTttBoard().getBoard();
-        printBoard(board);
-        Move bestMove = findBestMove(board);
-        ArrayList<Integer> position = new ArrayList<>();
-        position.add(bestMove.row);
-        position.add(bestMove.col);
-        System.out.printf("The Optimal Move is :\n");
-        System.out.printf("ROW: %d COL: %d\n\n", bestMove.row, bestMove.col );
-        // return a move
-        return null;
-    }
-
-    public static void printBoard(char[][] board) {
-        for(int i = 0; i < 3; i++) {
-            for(int j = 0; j < 3; j++) {
-                if(board[i][j] == 0) {
+    private static void printBoard(char[][] board) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board[i][j] == 0) {
                     System.out.print('_');
-                }
-                else {
+                } else {
                     System.out.print(board[i][j]);
                 }
             }
@@ -41,13 +23,12 @@ public class MinimaxAi implements Ai {
     }
 
     // This is the minimax function. It considers all the possible ways the game can go and returns the value of the board
-    static int minimax(char board[][], int depth, Boolean isMax)
-    {
+    private static int minimax(char[][] board, int depth, Boolean isMax) {
         int score = evaluate(board);
 
         // If Maximizer has won the game return his/her evaluated score
         if (score == 10)
-            return score-depth;
+            return score - depth;
 
         // If Minimizer has won the game return his/her evaluated score
         if (score == -10)
@@ -58,18 +39,14 @@ public class MinimaxAi implements Ai {
             return 0;
 
         // If this maximizer's move
-        if (isMax)
-        {
+        if (isMax) {
             int best = -1000;
 
             // Traverse all cells
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 3; j++)
-                {
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
                     // Check if cell is empty
-                    if (board[i][j]== 0)
-                    {
+                    if (board[i][j] == 0) {
                         // Make the move
                         board[i][j] = player;
                         // Call minimax recursively and choose
@@ -84,18 +61,14 @@ public class MinimaxAi implements Ai {
         }
 
         // If this minimizer's move
-        else
-        {
+        else {
             int best = 1000;
 
             // Traverse all cells
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 3; j++)
-                {
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
                     // Check if cell is empty
-                    if (board[i][j] == 0)
-                    {
+                    if (board[i][j] == 0) {
                         // Make the move
                         board[i][j] = opponent;
 
@@ -113,8 +86,7 @@ public class MinimaxAi implements Ai {
     }
 
     // This function returns true if there are moves remaining on the board. It returns false if there are no moves left to play.
-    static Boolean isMovesLeft(char board[][])
-    {
+    private static Boolean isMovesLeft(char[][] board) {
         for (int i = 0; i < 3; i++)
             for (int j = 0; j < 3; j++)
                 if (board[i][j] == 0)
@@ -122,13 +94,10 @@ public class MinimaxAi implements Ai {
         return false;
     }
 
-    static int evaluate(char b[][])
-    {
+    private static int evaluate(char[][] b) {
         // Checking for Rows for X or O victory.
-        for (int row = 0; row < 3; row++)
-        {
-            if (b[row][0] == b[row][1] && b[row][1] == b[row][2])
-            {
+        for (int row = 0; row < 3; row++) {
+            if (b[row][0] == b[row][1] && b[row][1] == b[row][2]) {
                 if (b[row][0] == player)
                     return +10;
                 else if (b[row][0] == opponent)
@@ -137,10 +106,8 @@ public class MinimaxAi implements Ai {
         }
 
         // Checking for Columns for X or O victory.
-        for (int col = 0; col < 3; col++)
-        {
-            if (b[0][col] == b[1][col] && b[1][col] == b[2][col])
-            {
+        for (int col = 0; col < 3; col++) {
+            if (b[0][col] == b[1][col] && b[1][col] == b[2][col]) {
                 if (b[0][col] == player)
                     return +10;
 
@@ -150,16 +117,14 @@ public class MinimaxAi implements Ai {
         }
 
         // Checking for Diagonals for X or O victory.
-        if (b[0][0] == b[1][1] && b[1][1] == b[2][2])
-        {
+        if (b[0][0] == b[1][1] && b[1][1] == b[2][2]) {
             if (b[0][0] == player)
                 return +10;
             else if (b[0][0] == opponent)
                 return -10;
         }
 
-        if (b[0][2] == b[1][1] && b[1][1] == b[2][0])
-        {
+        if (b[0][2] == b[1][1] && b[1][1] == b[2][0]) {
             if (b[0][2] == player)
                 return +10;
             else if (b[0][2] == opponent)
@@ -171,8 +136,7 @@ public class MinimaxAi implements Ai {
     }
 
     // This will return the best possible move for the player
-    static Move findBestMove(char board[][])
-    {
+    private static Move findBestMove(char[][] board) {
         int bestVal = -1000;
 
         Move bestMove = new Move();
@@ -180,13 +144,10 @@ public class MinimaxAi implements Ai {
         bestMove.col = -1;
 
         // Traverse all cells, evaluate minimax function for all empty cells. And return the cell with optimal value.
-        for (int i = 0; i < 3; i++)
-        {
-            for (int j = 0; j < 3; j++)
-            {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
                 // Check if cell is empty
-                if (board[i][j] == 0)
-                {
+                if (board[i][j] == 0) {
                     // Make the move
                     board[i][j] = player;
 
@@ -197,8 +158,7 @@ public class MinimaxAi implements Ai {
                     board[i][j] = 0;
 
                     // If the value of the current move is more than the best value, then update best
-                    if (moveVal > bestVal)
-                    {
+                    if (moveVal > bestVal) {
                         bestMove.row = i;
                         bestMove.col = j;
                         bestVal = moveVal;
@@ -209,5 +169,19 @@ public class MinimaxAi implements Ai {
 
         System.out.printf("The value of the best Move " + "is : %d\n\n", bestVal);
         return bestMove;
+    }
+
+    @Override
+    public Move play(Game game) {
+        char[][] board = game.getTttBoard().getBoard();
+        printBoard(board);
+        Move bestMove = findBestMove(board);
+        System.out.printf("The Optimal Move is :\n");
+        System.out.printf("ROW: %d COL: %d\n\n", bestMove.row, bestMove.col);
+        return bestMove;
+    }
+
+    public static class Move {
+        int row, col;
     }
 }

@@ -1,5 +1,7 @@
 package GameService;
 
+import ComputerPlayer.AiPlayer;
+import ComputerPlayer.MinimaxAi;
 import DataBase.sql.DataSource;
 import DataBase.sql.DatabaseManager;
 import Models.Game;
@@ -64,8 +66,16 @@ public class GameHandler implements Runnable {
                 service.addGame(game); // add game to game list and broadcast
                 Packet packet = new Packet(Packet.NEW_GAME_CREATED, clientConnection.getInformation(), game);
                 clientConnection.sendPacketToClient(packet);
-
                 break;
+
+            case Packet.AI_GAME:
+                Game aiGame = new Game(clientConnection);
+                service.addGame(aiGame);
+                AiPlayer aiPlayer = new AiPlayer(aiGame, new MinimaxAi());
+                aiPlayer.start();
+                Packet aiPacket = new Packet(Packet.NEW_GAME_CREATED, clientConnection.getInformation(), aiGame);
+                clientConnection.sendPacketToClient(aiPacket);
+
 
             case Packet.JOIN_GAME:
                 try {
