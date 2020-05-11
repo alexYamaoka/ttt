@@ -7,7 +7,7 @@ public class MinimaxAi implements Playable {
 
     @Override
     public Move play(Game game) {
-        char[][] board = game.getTttBoard().getBoard();
+        char[][] board = copyBoard(game.getTttBoard().getBoard());
         printBoard(board);
         Move bestMove = findBestMove(board);
         System.out.printf("The Optimal Move is :\n");
@@ -15,15 +15,19 @@ public class MinimaxAi implements Playable {
         return bestMove;
     }
 
+    private static char[][] copyBoard(char[][] board) {
+        char[][] newBoard = new char[board.length][];
+        for(int i = 0; i < board.length; i++) {
+            newBoard[i] = board[i].clone();
+        }
+        return newBoard;
+    }
+
     private static void printBoard(char[][] board) {
         System.out.println("Printing board from ai");
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                if (board[i][j] == 0) {
-                    System.out.print('_');
-                } else {
-                    System.out.print(board[i][j]);
-                }
+                System.out.print(board[i][j]);
             }
             System.out.println();
         }
@@ -53,7 +57,7 @@ public class MinimaxAi implements Playable {
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
                     // Check if cell is empty
-                    if (board[i][j] == 0) {
+                    if (board[i][j] == '_') {
                         // Make the move
                         board[i][j] = player;
                         // Call minimax recursively and choose
@@ -75,7 +79,7 @@ public class MinimaxAi implements Playable {
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
                     // Check if cell is empty
-                    if (board[i][j] == 0) {
+                    if (board[i][j] == '_') {
                         // Make the move
                         board[i][j] = opponent;
 
@@ -154,7 +158,7 @@ public class MinimaxAi implements Playable {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 // Check if cell is empty
-                if (board[i][j] == 0) {
+                if (board[i][j] == '_') {
                     // Make the move
                     board[i][j] = player;
 

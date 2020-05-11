@@ -59,10 +59,12 @@ public class AiPlayer implements Runnable {
                 Packet response = (Packet) inputStream.readObject();
                 switch(response.getRequest()) {
                     case Packet.GAME_MOVE:
-                        MinimaxAi.Move aiMove = playMethod.play(game);
-                        Move move = new Move(aiMove.row, aiMove.col, userInformation, game.getId());
-                        Packet packet = new Packet(Packet.GAME_MOVE, userInformation, move);
-                        outputStream.writeObject(packet);
+                        if(!game.getTttBoard().isOver()) {
+                            MinimaxAi.Move aiMove = playMethod.play(game);
+                            Move move = new Move(aiMove.row, aiMove.col, userInformation, game.getId());
+                            Packet packet = new Packet(Packet.GAME_MOVE, userInformation, move);
+                            outputStream.writeObject(packet);
+                        }
                         break;
                 }
             } catch (Exception ex) {
