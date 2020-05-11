@@ -29,8 +29,8 @@ public class Server {
 
     }
 
-    public boolean updateUser(String UpdatePassword,String UpdateLastName,String UpdateFirstName,String Id,String UpdateUserName) throws SQLException {
-        ds.update(UpdatePassword,UpdateLastName,UpdateFirstName,Id,UpdateUserName);
+    public boolean updateUser(String UpdateFirstName,String UpdateLastName,String UpdateUserName,String Id,String UpdatePassword) throws SQLException {
+        ds.update(UpdateFirstName,UpdateLastName,UpdateUserName,Id,UpdatePassword);
 
         //List User = (List) ds.update(user);
         //if(User.isEmpty()){

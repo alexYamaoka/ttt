@@ -109,7 +109,6 @@ public class Options implements Initializable, UpdateUserinformationListener {
         userName.setPromptText(information.getUserName());
     }
 
-
     public void userDetailsSaved(ActionEvent event) {
         List<String> user = new ArrayList<>();
 
@@ -128,9 +127,11 @@ public class Options implements Initializable, UpdateUserinformationListener {
         user.add(id);
         user.add(newPassword);
 
+        String data = String.join(" ", user);
+
         if(oldPassword.equalsIgnoreCase(controller.getAccountClient().getUserInformation().getPassword())){
             if(newPassword.equals(confirmPassword)){
-                Packet packet = new Packet(Packet.UPDATE_USER, controller.getAccountClient().getUserInformation(), (Serializable) user);
+                Packet packet = new Packet(Packet.UPDATE_USER, controller.getAccountClient().getUserInformation(),data);
                 controller.getAccountClient().addRequestToServer(packet);
             } else {
                 updateError.setTextFill(Color.RED);

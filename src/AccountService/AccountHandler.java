@@ -119,10 +119,8 @@ public class AccountHandler implements Runnable {
                 clientConnection.sendPacketToClient(regPacket);
                 break;
             case Packet.UPDATE_USER:
-
                 String UpdateString = data.toString();
                 System.out.println("DataToString  = " + data.toString()); // This comes in fine
-
                 String[] str3 = UpdateString.trim().split("\\s+");
                 String UpdateFirstName = str3[0];
                 String UpdateLastName = str3[1];
@@ -131,7 +129,7 @@ public class AccountHandler implements Runnable {
                 String UpdatePassword = str3[4];
 
                 try {
-                    ds.update(UpdatePassword,UpdateLastName,UpdateFirstName,Id,UpdateUserName);
+                    ds.update(UpdateFirstName,UpdateLastName,UpdateUserName,Id,UpdatePassword);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }

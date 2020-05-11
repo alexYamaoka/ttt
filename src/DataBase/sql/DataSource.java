@@ -20,7 +20,7 @@ public interface DataSource {
 
     boolean delete(String username, String firstname, String lastname, String password) throws SQLException;
 
-    Boolean update(String UpdatePassword,String UpdateLastName,String UpdateFirstName,String Id,String UpdateUserName) throws SQLException;
+    Boolean update(String UpdateFirstName,String UpdateLastName,String UpdateUserName,String Id,String UpdatePassword) throws SQLException;
 
     ArrayList<UserInformation> get(String id) throws SQLException;
 

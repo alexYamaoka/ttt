@@ -6,6 +6,7 @@ import Models.BaseModel;
 import Models.Move;
 import Server.ClientConnection;
 import Shared.UserInformation;
+import com.mysql.cj.x.protobuf.MysqlxCrud;
 
 import java.sql.*;
 import java.util.*;
@@ -67,17 +68,34 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
     }
 
     @Override
-    public Boolean update(String UpdatePassword,String UpdateLastName,String UpdateFirstName,String Id,String UpdateUserName) throws SQLException {
+    public Boolean update(String UpdateFirstName,String UpdateLastName,String UpdateUserName,String Id,String UpdatePassword) throws SQLException {
         StringBuilder query = new StringBuilder();
+        int row = 0;
 
-        query.append("UPDATE ");
-        query.append("user SET username = '" + UpdateUserName + "' password = '" + UpdatePassword + "' FirstName = '"
-                + UpdateFirstName + "' LastName = '" + UpdateLastName + "' WHERE id = '" + Id );
+        query.append("UPDATE user ").append("SET FirstName = ?").append(" LastName = ?").append(" UserName = ?").append(" password = ?");
+        query.append(" WHERE id = ?");
 
-            UserStatement = myConn.prepareStatement(query.toString());
-            System.out.println( "\nQuery to string   " + query.toString());
-            UserStatement.executeQuery(query.toString());
-            return true;
+        UserStatement = myConn.prepareStatement(String.valueOf(query));
+        System.out.println(query.toString());
+
+        System.out.println("\n");
+        System.out.println("FirstName "+UpdateFirstName);
+        System.out.println("Last " + UpdateLastName);
+        System.out.println("UserName " + UpdateUserName);
+        System.out.println("Pass " + UpdatePassword);
+        System.out.println("ID " + Id);
+        System.out.println("\n");
+
+        UserStatement.setString(1,UpdateFirstName);
+        UserStatement.setString(2,UpdateLastName);
+        UserStatement.setString(3,UpdateUserName);
+        UserStatement.setString(4,UpdatePassword);
+        UserStatement.setString(5,Id);
+
+        row = UserStatement.executeUpdate(UserStatement.toString());
+        System.out.println(String.format("Rows affected %d",row));
+
+        return row > 0;
     }
 
     @Override
@@ -105,7 +123,6 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
     public List<BaseModel> list(Class obj) {
         return null;
     }
-
 
     @Override
     public boolean addGameViewers(BaseModel gameObj,BaseModel userObj) throws SQLException {
