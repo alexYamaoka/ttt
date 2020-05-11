@@ -88,6 +88,11 @@ public class ReadMessageBus implements Runnable {
                             }
                             break;
 
+                        case Packet.OBSERVE_GAME:
+                            if(response.getData() != null) {
+                                lobbyListener.spectateGame((Game) response.getData());
+                            }
+
 
                         case Packet.GAME_MOVE:
                             lobbyListener.updateMove((Move) response.getData());

@@ -15,4 +15,6 @@ public interface LobbyListener extends GameListener {
     void joinGame(Game game);
 
     void clearGameList();
+
+    void spectateGame(Game game);
 }

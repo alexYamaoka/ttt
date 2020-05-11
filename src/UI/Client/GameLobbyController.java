@@ -192,6 +192,20 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
         activeGames.getItems().clear();
     }
 
+    @Override
+    public void spectateGame(Game game) {
+        Platform.runLater(() -> {
+            if(!gameBoards.containsKey(game.getId())) {
+                createGame(game);
+            }
+            // switch to the new scene
+            Stage stage = (Stage) newGameButton.getScene().getWindow();
+            Parent root = gameBoards.get(game.getId()).getKey();
+            stage.setScene(root.getScene());
+            stage.show();
+        });
+    }
+
     private void addButtonsToTable() {
         Callback<TableColumn<Game, Void>, TableCell<Game, Void>> cellFactory = new Callback<>() {
             @Override
@@ -224,8 +238,10 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
                             // send spectate game packet to game server
                             Game game = getTableView().getItems().get(getIndex());
                             if (!game.getPlayer1Username().equalsIgnoreCase(clientController.getAccountClient().getUserInformation().getUserName())) {
-                                Packet packet = new Packet(Packet.OBSERVE_GAME, clientController.getAccountClient().getUserInformation(), game.getId());
-                                clientController.getGameClient().addRequestToServer(packet);
+                                if(!game.getPlayer2Username().equalsIgnoreCase(clientController.getAccountClient().getUserInformation().getUserName())) {
+                                    Packet packet = new Packet(Packet.OBSERVE_GAME, clientController.getAccountClient().getUserInformation(), game.getId());
+                                    clientController.getGameClient().addRequestToServer(packet);
+                                }
                             }
                         });
                     }
