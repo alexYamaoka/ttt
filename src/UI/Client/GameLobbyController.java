@@ -201,6 +201,9 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
             // switch to the new scene
             Stage stage = (Stage) newGameButton.getScene().getWindow();
             Parent root = gameBoards.get(game.getId()).getKey();
+            GameBoardController gameBoardController = gameBoards.get(game.getId()).getValue();
+            gameBoardController.setPlayer1Username(game.getPlayer1Username());
+            gameBoardController.setPlayer2Username(game.getPlayer2Username());
             stage.setScene(root.getScene());
             stage.show();
         });

@@ -81,12 +81,14 @@ public class GameThread implements Runnable {
 
         player1.sendPacketToClient(whoIsPlayer1);
         player2.sendPacketToClient(whoIsPlayer1);
+        game.notifyObservers(whoIsPlayer1);
         System.out.println("sending packet about player1");
 
         // sends the username of player2
         Packet whoIsPlayer2 = new Packet(Packet.PLAYER_TWO_USERNAME, player2UserInformation, game.getId() + " " + player2UserInformation.getUserName());
         player1.sendPacketToClient(whoIsPlayer2);
         player2.sendPacketToClient(whoIsPlayer2);
+        game.notifyObservers(whoIsPlayer2);
         System.out.println("sending packet about player2");
 
         isPlayer1Turn = true;
