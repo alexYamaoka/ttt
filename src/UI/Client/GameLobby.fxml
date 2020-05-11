@@ -22,6 +22,9 @@
             </font>
         </Label>
         <TableView fx:id="activeGames" editable="true" layoutX="112.5" layoutY="160.0" prefHeight="400.0" prefWidth="800.0">
+            <placeholder>
+                <Label text="No Games Are Being Played"/>
+            </placeholder>
             <columns>
                 <TableColumn fx:id="player1Column" editable="false" prefWidth="200.0" text="Player 1" />
                 <TableColumn fx:id="player2Column" editable="false" minWidth="8.440948486328125" prefWidth="200.0" text="Player 2" />

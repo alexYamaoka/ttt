@@ -69,6 +69,8 @@ public class ReadMessageBus implements Runnable {
                             HashSet<Game> listOfGames = (HashSet<Game>) response.getData();
                             if (listOfGames != null) {
                                 lobbyListener.getListOfGames(listOfGames);
+                            } else {
+                                lobbyListener.clearGameList();
                             }
                             break;
 

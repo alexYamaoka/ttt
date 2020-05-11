@@ -93,6 +93,10 @@ public class TTTBoard {
 
     }
 
+    public char[][] getBoard() {
+        return board;
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
