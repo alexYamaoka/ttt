@@ -64,7 +64,7 @@ public class MinimaxAi implements Playable {
                         // the maximum value
                         best = Math.max(best, minimax(board, depth + 1, false));
                         // Undo the move
-                        board[i][j] = 0;
+                        board[i][j] = '_';
                     }
                 }
             }
@@ -88,7 +88,7 @@ public class MinimaxAi implements Playable {
                         best = Math.min(best, minimax(board, depth + 1, true));
 
                         // Undo the move
-                        board[i][j] = 0;
+                        board[i][j] = '_';
                     }
                 }
             }
@@ -100,7 +100,7 @@ public class MinimaxAi implements Playable {
     private static Boolean isMovesLeft(char[][] board) {
         for (int i = 0; i < 3; i++)
             for (int j = 0; j < 3; j++)
-                if (board[i][j] == 0)
+                if (board[i][j] == '_')
                     return true;
         return false;
     }
@@ -166,7 +166,7 @@ public class MinimaxAi implements Playable {
                     int moveVal = minimax(board, 0, false);
 
                     // Undo the move
-                    board[i][j] = 0;
+                    board[i][j] = '_';
 
                     // If the value of the current move is more than the best value, then update best
                     if (moveVal > bestVal) {
