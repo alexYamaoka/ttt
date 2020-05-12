@@ -52,10 +52,6 @@
       <Label fx:id="tZ" layoutX="510.0" layoutY="420.0" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" textAlignment="CENTER" />
       <Label fx:id="tO" layoutX="660.0" layoutY="420.0" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" textAlignment="CENTER" />
       <Label fx:id="tT" layoutX="810.0" layoutY="420.0" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" textAlignment="CENTER" />
-      <Button fx:id="returnToGHButton" alignment="CENTER" layoutX="165.0" layoutY="500.0" mnemonicParsing="false" onAction="#returnToGHButtonClicked" prefHeight="30.0" prefWidth="180.0" style="-fx-background-color: transparent;" text="Return to game history" textFill="WHITE">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Button>
+      <Button fx:id="backButton" alignment="CENTER_RIGHT" layoutX="20.0" layoutY="630.0" mnemonicParsing="false" onAction="#backButtonClicked" prefHeight="10.0" prefWidth="60.0" style="-fx-background-color: white;" styleClass="backButton" stylesheets="@backButton.css" text="Back" />
    </children>
 </AnchorPane>

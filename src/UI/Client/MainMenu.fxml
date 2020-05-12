@@ -7,33 +7,58 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="590.0"
-            style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496);"
-            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="UI.Client.MainMenuController">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="680.0" prefWidth="1025.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.Client.MainMenuController">
     <children>
-        <Label layoutX="222.5" layoutY="70.0" prefHeight="29.0" prefWidth="145.0" style="-fx-text-fill: #9fbfdf#9fbfdf;"
-               text="Main Menu">
+        <Label alignment="CENTER" layoutX="412.5" layoutY="120.0" prefWidth="200.0" text="Main Menu" textFill="WHITE">
             <font>
-                <Font size="31.0"/>
+                <Font size="40.0" />
             </font>
         </Label>
 
         <!--Main Menu Buttons -->
-        <Button fx:id="playButton" layoutX="230.0" layoutY="127.25" mnemonicParsing="false"
-                onAction="#onPlayButtonClicked" prefHeight="32.0" prefWidth="130.0"
-                style="-fx-background-color: #132639; -fx-text-fill: #9fbfdf;" text="Play"/>
-        <Button fx:id="gameHistory" layoutX="230.0" layoutY="187.25" mnemonicParsing="false"
-                onAction="#onGameHistoryClicked" prefHeight="32.0" prefWidth="130.0"
-                style="-fx-background-color: #132639; -fx-text-fill: #9fbfdf;" text="Game History"/>
-        <Button fx:id="optionsButton" layoutX="230.0" layoutY="247.75" mnemonicParsing="false"
-                onAction="#onOptionsButtonClicked" prefHeight="32.0" prefWidth="130.0"
-                style="-fx-background-color: #132639; -fx-text-fill: #9fbfdf;" text="Options"/>
-        <Button fx:id="exitButton" layoutX="230.0" layoutY="308.0" mnemonicParsing="false"
-                onAction="#onExitButtonClicked" prefHeight="32.0" prefWidth="130.0"
-                style="-fx-background-color: #132639; -fx-text-fill: #9fbfdf;" text="Exit"/>
+        <Button fx:id="playButton" layoutX="412.5" layoutY="220.0" mnemonicParsing="false" onAction="#onPlayButtonClicked" prefHeight="32.0" prefWidth="200.0" style="-fx-background-color: #132639;" text="Play" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font></Button>
+        <Button fx:id="historyButton" layoutX="412.5" layoutY="310.0" mnemonicParsing="false" onAction="#onGameHistoryClicked" prefHeight="32.0" prefWidth="200.0" style="-fx-background-color: #132639;" text="History" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font></Button>
+        <Button fx:id="settingsButton" layoutX="412.5" layoutY="400.0" mnemonicParsing="false" onAction="#onOptionsButtonClicked" prefHeight="32.0" prefWidth="200.0" style="-fx-background-color: #132639;" text="Settings" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font></Button>
+        <Button fx:id="exitButton" layoutX="412.5" layoutY="490.0" mnemonicParsing="false" onAction="#onExitButtonClicked" prefHeight="32.0" prefWidth="200.0" style="-fx-background-color: #132639;" text="Exit" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font></Button>
 
         <!-- Icons of the Buttons for use in side navigation bar -->
+        <ImageView fitHeight="63.0" fitWidth="87.0" layoutX="469.5" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../Resources/Icons/Logo.png" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="356.0" layoutY="216.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../Resources/Icons/2x/baseline_play_arrow_black_18dp.png" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="360.0" layoutY="310.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../Resources/Icons/2x/history_white.png" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="49.0" fitWidth="49.0" layoutX="356.0" layoutY="396.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../Resources/Icons/2x/baseline_settings_white_18dp.png" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="356.0" layoutY="486.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../Resources/Icons/2x/baseline_exit_to_app_black_18dp.png" />
+            </image>
+        </ImageView>
 
     </children>
 </AnchorPane>

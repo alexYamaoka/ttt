@@ -65,7 +65,7 @@ public class GameHistoryController implements Initializable {
         this.clientController = clientController;
     }
 
-    public void returnToMMButtonClicked(ActionEvent event) {
+    public void backButtonClicked(ActionEvent event) {
         Stage stage = null;
         Parent root = null;
 

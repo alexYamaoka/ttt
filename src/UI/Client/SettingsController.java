@@ -24,7 +24,7 @@ import java.io.Serializable;
 import java.net.URL;
 import java.util.*;
 
-public class Options implements Initializable, UpdateUserinformationListener {
+public class SettingsController implements Initializable, UpdateUserinformationListener {
     public Button btn1Save;
     public Button btn2Save;
     public Button SaveButton;

@@ -13,7 +13,7 @@ public class GameHistoryStatsController {
     @FXML
     Label gameID, player1Name, player2Name, startTime, endTime, result, zZ, zO, zT, oZ, oO, oT, tZ, tO, tT;
     @FXML
-    Button returnToGHButton;
+    Button backButton;
 
     private ClientController clientController;
 
@@ -35,12 +35,12 @@ public class GameHistoryStatsController {
         this.tT.setText(tT);
     }
 
-    public void returnToGHButtonClicked(ActionEvent event) {
+    public void backButtonClicked(ActionEvent event) {
         Stage stage = null;
         Parent root = null;
 
-        if(event.getSource() == returnToGHButton) {
-            stage = (Stage) returnToGHButton.getScene().getWindow();
+        if(event.getSource() == backButton) {
+            stage = (Stage) backButton.getScene().getWindow();
             root = clientController.getGameHistoryPane();
         }
         stage.setScene(root.getScene());

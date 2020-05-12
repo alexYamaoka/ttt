@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
 
 public class MainMenuController implements Initializable {
     @FXML
-    private Button playButton, gameHistory, exitButton, optionsButton;
+    private Button playButton, historyButton, exitButton, settingsButton;
 
 
     private ClientController clientController;
@@ -54,8 +54,8 @@ public class MainMenuController implements Initializable {
        Stage stage = null;
        Parent root = null;
 
-       if(event.getSource() == gameHistory) {
-           stage = (Stage) gameHistory.getScene().getWindow();
+       if(event.getSource() == historyButton) {
+           stage = (Stage) historyButton.getScene().getWindow();
            root = clientController.getGameHistoryPane();
        }
        stage.setScene(root.getScene());
@@ -68,8 +68,8 @@ public class MainMenuController implements Initializable {
         Stage stage = null;
         Parent root = null;
 
-        if (event.getSource() == optionsButton) {
-            stage = (Stage) optionsButton.getScene().getWindow();
+        if (event.getSource() == settingsButton) {
+            stage = (Stage) settingsButton.getScene().getWindow();
             root = clientController.getOptionsPane();
         }
         stage.setScene(root.getScene());
