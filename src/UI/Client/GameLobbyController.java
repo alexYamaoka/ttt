@@ -82,7 +82,12 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
     }
 
     public void returnToMainMenuButtonClicked(ActionEvent actionEvent) {
-        //return to main menu
+        Platform.runLater(() -> {
+            Stage stage = (Stage) newGameButton.getScene().getWindow();
+            Parent root = clientController.getMainMenuPain();
+            stage.setScene(root.getScene());
+            stage.show();
+        });
     }
 
     @Override
