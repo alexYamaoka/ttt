@@ -36,6 +36,8 @@ public class Game extends BaseModel implements Serializable {
     private String winningPlayerId;
     private String nextMoveId;
 
+    public Game() {
+    }
 
     public Game(ClientConnection player1) {
         UUIDGenerator gameId = new UUIDGenerator();

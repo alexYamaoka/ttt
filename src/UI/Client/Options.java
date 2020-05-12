@@ -76,9 +76,7 @@ public class Options implements Initializable, UpdateUserinformationListener {
 
 
     public void UserDetailButton(ActionEvent event) {
-        Pane2.setVisible(false);
-        Pane1.managedProperty().bind(Pane1.visibleProperty());
-        Pane1.setVisible(true);
+
 
     }
 
@@ -209,6 +207,13 @@ public class Options implements Initializable, UpdateUserinformationListener {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Platform.runLater(()->{
+            if(controller.getAccountClient().getUserInformation().getIsDeleted() == 1){
+                DeactivateAccount.setText("Activate Account");
+            }else{
+                DeactivateAccount.setText("Deactivate Account");
+            }
+        });
 
 
     }

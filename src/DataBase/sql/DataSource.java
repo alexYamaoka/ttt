@@ -3,6 +3,7 @@ package DataBase.sql;
 import Models.BaseModel;
 import Models.Game;
 import Models.Move;
+import Shared.GameInformation;
 import Shared.UserInformation;
 
 import java.sql.SQLException;
@@ -20,6 +21,7 @@ public interface DataSource {
 
     boolean delete(String Id) throws SQLException;
     boolean Activate(String Id) throws SQLException;
+    List<BaseModel> getPlayerGamesInfo(String Id) throws SQLException;
 
     Boolean update(String UpdateFirstName,String UpdateLastName,String UpdateUserName,String Id,String UpdatePassword) throws SQLException;
 

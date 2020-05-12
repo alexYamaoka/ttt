@@ -5,9 +5,11 @@ import Models.Game;
 import Models.BaseModel;
 import Models.Move;
 import Server.ClientConnection;
+import Shared.GameInformation;
 import Shared.UserInformation;
 import com.mysql.cj.x.protobuf.MysqlxCrud;
 
+import java.io.Serializable;
 import java.sql.*;
 import java.util.*;
 
@@ -54,6 +56,43 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
     }
 
 
+    public List<BaseModel> getPlayerGamesInfo(String PlayerId) throws SQLException {
+
+        StringBuilder query = new StringBuilder();
+        List<BaseModel> items = new ArrayList<>();
+        query.append("SELECT * FROM game WHERE id = ").append(PlayerId);
+        System.out.println("Print out " + query.toString());
+        GameStatement = myConn.prepareStatement(query.toString());
+        ResultSet rs;
+        rs = GameStatement.executeQuery(query.toString());
+        List<String> list = new ArrayList();
+
+        /*
+        while (rs.next()) {
+            GameInformation gameInformation = new GameInformation();
+            gameInformation.setId(rs.getString(1));
+            gameInformation.setStartTime(rs.getTimestamp(2));
+            gameInformation.setEndTime(rs.getTimestamp(3));
+
+            gameInformation.setPlayer1Username();
+           String player1Id = rs.getString(4);
+           String player2Id = rs.getString(5);
+           String StartingPlayer = rs.getString(6);
+           String Winner = rs.getString(7);
+
+           list.add(gameID);
+           list.add(startTime.toString());
+           list.add(endTime.toString());
+           list.add(player1Id);
+           list.add(player2Id);
+           list.add(StartingPlayer);
+           list.add(Winner);
+        }
+
+
+         */
+        return null;
+    }
 
 
     @Override
