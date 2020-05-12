@@ -42,178 +42,189 @@ public class ServerDisplay implements Initializable, ServiceListener {
     private Main main;
     private BlockingQueue<Packet> packetsReceived = new LinkedBlockingQueue<>();
 
-    /*
+
+
+    private ObservableList<Game> activeGamesList = FXCollections.observableArrayList();
+    private ObservableList<Game> allGamesList = FXCollections.observableArrayList();
+    private ObservableList<UserInformation> onlinePlayersList = FXCollections.observableArrayList();
+    private ObservableList<UserInformation> allPlayersList = FXCollections.observableArrayList();
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        initializeAGTable();
+        //initializeAGTable();
         initializeAPTable();
-        initializeGTable();
-        initializeATable();
+//        initializeGTable();
+//        initializeATable();
     }
     private void initializeAGTable() {
-        gameID_AG.setCellValueFactory(new PropertyValueFactory<>("gameID"));
-        player1_AG.setCellValueFactory(new PropertyValueFactory<>("player1"));
-        player2_AG.setCellValueFactory(new PropertyValueFactory<>("player2"));
+        activeGames.setItems(activeGamesList);
+        gameID_AG.setCellValueFactory(new PropertyValueFactory<>("id"));
+        player1_AG.setCellValueFactory(new PropertyValueFactory<>("player1Username"));
+        player2_AG.setCellValueFactory(new PropertyValueFactory<>("player2Username"));
         startTime_AG.setCellValueFactory(new PropertyValueFactory<>("startTime"));
 
-        editableAGCols();
+        //editableAGCols();
     }
     private void initializeAPTable() {
+        activePlayers.setItems(onlinePlayersList);
         username_AP.setCellValueFactory(new PropertyValueFactory<>("username"));
         status_AP.setCellValueFactory(new PropertyValueFactory<>("status"));
 
-        editableAPCols();
+        //editableAPCols();
     }
-    private void initializeGTable() {
-        gameID_G.setCellValueFactory(new PropertyValueFactory<>("gameID"));
-        player1_G.setCellValueFactory(new PropertyValueFactory<>("player1"));
-        player2_G.setCellValueFactory(new PropertyValueFactory<>("player2"));
-        startTime_G.setCellValueFactory(new PropertyValueFactory<>("startTime"));
-        endTime_G.setCellValueFactory(new PropertyValueFactory<>("endTime"));
-        result_G.setCellValueFactory(new PropertyValueFactory<>("result"));
-        spectators_G.setCellValueFactory(new PropertyValueFactory<>("spectators"));
+//    private void initializeGTable() {
+//        games.setItems(allGamesList);
+//        gameID_G.setCellValueFactory(new PropertyValueFactory<>("id"));
+//        player1_G.setCellValueFactory(new PropertyValueFactory<>("player1Username"));
+//        player2_G.setCellValueFactory(new PropertyValueFactory<>("player2Username"));
+//        startTime_G.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+//        endTime_G.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+//        result_G.setCellValueFactory(new PropertyValueFactory<>("result"));
+//        spectators_G.setCellValueFactory(new PropertyValueFactory<>("spectators"));
+//
+//        //editableGCols();
+//    }
+//    private void initializeATable() {
+//        accounts.setItems(allPlayersList);
+//        username_A.setCellValueFactory(new PropertyValueFactory<>("username"));
+//        password_A.setCellValueFactory(new PropertyValueFactory<>("password"));
+//        firstName_A.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+//        lastName_A.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+//        status_A.setCellValueFactory(new PropertyValueFactory<>("status"));
+//
+//        //editableACols();
+//    }
 
-        editableGCols();
-    }
-    private void initializeATable() {
-        username_A.setCellValueFactory(new PropertyValueFactory<>("username"));
-        password_A.setCellValueFactory(new PropertyValueFactory<>("password"));
-        firstName_A.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-        lastName_A.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-        status_A.setCellValueFactory(new PropertyValueFactory<>("status"));
-
-        editableACols();
-    }
-
-    //need to add each information into class and convert the value entered type (String) into each respective type
-    private void editableAGCols(){
-        gameID_AG.setCellFactory(TextFieldTableCell.forTableColumn());
-        gameID_AG.setOnEditCommit(e -> {
-            e.getTableView().getItems().get(e.getTablePosition().getRow()).setId(e.getNewValue());
-        });
-        player1_AG.setCellFactory(TextFieldTableCell.forTableColumn());
-        player1_AG.setOnEditCommit(e -> {
-            e.getTableView().getItems().get(e.getTablePosition().getRow()).setPlayer1Info(e.getNewValue());
-        });
-        player2_AG.setCellFactory(TextFieldTableCell.forTableColumn());
-        player2_AG.setOnEditCommit(e -> {
-            e.getTableView().getItems().get(e.getTablePosition().getRow()).setPlayer2Info(e.getNewValue());
-        });
-        startTime_AG.setCellFactory(TextFieldTableCell.forTableColumn());
-        startTime_AG.setOnEditCommit(e -> {
-            e.getTableView().getItems().get(e.getTablePosition().getRow()).setStartTime(e.getNewValue());
-        });
-    }
-    private void editableAPCols(){
-        username_AP.setCellFactory(TextFieldTableCell.forTableColumn());
-        username_AP.setOnEditCommit(e -> {
-            e.getTableView().getItems().get(e.getTablePosition().getRow()).setUserName(e.getNewValue());
-        });
-        status_AP.setCellFactory(TextFieldTableCell.forTableColumn());
-        status_AP.setOnEditCommit(e -> {
-            //e.getTableView().getItems().get(e.getTablePosition().getRow()).setStatus(e.getNewValue());
-        });
-    }
-    private void editableGCols(){
-        gameID_G.setCellFactory(TextFieldTableCell.forTableColumn());
-        gameID_G.setOnEditCommit(e -> {
-            e.getTableView().getItems().get(e.getTablePosition().getRow()).setId(e.getNewValue());
-        });
-        player1_G.setCellFactory(TextFieldTableCell.forTableColumn());
-        player1_G.setOnEditCommit(e -> {
-            e.getTableView().getItems().get(e.getTablePosition().getRow()).setPlayer1Info(e.getNewValue());
-        });
-        player2_G.setCellFactory(TextFieldTableCell.forTableColumn());
-        player2_G.setOnEditCommit(e -> {
-            //e.getTableView().getItems().get(e.getTablePosition().getRow()).setPlayer2Info(e.getNewValue());
-        });
-        startTime_G.setCellFactory(TextFieldTableCell.forTableColumn());
-        startTime_G.setOnEditCommit(e -> {
-            e.getTableView().getItems().get(e.getTablePosition().getRow()).setStartTime(e.getNewValue());
-        });
-        endTime_G.setCellFactory(TextFieldTableCell.forTableColumn());
-        endTime_G.setOnEditCommit(e -> {
-            e.getTableView().getItems().get(e.getTablePosition().getRow()).setEndTime(e.getNewValue());
-        });
-        result_G.setCellFactory(TextFieldTableCell.forTableColumn());
-        result_G.setOnEditCommit(e -> {
-            e.getTableView().getItems().get(e.getTablePosition().getRow()).setResult(e.getNewValue());
-        });
-        spectators_G.setCellFactory(TextFieldTableCell.forTableColumn());
-        spectators_G.setOnEditCommit(e -> {
-            e.getTableView().getItems().get(e.getTablePosition().getRow()).setSpectators(e.getNewValue());
-        });
-    }
-    private void editableACols(){
-        username_AP.setCellFactory(TextFieldTableCell.forTableColumn());
-        username_AP.setOnEditCommit(e -> {
-            e.getTableView().getItems().get(e.getTablePosition().getRow()).setUserName(e.getNewValue());
-        });
-        password_A.setCellFactory(TextFieldTableCell.forTableColumn());
-        password_A.setOnEditCommit(e -> {
-            e.getTableView().getItems().get(e.getTablePosition().getRow()).setLastName(e.getNewValue());
-        });
-        firstName_A.setCellFactory(TextFieldTableCell.forTableColumn());
-        firstName_A.setOnEditCommit(e -> {
-            e.getTableView().getItems().get(e.getTablePosition().getRow()).setFirstName(e.getNewValue());
-        });
-        lastName_A.setCellFactory(TextFieldTableCell.forTableColumn());
-        lastName_A.setOnEditCommit(e -> {
-            e.getTableView().getItems().get(e.getTablePosition().getRow()).setStatus(e.getNewValue());
-        });
-        status_A.setCellFactory(TextFieldTableCell.forTableColumn());
-        status_A.setOnEditCommit(e -> {
-            e.getTableView().getItems().get(e.getTablePosition().getRow()).setStatus(e.getNewValue());
-        });
-    }
-
-     */
+//    //need to add each information into class and convert the value entered type (String) into each respective type
+//    private void editableAGCols(){
+//        gameID_AG.setCellFactory(TextFieldTableCell.forTableColumn());
+//        gameID_AG.setOnEditCommit(e -> {
+//            e.getTableView().getItems().get(e.getTablePosition().getRow()).setId(e.getNewValue());
+//        });
+//        player1_AG.setCellFactory(TextFieldTableCell.forTableColumn());
+//        player1_AG.setOnEditCommit(e -> {
+//            e.getTableView().getItems().get(e.getTablePosition().getRow()).setPlayer1Info(e.getNewValue());
+//        });
+//        player2_AG.setCellFactory(TextFieldTableCell.forTableColumn());
+//        player2_AG.setOnEditCommit(e -> {
+//            e.getTableView().getItems().get(e.getTablePosition().getRow()).setPlayer2Info(e.getNewValue());
+//        });
+//        startTime_AG.setCellFactory(TextFieldTableCell.forTableColumn());
+//        startTime_AG.setOnEditCommit(e -> {
+//            e.getTableView().getItems().get(e.getTablePosition().getRow()).setStartTime(e.getNewValue());
+//        });
+//    }
+//    private void editableAPCols(){
+//        username_AP.setCellFactory(TextFieldTableCell.forTableColumn());
+//        username_AP.setOnEditCommit(e -> {
+//            e.getTableView().getItems().get(e.getTablePosition().getRow()).setUserName(e.getNewValue());
+//        });
+//        status_AP.setCellFactory(TextFieldTableCell.forTableColumn());
+//        status_AP.setOnEditCommit(e -> {
+//            //e.getTableView().getItems().get(e.getTablePosition().getRow()).setStatus(e.getNewValue());
+//        });
+//    }
+//    private void editableGCols(){
+//        gameID_G.setCellFactory(TextFieldTableCell.forTableColumn());
+//        gameID_G.setOnEditCommit(e -> {
+//            e.getTableView().getItems().get(e.getTablePosition().getRow()).setId(e.getNewValue());
+//        });
+//        player1_G.setCellFactory(TextFieldTableCell.forTableColumn());
+//        player1_G.setOnEditCommit(e -> {
+//            e.getTableView().getItems().get(e.getTablePosition().getRow()).setPlayer1Info(e.getNewValue());
+//        });
+//        player2_G.setCellFactory(TextFieldTableCell.forTableColumn());
+//        player2_G.setOnEditCommit(e -> {
+//            //e.getTableView().getItems().get(e.getTablePosition().getRow()).setPlayer2Info(e.getNewValue());
+//        });
+//        startTime_G.setCellFactory(TextFieldTableCell.forTableColumn());
+//        startTime_G.setOnEditCommit(e -> {
+//            e.getTableView().getItems().get(e.getTablePosition().getRow()).setStartTime(e.getNewValue());
+//        });
+//        endTime_G.setCellFactory(TextFieldTableCell.forTableColumn());
+//        endTime_G.setOnEditCommit(e -> {
+//            e.getTableView().getItems().get(e.getTablePosition().getRow()).setEndTime(e.getNewValue());
+//        });
+//        result_G.setCellFactory(TextFieldTableCell.forTableColumn());
+//        result_G.setOnEditCommit(e -> {
+//            e.getTableView().getItems().get(e.getTablePosition().getRow()).setResult(e.getNewValue());
+//        });
+//        spectators_G.setCellFactory(TextFieldTableCell.forTableColumn());
+//        spectators_G.setOnEditCommit(e -> {
+//            e.getTableView().getItems().get(e.getTablePosition().getRow()).setSpectators(e.getNewValue());
+//        });
+//    }
+//    private void editableACols(){
+//        username_AP.setCellFactory(TextFieldTableCell.forTableColumn());
+//        username_AP.setOnEditCommit(e -> {
+//            e.getTableView().getItems().get(e.getTablePosition().getRow()).setUserName(e.getNewValue());
+//        });
+//        password_A.setCellFactory(TextFieldTableCell.forTableColumn());
+//        password_A.setOnEditCommit(e -> {
+//            e.getTableView().getItems().get(e.getTablePosition().getRow()).setLastName(e.getNewValue());
+//        });
+//        firstName_A.setCellFactory(TextFieldTableCell.forTableColumn());
+//        firstName_A.setOnEditCommit(e -> {
+//            e.getTableView().getItems().get(e.getTablePosition().getRow()).setFirstName(e.getNewValue());
+//        });
+//        lastName_A.setCellFactory(TextFieldTableCell.forTableColumn());
+//        lastName_A.setOnEditCommit(e -> {
+//            e.getTableView().getItems().get(e.getTablePosition().getRow()).setStatus(e.getNewValue());
+//        });
+//        status_A.setCellFactory(TextFieldTableCell.forTableColumn());
+//        status_A.setOnEditCommit(e -> {
+//            e.getTableView().getItems().get(e.getTablePosition().getRow()).setStatus(e.getNewValue());
+//        });
+//    }
 
 
-    @FXML
-    public void onOnlinePlayerClicked(MouseEvent event)
-    {
-        if (event.getClickCount() == 2)
-        {
-            String username = activePlayers.getSelectionModel().getSelectedItem().toString();
-            System.out.println("username selected: " + username);
-        }
-    }
 
-    @FXML
-    public void onAccountClicked(MouseEvent event)
-    {
-        if (event.getClickCount() == 2)
-        {
-            String username = activePlayers.getSelectionModel().getSelectedItem().toString();
-            System.out.println("username selected: " + username);
 
-        }
-    }
+//    @FXML
+//    public void onOnlinePlayerClicked(MouseEvent event)
+//    {
+//        if (event.getClickCount() == 2)
+//        {
+//            String username = activePlayers.getSelectionModel().getSelectedItem().toString();
+//            System.out.println("username selected: " + username);
+//        }
+//    }
+//
+//    @FXML
+//    public void onAccountClicked(MouseEvent event)
+//    {
+//        if (event.getClickCount() == 2)
+//        {
+//            String username = activePlayers.getSelectionModel().getSelectedItem().toString();
+//            System.out.println("username selected: " + username);
+//
+//        }
+//    }
 
-    @FXML
-    public void onActiveGameClicked(MouseEvent event)
-    {
-        if (event.getClickCount() == 2)
-        {
-            String game = activeGames.getSelectionModel().getSelectedItem().toString();
-            System.out.println("game selected: " + game);
-        }
-    }
-
-    @FXML
-    public void onAllGameClicked(MouseEvent event)
-    {
-        if (event.getClickCount() == 2)
-        {
-            String game = games.getSelectionModel().getSelectedItem().toString();
-            System.out.println("game selected: " + game);
-        }
-    }
-
-    public void display(ActionEvent event) {
-
-    }
+//    @FXML
+//    public void onActiveGameClicked(MouseEvent event)
+//    {
+//        if (event.getClickCount() == 2)
+//        {
+//            String game = activeGames.getSelectionModel().getSelectedItem().toString();
+//            System.out.println("game selected: " + game);
+//        }
+//    }
+//
+//    @FXML
+//    public void onAllGameClicked(MouseEvent event)
+//    {
+//        if (event.getClickCount() == 2)
+//        {
+//            String game = games.getSelectionModel().getSelectedItem().toString();
+//            System.out.println("game selected: " + game);
+//        }
+//    }
+//
+//    public void display(ActionEvent event) {
+//
+//    }
 
 
     @Override
@@ -241,26 +252,33 @@ public class ServerDisplay implements Initializable, ServiceListener {
                     {
                         case Packet.REGISTER_CLIENT:
                             UserInformation newRegisteredClient = (UserInformation) packet.getData();
-                            System.out.println("<--- New Registered User: " + newRegisteredClient.getUserName() + " --->");
+                            System.out.println("<--- New Registered User: " + newRegisteredClient.getUsername() + " --->");
+                            allPlayersList.add(newRegisteredClient);
+
 
                         case Packet.SIGN_IN:
                             UserInformation newSignedInUser = (UserInformation) packet.getData();
-                            System.out.println("<--- New Signed In User: " + newSignedInUser.getUserName() + " --->");
+                            System.out.println("<--- New Signed In User: " + newSignedInUser.getUsername() + " --->");
+                            onlinePlayersList.add(newSignedInUser);
                             break;
 
                         case Packet.SIGN_OUT:
                             UserInformation newSignedOutUser = (UserInformation) packet.getData();
-                            System.out.println("<--- New Signed Out User: " + newSignedOutUser.getUserName() + " --->");
+                            System.out.println("<--- New Signed Out User: " + newSignedOutUser.getUsername() + " --->");
+                            onlinePlayersList.remove(newSignedOutUser);
                             break;
 
                         case Packet.ACTIVE_GAME:
                             Game newCreatedGame = (Game) packet.getData();
                             System.out.println("<--- New Created Game: " + newCreatedGame.getId() + " --->");
+                            activeGamesList.add(newCreatedGame);
                             break;
 
                         case Packet.GAME_CLOSE:
                             Game newClosedGame = (Game) packet.getData();
                             System.out.println("<--- New Closed Game: " + newClosedGame.getId() + " --->");
+                            activeGamesList.remove(newClosedGame);
+                            allGamesList.add(newClosedGame);
 
                     }
                 }
@@ -285,9 +303,9 @@ public class ServerDisplay implements Initializable, ServiceListener {
         this.main = main;
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle)
-    {
-
-    }
+//    @Override
+//    public void initialize(URL url, ResourceBundle resourceBundle)
+//    {
+//
+//    }
 }
