@@ -22,6 +22,7 @@ public class ClientController {
     private UI.Client.SignUpController signUpController;
     private UI.Client.Options options;
     private GameLobbyController gameLobby;
+    private GameHistoryController gameHistoryController;
 
     // Scenes
     private Pane signInPane;
@@ -29,6 +30,7 @@ public class ClientController {
     private Pane mainMenuPain;
     private Pane optionsPane;
     private Pane lobbyPane;
+    private Pane gameHistoryPane;
 
     private ReadMessageBus readMessageBus;
 
@@ -71,6 +73,12 @@ public class ClientController {
             gameLobby = loader.getController();
             gameLobby.setClientController(this);
             Scene lobbyScene = new Scene(lobbyPane);
+
+            loader = new FXMLLoader(getClass().getResource("../UI/Client/GameHistory.fxml"));
+            gameHistoryPane = loader.load();
+            gameHistoryController = loader.getController();
+            gameHistoryController.setClientController(this);
+            Scene historyScene = new Scene(gameHistoryPane);
         } catch (IOException ex) {
             ex.printStackTrace();
         }

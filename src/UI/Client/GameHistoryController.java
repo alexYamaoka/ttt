@@ -1,5 +1,6 @@
 package UI.Client;
 
+import Client.ClientController;
 import Models.Game;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -15,9 +16,11 @@ import java.util.ResourceBundle;
 
 public class GameHistoryController implements Initializable {
     @FXML
-    TableView gameHistoryTable;
+    private TableView gameHistoryTable;
     @FXML
-    TableColumn<Game, String> gameID, opponent, startTime, endTime, results;
+    private TableColumn<Game, String> gameID, opponent, startTime, endTime, results;
+
+    private ClientController clientController;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -46,5 +49,13 @@ public class GameHistoryController implements Initializable {
                 loadGames(listOfGames);
             }
         });
+    }
+
+    public ClientController getClientController() {
+        return clientController;
+    }
+
+    public void setClientController(ClientController clientController) {
+        this.clientController = clientController;
     }
 }

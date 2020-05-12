@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -19,11 +20,10 @@ import java.util.ResourceBundle;
 
 public class MainMenuController implements Initializable {
     @FXML
-    private Button playButton, watchMatchesButton, exitButton, optionsButton;
+    private Button playButton, gameHistory, exitButton, optionsButton;
 
 
     private ClientController clientController;
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -50,8 +50,10 @@ public class MainMenuController implements Initializable {
 
 
     @FXML
-    public void onWatchMatchesButtonClicked(ActionEvent event) {
-        System.out.println("Watch Matches Button Clicked!");
+    public void onGameHistoryClicked(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../UI/Client/GameHistory.fxml"));
+
+
     }
 
 
