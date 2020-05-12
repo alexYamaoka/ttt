@@ -1,5 +1,6 @@
 package UI.ServerUI;
-
+import DataBase.sql.DataSource;
+import DataBase.sql.DatabaseManager;
 import Models.Game;
 import Shared.UserInformation;
 import ObserverPatterns.ServiceListener;
@@ -35,8 +36,9 @@ public class ServerDisplay implements Initializable, ServiceListener {
     @FXML
     private TableView<UserInformation> activePlayers, accounts;
     @FXML
+    private ListView allAccounts = new ListView();
+    private DataSource ds = DatabaseManager.getInstance();
     private TableColumn<UserInformation, String> username_AP, status_AP, username_A, password_A, firstName_A, lastName_A, status_A;
-
     private Main main;
     private BlockingQueue<Packet> packetsReceived = new LinkedBlockingQueue<>();
 
@@ -185,6 +187,7 @@ public class ServerDisplay implements Initializable, ServiceListener {
         {
             String username = activePlayers.getSelectionModel().getSelectedItem().toString();
             System.out.println("username selected: " + username);
+
         }
     }
 

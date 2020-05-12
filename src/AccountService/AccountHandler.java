@@ -120,47 +120,52 @@ public class AccountHandler implements Runnable {
                 break;
             case Packet.UPDATE_USER:
                 String UpdateString = data.toString();
-                UserInformation user = new UserInformation();
+                System.out.println("DataToString  = " + data.toString()); // This comes in fine
                 String[] str3 = UpdateString.trim().split("\\s+");
                 String UpdateFirstName = str3[0];
                 String UpdateLastName = str3[1];
                 String UpdateUserName = str3[2];
-                String UpdateEmail = str3[3];
+                String Id = str3[3];
                 String UpdatePassword = str3[4];
-                user.setFirstName(UpdateFirstName);
-                user.setLastName(UpdateLastName);
-                user.setUserName(UpdateUserName);
-                user.setPassword(UpdatePassword);
 
-
-                // **** fix the write object line
                 try {
-                    if (server.updateUser(user))
+                    if (ds.update(UpdateFirstName,UpdateLastName,UpdateUserName,Id,UpdatePassword))
                     {
-                        outputStream.writeObject(new UserInformation(UpdateFirstName, UpdateLastName, UpdateUserName, UpdateEmail, UpdatePassword));
-                    }
+                        Packet packet1 = new Packet(Packet.UPDATE_USER,userInformation,new UserInformation(UpdateFirstName,UpdateLastName,UpdateUserName,null,UpdatePassword));
+                        clientConnection.sendPacketToClient(packet1);
+                   }
 
-                } catch (IOException | SQLException ex) {
+                } catch (SQLException ex) {
                     stop();
-                }
+               }
                 break;
 
             case Packet.DELETE_ACCOUNT:
                 String DeleteUserString = data.toString();
                 String[] str4 = DeleteUserString.trim().split("\\s+");
-                String DeleteFirstName = str4[0];
-                String DeleteLastName = str4[1];
-                String DeleteUserName = str4[2];
-                String DeleteEmail = str4[3];
-                String DeletePassword = str4[4];
+                String DeleteID = str4[0];
                 Packet deletePacket;
                 try {
-                    if (server.DeleteUser(DeleteUserName, DeleteFirstName, DeleteLastName, DeletePassword)) {
-                        deletePacket = new Packet(Packet.DELETE_ACCOUNT, userInformation, data);
-
+                    if (server.DeleteUser(DeleteID)) {
+                        deletePacket = new Packet(Packet.DELETE_ACCOUNT, userInformation, "SUCCESS");
                         clientConnection.sendPacketToClient(deletePacket);
                     }
                 } catch (SQLException e) {
+                    stop();
+                }
+                break;
+
+            case Packet.ACTIVATE_ACCOUNT:
+                String ActivateAccountString = data.toString();
+                String [] str5 = ActivateAccountString.trim().split("\\s+");
+                String ActivateAccountID = str5[0];
+                Packet ActivateAccountPacket;
+                try{
+                    if(ds.Activate(ActivateAccountID)) {
+                        ActivateAccountPacket = new Packet(Packet.ACTIVATE_ACCOUNT,userInformation, "SUCCESS");
+                        clientConnection.sendPacketToClient(ActivateAccountPacket);
+                    }
+                }catch (SQLException e){
                     stop();
                 }
                 break;

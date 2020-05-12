@@ -24,8 +24,6 @@ public class ClientConnection implements Runnable {
 
     private BlockingQueue<Packet> packetsToSend = new LinkedBlockingQueue<>();
 
-
-
     public ClientConnection(Socket socket, Service service) {
         this.socket = socket;
         this.service = service;

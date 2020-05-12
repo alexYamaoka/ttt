@@ -39,7 +39,6 @@ public class ReadMessageBus implements Runnable {
         running.set(false);
     }
 
-
     @Override
     public void run() {
         Packet response = null;
@@ -65,6 +64,13 @@ public class ReadMessageBus implements Runnable {
                             updateUserinformationListener.updateUserinformation(response.getData().toString());
                             break;
 
+                        case Packet.DELETE_ACCOUNT:
+                            updateUserinformationListener.deactivateAccount(response.getData().toString());
+                            break;
+
+                        case Packet.ACTIVATE_ACCOUNT:
+                            updateUserinformationListener.ActivateAccount(response.getData().toString());
+                            break;
 
                         case Packet.GET_GAMES:
                             HashSet<Game> listOfGames = (HashSet<Game>) response.getData();

@@ -3,6 +3,7 @@ package UI.Client;
 import Client.Client;
 import Client.ClientController;
 import Shared.Packet;
+import Shared.UserInformation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,15 +32,20 @@ public class MainMenuController implements Initializable {
 
     @FXML
     public void onPlayButtonClicked(ActionEvent event) throws IOException {
-        Stage stage = null;
-        Parent root = null;
 
-        if (event.getSource() == playButton) {
-            stage = (Stage) playButton.getScene().getWindow();
-            root = clientController.getLobbyPane();
+        if(clientController.getAccountClient().getUserInformation().getIsDeleted() == 0) {
+            Stage stage = null;
+            Parent root = null;
+
+            if (event.getSource() == playButton) {
+                stage = (Stage) playButton.getScene().getWindow();
+                root = clientController.getLobbyPane();
+            }
+            stage.setScene(root.getScene());
+            stage.show();
+        }else{
+            System.out.println("need an active account for this");
         }
-        stage.setScene(root.getScene());
-        stage.show();
     }
 
 
