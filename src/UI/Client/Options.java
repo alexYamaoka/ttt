@@ -112,7 +112,7 @@ public class Options implements Initializable, UpdateUserinformationListener {
         UserInformation information = controller.getAccountClient().getUserInformation();
         firstName.setPromptText(information.getFirstName());
         lastName.setPromptText(information.getLastName());
-        userName.setPromptText(information.getUserName());
+        userName.setPromptText(information.getUsername());
     }
 
     public void DeactivateAccount(ActionEvent event){
