@@ -43,6 +43,7 @@ public class GameThread implements Runnable {
         this.player2 = player2;
         player1UserInformation = player1.getInformation();
         player2UserInformation = player2.getInformation();
+        game.setStartTime();
     }
 
     public synchronized void addMove(Move move) throws InterruptedException {
@@ -101,7 +102,6 @@ public class GameThread implements Runnable {
                 if (!moveQueue.isEmpty()) {
                     System.out.println("Inside game thread, removing move from the queue ");
                     newMove = moveQueue.take();
-                    game.setStartTime();
 
                     if (newMove.getUserInformation() == player1UserInformation && isPlayer1Turn) {
                         System.out.println("game player1.make move is called");

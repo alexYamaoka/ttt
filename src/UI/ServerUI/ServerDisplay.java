@@ -1,4 +1,5 @@
 package UI.ServerUI;
+
 import DataBase.sql.DataSource;
 import DataBase.sql.DatabaseManager;
 import Models.Game;
@@ -13,16 +14,15 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 
 
 import java.net.URL;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -32,7 +32,9 @@ public class ServerDisplay implements Initializable, ServiceListener {
     @FXML
     private TableView<Game> activeGames, games;
     @FXML
-    private TableColumn<Game, String> gameID_AG, player1_AG, player2_AG, startTime_AG, gameID_G, player1_G, player2_G, startTime_G, endTime_G, result_G, spectators_G;
+    private TableColumn<Game, String> gameID_AG, player1_AG, player2_AG, gameID_G, player1_G, player2_G, startTime_G, endTime_G, result_G, spectators_G;
+    @FXML
+    private TableColumn<Game, Timestamp> startTime_AG;
     @FXML
     private TableView<UserInformation> activePlayers, accounts;
     @FXML
@@ -43,7 +45,6 @@ public class ServerDisplay implements Initializable, ServiceListener {
     private BlockingQueue<Packet> packetsReceived = new LinkedBlockingQueue<>();
 
 
-
     private ObservableList<Game> activeGamesList = FXCollections.observableArrayList();
     private ObservableList<Game> allGamesList = FXCollections.observableArrayList();
     private ObservableList<UserInformation> onlinePlayersList = FXCollections.observableArrayList();
@@ -52,11 +53,12 @@ public class ServerDisplay implements Initializable, ServiceListener {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //initializeAGTable();
-        initializeAPTable();
+        initializeAGTable();
+//        initializeAPTable();
 //        initializeGTable();
 //        initializeATable();
     }
+
     private void initializeAGTable() {
         activeGames.setItems(activeGamesList);
         gameID_AG.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -66,6 +68,7 @@ public class ServerDisplay implements Initializable, ServiceListener {
 
         //editableAGCols();
     }
+
     private void initializeAPTable() {
         activePlayers.setItems(onlinePlayersList);
         username_AP.setCellValueFactory(new PropertyValueFactory<>("username"));
@@ -179,8 +182,6 @@ public class ServerDisplay implements Initializable, ServiceListener {
 //    }
 
 
-
-
 //    @FXML
 //    public void onOnlinePlayerClicked(MouseEvent event)
 //    {
@@ -236,20 +237,15 @@ public class ServerDisplay implements Initializable, ServiceListener {
 
     }
 
-    private synchronized void updateUI()
-    {
-        Platform.runLater(new Runnable()
-        {
+    private synchronized void updateUI() {
+        Platform.runLater(new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
                 Packet packet = null;
-                try
-                {
+                try {
                     packet = packetsReceived.take();
 
-                    switch (packet.getRequest())
-                    {
+                    switch (packet.getRequest()) {
                         case Packet.REGISTER_CLIENT:
                             UserInformation newRegisteredClient = (UserInformation) packet.getData();
                             System.out.println("<--- New Registered User: " + newRegisteredClient.getUsername() + " --->");
@@ -271,6 +267,7 @@ public class ServerDisplay implements Initializable, ServiceListener {
                         case Packet.ACTIVE_GAME:
                             Game newCreatedGame = (Game) packet.getData();
                             System.out.println("<--- New Created Game: " + newCreatedGame.getId() + " --->");
+                            System.out.println("Start Time: " + newCreatedGame.getStartTime());
                             activeGamesList.add(newCreatedGame);
                             break;
 
@@ -281,9 +278,7 @@ public class ServerDisplay implements Initializable, ServiceListener {
                             allGamesList.add(newClosedGame);
 
                     }
-                }
-                catch (InterruptedException e)
-                {
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
 
@@ -294,12 +289,7 @@ public class ServerDisplay implements Initializable, ServiceListener {
     }
 
 
-
-
-
-
-    public void setMain(Main main)
-    {
+    public void setMain(Main main) {
         this.main = main;
     }
 
