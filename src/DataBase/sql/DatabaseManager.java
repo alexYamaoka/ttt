@@ -6,6 +6,7 @@ import Models.BaseModel;
 import Models.Move;
 import Server.ClientConnection;
 import Shared.UserInformation;
+import com.mysql.cj.x.protobuf.MysqlxCrud;
 
 import java.sql.*;
 import java.util.*;
@@ -52,35 +53,65 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         }
     }
 
-    @Override
-    public boolean delete(String username, String firstname, String lastname, String password) throws SQLException {
-        StringBuilder query = new StringBuilder();
-        query.append("UPDATE user SET");
-        query.append("isDeleted = 1");
-        query.append("WHERE ");
-        query.append("username = '" + username + "' AND password = '" + password + "'");
-        UserStatement = myConn.prepareStatement(query.toString());
-        UserStatement.executeUpdate(query.toString());
-        System.out.println(query.toString());
 
-        return true;
+
+
+    @Override
+    public boolean delete(String Id) throws SQLException {
+        StringBuilder query = new StringBuilder();
+        String sql = "UPDATE user SET isDeleted = ? WHERE id = ?";
+        int row = 0;
+        System.out.println(sql);
+        UserStatement = myConn.prepareStatement(sql);
+        UserStatement.setInt(1,1);
+        UserStatement.setString(2,Id);
+        row = UserStatement.executeUpdate();
+        System.out.println(query.toString());
+        System.out.println(String.format("Rows affected %d",row));
+        return row > 0;
     }
 
     @Override
-    public BaseModel update(BaseModel obj) throws SQLException {
+    public boolean Activate(String Id) throws SQLException {
         StringBuilder query = new StringBuilder();
-        List<BaseModel> items = new ArrayList<>();
-        if (obj instanceof UserInformation) {
-            UserInformation user = (UserInformation) obj;
-            query.append("UPDATE ");
-            query.append("user SET username = ? WHERE id = ? ");
-            UserStatement = myConn.prepareStatement(query.toString());
-            System.out.println(query.toString());
-            UserStatement.setString(1, user.getUserName());
-            UserStatement.executeQuery(query.toString());
-            items.add(user);
-        }
-        return (BaseModel) items;
+        String sql = "UPDATE user SET isDeleted = ? WHERE id = ?";
+        int row = 0;
+        System.out.println(sql);
+        UserStatement = myConn.prepareStatement(sql);
+        UserStatement.setInt(1,0);
+        UserStatement.setString(2,Id);
+        row = UserStatement.executeUpdate();
+        System.out.println(query.toString());
+        System.out.println(String.format("Rows affected %d",row));
+        return row > 0;
+    }
+
+    @Override
+    public Boolean update(String UpdateFirstName,String UpdateLastName,String UpdateUserName,String Id,String UpdatePassword) throws SQLException {
+        String sql = "UPDATE user " + "SET FirstName = ? , LastName = ? , username = ? , password = ? WHERE id = ?";
+        int row = 0;
+
+        UserStatement = myConn.prepareStatement(sql);
+        System.out.println(sql.toString());
+
+        System.out.println("\n");
+        System.out.println("FirstName "+UpdateFirstName);
+        System.out.println("Last " + UpdateLastName);
+        System.out.println("UserName " + UpdateUserName);
+        System.out.println("Pass " + UpdatePassword);
+        System.out.println("ID " + Id);
+        System.out.println("\n");
+
+        UserStatement.setString(1,UpdateFirstName);
+        UserStatement.setString(2,UpdateLastName);
+        UserStatement.setString(3,UpdateUserName);
+        UserStatement.setString(4,UpdatePassword);
+        UserStatement.setString(5,Id);
+
+        row = UserStatement.executeUpdate();
+        System.out.println(String.format("Rows affected %d",row));
+
+        return row > 0;
     }
 
     @Override
@@ -109,7 +140,6 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         return null;
     }
 
-
     @Override
     public boolean addGameViewers(BaseModel gameObj,BaseModel userObj) throws SQLException {
         StringBuilder query = new StringBuilder();
@@ -129,7 +159,6 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         System.out.println("Row = " + row);
 
         return row != 0;
-
     }
 
     @Override

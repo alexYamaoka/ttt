@@ -3,6 +3,7 @@ package UI.Client;
 import Client.Client;
 import Client.ClientController;
 import Shared.Packet;
+import Shared.UserInformation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -18,11 +20,10 @@ import java.util.ResourceBundle;
 
 public class MainMenuController implements Initializable {
     @FXML
-    private Button playButton, watchMatchesButton, exitButton, optionsButton;
+    private Button playButton, gameHistory, exitButton, optionsButton;
 
 
     private ClientController clientController;
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -31,21 +32,34 @@ public class MainMenuController implements Initializable {
 
     @FXML
     public void onPlayButtonClicked(ActionEvent event) throws IOException {
-        Stage stage = null;
-        Parent root = null;
 
-        if (event.getSource() == playButton) {
-            stage = (Stage) playButton.getScene().getWindow();
-            root = clientController.getLobbyPane();
+        if(clientController.getAccountClient().getUserInformation().getIsDeleted() == 0) {
+            Stage stage = null;
+            Parent root = null;
+
+            if (event.getSource() == playButton) {
+                stage = (Stage) playButton.getScene().getWindow();
+                root = clientController.getLobbyPane();
+            }
+            stage.setScene(root.getScene());
+            stage.show();
+        }else{
+            System.out.println("need an active account for this");
         }
-        stage.setScene(root.getScene());
-        stage.show();
     }
 
 
     @FXML
-    public void onWatchMatchesButtonClicked(ActionEvent event) {
-        System.out.println("Watch Matches Button Clicked!");
+    public void onGameHistoryClicked(ActionEvent event) {
+       Stage stage = null;
+       Parent root = null;
+
+       if(event.getSource() == gameHistory) {
+           stage = (Stage) gameHistory.getScene().getWindow();
+           root = clientController.getGameHistoryPane();
+       }
+       stage.setScene(root.getScene());
+       stage.show();
     }
 
 

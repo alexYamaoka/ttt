@@ -8,7 +8,7 @@ class TTTBoardTest
 {
 
     @Test
-    void setX_shouldReturn_X()
+    void setX_should_return_X()
     {
         TTTBoard tttBoard = new TTTBoard();
 
@@ -18,7 +18,7 @@ class TTTBoardTest
     }
 
     @Test
-    void setO_shouldReturn_O()
+    void setO_should_return_O()
     {
         TTTBoard tttBoard = new TTTBoard();
 
@@ -29,7 +29,7 @@ class TTTBoardTest
 
 
     @Test
-    void isCellEmpty_shouldReturn_UnderscoreCharacter()
+    void isCellEmpty_should_return_UnderscoreCharacter()
     {
         TTTBoard tttBoard = new TTTBoard();
         assertEquals('_', tttBoard.getCharInCell(1,1));
@@ -37,7 +37,7 @@ class TTTBoardTest
 
 
     @Test
-    void isWinner_mainDiagonal_shouldReturn_true()
+    void isWinner_main_diagonal_should_return_true()
     {
         TTTBoard tttBoard = new TTTBoard();
         tttBoard.setX(0,0);
@@ -47,11 +47,11 @@ class TTTBoardTest
         System.out.println("main diagonal:");
         tttBoard.printBoard();
 
-        assertEquals(true, tttBoard.isWinner(2,2,'X'));
+        assertTrue(tttBoard.isWinner(2,2,'X'));
     }
 
     @Test
-    void isWinner_secondaryDiagonal_shouldReturn_true()
+    void isWinner_secondary_diagonal_should_return_true()
     {
         TTTBoard tttBoard = new TTTBoard();
         tttBoard.setX(0,2);
@@ -61,11 +61,11 @@ class TTTBoardTest
         System.out.println("secondary diagonal:");
         tttBoard.printBoard();
 
-        assertEquals(true, tttBoard.isWinner(2,0,'X'));
+        assertTrue(tttBoard.isWinner(2,0,'X'));
     }
 
     @Test
-    void isWinner_horizontalTop_shouldReturn_true()
+    void isWinner_horizontal_top_should_return_true()
     {
         TTTBoard tttBoard = new TTTBoard();
         tttBoard.setX(0,0);
@@ -75,11 +75,11 @@ class TTTBoardTest
         System.out.println("horizontal top:");
         tttBoard.printBoard();
 
-        assertEquals(true, tttBoard.isWinner(0,2,'X'));
+        assertTrue(tttBoard.isWinner(0,2,'X'));
     }
 
     @Test
-    void isWinner_horizontalMiddle_shouldReturn_true()
+    void isWinner_horizontal_middle_should_return_true()
     {
         TTTBoard tttBoard = new TTTBoard();
         tttBoard.setX(1,0);
@@ -89,11 +89,11 @@ class TTTBoardTest
         System.out.println("horizontal middle:");
         tttBoard.printBoard();
 
-        assertEquals(true, tttBoard.isWinner(1,2,'X'));
+        assertTrue(tttBoard.isWinner(1,2,'X'));
     }
 
     @Test
-    void isWinner_horizontalBottom_shouldReturn_true()
+    void isWinner_horizontal_bottom_should_return_true()
     {
         TTTBoard tttBoard = new TTTBoard();
         tttBoard.setX(2,0);
@@ -103,11 +103,11 @@ class TTTBoardTest
         System.out.println("horizontal bottom:");
         tttBoard.printBoard();
 
-        assertEquals(true, tttBoard.isWinner(2,2,'X'));
+        assertTrue(tttBoard.isWinner(2,2,'X'));
     }
 
     @Test
-    void isWinner_verticalLeft_shouldReturn_true()
+    void isWinner_vertical_left_should_return_true()
     {
         TTTBoard tttBoard = new TTTBoard();
         tttBoard.setX(0,0);
@@ -117,11 +117,11 @@ class TTTBoardTest
         System.out.println("vertical left:");
         tttBoard.printBoard();
 
-        assertEquals(true, tttBoard.isWinner(2,0,'X'));
+        assertTrue(tttBoard.isWinner(2,0,'X'));
     }
 
     @Test
-    void isWinner_verticalMiddle_shouldReturn_true()
+    void isWinner_vertical_middle_should_return_true()
     {
         TTTBoard tttBoard = new TTTBoard();
         tttBoard.setX(0,1);
@@ -131,11 +131,11 @@ class TTTBoardTest
         System.out.println("vertical middle:");
         tttBoard.printBoard();
 
-        assertEquals(true, tttBoard.isWinner(2,1,'X'));
+        assertTrue(tttBoard.isWinner(2,1,'X'));
     }
 
     @Test
-    void isWinner_verticalRight_shouldReturn_true()
+    void isWinner_vertical_right_should_return_true()
     {
         TTTBoard tttBoard = new TTTBoard();
         tttBoard.setX(0,2);
@@ -145,13 +145,13 @@ class TTTBoardTest
         System.out.println("vertical right:");
         tttBoard.printBoard();
 
-        assertEquals(true, tttBoard.isWinner(2,2,'X'));
+        assertTrue(tttBoard.isWinner(2,2,'X'));
     }
 
 
 
     @Test
-    void isTieGame_shouldReturn_true()
+    void isTieGame_should_return_true()
     {
         TTTBoard tttBoard = new TTTBoard();
         tttBoard.setX(0,0);
@@ -167,6 +167,6 @@ class TTTBoardTest
         System.out.println("Tie Game:");
         tttBoard.printBoard();
 
-        assertEquals(true, tttBoard.isTieGame());
+        assertTrue(tttBoard.isTieGame());
     }
 }
