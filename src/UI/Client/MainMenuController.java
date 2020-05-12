@@ -33,7 +33,7 @@ public class MainMenuController implements Initializable {
     @FXML
     public void onPlayButtonClicked(ActionEvent event) throws IOException {
 
-        if(clientController.getAccountClient().getUserInformation().getIsDeleted() == 0) {
+        if (clientController.getAccountClient().getUserInformation().getIsDeleted() == 0) {
             Stage stage = null;
             Parent root = null;
 
@@ -43,7 +43,8 @@ public class MainMenuController implements Initializable {
             }
             stage.setScene(root.getScene());
             stage.show();
-        }else{
+
+        } else {
             System.out.println("need an active account for this");
         }
     }
@@ -51,15 +52,18 @@ public class MainMenuController implements Initializable {
 
     @FXML
     public void onGameHistoryClicked(ActionEvent event) {
-       Stage stage = null;
-       Parent root = null;
+        Stage stage = null;
+        Parent root = null;
 
-       if(event.getSource() == gameHistory) {
-           stage = (Stage) gameHistory.getScene().getWindow();
-           root = clientController.getGameHistoryPane();
-       }
-       stage.setScene(root.getScene());
-       stage.show();
+        if (event.getSource() == gameHistory) {
+            stage = (Stage) gameHistory.getScene().getWindow();
+            root = clientController.getGameHistoryPane();
+        }
+        stage.setScene(root.getScene());
+        stage.show();
+
+        Packet packet = new Packet(Packet.GAME_HISTORY, clientController.getAccountClient().getUserInformation(), clientController.getAccountClient().getUserInformation().getId());
+        clientController.getGameClient().addRequestToServer(packet);
     }
 
 

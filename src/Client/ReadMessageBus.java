@@ -2,14 +2,12 @@ package Client;
 
 import Models.Game;
 import Models.Move;
-import ObserverPatterns.LobbyListener;
-import ObserverPatterns.SignInResultListener;
-import ObserverPatterns.SignUpResultListener;
-import ObserverPatterns.UpdateUserinformationListener;
+import ObserverPatterns.*;
 import Shared.Packet;
 import Shared.UserInformation;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ReadMessageBus implements Runnable {
@@ -21,6 +19,7 @@ public class ReadMessageBus implements Runnable {
     private SignUpResultListener signUpResultListener;
     private UpdateUserinformationListener updateUserinformationListener;
     private LobbyListener lobbyListener;
+    private HistoryListener historyListener;
 
     public ReadMessageBus(ClientController clientController) {
         this.clientController = clientController;
@@ -28,6 +27,7 @@ public class ReadMessageBus implements Runnable {
         signUpResultListener = clientController.getSignUpController();
         updateUserinformationListener = clientController.getOptions();
         lobbyListener = clientController.getGameLobby();
+        historyListener = clientController.getGameHistoryController();
     }
 
     public void start() {
@@ -124,6 +124,11 @@ public class ReadMessageBus implements Runnable {
                         case Packet.GAME_STATUS:
                             lobbyListener.updateStatus(response.getData().toString());
                             break;
+
+                        case Packet.GAME_HISTORY:
+                            if(response.getData() != null) {
+                                historyListener.updateHistory((List<Game>)response.getData());
+                            }
                     }
                 }
             }
