@@ -60,12 +60,18 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
 
         StringBuilder query = new StringBuilder();
         List<BaseModel> items = new ArrayList<>();
-        query.append("SELECT * FROM game WHERE id = ").append(PlayerId);
+        //query.append("SELECT * FROM game WHERE id = ").append(PlayerId);
+
+        query.append("SELECT game.id , game.startTime , game.endTime , user.username , game.WinningPlayerId ");
+        query.append("FROM game , user as player1 , user as player2");
+        query.append("WHERE id = ").append(PlayerId).append("game.player1Id = Player1.Id AND game.Player2Id = player2.Id");
+
+
         System.out.println("Print out " + query.toString());
         GameStatement = myConn.prepareStatement(query.toString());
         ResultSet rs;
         rs = GameStatement.executeQuery(query.toString());
-        List<String> list = new ArrayList();
+        //List<String> list = new ArrayList();
 
         /*
         while (rs.next()) {
