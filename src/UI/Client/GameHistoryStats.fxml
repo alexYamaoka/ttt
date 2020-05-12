@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -51,5 +52,10 @@
       <Label fx:id="tZ" layoutX="510.0" layoutY="420.0" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" textAlignment="CENTER" />
       <Label fx:id="tO" layoutX="660.0" layoutY="420.0" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" textAlignment="CENTER" />
       <Label fx:id="tT" layoutX="810.0" layoutY="420.0" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" textAlignment="CENTER" />
+      <Button fx:id="returnToGHButton" alignment="CENTER" layoutX="165.0" layoutY="500.0" mnemonicParsing="false" onAction="#returnToGHButtonClicked" prefHeight="30.0" prefWidth="180.0" style="-fx-background-color: transparent;" text="Return to game history" textFill="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
