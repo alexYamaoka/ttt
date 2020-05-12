@@ -81,12 +81,14 @@ public class GameThread implements Runnable {
 
         player1.sendPacketToClient(whoIsPlayer1);
         player2.sendPacketToClient(whoIsPlayer1);
+        game.notifyObservers(whoIsPlayer1);
         System.out.println("sending packet about player1");
 
         // sends the username of player2
         Packet whoIsPlayer2 = new Packet(Packet.PLAYER_TWO_USERNAME, player2UserInformation, game.getId() + " " + player2UserInformation.getUserName());
         player1.sendPacketToClient(whoIsPlayer2);
         player2.sendPacketToClient(whoIsPlayer2);
+        game.notifyObservers(whoIsPlayer2);
         System.out.println("sending packet about player2");
 
         isPlayer1Turn = true;
@@ -111,6 +113,7 @@ public class GameThread implements Runnable {
 
                             player1.sendPacketToClient(packet);
                             player2.sendPacketToClient(packet);
+                            game.notifyObservers(packet);
                             System.out.println("move is outputted to both players");
 
                             isPlayer1Turn = false;
@@ -120,7 +123,7 @@ public class GameThread implements Runnable {
                                 String winner = game.getPlayer1Info().getUserName();
                                 Packet player1Wins = new Packet(Packet.GAME_STATUS, player1UserInformation, game.getId() + " " + winner);
                                 player1.sendPacketToClient(player1Wins);
-                                player2.sendPacketToClient(player1Wins);
+                                player2.sendPacketToClient(player1Wins);;
                                 game.notifyObservers(player1Wins);
                                 game.setEndTime();
 
@@ -159,6 +162,7 @@ public class GameThread implements Runnable {
 
                             player1.sendPacketToClient(packet);
                             player2.sendPacketToClient(packet);
+                            game.notifyObservers(packet);
                             System.out.println("move is outputted to both players");
 
                             isPlayer1Turn = true;

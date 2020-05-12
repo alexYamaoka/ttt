@@ -1,5 +1,7 @@
 package GameService;
 
+import ComputerPlayer.AiPlayer;
+import ComputerPlayer.MinimaxAi;
 import DataBase.sql.DataSource;
 import DataBase.sql.DatabaseManager;
 import Models.Game;
@@ -64,8 +66,16 @@ public class GameHandler implements Runnable {
                 service.addGame(game); // add game to game list and broadcast
                 Packet packet = new Packet(Packet.NEW_GAME_CREATED, clientConnection.getInformation(), game);
                 clientConnection.sendPacketToClient(packet);
-
                 break;
+
+            case Packet.AI_GAME:
+                Game aiGame = new Game(clientConnection);
+                service.addGame(aiGame);
+                AiPlayer aiPlayer = new AiPlayer(aiGame, new MinimaxAi());
+                aiPlayer.start();
+                Packet aiPacket = new Packet(Packet.NEW_GAME_CREATED, clientConnection.getInformation(), aiGame);
+                clientConnection.sendPacketToClient(aiPacket);
+
 
             case Packet.JOIN_GAME:
                 try {
@@ -87,7 +97,7 @@ public class GameHandler implements Runnable {
                     service.broadcast(broadcast);
 
                     // update server display
-                    Packet notifyGameJoined = new Packet(Packet.ACTIVE_GAME, null, "Game ID: " + sendGame.getId());
+                    Packet notifyGameJoined = new Packet(Packet.ACTIVE_GAME, null, sendGame);
                     service.notifyServerDisplay(notifyGameJoined);
 
 
@@ -99,7 +109,11 @@ public class GameHandler implements Runnable {
 
             case Packet.OBSERVE_GAME:
                 Game observerGame = service.getGame(data.toString());
-                observerGame.addGameObserver(clientConnection);
+                if(observerGame.addGameObserver(clientConnection)) {
+                    Packet observe = new Packet(Packet.OBSERVE_GAME, userInformation, observerGame);
+                    clientConnection.sendPacketToClient(observe);
+                }
+
                 break;
 
             case Packet.GAME_MOVE:
@@ -125,6 +139,8 @@ public class GameHandler implements Runnable {
                 try {
                     if (service.removeGameFromLobby(data.toString())) {
                         System.out.println("Game closed!");
+                        Packet closePacket = new Packet(Packet.GET_GAMES, null, service.getGames()); // Refresh List with new Games/Removed games
+                        service.broadcast(closePacket);
                     } else {
                         System.out.println("Game not closed");
                     }
