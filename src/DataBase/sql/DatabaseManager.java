@@ -111,17 +111,19 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
 
 
     @Override
-    public boolean addGameViewers(BaseModel obj) throws SQLException {
+    public boolean addGameViewers(BaseModel gameObj,BaseModel userObj) throws SQLException {
         StringBuilder query = new StringBuilder();
-        Game game = (Game) obj;
-        query.append("INSERT INTO game ");
+        Game game = (Game) gameObj;
+        UserInformation user = (UserInformation) userObj;
+
+        query.append("INSERT INTO gameViewers ");
         int row = 0;
-        query.append("(gameId, UserId)");
+        query.append("(GameId, UserId)");
         query.append(" values (?,?)");
         GameStatement = myConn.prepareStatement(query.toString());
         System.out.println(query.toString());
         GameStatement.setString(1, game.getId());
-        //GameStatement.setString(2,game.);
+        GameStatement.setString(2, user.getId());
         System.out.println(GameStatement);
         row = GameStatement.executeUpdate();
         System.out.println("Row = " + row);
@@ -144,9 +146,9 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         GameStatement.setString(1, game.getId());
         GameStatement.setTimestamp(2, game.getStartTime());
         GameStatement.setTimestamp(3, game.getEndTime());
-        GameStatement.setString(4, game.getPlayer1ClientConnection().getInformation().getId());
-        GameStatement.setString(5, game.getPlayer2ClientConnection().getInformation().getId());
-        GameStatement.setString(6, game.getPlayer1ClientConnection().getInformation().getId());
+        GameStatement.setString(4, game.getPlayer1Info().getId());
+        GameStatement.setString(5, game.getPlayer2Info().getId());
+        GameStatement.setString(6, game.getWinningPlayerId());
         GameStatement.setString(7, game.getWinningPlayerId());
 
         System.out.println(GameStatement);

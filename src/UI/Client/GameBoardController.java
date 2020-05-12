@@ -4,6 +4,7 @@ import AccountService.AccountService;
 import Client.ClientController;
 import Models.Game;
 import Models.Move;
+import Models.TTTBoard;
 import ObserverPatterns.GameListener;
 import Shared.Packet;
 import Shared.UserInformation;
@@ -77,6 +78,9 @@ public class GameBoardController implements Initializable, GameListener {
     }
 
     public void rematch(ActionEvent actionEvent) {
+        if (actionEvent.getSource() == rematch) {
+
+        }
     }
 
     public void quit(ActionEvent actionEvent) {
@@ -126,7 +130,6 @@ public class GameBoardController implements Initializable, GameListener {
             int row = move.getRow();
             int col = move.getColumn();
             UserInformation userInformation = move.getUserInformation();
-
 
             // used players username to determine who is X and who is O.
             if (player1Username.equals(userInformation.getUserName())) {

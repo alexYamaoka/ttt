@@ -62,6 +62,7 @@ public class Options implements Initializable, UpdateUserinformationListener {
 
     private ClientController controller;
 
+
     public void UserDetailButton(ActionEvent event) {
         Pane2.setVisible(false);
         Pane1.managedProperty().bind(Pane1.visibleProperty());
@@ -99,7 +100,9 @@ public class Options implements Initializable, UpdateUserinformationListener {
         userName.setPromptText(information.getUserName());
     }
 
+
     public void userDetailsSaved(ActionEvent event) {
+
         String firstName = this.firstName.getText();
         String lastName = this.lastName.getText();
         String username = this.userName.getText();

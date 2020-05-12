@@ -7,6 +7,7 @@ import ObserverPatterns.GameObserver;
 import Server.ClientConnection;
 import Shared.Packet;
 import Shared.UserInformation;
+import app.Server;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -36,6 +37,7 @@ public class Game extends BaseModel implements Serializable {
     private String nextMoveId;
 
 
+
     public Game(ClientConnection player1) {
         UUIDGenerator gameId = new UUIDGenerator();
         this.id = gameId.getNewId();
@@ -44,6 +46,11 @@ public class Game extends BaseModel implements Serializable {
         this.player1Username = player1Info.getUserName();
         tttBoard = new TTTBoard();
         this.gameStatus = "WAITING FOR ANOTHER PLAYER";
+        try {
+            ds.addGameViewers(this,player1Info);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
     public Game(Game game) {
         this.player1Username = game.getPlayer1Username();
@@ -52,16 +59,39 @@ public class Game extends BaseModel implements Serializable {
         this.gameStatus = game.getGameStatus();
         this.startTime = game.getStartTime();
         this.endTime = game.getEndTime();
+
     }
 
     public void join(ClientConnection player2) {
         this.player2 = player2;
         player2Info = player2.getInformation();
         player2Username = player2Info.getUserName();
+        try{
+            ds.addGameViewers(this,player2Info);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void addGameObserver(ClientConnection client) {
         GameObservers.add(client);
+        try {
+            ds.addGameViewers(this,client.getInformation());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        //to notify other players and observers when a new observer has joined //Thread error
+        /*Packet packet = new Packet(Packet.OBSERVE_GAME,null,client.getInformation().getId());
+        try {
+            player1.getOutputStream().flush();
+            player1.getOutputStream().writeObject(packet);
+            player2.getOutputStream().flush();
+            player2.getOutputStream().writeObject(packet);
+            notifyObservers(packet);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+         */
     }
 
     public void notifyObservers(Packet packet) {

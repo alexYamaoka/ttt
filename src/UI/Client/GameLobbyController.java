@@ -75,7 +75,6 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
             Packet packet = new Packet(Packet.NEW_GAME_CREATED, clientController.getAccountClient().getUserInformation(), "NEW-GAME");
             clientController.getGameClient().addRequestToServer(packet);
         }
-
     }
 
     public void returnToMainMenuButtonClicked(ActionEvent actionEvent) {

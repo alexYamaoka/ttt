@@ -35,31 +35,5 @@
 
         <!-- Icons of the Buttons for use in side navigation bar -->
 
-        <ImageView layoutX="177.0" layoutY="231.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="file:/Users/harrison/Downloads/pngguru.com-2.png"/>
-            </image>
-        </ImageView>
-
-        <ImageView accessibleRole="BUTTON" fitHeight="32.0" fitWidth="32.0" layoutX="189.0" layoutY="127.25">
-            <image>
-                <Image url="@../Resources/Icons/2x/baseline_play_arrow_black_18dp.png"/>
-            </image>
-        </ImageView>
-        <ImageView accessibleRole="BUTTON" fitHeight="32.0" fitWidth="32.0" layoutX="189.0" layoutY="187.25">
-            <image>
-                <Image url="@../Resources/Icons/2x/baseline_tv_black_18dp.png"/>
-            </image>
-        </ImageView>
-        <ImageView accessibleRole="BUTTON" fitHeight="32.0" fitWidth="32.0" layoutX="189.0" layoutY="247.75">
-            <image>
-                <Image url="@../Resources/Icons/2x/baseline_settings_black_18dp.png"/>
-            </image>
-        </ImageView>
-        <ImageView accessibleRole="BUTTON" fitHeight="32.0" fitWidth="32.0" layoutX="189.0" layoutY="308.0">
-            <image>
-                <Image url="@../Resources/Icons/2x/baseline_exit_to_app_black_18dp.png"/>
-            </image>
-        </ImageView>
     </children>
 </AnchorPane>
