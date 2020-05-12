@@ -51,9 +51,15 @@ public class MainMenuController implements Initializable {
 
     @FXML
     public void onGameHistoryClicked(ActionEvent event) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../UI/Client/GameHistory.fxml"));
+       Stage stage = null;
+       Parent root = null;
 
-
+       if(event.getSource() == gameHistory) {
+           stage = (Stage) gameHistory.getScene().getWindow();
+           root = clientController.getGameHistoryPane();
+       }
+       stage.setScene(root.getScene());
+       stage.show();
     }
 
 

@@ -163,4 +163,12 @@ public class ClientController {
     public GameLobbyController getGameLobby() {
         return gameLobby;
     }
+
+    public GameHistoryController getGameHistoryController() {
+        return gameHistoryController;
+    }
+
+    public Pane getGameHistoryPane() {
+        return gameHistoryPane;
+    }
 }
