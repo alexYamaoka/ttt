@@ -127,6 +127,7 @@ public class AccountHandler implements Runnable {
                 String UpdateUserName = str3[2];
                 String Id = str3[3];
                 String UpdatePassword = str3[4];
+
                 try {
                     if (ds.update(UpdateFirstName,UpdateLastName,UpdateUserName,Id,UpdatePassword))
                     {
@@ -150,6 +151,21 @@ public class AccountHandler implements Runnable {
                         clientConnection.sendPacketToClient(deletePacket);
                     }
                 } catch (SQLException e) {
+                    stop();
+                }
+                break;
+
+            case Packet.ACTIVATE_ACCOUNT:
+                String ActivateAccountString = data.toString();
+                String [] str5 = ActivateAccountString.trim().split("\\s+");
+                String ActivateAccountID = str5[0];
+                Packet ActivateAccountPacket;
+                try{
+                    if(ds.Activate(ActivateAccountID)) {
+                        ActivateAccountPacket = new Packet(Packet.ACTIVATE_ACCOUNT,userInformation, "SUCCESS");
+                        clientConnection.sendPacketToClient(ActivateAccountPacket);
+                    }
+                }catch (SQLException e){
                     stop();
                 }
                 break;

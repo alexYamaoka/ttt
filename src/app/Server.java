@@ -15,6 +15,10 @@ public class Server {
 
     private DataSource ds = DatabaseManager.getInstance();
 
+    public boolean ActivateUser(String Id) throws SQLException{
+        return ds.Activate(Id);
+    }
+
     public boolean DeleteUser(String Id) throws SQLException {
         return ds.delete(Id);
     }

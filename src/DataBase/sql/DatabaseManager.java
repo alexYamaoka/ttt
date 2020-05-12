@@ -53,15 +53,32 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         }
     }
 
+
+
+
     @Override
     public boolean delete(String Id) throws SQLException {
         StringBuilder query = new StringBuilder();
         String sql = "UPDATE user SET isDeleted = ? WHERE id = ?";
         int row = 0;
-
         System.out.println(sql);
         UserStatement = myConn.prepareStatement(sql);
         UserStatement.setInt(1,1);
+        UserStatement.setString(2,Id);
+        row = UserStatement.executeUpdate();
+        System.out.println(query.toString());
+        System.out.println(String.format("Rows affected %d",row));
+        return row > 0;
+    }
+
+    @Override
+    public boolean Activate(String Id) throws SQLException {
+        StringBuilder query = new StringBuilder();
+        String sql = "UPDATE user SET isDeleted = ? WHERE id = ?";
+        int row = 0;
+        System.out.println(sql);
+        UserStatement = myConn.prepareStatement(sql);
+        UserStatement.setInt(1,0);
         UserStatement.setString(2,Id);
         row = UserStatement.executeUpdate();
         System.out.println(query.toString());

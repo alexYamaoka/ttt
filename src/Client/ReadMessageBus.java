@@ -67,6 +67,10 @@ public class ReadMessageBus implements Runnable {
                             updateUserinformationListener.deactivateAccount(response.getData().toString());
                             break;
 
+                        case Packet.ACTIVATE_ACCOUNT:
+                            updateUserinformationListener.ActivateAccount(response.getData().toString());
+                            break;
+
                         case Packet.GET_GAMES:
                             HashSet<Game> listOfGames = (HashSet<Game>) response.getData();
                             if (listOfGames != null) {

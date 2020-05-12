@@ -29,6 +29,7 @@ public class Options implements Initializable, UpdateUserinformationListener {
     public Button btn2Save;
     public Button SaveButton;
     public Button DeactivateAccount;
+    public Label errorLable;
 
     private AnchorPane Ach_pane3;
     @FXML
@@ -73,6 +74,7 @@ public class Options implements Initializable, UpdateUserinformationListener {
     public TextField btnNewpass;
     public TextField btnConfirmPass;
 
+
     public void UserDetailButton(ActionEvent event) {
         Pane2.setVisible(false);
         Pane1.managedProperty().bind(Pane1.visibleProperty());
@@ -85,6 +87,8 @@ public class Options implements Initializable, UpdateUserinformationListener {
         Pane2.managedProperty().bind(Pane2.visibleProperty());
         Pane2.setVisible(true);
     }
+
+
 
     public void MainMenu(ActionEvent event) throws IOException {
         Stage stage = null;
@@ -116,41 +120,92 @@ public class Options implements Initializable, UpdateUserinformationListener {
         List<String> user = new ArrayList<>();
         user.add(id);
         String data = String.join(" ", user);
-        System.out.println("User in deactivate " + user);
-        Packet packet = new Packet(Packet.DELETE_ACCOUNT, controller.getAccountClient().getUserInformation(), data);
-        controller.getAccountClient().addRequestToServer(packet);
+        if(controller.getAccountClient().getUserInformation().getIsDeleted() == 1){
+            Packet packet = new Packet(Packet.ACTIVATE_ACCOUNT,controller.getAccountClient().getUserInformation(), data);
+            controller.getAccountClient().addRequestToServer(packet);
+        }else {
+            Packet packet = new Packet(Packet.DELETE_ACCOUNT, controller.getAccountClient().getUserInformation(), data);
+            controller.getAccountClient().addRequestToServer(packet);
+        }
     }
 
     public void userDetailsSaved(ActionEvent event) {
+        List<String> user = new ArrayList<>();
+        String id = controller.getAccountClient().getUserInformation().getId();
+        String username = this.userName.getPromptText();
+        String firstName = this.firstName.getPromptText();
+        String lastName = this.lastName.getPromptText();
+        String oldPassword = this.btnOldpass.getText();
+        String newPassword = this.btnNewpass.getText();
+        String confirmPassword = this.btnConfirmPass.getText();
+        user.add(firstName.toString());
+        user.add(lastName.toString());
+        user.add(username.toString());
+        user.add(id.toString());
+        user.add(confirmPassword.toString());
 
-                List<String> user = new ArrayList<>();
-                String firstName = this.firstName.getText();
-                String lastName = this.lastName.getText();
-                String username = this.userName.getText();
-                String id = controller.getAccountClient().getUserInformation().getId();
-                String oldPassword = this.btnOldpass.getText();
-                String newPassword = this.btnNewpass.getText();
-                String confirmPassword = this.btnConfirmPass.getText();
-                user.add(firstName);
-                user.add(lastName);
-                user.add(username);
-                user.add(id);
-                user.add(newPassword);
-                String data = String.join(" ", user);
-
-                if (oldPassword.equalsIgnoreCase(controller.getAccountClient().getUserInformation().getPassword())) {
-                    if (newPassword.equals(confirmPassword)) {
-                        Packet packet = new Packet(Packet.UPDATE_USER, controller.getAccountClient().getUserInformation(), data);
-                        controller.getAccountClient().addRequestToServer(packet);
-                    } else {
-                        updateError.setTextFill(Color.RED);
-                        updateError.setText("New passwords do not match!");
-                    }
-                } else {
-                    updateError.setTextFill(Color.RED);
-                    updateError.setText("You did not enter the correct old password!");
-                }
+/*
+            if(!this.userName.getText().equals(this.userName.getPromptText())){
+                username = this.userName.getText();
+            }else{
+                username = this.userName.getPromptText();
             }
+                user.add(username);
+
+            if(!this.firstName.getText().equals(this.firstName.getPromptText())){
+                    firstName = this.firstName.getText();
+                }else{
+                    firstName = this.firstName.getPromptText();
+                }
+                    user.add(firstName);
+
+                if(!this.lastName.getText().equals(this.lastName.getPromptText())){
+                        lastName = this.lastName.getText();
+                    }else{
+                        lastName = this.lastName.getPromptText();
+                    }
+                        user.add(lastName);
+
+                    if(!this.oldPassword.getText().equals(this.oldPassword.getPromptText())){
+                            oldPassword = this.oldPassword.getText();
+                        }else{
+                            oldPassword = this.oldPassword.getPromptText();
+                        }
+                            user.add(oldPassword);
+
+                        if(!this.newPassword.getText().equals(this.newPassword.getPromptText())){
+                                newPassword = this.newPassword.getText();
+                        }else{
+                                newPassword = this.newPassword.getPromptText();
+                        }
+                                user.add(newPassword);
+                            if(!this.confirmPassword.getText().equals(this.confirmPassword.getPromptText())){
+                                    confirmPassword = this.confirmPassword.getText();
+                            }else{
+                                    confirmPassword = this.confirmPassword.getPromptText();
+                            }
+                                    user.add(confirmPassword);
+
+*/
+
+                        String data = String.join(" ", user);
+                        System.out.println(user);
+                        if (oldPassword.equalsIgnoreCase(controller.getAccountClient().getUserInformation().getPassword())) {
+                            if (newPassword.equals(confirmPassword)) {
+
+                                Packet packet = new Packet(Packet.UPDATE_USER, controller.getAccountClient().getUserInformation(), data);
+                                controller.getAccountClient().addRequestToServer(packet);
+                            } else {
+                                errorLable.setTextFill(Color.RED);
+                                errorLable.setText("New passwords do not match!");
+                                }
+                        } else {
+                            errorLable.setTextFill(Color.RED);
+                            errorLable.setText("You did not enter the correct old password!");
+                            }
+
+
+                        }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -176,11 +231,11 @@ public class Options implements Initializable, UpdateUserinformationListener {
                     userInformation.setId(id);
                     controller.getAccountClient().setUserInformation(userInformation);
                     controller.getOptions().updateInfo();
-                    updateError.setTextFill(Color.LIMEGREEN);
-                    updateError.setText("Information Has Been Updated!");
+                    errorLable.setTextFill(Color.LIMEGREEN);
+                    errorLable.setText("Information Has Been Updated!");
                 } else {
-                    updateError.setTextFill(Color.RED);
-                    updateError.setText("Username has already been taken!");
+                    errorLable.setTextFill(Color.RED);
+                    errorLable.setText("Username has already been taken!");
                 }
             }
         });
@@ -190,12 +245,28 @@ public class Options implements Initializable, UpdateUserinformationListener {
     public void deactivateAccount(String message) {
         Platform.runLater(()->{
             if(message.equals("SUCCESS")) {
+                DeactivateAccount.setText("Activate Account");
                 controller.getAccountClient().getUserInformation().setIsDeleted(1);
                 Stage stage = (Stage)DeactivateAccount.getScene().getWindow();
-                Parent root = controller.getSignInPane();
+                Parent root = controller.getMainMenuPain();
                 stage.setScene(root.getScene());
                 stage.show();
             }
+        });
+    }
+    @Override
+    public void ActivateAccount(String message){
+        Platform.runLater(()->{
+            if(message.equals("SUCCESS")){
+                DeactivateAccount.setText("Deactivate Account");
+                controller.getAccountClient().getUserInformation().setIsDeleted(0);
+                Stage stage = (Stage)DeactivateAccount.getScene().getWindow();
+                Parent root = controller.getMainMenuPain();
+                stage.setScene(root.getScene());
+                stage.show();
+            }
+
+
         });
     }
 }
