@@ -63,7 +63,7 @@ public class MainMenuController implements Initializable {
         stage.setScene(root.getScene());
         stage.show();
 
-        Packet packet = new Packet(Packet.GAME_HISTORY, clientController.getAccountClient().getUserInformation(), clientController.getAccountClient().getUserInformation().getId());
+        Packet packet = new Packet(Packet.GAME_HISTORY_INFO, clientController.getAccountClient().getUserInformation(), clientController.getAccountClient().getUserInformation().getId());
         clientController.getGameClient().addRequestToServer(packet);
     }
 

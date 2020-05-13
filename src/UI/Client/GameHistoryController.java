@@ -25,12 +25,12 @@ public class GameHistoryController implements Initializable, GameHistoryListener
     @FXML
     private TableView gameHistoryTable;
     @FXML
-    private TableColumn<Game, String> gameID, opponent, startTime, endTime, results;
+    private TableColumn<GameInformation, String> gameID, opponent, startTime, endTime, results;
 
     private ClientController clientController;
     private DataSource ds = DatabaseManager.getInstance();
 
-    private ObservableList<Game> data = FXCollections.observableArrayList();
+    private ObservableList<GameInformation> data = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -75,7 +75,7 @@ public class GameHistoryController implements Initializable, GameHistoryListener
     }
 
     @Override
-    public void updateHistory(List<Game> list) {
+    public void updateHistory(List<GameInformation> list) {
         Platform.runLater(() -> {
             data.clear();
             data.addAll(list);

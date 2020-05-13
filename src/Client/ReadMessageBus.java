@@ -127,14 +127,9 @@ public class ReadMessageBus implements Runnable {
                         case Packet.GAME_STATUS:
                             lobbyListener.updateStatus(response.getData().toString());
                             break;
-
-                        case Packet.GAME_HISTORY:
-                            if(response.getData() != null) {
-                                gameHistoryListener.updateHistory((List<Game>)response.getData());
-                            }
                         
                         case Packet.GAME_HISTORY_INFO:
-                            gameHistoryListener.updateGameHistory((GameInformation)response.getData());
+                            gameHistoryListener.updateHistory((List<GameInformation>)response.getData());
                             break;
                     }
                 }
