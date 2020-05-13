@@ -237,14 +237,6 @@ public class SettingsController implements Initializable, UpdateUserinformationL
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Platform.runLater(()->{
-            if(controller.getAccountClient().getUserInformation().getIsDeleted() == 1){
-                DeactivateAccount.setText("Activate Account");
-            }else{
-                DeactivateAccount.setText("Deactivate Account");
-            }
-        });
-
 
     }
 

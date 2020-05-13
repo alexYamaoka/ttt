@@ -34,6 +34,9 @@ public class MainMenuController implements Initializable {
     @FXML
     public void onPlayButtonClicked(ActionEvent event) throws IOException {
 
+        System.out.println("on play button clicked: ");
+        System.out.println("get is deleted: " + clientController.getAccountClient().getUserInformation().getIsDeleted());
+
         if (clientController.getAccountClient().getUserInformation().getIsDeleted() == 0) {
             Stage stage = null;
             Parent root = null;
