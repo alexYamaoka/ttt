@@ -210,4 +210,8 @@ public class SettingsController implements Initializable, UpdateUserinformationL
             }
         });
     }
+
+    public void MainMenu(ActionEvent event) {
+
+    }
 }
