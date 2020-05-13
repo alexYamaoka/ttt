@@ -58,7 +58,7 @@ public class SettingsController implements Initializable, UpdateUserinformationL
         password.setText(information.getPassword());
     }
 
-    //needs a method that sets the confirmChangeButton visible
+    //needs a method that sets the confirmChangeButton visible when the firstname, lastname, or username is modified
 
     @Override
     public void updateUserinformation(String message) {
