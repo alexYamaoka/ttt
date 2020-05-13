@@ -174,6 +174,21 @@ public class AccountHandler implements Runnable {
                 Packet packet1 = new Packet(Packet.GET_ONLINE_PLAYERS, userInformation, service.getPlayersOnline());
                 clientConnection.sendPacketToClient(packet1);
                 break;
+
+            case Packet.GAME_INFO_SEVER:
+                String GameInfoString = data.toString();
+                String [] str6 = GameInfoString.trim().split("\\s+");
+                System.out.println( "GameInfoServer String "+ data.toString());
+                String id = str6[0];
+                String username = str6[1];
+
+                try {
+                    ds.getPlayerGamesInfo(id,username);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                //Packet packet2 = new Packet(Packet.GAME_INFO_SEVER,userInformation,data);
+                //clientConnection.sendPacketToClient(packet2);
         }
 
         stop();

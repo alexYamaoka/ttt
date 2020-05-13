@@ -60,21 +60,24 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
 
         StringBuilder query = new StringBuilder();
         List<BaseModel> items = new ArrayList<>();
+        String sql = "SELECT game.gameID, user.username, game.StartTime, game.EndTime," + "(SELECT user.username FROM user WHERE user.id = game.Player2Id) AS Name, " +
+                "(SELECT user.username FROM user WHERE user.id = game.WinningPlayerId) AS Winner FROM game " +
+                "INNER JOIN user ON game.Player1Id = user.id WHERE game.Player1Id = ?" + " INNER JOIN user ON game.Player1Id = user.id WHERE game.Player1Id = ?" +
+                " ORDER BY game.StartTime";
 
-        query.append("SELECT game.gameID, user.username, game.StartTime, game.EndTime, " +
-                "(SELECT user.username FROM user WHERE user.id = game.Player2Id) AS Name, " +
-                "(SELECT user.username FROM user WHERE user.id = game.WinningPlayerId) AS WinnerFROM game " +
-                "INNER JOIN user ON game.Player1Id = user.id WHERE game.Player1Id =" + PlayerId
-                + " AND user.username="+username+ " ORDER BY game.StartTime ");
 
-        System.out.println("Print out " + query.toString());
-        GameStatement = myConn.prepareStatement(query.toString());
+        System.out.println("Print out " + sql);
+        GameStatement = myConn.prepareStatement(sql);
+        //GameStatement = myConn.prepareStatement(query.toString());
+        GameStatement.setString(1,PlayerId);
+        GameStatement.setString(2,username);
         ResultSet rs;
-        rs = GameStatement.executeQuery(query.toString());
-        //List<String> list = new ArrayList();
-
-        /*
+        //rs = GameStatement.executeQuery(query.toString());
+        rs = GameStatement.executeQuery(sql);
+        List<String> list = new ArrayList();
         while (rs.next()) {
+
+            /*
             GameInformation gameInformation = new GameInformation();
             gameInformation.setId(rs.getString(1));
             gameInformation.setStartTime(rs.getTimestamp(2));
@@ -93,9 +96,13 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
            list.add(player2Id);
            list.add(StartingPlayer);
            list.add(Winner);
+
+             */
         }
 
-         */
+
+
+
         return null;
     }
 

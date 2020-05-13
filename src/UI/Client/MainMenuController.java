@@ -60,6 +60,8 @@ public class MainMenuController implements Initializable {
        }
        stage.setScene(root.getScene());
        stage.show();
+
+        clientController.getGameHistoryController().GetGameinfo();
     }
 
 
