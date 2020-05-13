@@ -148,6 +148,10 @@ public class GameHandler implements Runnable {
                     e.printStackTrace();
                 }
                 break;
+
+            case Packet.SIGN_OUT:
+                service.removeConnection(clientConnection);
+                break;
         }
         stop();
     }

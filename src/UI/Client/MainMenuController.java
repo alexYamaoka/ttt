@@ -82,8 +82,11 @@ public class MainMenuController implements Initializable {
 
     @FXML
     public void onExitButtonClicked(ActionEvent event) {
-        System.out.println("Exit Button Clicked!");
-        //((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+        Packet packet = new Packet(Packet.SIGN_OUT, clientController.getAccountClient().getUserInformation(), "SIGN-OUT");
+        clientController.getAccountClient().addRequestToServer(packet);
+        clientController.getGameClient().addRequestToServer(packet);
+        Stage stage = (Stage) exitButton.getScene().getWindow();
+        stage.close();
     }
 
 
