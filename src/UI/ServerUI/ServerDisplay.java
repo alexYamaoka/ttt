@@ -38,10 +38,11 @@ public class ServerDisplay implements Initializable, ServiceListener {
     @FXML
     private TableView<UserInformation> activePlayers, accounts;
     @FXML
+    private TableColumn<UserInformation, String> username_AP, playerId_AP, username_A, password_A, firstName_A, lastName_A, status_A;
+    @FXML
     private ListView allAccounts = new ListView();
+
     private DataSource ds = DatabaseManager.getInstance();
-    private TableColumn<UserInformation, String> username_AP, status_AP, username_A, password_A, firstName_A, lastName_A, status_A;
-    private Main main;
     private BlockingQueue<Packet> packetsReceived = new LinkedBlockingQueue<>();
 
 
@@ -54,7 +55,7 @@ public class ServerDisplay implements Initializable, ServiceListener {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializeAGTable();
-//        initializeAPTable();
+        initializeAPTable();
 //        initializeGTable();
 //        initializeATable();
     }
@@ -66,13 +67,13 @@ public class ServerDisplay implements Initializable, ServiceListener {
         player2_AG.setCellValueFactory(new PropertyValueFactory<>("player2Username"));
         startTime_AG.setCellValueFactory(new PropertyValueFactory<>("startTime"));
 
-        //editableAGCols();
+//        editableAGCols();
     }
 
     private void initializeAPTable() {
         activePlayers.setItems(onlinePlayersList);
         username_AP.setCellValueFactory(new PropertyValueFactory<>("username"));
-        status_AP.setCellValueFactory(new PropertyValueFactory<>("status"));
+        playerId_AP.setCellValueFactory(new PropertyValueFactory<>("id"));
 
         //editableAPCols();
     }
@@ -118,6 +119,7 @@ public class ServerDisplay implements Initializable, ServiceListener {
 //            e.getTableView().getItems().get(e.getTablePosition().getRow()).setStartTime(e.getNewValue());
 //        });
 //    }
+
 //    private void editableAPCols(){
 //        username_AP.setCellFactory(TextFieldTableCell.forTableColumn());
 //        username_AP.setOnEditCommit(e -> {
@@ -286,11 +288,6 @@ public class ServerDisplay implements Initializable, ServiceListener {
             }
         });
 
-    }
-
-
-    public void setMain(Main main) {
-        this.main = main;
     }
 
 //    @Override

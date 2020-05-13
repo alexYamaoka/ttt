@@ -31,7 +31,7 @@
                   <TableView fx:id="activePlayers" editable="true" prefHeight="717.0" prefWidth="952.0">
                      <columns>
                         <TableColumn fx:id="username_AP" prefWidth="476.0" text="Username" />
-                        <TableColumn fx:id="status_AP" prefWidth="476.0" text="Status" />
+                        <TableColumn fx:id="playerId_AP" prefWidth="476.0" text="ID" />
                      </columns>
                   </TableView>
                </children>
