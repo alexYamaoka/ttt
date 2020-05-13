@@ -1,5 +1,6 @@
 package UI.ServerUI;
 
+import AccountService.AccountService;
 import DataBase.sql.DataSource;
 import DataBase.sql.DatabaseManager;
 import Models.Game;
@@ -23,6 +24,7 @@ import javafx.scene.input.MouseEvent;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -51,6 +53,7 @@ public class ServerDisplay implements Initializable, ServiceListener {
     private ObservableList<UserInformation> onlinePlayersList = FXCollections.observableArrayList();
     private ObservableList<UserInformation> allPlayersList = FXCollections.observableArrayList();
 
+    private ServiceListener serviceListener = AccountService.getInstance();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -287,6 +290,11 @@ public class ServerDisplay implements Initializable, ServiceListener {
             }
         });
 
+    }
+
+    public void notifyAccountsServer(Packet packet)
+    {
+        serviceListener.onDataChanged(packet);
     }
 
 //    @Override
