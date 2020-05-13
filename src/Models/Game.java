@@ -8,10 +8,12 @@ import Server.ClientConnection;
 import Shared.Packet;
 import Shared.UserInformation;
 import app.Server;
+import javafx.util.converter.TimeStringConverter;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,8 @@ public class Game extends BaseModel implements Serializable {
     private String startingPlayerId;
     private String winningPlayerId;
     private String nextMoveId;
+    private String result = "not available";
+    private List<String> spectators = new ArrayList<>();
 
     public Game() {
     }
@@ -44,7 +48,7 @@ public class Game extends BaseModel implements Serializable {
         this.id = gameId.getNewId();
         this.player1 = player1;
         this.player1Info = player1.getInformation();
-        this.player1Username = player1Info.getUserName();
+        this.player1Username = player1Info.getUsername();
         tttBoard = new TTTBoard();
         this.gameStatus = "WAITING FOR ANOTHER PLAYER";
         try {
@@ -67,13 +71,38 @@ public class Game extends BaseModel implements Serializable {
     public void join(ClientConnection player2) {
         this.player2 = player2;
         player2Info = player2.getInformation();
-        player2Username = player2Info.getUserName();
+        player2Username = player2Info.getUsername();
         try {
             ds.addGameViewers(this, player2Info);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
+
+    public void setResult(String result)
+    {
+        this.result = result;
+    }
+
+    public String getResult()
+    {
+        return result;
+    }
+
+
+    private void addSpectators(String username)
+    {
+        spectators.add(username);
+    }
+
+    public List<String> getSpectators()
+    {
+        return spectators;
+    }
+
+
+
 
     public String getWinningPlayerId() {
         return winningPlayerId;
@@ -94,6 +123,7 @@ public class Game extends BaseModel implements Serializable {
         GameObservers.add(client);
         try {
             ds.addGameViewers(this, client.getInformation());
+            addSpectators(client.getInformation().getUsername());
         } catch (SQLException e) {
             e.printStackTrace();
         }
