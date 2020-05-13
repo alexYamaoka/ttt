@@ -29,10 +29,6 @@ import javafx.util.Callback;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.HashSet;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -87,7 +83,6 @@ public class ServerDisplay implements Initializable, ServiceListener {
     }
 
     private void initializeGTable() {
-        //ds.getAllGamesInfo()
         games.setItems(allGamesList);
         gameID_G.setCellValueFactory(new PropertyValueFactory<>("id"));
         player1_G.setCellValueFactory(new PropertyValueFactory<>("player1Username"));

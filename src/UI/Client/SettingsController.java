@@ -247,7 +247,6 @@ public class SettingsController implements Initializable, UpdateUserinformationL
                 }
             }
         });
-
     }
 
     @Override
