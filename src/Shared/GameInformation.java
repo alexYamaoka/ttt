@@ -12,6 +12,7 @@ public class GameInformation implements Serializable {
     private Timestamp endTime;
     private String startingPlayerId;
     private String winningPlayerId;
+    private String opponent;
 
     public GameInformation() {
     }
@@ -71,5 +72,9 @@ public class GameInformation implements Serializable {
 
     public void setWinningPlayerId(String winningPlayerId) {
         this.winningPlayerId = winningPlayerId;
+    }
+
+    public String getOpponent() {
+        return opponent;
     }
 }

@@ -15,11 +15,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+import java.lang.reflect.GenericArrayType;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,10 +48,10 @@ public class GameHistoryController implements Initializable, GameHistoryListener
     private void initializeTable() {
         gameHistoryTable.setItems(data);
         gameID.setCellValueFactory(new PropertyValueFactory<>("id"));
-        opponent.setCellValueFactory(new PropertyValueFactory<>("opponent"));
+        opponent.setCellValueFactory(new PropertyValueFactory<>("player2Username"));
         startTime.setCellValueFactory(new PropertyValueFactory<>("startTime"));
         endTime.setCellValueFactory(new PropertyValueFactory<>("endTime"));
-        results.setCellValueFactory(new PropertyValueFactory<>("results"));
+        results.setCellValueFactory(new PropertyValueFactory<>("winningPlayerId"));
     }
 
     public void GetGameinfo() {
