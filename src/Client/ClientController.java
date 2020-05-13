@@ -3,10 +3,13 @@ package Client;
 import Shared.Packet;
 import Shared.UserInformation;
 import UI.Client.*;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.util.ArrayDeque;
@@ -38,6 +41,15 @@ public class ClientController {
 
     public ClientController(Stage stage) {
         this.stage = stage;
+        stage.setOnCloseRequest(windowEvent -> {
+            Packet packet = new Packet(Packet.SIGN_OUT, accountClient.getUserInformation(), "SIGN-OUT");
+            accountClient.addRequestToServer(packet);
+            gameClient.addRequestToServer(packet);
+            this.stop();
+            stage.close();
+            Platform.exit();
+            System.exit(0);
+        });
         accountClient = new Client("localhost", 8000, new UserInformation("NA", "NA", "Anonymous", "NA", "NA"), this);
         initialize();
         setUpClientToUI();
@@ -98,6 +110,17 @@ public class ClientController {
 
     public void run() {
         accountClient.execute();
+    }
+
+    public void stop() {
+        System.out.println("Stopping client controller");
+        // stop read message bus
+        readMessageBus.stop();
+        // stop account client
+        accountClient.stop();
+        //stop game client
+        gameClient.stop();
+
     }
 
     public Client getAccountClient() {

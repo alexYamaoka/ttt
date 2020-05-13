@@ -4,6 +4,7 @@ import Client.Client;
 import Client.ClientController;
 import Shared.Packet;
 import Shared.UserInformation;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -85,8 +86,11 @@ public class MainMenuController implements Initializable {
         Packet packet = new Packet(Packet.SIGN_OUT, clientController.getAccountClient().getUserInformation(), "SIGN-OUT");
         clientController.getAccountClient().addRequestToServer(packet);
         clientController.getGameClient().addRequestToServer(packet);
+        clientController.stop();
         Stage stage = (Stage) exitButton.getScene().getWindow();
         stage.close();
+        Platform.exit();
+        System.exit(0);
     }
 
 

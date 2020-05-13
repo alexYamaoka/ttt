@@ -36,6 +36,7 @@ public class ReadMessageBus implements Runnable {
     }
 
     public void stop() {
+        System.out.println("Stopping ReadMessageBus");
         running.set(false);
     }
 
