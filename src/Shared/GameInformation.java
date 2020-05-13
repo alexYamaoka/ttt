@@ -2,6 +2,8 @@ package Shared;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameInformation implements Serializable {
 
@@ -12,7 +14,7 @@ public class GameInformation implements Serializable {
     private Timestamp endTime;
     private String startingPlayerId;
     private String winningPlayerId;
-    private String opponent;
+    private List<String> spectators = new ArrayList<>();
 
     public GameInformation() {
     }
@@ -74,7 +76,11 @@ public class GameInformation implements Serializable {
         this.winningPlayerId = winningPlayerId;
     }
 
-    public String getOpponent() {
-        return opponent;
+    public List<String> getSpectators() {
+        return spectators;
+    }
+
+    public void setSpectators(List<String> spectators) {
+        this.spectators.addAll(spectators);
     }
 }

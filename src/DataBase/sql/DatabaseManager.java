@@ -56,6 +56,54 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
     }
 
 
+    public List<Move> Moves (String gameId) throws SQLException {
+        String sql =
+                "SELECT * FROM moves WHERE GameId = '"+gameId+"'";
+
+        System.out.println("Print out " + sql);
+        GameStatement = myConn.prepareStatement(sql);
+        ResultSet rs;
+        rs = GameStatement.executeQuery(sql);
+
+        List<Move> moves = new ArrayList<>();
+        while (rs.next()) {
+
+            Move m = new Move();
+            m.setId(rs.getString("id"));
+            m.setGameId(rs.getString("GameId"));
+            m.setPlayerId("PlayerId");
+            m.setRow(rs.getInt("X_coord"));
+            m.setColumn(rs.getInt("Y_Coord"));
+            m.setMoveTime(rs.getTimestamp("Time"));
+
+            moves.add(m);
+        }
+
+        return moves;
+
+    }
+
+    public List<UserInformation> AllUserInfo() throws SQLException {
+
+        String sql = "SELECT * FROM user";
+        UserStatement = myConn.prepareStatement(sql);
+        ResultSet rs = UserStatement.executeQuery(sql);
+        List<UserInformation> items = new ArrayList<>();
+        while(rs.next()){
+            UserInformation u = new UserInformation();
+            u.setId(rs.getString("id"));
+            u.setUsername(rs.getString("username"));
+            u.setPassword(rs.getString("password"));
+            u.setFirstName(rs.getString("FirstName"));
+            u.setLastName(rs.getString("LastName"));
+            u.setIsDeleted(rs.getInt("isDeleted"));
+            items.add(u);
+        }
+
+
+        return items;
+    }
+
 
     public List<GameInformation> getAllGamesInfo() throws SQLException{
 
@@ -71,9 +119,9 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
             gameInformation.setPlayer1Username(rs.getString("Player1Id"));
             gameInformation.setPlayer2Username(rs.getString("Player2Id"));
             gameInformation.setStartTime(rs.getTimestamp("StartTime"));
+            allGameInfo.add(gameInformation);
         }
-
-
+        
         return allGameInfo;
     }
 
@@ -138,6 +186,8 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         System.out.println(String.format("Rows affected %d",row));
         return row > 0;
     }
+
+
 
     @Override
     public Boolean update(String UpdateFirstName,String UpdateLastName,String UpdateUserName,String Id,String UpdatePassword) throws SQLException {
@@ -214,6 +264,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         return row != 0;
     }
 
+
     @Override
     public boolean insertGame(BaseModel obj) throws SQLException {
         StringBuilder query = new StringBuilder();
@@ -232,7 +283,6 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         GameStatement.setString(5, game.getPlayer2Info().getId());
         GameStatement.setString(6, game.getWinningPlayerId());
         GameStatement.setString(7, game.getWinningPlayerId());
-
         System.out.println(GameStatement);
         row = GameStatement.executeUpdate();
         System.out.println("Row = " + row);

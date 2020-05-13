@@ -122,6 +122,7 @@ public class AccountService implements Service, Runnable, ServiceListener{
     @Override
     public void onDataChanged(Packet packet)
     {
+        // edit account directly
         System.out.println("Packet on data change");
         System.out.println("Packet: " + packet.getRequest());
     }
