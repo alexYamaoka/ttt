@@ -11,17 +11,20 @@ import Shared.UserInformation;
 import ObserverPatterns.ServiceListener;
 import Shared.Packet;
 import javafx.application.Platform;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-
+import javafx.util.Callback;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -36,6 +39,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class ServerDisplay implements Initializable, ServiceListener {
 
+    public static GameService instance = null;
     @FXML
     private TableView<Game> activeGames;
     @FXML
@@ -47,22 +51,17 @@ public class ServerDisplay implements Initializable, ServiceListener {
     @FXML
     private TableView<UserInformation> activePlayers, accounts;
     @FXML
-    private TableColumn<UserInformation, String> username_AP, playerId_AP, username_A, password_A, firstName_A, lastName_A, deleted_A;
+    private TableColumn<UserInformation, String> username_AP, playerId_AP, username_A, password_A, firstName_A, lastName_A;
+    @FXML
+    private TableColumn<UserInformation, Integer> deleted_A;
 
     private ClientController clientController;
-
     private DatabaseManager ds = DatabaseManager.getInstance();
-
     private BlockingQueue<Packet> packetsReceived = new LinkedBlockingQueue<>();
-
-
     private ObservableList<Game> activeGamesList = FXCollections.observableArrayList();
     private ObservableList<GameInformation> allGamesList = FXCollections.observableArrayList();
     private ObservableList<UserInformation> onlinePlayersList = FXCollections.observableArrayList();
     private ObservableList<UserInformation> allPlayersList = FXCollections.observableArrayList();
-    public static GameService instance = null;
-
-
     private ServiceListener serviceListener = AccountService.getInstance();
 
     @Override
@@ -121,39 +120,20 @@ public class ServerDisplay implements Initializable, ServiceListener {
 
     private void editableACols() {
         accounts.setEditable(true);
-        // allows the individual cells to be editable
-        accounts.getSelectionModel().cellSelectionEnabledProperty().set(true);
-        // when character or numbers pressed it will start edit in editable fields
-        accounts.setOnKeyPressed(event -> {
-            if(event.getCode().isLetterKey() || event.getCode().isDigitKey()) {
-                editFocusedCell();
-            } else if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.TAB) {
-                accounts.getSelectionModel().selectNext();
-                event.consume();
-            }
-        });
     }
 
-    private void editFocusedCell() {
-        final TablePosition<UserInformation, ?> focusedCell = accounts.focusModelProperty().get().focusedCellProperty().get();
-        accounts.edit(focusedCell.getRow(), focusedCell.getTableColumn());
-    }
-  
+
     @FXML
-    public void onOnlinePlayerClicked(MouseEvent event)
-    {
-        if (event.getClickCount() == 2)
-        {
+    public void onOnlinePlayerClicked(MouseEvent event) {
+        if (event.getClickCount() == 2) {
             String username = activePlayers.getSelectionModel().getSelectedItem().toString();
             System.out.println("username selected: " + username);
         }
     }
 
     @FXML
-    public void onAccountClicked(MouseEvent event)
-    {
-        if (event.getClickCount() == 2)
-        {
+    public void onAccountClicked(MouseEvent event) {
+        if (event.getClickCount() == 2) {
             String username = activePlayers.getSelectionModel().getSelectedItem().toString();
             System.out.println("username selected: " + username);
 
@@ -161,20 +141,16 @@ public class ServerDisplay implements Initializable, ServiceListener {
     }
 
     @FXML
-    public void onActiveGameClicked(MouseEvent event)
-    {
-        if (event.getClickCount() == 2)
-        {
+    public void onActiveGameClicked(MouseEvent event) {
+        if (event.getClickCount() == 2) {
             String game = activeGames.getSelectionModel().getSelectedItem().toString();
             System.out.println("game selected: " + game);
         }
     }
 
     @FXML
-    public void onAllGameClicked(MouseEvent event)
-    {
-        if (event.getClickCount() == 2)
-        {
+    public void onAllGameClicked(MouseEvent event) {
+        if (event.getClickCount() == 2) {
             String game = games.getSelectionModel().getSelectedItem().toString();
             System.out.println("game selected: " + game);
         }
@@ -243,9 +219,8 @@ public class ServerDisplay implements Initializable, ServiceListener {
             }
         });
     }
-  
-    public void notifyAccountsServer(Packet packet)
-    {
+
+    public void notifyAccountsServer(Packet packet) {
         serviceListener.onDataChanged(packet);
     }
 }
