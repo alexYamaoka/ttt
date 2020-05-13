@@ -171,8 +171,10 @@ public class SignInController implements Initializable, SignInResultListener {
                     String username = str[3];
                     String email = str[4];
                     String password = str[5];
+                    String isDeleted = str[6];
                     UserInformation userInformation = new UserInformation(firstName, lastName, username, email, password);
                     userInformation.setId(id);
+                    userInformation.setIsDeleted(Integer.parseInt(isDeleted));
                     controller.getAccountClient().setUserInformation(userInformation);
                     Stage stage = (Stage) btn_LogIn.getScene().getWindow();
                     Parent root = controller.getMainMenuPain();
@@ -180,6 +182,14 @@ public class SignInController implements Initializable, SignInResultListener {
                     stage.setScene(scene);
                     stage.show();
                     controller.getOptions().updateInfo();
+
+
+
+                    if(userInformation.getIsDeleted() == 1){
+                        controller.getOptions().DeactivateAccount.setText("Activate Account");
+                    }else{
+                        controller.getOptions().DeactivateAccount.setText("Deactivate Account");
+                    }
 
                     Client client = new Client("localhost", 8080, userInformation, controller);
                     controller.setGameClient(client);
