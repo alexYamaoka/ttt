@@ -232,61 +232,8 @@ public class SettingsController implements Initializable, UpdateUserinformationL
             errorLable.setTextFill(Color.RED);
             errorLable.setText("You did not enter the correct old password!");
         }
-
     }
-            if(!this.firstName.getText().equals(this.firstName.getPromptText())){
-                    firstName = this.firstName.getText();
-                }else{
-                    firstName = this.firstName.getPromptText();
-                }
-                    user.add(firstName);
 
-                if(!this.lastName.getText().equals(this.lastName.getPromptText())){
-                        lastName = this.lastName.getText();
-                    }else{
-                        lastName = this.lastName.getPromptText();
-                    }
-                        user.add(lastName);
-
-                    if(!this.oldPassword.getText().equals(this.oldPassword.getPromptText())){
-                            oldPassword = this.oldPassword.getText();
-                        }else{
-                            oldPassword = this.oldPassword.getPromptText();
-                        }
-                            user.add(oldPassword);
-
-                        if(!this.newPassword.getText().equals(this.newPassword.getPromptText())){
-                                newPassword = this.newPassword.getText();
-                        }else{
-                                newPassword = this.newPassword.getPromptText();
-                        }
-                                user.add(newPassword);
-                            if(!this.confirmPassword.getText().equals(this.confirmPassword.getPromptText())){
-                                    confirmPassword = this.confirmPassword.getText();
-                            }else{
-                                    confirmPassword = this.confirmPassword.getPromptText();
-                            }
-                                    user.add(confirmPassword);
-
-*/
-                        String data = String.join(" ", user);
-                        System.out.println(user);
-                        if (oldPassword.equalsIgnoreCase(controller.getAccountClient().getUserInformation().getPassword())) {
-                            if (newPassword.equals(confirmPassword)) {
-
-                                Packet packet = new Packet(Packet.UPDATE_USER, controller.getAccountClient().getUserInformation(), data);
-                                controller.getAccountClient().addRequestToServer(packet);
-                            } else {
-                                errorLable.setTextFill(Color.RED);
-                                errorLable.setText("New passwords do not match!");
-                                }
-                        } else {
-                            errorLable.setTextFill(Color.RED);
-                            errorLable.setText("You did not enter the correct old password!");
-                            }
-
-
-                        }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -318,7 +265,7 @@ public class SettingsController implements Initializable, UpdateUserinformationL
                     UserInformation userInformation = new UserInformation(firstName, lastName, username, email, password);
                     userInformation.setId(id);
                     controller.getAccountClient().setUserInformation(userInformation);
-                    controller.getOptions().updateInfo();
+                    updateInfo();
                     errorLable.setTextFill(Color.LIMEGREEN);
                     errorLable.setText("Information Has Been Updated!");
                 } else {
