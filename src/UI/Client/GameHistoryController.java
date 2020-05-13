@@ -4,6 +4,8 @@ import Client.ClientController;
 import DataBase.sql.DataSource;
 import DataBase.sql.DatabaseManager;
 import Models.Game;
+import ObserverPatterns.GameHistoryListener;
+import Shared.GameInformation;
 import Shared.Packet;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -23,7 +25,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 
-public class GameHistoryController implements Initializable {
+public class GameHistoryController implements Initializable, GameHistoryListener {
     @FXML
     private TableView gameHistoryTable;
     @FXML
@@ -91,5 +93,10 @@ public class GameHistoryController implements Initializable {
 
     public void setClientController(ClientController clientController) {
         this.clientController = clientController;
+    }
+
+    @Override
+    public void updateGameHistory(GameInformation gameInformation) {
+
     }
 }
