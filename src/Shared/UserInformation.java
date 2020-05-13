@@ -58,6 +58,15 @@ public class UserInformation extends BaseModel implements Serializable {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof UserInformation) {
+            UserInformation information = (UserInformation) obj;
+            return this.getId().equals(information.getId());
+        }
+        return false;
+    }
+
+    @Override
     public int getIsDeleted() {
         return isDeleted;
     }

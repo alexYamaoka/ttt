@@ -261,4 +261,12 @@ public class Game extends BaseModel implements Serializable {
     public TTTBoard getTttBoard() {
         return tttBoard;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Game) {
+            return this.getId().equals(((Game) obj).getId());
+        }
+        return false;
+    }
 }
