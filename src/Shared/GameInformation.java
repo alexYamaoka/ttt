@@ -1,8 +1,9 @@
 package Shared;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class GameInformation {
+public class GameInformation implements Serializable {
 
     private String player1Username;
     private String player2Username;
