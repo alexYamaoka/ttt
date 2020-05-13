@@ -99,7 +99,7 @@ public class GameBoardController implements Initializable, GameListener {
             clientController.getGameClient().addRequestToServer(packet);
 
             stage = (Stage) quit.getScene().getWindow();
-            root = clientController.getLobbyPane();
+            root = clientController.getMainMenuPain();
             stage.setScene(root.getScene());
             stage.show();
         }
