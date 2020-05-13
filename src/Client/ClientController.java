@@ -102,8 +102,12 @@ public class ClientController {
     public void run() {
         stage.setOnCloseRequest(windowEvent -> {
             Packet packet = new Packet(Packet.SIGN_OUT, accountClient.getUserInformation(), "SIGN-OUT");
-            accountClient.addRequestToServer(packet);
-            gameClient.addRequestToServer(packet);
+            if(accountClient != null) {
+                accountClient.addRequestToServer(packet);
+            }
+            if(gameClient != null) {
+                gameClient.addRequestToServer(packet);
+            }
             this.stop();
             stage.close();
             Platform.exit();
