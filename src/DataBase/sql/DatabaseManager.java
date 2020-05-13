@@ -56,16 +56,12 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
     }
 
 
-    public List<BaseModel> getPlayerGamesInfo(String PlayerId,String username) throws SQLException {
-
-        StringBuilder query = new StringBuilder();
-        List<BaseModel> items = new ArrayList<>();
+    public List<GameInformation> getPlayerGamesInfo(String PlayerId,String username) throws SQLException {
+        
         String sql = "SELECT game.gameID, user.username, game.StartTime, game.EndTime," + "(SELECT user.username FROM user WHERE user.id = game.Player2Id) AS Name, " +
                 "(SELECT user.username FROM user WHERE user.id = game.WinningPlayerId) AS Winner FROM game " +
                 "INNER JOIN user ON game.Player1Id = user.id WHERE game.Player1Id = ?" + " INNER JOIN user ON game.Player1Id = user.id WHERE game.Player1Id = ?" +
                 " ORDER BY game.StartTime";
-
-
         System.out.println("Print out " + sql);
         GameStatement = myConn.prepareStatement(sql);
         //GameStatement = myConn.prepareStatement(query.toString());
@@ -74,36 +70,20 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         ResultSet rs;
         //rs = GameStatement.executeQuery(query.toString());
         rs = GameStatement.executeQuery(sql);
-        List<String> list = new ArrayList();
+        List<GameInformation> gameList = new ArrayList<>();
         while (rs.next()) {
-
-            /*
             GameInformation gameInformation = new GameInformation();
-            gameInformation.setId(rs.getString(1));
-            gameInformation.setStartTime(rs.getTimestamp(2));
-            gameInformation.setEndTime(rs.getTimestamp(3));
+            gameInformation.setId(rs.getString("game.gameID"));
+            gameInformation.setPlayer1Username(rs.getString("user.username"));
+            gameInformation.setStartTime(rs.getTimestamp("game.StartTime"));
+            gameInformation.setEndTime(rs.getTimestamp("game.EndTime"));
+            gameInformation.setPlayer2Username(rs.getString("Name"));
+            gameInformation.setWinningPlayerId(rs.getString("Winner"));
+            gameList.add(gameInformation);
 
-            gameInformation.setPlayer1Username();
-           String player1Id = rs.getString(4);
-           String player2Id = rs.getString(5);
-           String StartingPlayer = rs.getString(6);
-           String Winner = rs.getString(7);
-
-           list.add(gameID);
-           list.add(startTime.toString());
-           list.add(endTime.toString());
-           list.add(player1Id);
-           list.add(player2Id);
-           list.add(StartingPlayer);
-           list.add(Winner);
-
-             */
         }
 
-
-
-
-        return null;
+        return gameList;
     }
 
 
