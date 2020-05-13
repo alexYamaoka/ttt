@@ -19,6 +19,8 @@ public interface DataSource {
 
     boolean insert(BaseModel obj) throws SQLException;
 
+    List<GameInformation> getAllGamesInfo() throws SQLException;
+
     boolean delete(String Id) throws SQLException;
     boolean Activate(String Id) throws SQLException;
     List<GameInformation> getPlayerGamesInfo(String PlayerId,String username) throws SQLException;

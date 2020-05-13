@@ -1,28 +1,29 @@
 package UI.ServerUI;
 
+import Client.ClientController;
 import DataBase.sql.DataSource;
 import DataBase.sql.DatabaseManager;
+import GameService.GameService;
 import Models.Game;
+import Shared.GameInformation;
 import Shared.UserInformation;
 import ObserverPatterns.ServiceListener;
 import Shared.Packet;
-import Shared.UserInformation;
-import app.Main;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -40,7 +41,10 @@ public class ServerDisplay implements Initializable, ServiceListener {
     @FXML
     private TableColumn<UserInformation, String> username_AP, playerId_AP, username_A, password_A, firstName_A, lastName_A, deleted_A;
 
+    private ClientController clientController;
+
     private DataSource ds = DatabaseManager.getInstance();
+
     private BlockingQueue<Packet> packetsReceived = new LinkedBlockingQueue<>();
 
 
@@ -48,6 +52,8 @@ public class ServerDisplay implements Initializable, ServiceListener {
     private ObservableList<Game> allGamesList = FXCollections.observableArrayList();
     private ObservableList<UserInformation> onlinePlayersList = FXCollections.observableArrayList();
     private ObservableList<UserInformation> allPlayersList = FXCollections.observableArrayList();
+    public static GameService instance = null;
+
 
 
     @Override
@@ -115,7 +121,7 @@ public class ServerDisplay implements Initializable, ServiceListener {
             e.getTableView().getItems().get(e.getTablePosition().getRow()).setIsDeleted(Integer.parseInt(e.getNewValue()));
         });
     }
-
+  
     @FXML
     public void onOnlinePlayerClicked(MouseEvent event)
     {
@@ -160,7 +166,6 @@ public class ServerDisplay implements Initializable, ServiceListener {
     public void display(ActionEvent event) {
 
     }
-
 
     @Override
     public void onDataChanged(Packet packet) {
