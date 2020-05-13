@@ -19,6 +19,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 
 
@@ -105,27 +106,24 @@ public class ServerDisplay implements Initializable, ServiceListener {
         editableACols();
     }
 
-    private void editableACols(){
-        username_AP.setCellFactory(TextFieldTableCell.forTableColumn());
-        username_AP.setOnEditCommit(e -> {
-            e.getTableView().getItems().get(e.getTablePosition().getRow()).setUsername(e.getNewValue());
+    private void editableACols() {
+        accounts.setEditable(true);
+        // allows the individual cells to be editable
+        accounts.getSelectionModel().cellSelectionEnabledProperty().set(true);
+        // when character or numbers pressed it will start edit in editable fields
+        accounts.setOnKeyPressed(event -> {
+            if(event.getCode().isLetterKey() || event.getCode().isDigitKey()) {
+                editFocusedCell();
+            } else if (event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.TAB) {
+                accounts.getSelectionModel().selectNext();
+                event.consume();
+            }
         });
-        password_A.setCellFactory(TextFieldTableCell.forTableColumn());
-        password_A.setOnEditCommit(e -> {
-            e.getTableView().getItems().get(e.getTablePosition().getRow()).setPassword(e.getNewValue());
-        });
-        firstName_A.setCellFactory(TextFieldTableCell.forTableColumn());
-        firstName_A.setOnEditCommit(e -> {
-            e.getTableView().getItems().get(e.getTablePosition().getRow()).setFirstName(e.getNewValue());
-        });
-        lastName_A.setCellFactory(TextFieldTableCell.forTableColumn());
-        lastName_A.setOnEditCommit(e -> {
-            e.getTableView().getItems().get(e.getTablePosition().getRow()).setLastName(e.getNewValue());
-        });
-        deleted_A.setCellFactory(TextFieldTableCell.forTableColumn());
-        deleted_A.setOnEditCommit(e -> {
-            e.getTableView().getItems().get(e.getTablePosition().getRow()).setIsDeleted(Integer.parseInt(e.getNewValue()));
-        });
+    }
+
+    private void editFocusedCell() {
+        final TablePosition<UserInformation, ?> focusedCell = accounts.focusModelProperty().get().focusedCellProperty().get();
+        accounts.edit(focusedCell.getRow(), focusedCell.getTableColumn());
     }
   
     @FXML
