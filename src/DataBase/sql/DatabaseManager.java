@@ -5,9 +5,11 @@ import Models.Game;
 import Models.BaseModel;
 import Models.Move;
 import Server.ClientConnection;
+import Shared.GameInformation;
 import Shared.UserInformation;
 import com.mysql.cj.x.protobuf.MysqlxCrud;
 
+import java.io.Serializable;
 import java.sql.*;
 import java.util.*;
 
@@ -54,6 +56,36 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
     }
 
 
+    public List<GameInformation> getPlayerGamesInfo(String PlayerId,String username) throws SQLException {
+
+        String sql =
+                "SELECT game.gameID, user.username, game.StartTime, game.EndTime," + "(SELECT user.username FROM user WHERE user.id = game.Player2Id) AS Name, "
+                +" (SELECT user.username FROM user WHERE user.id = game.WinningPlayerId ) AS Winner "
+                +"FROM game "
+                +"INNER JOIN user ON game.Player1Id = user.id "
+                +"WHERE game.Player1Id = '" + PlayerId + "'" + " AND user.username = '" + username + "'" + " ORDER BY game.StartTime";
+
+        System.out.println("Print out " + sql);
+        GameStatement = myConn.prepareStatement(sql);
+        ResultSet rs;
+        //rs = GameStatement.executeQuery(query.toString());
+        System.out.println(GameStatement.toString());
+        rs = GameStatement.executeQuery(sql);
+
+        List<GameInformation> gameList = new ArrayList<>();
+        while (rs.next()) {
+            GameInformation gameInformation = new GameInformation();
+            gameInformation.setId(rs.getString("game.gameID"));
+            gameInformation.setPlayer1Username(rs.getString("user.username"));
+            gameInformation.setStartTime(rs.getTimestamp("game.StartTime"));
+            gameInformation.setEndTime(rs.getTimestamp("game.EndTime"));
+            gameInformation.setPlayer2Username(rs.getString("Name"));
+            gameInformation.setWinningPlayerId(rs.getString("Winner"));
+            gameList.add(gameInformation);
+        }
+
+        return gameList;
+    }
 
 
     @Override
@@ -127,7 +159,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         while (rs.next()) {
             UserInformation u = new UserInformation();
             u.setId(rs.getString(1));
-            u.setUserName(rs.getString(2));
+            u.setUsername(rs.getString(2));
             u.setFirstName(rs.getString(3));
             u.setLastName(rs.getString(4));
             items.add(u);
@@ -222,14 +254,14 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         if (obj instanceof UserInformation) {
             UserInformation userObj = (UserInformation) obj;
             UUIDGenerator newID = new UUIDGenerator();
-            System.out.println("Name " + userObj.getUserName());
+            System.out.println("Name " + userObj.getUsername());
             query.append("user ");
             query.append("(id, username, password, FirstName, LastName, isDeleted)");
             query.append(" values (?,?,?,?,?,?)");
             UserStatement = myConn.prepareStatement(query.toString());
             System.out.println(query.toString());
             UserStatement.setString(1, newID.getNewId());
-            UserStatement.setString(2, userObj.getUserName());
+            UserStatement.setString(2, userObj.getUsername());
             UserStatement.setString(3, userObj.getPassword());
             UserStatement.setString(4, userObj.getFirstName());
             UserStatement.setString(5, userObj.getLastName());
@@ -268,7 +300,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
             if (obj.getCanonicalName().equalsIgnoreCase("Shared.UserInformation")) {
                 UserInformation u = new UserInformation();
                 u.setId(rs.getString(1));
-                u.setUserName(rs.getString(2));
+                u.setUsername(rs.getString(2));
                 u.setPassword(rs.getString(3));
                 u.setFirstName(rs.getString(4));
                 u.setLastName(rs.getString(5));

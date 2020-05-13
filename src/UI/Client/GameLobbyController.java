@@ -227,7 +227,7 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
                             Game game = getTableView().getItems().get(getIndex());
                             String player1 = game.getPlayer1Username();
                             String player2 = game.getPlayer2Username();
-                            String clientUsername = clientController.getAccountClient().getUserInformation().getUserName();
+                            String clientUsername = clientController.getAccountClient().getUserInformation().getUsername();
                             System.out.println("Join Button: " + player1 + " " + player2 + " " + clientUsername);
 
                             if (player1.equals(clientUsername)) {
@@ -245,8 +245,8 @@ public class GameLobbyController implements Initializable, LobbyListener, GameLi
                         spectateButton.setOnAction(event -> {
                             // send spectate game packet to game server
                             Game game = getTableView().getItems().get(getIndex());
-                            if (!game.getPlayer1Username().equalsIgnoreCase(clientController.getAccountClient().getUserInformation().getUserName())) {
-                                if(!game.getPlayer2Username().equalsIgnoreCase(clientController.getAccountClient().getUserInformation().getUserName())) {
+                            if (!game.getPlayer1Username().equalsIgnoreCase(clientController.getAccountClient().getUserInformation().getUsername())) {
+                                if(!game.getPlayer2Username().equalsIgnoreCase(clientController.getAccountClient().getUserInformation().getUsername())) {
                                     Packet packet = new Packet(Packet.OBSERVE_GAME, clientController.getAccountClient().getUserInformation(), game.getId());
                                     clientController.getGameClient().addRequestToServer(packet);
                                 }

@@ -43,6 +43,7 @@ public class GameThread implements Runnable {
         this.player2 = player2;
         player1UserInformation = player1.getInformation();
         player2UserInformation = player2.getInformation();
+        game.setStartTime();
     }
 
     public synchronized void addMove(Move move) throws InterruptedException {
@@ -77,7 +78,7 @@ public class GameThread implements Runnable {
         gameService.broadcast(gameStatus);
 
         // sends the username of player1
-        Packet whoIsPlayer1 = new Packet(Packet.PLAYER_ONE_USERNAME, player1UserInformation, game.getId() + " " + player1UserInformation.getUserName());
+        Packet whoIsPlayer1 = new Packet(Packet.PLAYER_ONE_USERNAME, player1UserInformation, game.getId() + " " + player1UserInformation.getUsername());
 
         player1.sendPacketToClient(whoIsPlayer1);
         player2.sendPacketToClient(whoIsPlayer1);
@@ -85,7 +86,7 @@ public class GameThread implements Runnable {
         System.out.println("sending packet about player1");
 
         // sends the username of player2
-        Packet whoIsPlayer2 = new Packet(Packet.PLAYER_TWO_USERNAME, player2UserInformation, game.getId() + " " + player2UserInformation.getUserName());
+        Packet whoIsPlayer2 = new Packet(Packet.PLAYER_TWO_USERNAME, player2UserInformation, game.getId() + " " + player2UserInformation.getUsername());
         player1.sendPacketToClient(whoIsPlayer2);
         player2.sendPacketToClient(whoIsPlayer2);
         game.notifyObservers(whoIsPlayer2);
@@ -101,7 +102,6 @@ public class GameThread implements Runnable {
                 if (!moveQueue.isEmpty()) {
                     System.out.println("Inside game thread, removing move from the queue ");
                     newMove = moveQueue.take();
-                    game.setStartTime();
 
                     if (newMove.getUserInformation() == player1UserInformation && isPlayer1Turn) {
                         System.out.println("game player1.make move is called");
@@ -120,7 +120,7 @@ public class GameThread implements Runnable {
 
                             if (game.isPlayer1Winner(newMove)) {
                                 System.out.println("Player 1 Wins!");
-                                String winner = game.getPlayer1Info().getUserName();
+                                String winner = game.getPlayer1Info().getUsername();
                                 Packet player1Wins = new Packet(Packet.GAME_STATUS, player1UserInformation, game.getId() + " " + winner);
                                 player1.sendPacketToClient(player1Wins);
                                 player2.sendPacketToClient(player1Wins);;
@@ -169,7 +169,7 @@ public class GameThread implements Runnable {
 
                             if (game.isPlayer2Winner(newMove)) {
                                 System.out.println("Player 2 Wins!");
-                                String winner = game.getPlayer2Info().getUserName();
+                                String winner = game.getPlayer2Info().getUsername();
                                 Packet player2Wins = new Packet(Packet.GAME_STATUS, player2UserInformation, game.getId() + " " + winner);
                                 player1.sendPacketToClient(player2Wins);
                                 player2.sendPacketToClient(player2Wins);

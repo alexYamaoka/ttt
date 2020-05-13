@@ -84,9 +84,6 @@ public class AccountService implements Service, Runnable {
         for (ClientConnection connection : clientConnections) {
                 connection.sendPacketToClient(packet);
         }
-//        for (ServiceListener serviceListener : serviceListeners) {
-//            serviceListener.onDataChanged(packet);
-//        }
     }
 
     public void notifyServerDisplay(Packet packet)
@@ -100,6 +97,14 @@ public class AccountService implements Service, Runnable {
         playersOnline.add(user);
         Packet packet = new Packet(Packet.GET_ONLINE_PLAYERS, null, getPlayersOnline());
         broadcast(packet);
+    }
+
+    public void removeAccount(ClientConnection clientConnection) {
+        if(clientConnections.contains(clientConnection)) {
+            clientConnection.stop();
+            clientConnections.remove(clientConnection);
+            playersOnline.remove(clientConnection.getInformation());
+        }
     }
 
     public HashSet<UserInformation> getPlayersOnline() {

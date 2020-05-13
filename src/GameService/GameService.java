@@ -25,7 +25,6 @@ public class GameService implements Runnable, Service {
     private final int PORT_NUMBER = 8080;
     private Thread worker;
     private HashSet<ServiceListener> serviceListeners = new HashSet<>();
-    private DataSource ds = DatabaseManager.getInstance();
     private HashSet<ClientConnection> clientConnections = new HashSet<>();
     private HashMap<String, Game> ongoingGameRooms = new HashMap<>();
     private HashMap<String, GameThread> gameThreadList = new HashMap<>();
@@ -34,11 +33,10 @@ public class GameService implements Runnable, Service {
         start();
     }
 
-    public static GameService getInstance()
-    {
+    public static GameService getInstance() {
         if (instance == null) {
             synchronized (GameService.class) {
-                if(instance == null) {
+                if (instance == null) {
                     instance = new GameService();
                 }
             }
@@ -71,6 +69,13 @@ public class GameService implements Runnable, Service {
             }
         } catch (IOException ex) {
             ex.printStackTrace();
+        }
+    }
+
+    public void removeConnection(ClientConnection connection) {
+        if(clientConnections.contains(connection)) {
+            connection.stop();
+            clientConnections.remove(connection);
         }
     }
 
@@ -125,15 +130,9 @@ public class GameService implements Runnable, Service {
                 ex.printStackTrace();
             }
         }
-//        for (ServiceListener serviceListener : serviceListeners) {
-//
-//            System.out.println("inside broadcast: " + packet.getRequest());
-//            serviceListener.onDataChanged(packet);
-//        }
     }
 
-    public void notifyServerDisplay(Packet packet)
-    {
+    public void notifyServerDisplay(Packet packet) {
         for (ServiceListener serviceListener : serviceListeners) {
             serviceListener.onDataChanged(packet);
         }

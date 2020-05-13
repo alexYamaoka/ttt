@@ -7,7 +7,7 @@ import java.io.Serializable;
 public class UserInformation extends BaseModel implements Serializable {
 
     private String firstName, lastName;
-    private String userName;
+    private String username;
     private String email = "email";
     private String password;
     private int isDeleted;
@@ -16,10 +16,10 @@ public class UserInformation extends BaseModel implements Serializable {
 
     }
 
-    public UserInformation(String firstName, String lastName, String userName, String email, String password) {
+    public UserInformation(String firstName, String lastName, String username, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.userName = userName;
+        this.username = username;
         this.email = email;
         this.password = password;
         this.isDeleted = 0;
@@ -41,12 +41,12 @@ public class UserInformation extends BaseModel implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -55,6 +55,15 @@ public class UserInformation extends BaseModel implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof UserInformation) {
+            UserInformation information = (UserInformation) obj;
+            return this.getId().equals(information.getId());
+        }
+        return false;
     }
 
     @Override
@@ -70,7 +79,7 @@ public class UserInformation extends BaseModel implements Serializable {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append(getId() + " " + firstName + " " + lastName + " " + userName + " " + email + " " + password);
+        builder.append(getId() + " " + firstName + " " + lastName + " " + username + " " + email + " " + password);
         return builder.toString();
     }
 }

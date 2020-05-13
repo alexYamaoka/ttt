@@ -76,9 +76,7 @@ public class SettingsController implements Initializable, UpdateUserinformationL
 
 
     public void UserDetailButton(ActionEvent event) {
-        Pane2.setVisible(false);
-        Pane1.managedProperty().bind(Pane1.visibleProperty());
-        Pane1.setVisible(true);
+
 
     }
 
@@ -112,7 +110,7 @@ public class SettingsController implements Initializable, UpdateUserinformationL
         UserInformation information = controller.getAccountClient().getUserInformation();
         firstName.setPromptText(information.getFirstName());
         lastName.setPromptText(information.getLastName());
-        userName.setPromptText(information.getUserName());
+        userName.setPromptText(information.getUsername());
     }
 
     public void DeactivateAccount(ActionEvent event){
@@ -209,6 +207,13 @@ public class SettingsController implements Initializable, UpdateUserinformationL
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Platform.runLater(()->{
+            if(controller.getAccountClient().getUserInformation().getIsDeleted() == 1){
+                DeactivateAccount.setText("Activate Account");
+            }else{
+                DeactivateAccount.setText("Deactivate Account");
+            }
+        });
 
 
     }

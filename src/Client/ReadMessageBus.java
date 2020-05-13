@@ -2,14 +2,14 @@ package Client;
 
 import Models.Game;
 import Models.Move;
-import ObserverPatterns.LobbyListener;
-import ObserverPatterns.SignInResultListener;
-import ObserverPatterns.SignUpResultListener;
-import ObserverPatterns.UpdateUserinformationListener;
+import ObserverPatterns.*;
+import Shared.GameInformation;
 import Shared.Packet;
 import Shared.UserInformation;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ReadMessageBus implements Runnable {
@@ -21,6 +21,7 @@ public class ReadMessageBus implements Runnable {
     private SignUpResultListener signUpResultListener;
     private UpdateUserinformationListener updateUserinformationListener;
     private LobbyListener lobbyListener;
+    private GameHistoryListener gameHistoryListener;
 
     public ReadMessageBus(ClientController clientController) {
         this.clientController = clientController;
@@ -28,6 +29,7 @@ public class ReadMessageBus implements Runnable {
         signUpResultListener = clientController.getSignUpController();
         updateUserinformationListener = clientController.getOptions();
         lobbyListener = clientController.getGameLobby();
+        gameHistoryListener = clientController.getGameHistoryController();
     }
 
     public void start() {
@@ -36,6 +38,7 @@ public class ReadMessageBus implements Runnable {
     }
 
     public void stop() {
+        System.out.println("Stopping ReadMessageBus");
         running.set(false);
     }
 
@@ -123,6 +126,10 @@ public class ReadMessageBus implements Runnable {
 
                         case Packet.GAME_STATUS:
                             lobbyListener.updateStatus(response.getData().toString());
+                            break;
+                        
+                        case Packet.GAME_HISTORY_INFO:
+                            gameHistoryListener.updateHistory((List<GameInformation>)response.getData());
                             break;
                     }
                 }
