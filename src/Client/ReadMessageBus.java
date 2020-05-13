@@ -3,9 +3,11 @@ package Client;
 import Models.Game;
 import Models.Move;
 import ObserverPatterns.*;
+import Shared.GameInformation;
 import Shared.Packet;
 import Shared.UserInformation;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -19,7 +21,7 @@ public class ReadMessageBus implements Runnable {
     private SignUpResultListener signUpResultListener;
     private UpdateUserinformationListener updateUserinformationListener;
     private LobbyListener lobbyListener;
-    private HistoryListener historyListener;
+    private GameHistoryListener gameHistoryListener;
 
     public ReadMessageBus(ClientController clientController) {
         this.clientController = clientController;
@@ -27,7 +29,7 @@ public class ReadMessageBus implements Runnable {
         signUpResultListener = clientController.getSignUpController();
         updateUserinformationListener = clientController.getOptions();
         lobbyListener = clientController.getGameLobby();
-        historyListener = clientController.getGameHistoryController();
+        gameHistoryListener = clientController.getGameHistoryController();
     }
 
     public void start() {
@@ -128,8 +130,12 @@ public class ReadMessageBus implements Runnable {
 
                         case Packet.GAME_HISTORY:
                             if(response.getData() != null) {
-                                historyListener.updateHistory((List<Game>)response.getData());
+                                gameHistoryListener.updateHistory((List<Game>)response.getData());
                             }
+                        
+                        case Packet.GAME_HISTORY_INFO:
+                            gameHistoryListener.updateGameHistory((GameInformation)response.getData());
+                            break;
                     }
                 }
             }
