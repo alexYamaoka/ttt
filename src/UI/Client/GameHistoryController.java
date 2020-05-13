@@ -71,7 +71,7 @@ public class GameHistoryController implements Initializable {
         user.add(id);
         user.add(username);
         String data = String.join(" ", user);
-        Packet packet = new Packet(Packet.GAME_INFO_SEVER, clientController.getAccountClient().getUserInformation(), data);
+        Packet packet = new Packet(Packet.GAME_HISTORY_INFO, clientController.getAccountClient().getUserInformation(), data);
         clientController.getAccountClient().addRequestToServer(packet);
     }
 

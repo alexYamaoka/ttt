@@ -6,10 +6,13 @@ import ObserverPatterns.LobbyListener;
 import ObserverPatterns.SignInResultListener;
 import ObserverPatterns.SignUpResultListener;
 import ObserverPatterns.UpdateUserinformationListener;
+import Shared.GameInformation;
 import Shared.Packet;
 import Shared.UserInformation;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ReadMessageBus implements Runnable {
