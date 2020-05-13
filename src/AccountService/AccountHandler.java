@@ -4,6 +4,7 @@ import DataBase.sql.DataSource;
 import DataBase.sql.DatabaseManager;
 import Models.BaseModel;
 import Server.ClientConnection;
+import Shared.GameInformation;
 import Shared.Packet;
 import Shared.UserInformation;
 import app.Server;
@@ -14,6 +15,7 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -174,6 +176,33 @@ public class AccountHandler implements Runnable {
                 Packet packet1 = new Packet(Packet.GET_ONLINE_PLAYERS, userInformation, service.getPlayersOnline());
                 clientConnection.sendPacketToClient(packet1);
                 break;
+
+            case Packet.GAME_HISTORY_INFO:
+                String GameInfoString = data.toString();
+                String [] str6 = GameInfoString.trim().split("\\s+");
+                System.out.println( "GameInfoServer String "+ data.toString());
+                String id = str6[0];
+                String username = str6[1];
+
+                try {
+                    List<GameInformation> gameInformation = new ArrayList<>();
+                    gameInformation = ds.getPlayerGamesInfo(id,username);
+
+
+                    if(gameInformation.isEmpty()){
+                        stop();
+                    }else{
+                        Packet info = new Packet(Packet.GAME_HISTORY_INFO, userInformation, (Serializable)gameInformation);
+                        clientConnection.sendPacketToClient(info);
+                        System.out.println("Packet sent successfully ");
+                    }
+
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                //Packet packet2 = new Packet(Packet.GAME_INFO_SEVER,userInformation,data);
+                //clientConnection.sendPacketToClient(packet2);
         }
 
         stop();

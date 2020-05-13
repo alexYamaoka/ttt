@@ -26,6 +26,8 @@ public class UserInformation extends BaseModel implements Serializable {
         this.isDeleted = 0;
     }
 
+
+
     public void setStatus(String status)
     {
         this.status = status;
