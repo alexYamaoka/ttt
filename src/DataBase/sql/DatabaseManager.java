@@ -56,7 +56,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
     }
 
 
-    public List<Move> Moves (String gameId) throws SQLException {
+    public List<Move> moves (String gameId) throws SQLException {
         String sql =
                 "SELECT * FROM moves WHERE GameId = '"+gameId+"'";
 
@@ -71,7 +71,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
             Move m = new Move();
             m.setId(rs.getString("id"));
             m.setGameId(rs.getString("GameId"));
-            m.setPlayerId("PlayerId");
+            m.setPlayerId(rs.getString("PlayerId"));
             m.setRow(rs.getInt("X_coord"));
             m.setColumn(rs.getInt("Y_Coord"));
             m.setMoveTime(rs.getTimestamp("Time"));
