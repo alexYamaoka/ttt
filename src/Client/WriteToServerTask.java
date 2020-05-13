@@ -31,6 +31,7 @@ public class WriteToServerTask implements Runnable {
     }
 
     public void stop() {
+        System.out.println("Stopping WriteToServerTask");
         running.set(false);
     }
 

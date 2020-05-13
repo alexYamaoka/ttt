@@ -38,10 +38,11 @@ public class ServerDisplay implements Initializable, ServiceListener {
     @FXML
     private TableView<UserInformation> activePlayers, accounts;
     @FXML
+    private TableColumn<UserInformation, String> username_AP, playerId_AP, username_A, password_A, firstName_A, lastName_A, status_A;
+    @FXML
     private ListView allAccounts = new ListView();
+
     private DataSource ds = DatabaseManager.getInstance();
-    private TableColumn<UserInformation, String> username_AP, status_AP, username_A, password_A, firstName_A, lastName_A, status_A;
-    private Main main;
     private BlockingQueue<Packet> packetsReceived = new LinkedBlockingQueue<>();
 
 
@@ -54,9 +55,9 @@ public class ServerDisplay implements Initializable, ServiceListener {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializeAGTable();
-//        initializeAPTable();
-//        initializeGTable();
-//        initializeATable();
+        initializeAPTable();
+        initializeGTable();
+        initializeATable();
     }
 
     private void initializeAGTable() {
@@ -66,38 +67,40 @@ public class ServerDisplay implements Initializable, ServiceListener {
         player2_AG.setCellValueFactory(new PropertyValueFactory<>("player2Username"));
         startTime_AG.setCellValueFactory(new PropertyValueFactory<>("startTime"));
 
-        //editableAGCols();
+//        editableAGCols();
     }
 
     private void initializeAPTable() {
         activePlayers.setItems(onlinePlayersList);
         username_AP.setCellValueFactory(new PropertyValueFactory<>("username"));
-        status_AP.setCellValueFactory(new PropertyValueFactory<>("status"));
+        playerId_AP.setCellValueFactory(new PropertyValueFactory<>("id"));
 
         //editableAPCols();
     }
-//    private void initializeGTable() {
-//        games.setItems(allGamesList);
-//        gameID_G.setCellValueFactory(new PropertyValueFactory<>("id"));
-//        player1_G.setCellValueFactory(new PropertyValueFactory<>("player1Username"));
-//        player2_G.setCellValueFactory(new PropertyValueFactory<>("player2Username"));
-//        startTime_G.setCellValueFactory(new PropertyValueFactory<>("startTime"));
-//        endTime_G.setCellValueFactory(new PropertyValueFactory<>("endTime"));
-//        result_G.setCellValueFactory(new PropertyValueFactory<>("result"));
-//        spectators_G.setCellValueFactory(new PropertyValueFactory<>("spectators"));
-//
-//        //editableGCols();
-//    }
-//    private void initializeATable() {
-//        accounts.setItems(allPlayersList);
-//        username_A.setCellValueFactory(new PropertyValueFactory<>("username"));
-//        password_A.setCellValueFactory(new PropertyValueFactory<>("password"));
-//        firstName_A.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-//        lastName_A.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-//        status_A.setCellValueFactory(new PropertyValueFactory<>("status"));
-//
-//        //editableACols();
-//    }
+
+    private void initializeGTable() {
+        games.setItems(allGamesList);
+        gameID_G.setCellValueFactory(new PropertyValueFactory<>("id"));
+        player1_G.setCellValueFactory(new PropertyValueFactory<>("player1Username"));
+        player2_G.setCellValueFactory(new PropertyValueFactory<>("player2Username"));
+        startTime_G.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+        endTime_G.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+        result_G.setCellValueFactory(new PropertyValueFactory<>("result"));
+        spectators_G.setCellValueFactory(new PropertyValueFactory<>("spectators"));
+
+        //editableGCols();
+    }
+
+    private void initializeATable() {
+        accounts.setItems(allPlayersList);
+        username_A.setCellValueFactory(new PropertyValueFactory<>("username"));
+        password_A.setCellValueFactory(new PropertyValueFactory<>("password"));
+        firstName_A.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        lastName_A.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        status_A.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+        //editableACols();
+    }
 
 //    //need to add each information into class and convert the value entered type (String) into each respective type
 //    private void editableAGCols(){
@@ -118,6 +121,7 @@ public class ServerDisplay implements Initializable, ServiceListener {
 //            e.getTableView().getItems().get(e.getTablePosition().getRow()).setStartTime(e.getNewValue());
 //        });
 //    }
+
 //    private void editableAPCols(){
 //        username_AP.setCellFactory(TextFieldTableCell.forTableColumn());
 //        username_AP.setOnEditCommit(e -> {
@@ -230,11 +234,8 @@ public class ServerDisplay implements Initializable, ServiceListener {
 
     @Override
     public void onDataChanged(Packet packet) {
-
         packetsReceived.add(packet);
         updateUI();
-
-
     }
 
     private synchronized void updateUI() {
@@ -286,11 +287,6 @@ public class ServerDisplay implements Initializable, ServiceListener {
             }
         });
 
-    }
-
-
-    public void setMain(Main main) {
-        this.main = main;
     }
 
 //    @Override

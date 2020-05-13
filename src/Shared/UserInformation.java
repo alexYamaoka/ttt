@@ -11,7 +11,6 @@ public class UserInformation extends BaseModel implements Serializable {
     private String email = "email";
     private String password;
     private int isDeleted;
-    private String status = "not available";
 
     public UserInformation() {
 
@@ -24,18 +23,6 @@ public class UserInformation extends BaseModel implements Serializable {
         this.email = email;
         this.password = password;
         this.isDeleted = 0;
-    }
-
-
-
-    public void setStatus(String status)
-    {
-        this.status = status;
-    }
-
-    public String getStatus()
-    {
-        return status;
     }
 
     public String getFirstName() {
@@ -68,6 +55,15 @@ public class UserInformation extends BaseModel implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof UserInformation) {
+            UserInformation information = (UserInformation) obj;
+            return this.getId().equals(information.getId());
+        }
+        return false;
     }
 
     @Override

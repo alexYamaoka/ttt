@@ -33,7 +33,6 @@ public class Main extends Application
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../UI/ServerUI/ServerDisplay.fxml"));
         Parent root = loader.load();
         serverDisplayController = loader.getController();
-        serverDisplayController.setMain(this);
 
         accountService.addServiceListener(serverDisplayController);
         gameService.addServiceListener(serverDisplayController);

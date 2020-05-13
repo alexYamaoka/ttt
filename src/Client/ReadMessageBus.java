@@ -38,6 +38,7 @@ public class ReadMessageBus implements Runnable {
     }
 
     public void stop() {
+        System.out.println("Stopping ReadMessageBus");
         running.set(false);
     }
 
@@ -127,6 +128,11 @@ public class ReadMessageBus implements Runnable {
                             lobbyListener.updateStatus(response.getData().toString());
                             break;
 
+                        case Packet.GAME_HISTORY:
+                            if(response.getData() != null) {
+                                gameHistoryListener.updateHistory((List<Game>)response.getData());
+                            }
+                        
                         case Packet.GAME_HISTORY_INFO:
                             gameHistoryListener.updateGameHistory((GameInformation)response.getData());
                             break;

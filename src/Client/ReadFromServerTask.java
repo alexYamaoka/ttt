@@ -34,6 +34,7 @@ public class ReadFromServerTask implements Runnable {
     }
 
     public void stop() {
+        System.out.println("Stopping ReadFromServerTask");
         running.set(false);
     }
 

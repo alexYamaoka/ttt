@@ -90,10 +90,10 @@ public class AccountHandler implements Runnable {
                 }
                 break;
             case Packet.SIGN_OUT:
-
                 // update server display
                 Packet notifySignOut = new Packet(Packet.SIGN_OUT, null, clientConnection.getInformation());
                 service.notifyServerDisplay(notifySignOut);
+                service.removeAccount(clientConnection);
 
                 break;
             case Packet.REGISTER_CLIENT:

@@ -4,10 +4,13 @@ import Client.ClientController;
 import DataBase.sql.DataSource;
 import DataBase.sql.DatabaseManager;
 import Models.Game;
+import ObserverPatterns.HistoryListener;
 import ObserverPatterns.GameHistoryListener;
 import Shared.GameInformation;
 import Shared.Packet;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -24,7 +27,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
 
-
 public class GameHistoryController implements Initializable, GameHistoryListener {
     @FXML
     private TableView gameHistoryTable;
@@ -34,25 +36,20 @@ public class GameHistoryController implements Initializable, GameHistoryListener
     private ClientController clientController;
     private DataSource ds = DatabaseManager.getInstance();
 
+    private ObservableList<Game> data = FXCollections.observableArrayList();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializeTable();
     }
 
     private void initializeTable() {
-        gameID.setCellValueFactory(new PropertyValueFactory<>("gameID"));
+        gameHistoryTable.setItems(data);
+        gameID.setCellValueFactory(new PropertyValueFactory<>("id"));
         opponent.setCellValueFactory(new PropertyValueFactory<>("opponent"));
         startTime.setCellValueFactory(new PropertyValueFactory<>("startTime"));
         endTime.setCellValueFactory(new PropertyValueFactory<>("endTime"));
         results.setCellValueFactory(new PropertyValueFactory<>("results"));
-    }
-
-    // import an ObservableList of all game history from server
-    private void loadGames(HashSet<Game> listOfGames) {
-        System.out.println("Load games called!");
-
-
-        gameHistoryTable.getItems().addAll(listOfGames);
     }
 
     public void getListOfGames(HashSet<Game> listOfGames) {
@@ -86,7 +83,6 @@ public class GameHistoryController implements Initializable, GameHistoryListener
             }
         });
     }
-
     public ClientController getClientController() {
         return clientController;
     }
@@ -96,6 +92,13 @@ public class GameHistoryController implements Initializable, GameHistoryListener
     }
 
     @Override
+    public void updateHistory(List<Game> list) {
+        Platform.runLater(() -> {
+            data.clear();
+            data.addAll(list);
+        });
+    }
+  
     public void updateGameHistory(GameInformation gameInformation) {
 
     }
