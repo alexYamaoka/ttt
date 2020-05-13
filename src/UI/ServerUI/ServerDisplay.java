@@ -23,10 +23,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.control.cell.TextFieldTreeTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
+import javafx.util.converter.IntegerStringConverter;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -111,6 +113,7 @@ public class ServerDisplay implements Initializable, ServiceListener {
         lastName_A.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         lastName_A.setCellFactory(TextFieldTableCell.forTableColumn());
         deleted_A.setCellValueFactory(new PropertyValueFactory<>("isDeleted"));
+        deleted_A.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         editableACols();
         try {
             allPlayersList.addAll(ds.AllUserInfo());
@@ -223,52 +226,5 @@ public class ServerDisplay implements Initializable, ServiceListener {
 
     public void notifyAccountsServer(Packet packet) {
         serviceListener.onDataChanged(packet);
-    }
-
-    private class TextFieldCellFactory implements Callback<TableColumn<UserInformation, String>, TableCell<UserInformation, String>> {
-
-        @Override
-        public TableCell<UserInformation, String> call(TableColumn<UserInformation, String> userInformationStringTableColumn) {
-            TextFieldCell textFieldCell = new TextFieldCell();
-            return textFieldCell;
-        }
-
-        public class TextFieldCell extends TableCell<UserInformation, String> {
-            private TextField textField;
-            private SimpleStringProperty boundToCurrently = null;
-
-            public TextFieldCell() {
-                String strCss;
-                strCss = "-fx-padding: 0";
-                this.setStyle(strCss);
-
-                textField = new TextField();
-                this.setGraphic(textField);
-            }
-
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if(!empty) {
-                    this.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-                    ObservableValue<String> ov = getTableColumn().getCellObservableValue(getIndex());
-                    SimpleStringProperty sp = (SimpleStringProperty) ov;
-
-                    if(this.boundToCurrently == null) {
-                        this.boundToCurrently = sp;
-                        this.textField.textProperty().bindBidirectional(sp);
-                    } else {
-                        if(this.boundToCurrently != sp) {
-                            this.textField.textProperty().unbindBidirectional(this.boundToCurrently);
-                            this.boundToCurrently = sp;
-                            this.textField.textProperty().bindBidirectional(this.boundToCurrently);
-                        }
-                    }
-                } else {
-                    this.setContentDisplay(ContentDisplay.TEXT_ONLY);
-                }
-            }
-
-        }
     }
 }
