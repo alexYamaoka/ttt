@@ -26,9 +26,9 @@ public class SettingsController implements Initializable, UpdateUserinformationL
     @FXML
     Button confirmChangeButton, promptChangePasswordButton, confirmChangePasswordButton, backButton, deactivateAccountButton;
     @FXML
-    private TextField firstName, lastName, username;
-    @FXML
     PasswordField password, currentPasswordField, newPasswordField, confirmNewPasswordField;
+    @FXML
+    private TextField firstName, lastName, username;
     @FXML
     private Label usernameErrorLabel, currentPasswordErrorLabel, newPasswordErrorLabel, confirmNewPasswordErrorLabel;
 
@@ -41,10 +41,10 @@ public class SettingsController implements Initializable, UpdateUserinformationL
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Platform.runLater(()->{
-            if(clientController.getAccountClient().getUserInformation().getIsDeleted() == 1){
+        Platform.runLater(() -> {
+            if (clientController.getAccountClient().getUserInformation().getIsDeleted() == 1) {
                 deactivateAccountButton.setText("Activate Account");
-            }else{
+            } else {
                 deactivateAccountButton.setText("Deactivate Account");
             }
         });
@@ -58,39 +58,41 @@ public class SettingsController implements Initializable, UpdateUserinformationL
 //        btnOldpass.setPromptText(information.getPassword());
     }
 
-    public void DeactivateAccount(ActionEvent event){
+    public void DeactivateAccount(ActionEvent event) {
         String id = clientController.getAccountClient().getUserInformation().getId();
         List<String> user = new ArrayList<>();
         user.add(id);
         String data = String.join(" ", user);
-        if(clientController.getAccountClient().getUserInformation().getIsDeleted() == 1){
-            Packet packet = new Packet(Packet.ACTIVATE_ACCOUNT,clientController.getAccountClient().getUserInformation(), data);
+        if (clientController.getAccountClient().getUserInformation().getIsDeleted() == 1) {
+            Packet packet = new Packet(Packet.ACTIVATE_ACCOUNT, clientController.getAccountClient().getUserInformation(), data);
             clientController.getAccountClient().addRequestToServer(packet);
-        }else {
+        } else {
             Packet packet = new Packet(Packet.DELETE_ACCOUNT, clientController.getAccountClient().getUserInformation(), data);
             clientController.getAccountClient().addRequestToServer(packet);
         }
     }
+
     @Override
     public void deactivateAccount(String message) {
-        Platform.runLater(()->{
-            if(message.equals("SUCCESS")) {
+        Platform.runLater(() -> {
+            if (message.equals("SUCCESS")) {
                 deactivateAccountButton.setText("Activate Account");
                 clientController.getAccountClient().getUserInformation().setIsDeleted(1);
-                Stage stage = (Stage)deactivateAccountButton.getScene().getWindow();
+                Stage stage = (Stage) deactivateAccountButton.getScene().getWindow();
                 Parent root = clientController.getMainMenuPain();
                 stage.setScene(root.getScene());
                 stage.show();
             }
         });
     }
+
     @Override
-    public void ActivateAccount(String message){
-        Platform.runLater(()->{
-            if(message.equals("SUCCESS")){
+    public void ActivateAccount(String message) {
+        Platform.runLater(() -> {
+            if (message.equals("SUCCESS")) {
                 deactivateAccountButton.setText("Deactivate Account");
                 clientController.getAccountClient().getUserInformation().setIsDeleted(0);
-                Stage stage = (Stage)deactivateAccountButton.getScene().getWindow();
+                Stage stage = (Stage) deactivateAccountButton.getScene().getWindow();
                 Parent root = clientController.getMainMenuPain();
                 stage.setScene(root.getScene());
                 stage.show();
@@ -109,67 +111,61 @@ public class SettingsController implements Initializable, UpdateUserinformationL
         String oldPassword = this.currentPasswordField.getText();
         String newPassword = this.newPasswordField.getText();
         String confirmPassword = this.confirmNewPasswordField.getText();
-        user.add(firstName.toString());
-        user.add(lastName.toString());
-        user.add(username.toString());
-        user.add(id.toString());
-        user.add(confirmPassword.toString());
-/*
-            if(!this.userName.getText().equals(this.userName.getPromptText())){
-                username = this.userName.getText();
-            }else{
-                username = this.userName.getPromptText();
-            }
-                user.add(username);
+        user.add(firstName);
+        user.add(lastName);
+        user.add(username);
+        user.add(id);
+        user.add(confirmPassword);
 
-        if(!this.firstName.getText().equals(this.firstName.getPromptText())){
-                firstName = this.firstName.getText();
-        }else{
+        if (!this.username.getText().equals(this.username.getPromptText())) {
+            username = this.username.getText();
+        } else {
+            username = this.username.getPromptText();
+        }
+        user.add(username);
+
+        if (!this.firstName.getText().equals(this.firstName.getPromptText())) {
+            firstName = this.firstName.getText();
+        } else {
             firstName = this.firstName.getPromptText();
         }
         user.add(firstName);
         System.out.println("first name: " + firstName);
 
-        if(!this.lastName.getText().equals(this.lastName.getPromptText())){
-                lastName = this.lastName.getText();
-        }
-        else{
+        if (!this.lastName.getText().equals(this.lastName.getPromptText())) {
+            lastName = this.lastName.getText();
+        } else {
             lastName = this.lastName.getPromptText();
         }
         user.add(lastName);
         System.out.println("last name: " + lastName);
 
-        if(!this.btnOldpass.getPromptText().equals(controller.getAccountClient().getUserInformation().getPassword())){
+        if (!this.password.getPromptText().equals(clientController.getAccountClient().getUserInformation().getPassword())) {
 
-            oldPassword = this.btnOldpass.getText();
-        }
-        else{
-            oldPassword = controller.getAccountClient().getUserInformation().getPassword();
+            oldPassword = this.password.getText();
+        } else {
+            oldPassword = clientController.getAccountClient().getUserInformation().getPassword();
         }
         user.add(oldPassword);
         System.out.println("old password: " + oldPassword);
 
 
-        if(!this.btnNewpass.getText().equals(this.btnNewpass.getPromptText())){
-            newPassword = this.btnNewpass.getText();
-        }
-        else{
-            newPassword = controller.getAccountClient().getUserInformation().getPassword();
+        if (!this.newPasswordField.getText().equals(this.newPasswordField.getPromptText())) {
+            newPassword = this.newPasswordField.getText();
+        } else {
+            newPassword = clientController.getAccountClient().getUserInformation().getPassword();
         }
         user.add(newPassword);
         System.out.println("new password: " + newPassword);
 
-        if(!this.btnConfirmPass.getText().equals(this.btnConfirmPass.getPromptText())){
-            confirmPassword = this.btnConfirmPass.getText();
-        }
-        else{
-            confirmPassword = controller.getAccountClient().getUserInformation().getPassword();
+        if (!this.confirmChangePasswordButton.getText().equals(this.confirmNewPasswordField.getPromptText())) {
+            confirmPassword = this.confirmNewPasswordField.getText();
+        } else {
+            confirmPassword = clientController.getAccountClient().getUserInformation().getPassword();
         }
         user.add(confirmPassword);
         System.out.println("confirm password: " + confirmPassword);
 
-
-*/
         String data = String.join(" ", user);
         System.out.println(user);
         if (oldPassword.equalsIgnoreCase(clientController.getAccountClient().getUserInformation().getPassword())) {
@@ -194,7 +190,7 @@ public class SettingsController implements Initializable, UpdateUserinformationL
             public void run() {
                 if (!message.equalsIgnoreCase("FAIL")) {
                     String[] str = message.trim().split("\\s+");
-                    System.out.println( "Array to string " +Arrays.toString(str));
+                    System.out.println("Array to string " + Arrays.toString(str));
                     String id = str[0];
                     String firstName = str[1];
                     String lastName = str[2];
