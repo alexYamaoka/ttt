@@ -10,7 +10,9 @@ import Shared.GameInformation;
 import Shared.UserInformation;
 import ObserverPatterns.ServiceListener;
 import Shared.Packet;
+import com.mysql.cj.conf.StringProperty;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,10 +23,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.control.cell.TextFieldTreeTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
+import javafx.util.converter.IntegerStringConverter;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -100,23 +104,53 @@ public class ServerDisplay implements Initializable, ServiceListener {
 
     private void initializeATable() {
         accounts.setItems(allPlayersList);
+
         username_A.setCellValueFactory(new PropertyValueFactory<>("username"));
+        username_A.setCellFactory(TextFieldTableCell.forTableColumn());
+        username_A.setOnEditCommit(event -> {
+            UserInformation information = event.getTableView().getItems().get(event.getTablePosition().getRow());
+            information.setUsername(event.getNewValue());
+            // update database from here
+        });
+
         password_A.setCellValueFactory(new PropertyValueFactory<>("password"));
+        password_A.setCellFactory(TextFieldTableCell.forTableColumn());
+        password_A.setOnEditCommit(event -> {
+            UserInformation information = event.getTableView().getItems().get(event.getTablePosition().getRow());
+            information.setPassword(event.getNewValue());
+            // update database from here
+        });
+
         firstName_A.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        firstName_A.setCellFactory(TextFieldTableCell.forTableColumn());
+        firstName_A.setOnEditCommit(event -> {
+            UserInformation information = event.getTableView().getItems().get(event.getTablePosition().getRow());
+            information.setFirstName(event.getNewValue());
+            // update database from here
+        });
+
         lastName_A.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        lastName_A.setCellFactory(TextFieldTableCell.forTableColumn());
+        lastName_A.setOnEditCommit(event -> {
+            UserInformation information = event.getTableView().getItems().get(event.getTablePosition().getRow());
+            information.setLastName(event.getNewValue());
+            // update database from here
+        });
+
         deleted_A.setCellValueFactory(new PropertyValueFactory<>("isDeleted"));
-        editableACols();
+        deleted_A.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        deleted_A.setOnEditCommit(event -> {
+            UserInformation information = event.getTableView().getItems().get(event.getTablePosition().getRow());
+            information.setIsDeleted(event.getNewValue());
+            // update database here
+        });
+
         try {
             allPlayersList.addAll(ds.AllUserInfo());
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
-
-    private void editableACols() {
-        accounts.setEditable(true);
-    }
-
 
     @FXML
     public void onOnlinePlayerClicked(MouseEvent event) {
