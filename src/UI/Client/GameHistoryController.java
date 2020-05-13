@@ -66,7 +66,7 @@ public class GameHistoryController implements Initializable {
 
     public void GetGameinfo() {
         String id = clientController.getAccountClient().getUserInformation().getId();
-        String username = clientController.getAccountClient().getUserInformation().getUserName();
+        String username = clientController.getAccountClient().getUserInformation().getUsername();
         List<String> user = new ArrayList<>();
         user.add(id);
         user.add(username);
