@@ -16,7 +16,7 @@ import java.util.HashSet;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class AccountService implements Service, Runnable {
+public class AccountService implements Service, Runnable, ServiceListener{
     private static AccountService instance = null;
 
     private final AtomicBoolean running = new AtomicBoolean(false);
@@ -117,5 +117,13 @@ public class AccountService implements Service, Runnable {
 
     public void update(Packet packet) {
 
+    }
+
+    @Override
+    public void onDataChanged(Packet packet)
+    {
+        // edit account directly
+        System.out.println("Packet on data change");
+        System.out.println("Packet: " + packet.getRequest());
     }
 }

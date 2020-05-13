@@ -46,7 +46,7 @@
                         <TableColumn fx:id="player2_G" prefWidth="136.0" text="Player 2" />
                         <TableColumn fx:id="startTime_G" prefWidth="136.0" text="Start Time" />
                         <TableColumn fx:id="endTime_G" prefWidth="136.0" text="End Time" />
-                        <TableColumn fx:id="result_G" prefWidth="136.0" text="Result" />
+                        <TableColumn fx:id="result_G" prefWidth="136.0" text="Winning Player" />
                         <TableColumn fx:id="spectators_G" prefWidth="136.0" text="Spectators" />
                      </columns>
                   </TableView>

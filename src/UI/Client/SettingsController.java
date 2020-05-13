@@ -55,95 +55,10 @@ public class SettingsController implements Initializable, UpdateUserinformationL
         firstName.setPromptText(information.getFirstName());
         lastName.setPromptText(information.getLastName());
         username.setPromptText(information.getUsername());
-        password.setText(information.getPassword());
+//        btnOldpass.setPromptText(information.getPassword());
     }
 
-    //needs a method that sets the confirmChangeButton visible when the firstname, lastname, or username is modified
-
-    @Override
-    public void updateUserinformation(String message) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                if (!message.equalsIgnoreCase("FAIL")) {
-                    String[] str = message.trim().split("\\s+");
-                    System.out.println( "Array to string " +Arrays.toString(str));
-                    String id = str[0];
-                    String firstName = str[1];
-                    String lastName = str[2];
-                    String username = str[3];
-                    String email = str[4];
-                    String password = str[5];
-                    UserInformation userInformation = new UserInformation(firstName, lastName, username, email, password);
-                    userInformation.setId(id);
-                    clientController.getAccountClient().setUserInformation(userInformation);
-                    clientController.getOptions().updateInfo();
-                    usernameErrorLabel.setTextFill(Color.LIMEGREEN);
-                    usernameErrorLabel.setText("Information Has Been Updated!");
-                } else {
-                    usernameErrorLabel.setTextFill(Color.RED);
-                    usernameErrorLabel.setText("Username has already been taken!");
-                }
-            }
-        });
-    }
-
-    public void confirmChangeButtonClicked() {
-        UserInformation information = clientController.getAccountClient().getUserInformation();
-        firstName.setPromptText(information.getFirstName());
-        lastName.setPromptText(information.getLastName());
-        username.setPromptText(information.getUsername());
-    }
-
-    public void promptChangePasswordButtonClicked(ActionEvent event){
-        currentPasswordField.setVisible(true);
-        newPasswordField.setVisible(true);
-        confirmNewPasswordField.setVisible(true);
-    }
-
-    public boolean checkPasswordField(String currentPassword, String newPassword, String confirmNewPassword) {
-        boolean value_entered = true;
-        if (currentPassword.isBlank()) {
-            currentPasswordField.setStyle("-fx-border-color: red;");
-            currentPasswordErrorLabel.setText("Enter an username");
-            value_entered = false;
-        } else {
-            currentPasswordErrorLabel.setText("");
-        }
-        if (newPassword.isBlank()) {
-            newPasswordField.setStyle("-fx-border-color: red;");
-            newPasswordErrorLabel.setText("Enter a password");
-            value_entered = false;
-        } else {
-            newPasswordField.setText("");
-        }
-        if (confirmNewPassword.isBlank()) {
-            confirmNewPasswordField.setStyle("-fx-border-color: red;");
-            confirmNewPasswordErrorLabel.setText("Confirm your new password");
-            value_entered = false;
-        } else {
-            confirmNewPasswordErrorLabel.setText("");
-        }
-
-        return value_entered;
-    }
-
-    public void confirmChangePasswordButtonClicked(ActionEvent event){
-    }
-
-    public void backButtonClicked(ActionEvent event) {
-        Stage stage = null;
-        Parent root = null;
-
-        if(event.getSource() == backButton) {
-            stage = (Stage) backButton.getScene().getWindow();
-            root = clientController.getMainMenuPain();
-        }
-        stage.setScene(root.getScene());
-        stage.show();
-    }
-
-    public void deactivateAccountButtonClicked(ActionEvent event){
+    public void DeactivateAccount(ActionEvent event){
         String id = clientController.getAccountClient().getUserInformation().getId();
         List<String> user = new ArrayList<>();
         user.add(id);
@@ -207,39 +122,52 @@ public class SettingsController implements Initializable, UpdateUserinformationL
             }
                 user.add(username);
 
-            if(!this.firstName.getText().equals(this.firstName.getPromptText())){
-                    firstName = this.firstName.getText();
-                }else{
-                    firstName = this.firstName.getPromptText();
-                }
-                    user.add(firstName);
+        if(!this.firstName.getText().equals(this.firstName.getPromptText())){
+                firstName = this.firstName.getText();
+        }else{
+            firstName = this.firstName.getPromptText();
+        }
+        user.add(firstName);
+        System.out.println("first name: " + firstName);
 
-                if(!this.lastName.getText().equals(this.lastName.getPromptText())){
-                        lastName = this.lastName.getText();
-                    }else{
-                        lastName = this.lastName.getPromptText();
-                    }
-                        user.add(lastName);
+        if(!this.lastName.getText().equals(this.lastName.getPromptText())){
+                lastName = this.lastName.getText();
+        }
+        else{
+            lastName = this.lastName.getPromptText();
+        }
+        user.add(lastName);
+        System.out.println("last name: " + lastName);
 
-                    if(!this.oldPassword.getText().equals(this.oldPassword.getPromptText())){
-                            oldPassword = this.oldPassword.getText();
-                        }else{
-                            oldPassword = this.oldPassword.getPromptText();
-                        }
-                            user.add(oldPassword);
+        if(!this.btnOldpass.getPromptText().equals(controller.getAccountClient().getUserInformation().getPassword())){
 
-                        if(!this.newPassword.getText().equals(this.newPassword.getPromptText())){
-                                newPassword = this.newPassword.getText();
-                        }else{
-                                newPassword = this.newPassword.getPromptText();
-                        }
-                                user.add(newPassword);
-                            if(!this.confirmPassword.getText().equals(this.confirmPassword.getPromptText())){
-                                    confirmPassword = this.confirmPassword.getText();
-                            }else{
-                                    confirmPassword = this.confirmPassword.getPromptText();
-                            }
-                                    user.add(confirmPassword);
+            oldPassword = this.btnOldpass.getText();
+        }
+        else{
+            oldPassword = controller.getAccountClient().getUserInformation().getPassword();
+        }
+        user.add(oldPassword);
+        System.out.println("old password: " + oldPassword);
+
+
+        if(!this.btnNewpass.getText().equals(this.btnNewpass.getPromptText())){
+            newPassword = this.btnNewpass.getText();
+        }
+        else{
+            newPassword = controller.getAccountClient().getUserInformation().getPassword();
+        }
+        user.add(newPassword);
+        System.out.println("new password: " + newPassword);
+
+        if(!this.btnConfirmPass.getText().equals(this.btnConfirmPass.getPromptText())){
+            confirmPassword = this.btnConfirmPass.getText();
+        }
+        else{
+            confirmPassword = controller.getAccountClient().getUserInformation().getPassword();
+        }
+        user.add(confirmPassword);
+        System.out.println("confirm password: " + confirmPassword);
+
 
 */
         String data = String.join(" ", user);
@@ -257,9 +185,33 @@ public class SettingsController implements Initializable, UpdateUserinformationL
             currentPasswordField.setStyle("-fx-border-color: red;");
             currentPasswordErrorLabel.setText("Incorrect password");
         }
-
-
     }
 
-
+    @Override
+    public void updateUserinformation(String message) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                if (!message.equalsIgnoreCase("FAIL")) {
+                    String[] str = message.trim().split("\\s+");
+                    System.out.println( "Array to string " +Arrays.toString(str));
+                    String id = str[0];
+                    String firstName = str[1];
+                    String lastName = str[2];
+                    String username = str[3];
+                    String email = str[4];
+                    String password = str[5];
+                    UserInformation userInformation = new UserInformation(firstName, lastName, username, email, password);
+                    userInformation.setId(id);
+                    clientController.getAccountClient().setUserInformation(userInformation);
+                    updateInfo();
+                    usernameErrorLabel.setTextFill(Color.LIMEGREEN);
+                    usernameErrorLabel.setText("Information Has Been Updated!");
+                } else {
+                    usernameErrorLabel.setTextFill(Color.RED);
+                    usernameErrorLabel.setText("Username has already been taken!");
+                }
+            }
+        });
+    }
 }

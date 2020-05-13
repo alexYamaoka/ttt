@@ -12,6 +12,7 @@ public class UserInformation extends BaseModel implements Serializable {
     private String password;
     private int isDeleted;
 
+
     public UserInformation() {
 
     }
@@ -79,7 +80,7 @@ public class UserInformation extends BaseModel implements Serializable {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append(getId() + " " + firstName + " " + lastName + " " + username + " " + email + " " + password);
+        builder.append(getId() + " " + firstName + " " + lastName + " " + username + " " + email + " " + password + " " + isDeleted);
         return builder.toString();
     }
 }

@@ -20,6 +20,7 @@ public class Main extends Application
 
     private AccountService accountService = AccountService.getInstance();
     private GameService gameService = GameService.getInstance();
+
     private ServerDisplay serverDisplayController;
 
     public static void main(String[] args) {
@@ -36,6 +37,9 @@ public class Main extends Application
 
         accountService.addServiceListener(serverDisplayController);
         gameService.addServiceListener(serverDisplayController);
+
+        // serverDisplayController.addListener(accountService);
+        // serverDisplayController.addListener)gameService)
 
         Scene scene = new Scene(root, 1000, 750);
         stage.setTitle("EndFrame Server");

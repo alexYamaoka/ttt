@@ -1,36 +1,45 @@
 package UI.ServerUI;
 
+import AccountService.AccountService;
+import Client.ClientController;
 import DataBase.sql.DataSource;
 import DataBase.sql.DatabaseManager;
+import GameService.GameService;
 import Models.Game;
+import Shared.GameInformation;
 import Shared.UserInformation;
 import ObserverPatterns.ServiceListener;
 import Shared.Packet;
-import Shared.UserInformation;
-import app.Main;
 import javafx.application.Platform;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-
+import javafx.util.Callback;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class ServerDisplay implements Initializable, ServiceListener {
 
+    public static GameService instance = null;
     @FXML
-    private TableView<Game> activeGames, games;
+    private TableView<Game> activeGames;
+    @FXML
+    private TableView<GameInformation> games;
     @FXML
     private TableColumn<Game, String> gameID_AG, player1_AG, player2_AG, gameID_G, player1_G, player2_G, startTime_G, endTime_G, result_G, spectators_G;
     @FXML
@@ -38,17 +47,18 @@ public class ServerDisplay implements Initializable, ServiceListener {
     @FXML
     private TableView<UserInformation> activePlayers, accounts;
     @FXML
-    private TableColumn<UserInformation, String> username_AP, playerId_AP, username_A, password_A, firstName_A, lastName_A, deleted_A;
+    private TableColumn<UserInformation, String> username_AP, playerId_AP, username_A, password_A, firstName_A, lastName_A;
+    @FXML
+    private TableColumn<UserInformation, Integer> deleted_A;
 
-    private DataSource ds = DatabaseManager.getInstance();
+    private ClientController clientController;
+    private DatabaseManager ds = DatabaseManager.getInstance();
     private BlockingQueue<Packet> packetsReceived = new LinkedBlockingQueue<>();
-
-
     private ObservableList<Game> activeGamesList = FXCollections.observableArrayList();
-    private ObservableList<Game> allGamesList = FXCollections.observableArrayList();
+    private ObservableList<GameInformation> allGamesList = FXCollections.observableArrayList();
     private ObservableList<UserInformation> onlinePlayersList = FXCollections.observableArrayList();
     private ObservableList<UserInformation> allPlayersList = FXCollections.observableArrayList();
-
+    private ServiceListener serviceListener = AccountService.getInstance();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -79,8 +89,13 @@ public class ServerDisplay implements Initializable, ServiceListener {
         player2_G.setCellValueFactory(new PropertyValueFactory<>("player2Username"));
         startTime_G.setCellValueFactory(new PropertyValueFactory<>("startTime"));
         endTime_G.setCellValueFactory(new PropertyValueFactory<>("endTime"));
-        result_G.setCellValueFactory(new PropertyValueFactory<>("result"));
+        result_G.setCellValueFactory(new PropertyValueFactory<>("winningPlayerId"));
         spectators_G.setCellValueFactory(new PropertyValueFactory<>("spectators"));
+        try {
+            allGamesList.addAll(ds.getAllGamesInfo());
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     private void initializeATable() {
@@ -91,46 +106,29 @@ public class ServerDisplay implements Initializable, ServiceListener {
         lastName_A.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         deleted_A.setCellValueFactory(new PropertyValueFactory<>("isDeleted"));
         editableACols();
+        try {
+            allPlayersList.addAll(ds.AllUserInfo());
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
-    private void editableACols(){
-        username_AP.setCellFactory(TextFieldTableCell.forTableColumn());
-        username_AP.setOnEditCommit(e -> {
-            e.getTableView().getItems().get(e.getTablePosition().getRow()).setUsername(e.getNewValue());
-        });
-        password_A.setCellFactory(TextFieldTableCell.forTableColumn());
-        password_A.setOnEditCommit(e -> {
-            e.getTableView().getItems().get(e.getTablePosition().getRow()).setPassword(e.getNewValue());
-        });
-        firstName_A.setCellFactory(TextFieldTableCell.forTableColumn());
-        firstName_A.setOnEditCommit(e -> {
-            e.getTableView().getItems().get(e.getTablePosition().getRow()).setFirstName(e.getNewValue());
-        });
-        lastName_A.setCellFactory(TextFieldTableCell.forTableColumn());
-        lastName_A.setOnEditCommit(e -> {
-            e.getTableView().getItems().get(e.getTablePosition().getRow()).setLastName(e.getNewValue());
-        });
-        deleted_A.setCellFactory(TextFieldTableCell.forTableColumn());
-        deleted_A.setOnEditCommit(e -> {
-            e.getTableView().getItems().get(e.getTablePosition().getRow()).setIsDeleted(Integer.parseInt(e.getNewValue()));
-        });
+    private void editableACols() {
+        accounts.setEditable(true);
     }
+
 
     @FXML
-    public void onOnlinePlayerClicked(MouseEvent event)
-    {
-        if (event.getClickCount() == 2)
-        {
+    public void onOnlinePlayerClicked(MouseEvent event) {
+        if (event.getClickCount() == 2) {
             String username = activePlayers.getSelectionModel().getSelectedItem().toString();
             System.out.println("username selected: " + username);
         }
     }
 
     @FXML
-    public void onAccountClicked(MouseEvent event)
-    {
-        if (event.getClickCount() == 2)
-        {
+    public void onAccountClicked(MouseEvent event) {
+        if (event.getClickCount() == 2) {
             String username = activePlayers.getSelectionModel().getSelectedItem().toString();
             System.out.println("username selected: " + username);
 
@@ -138,20 +136,16 @@ public class ServerDisplay implements Initializable, ServiceListener {
     }
 
     @FXML
-    public void onActiveGameClicked(MouseEvent event)
-    {
-        if (event.getClickCount() == 2)
-        {
+    public void onActiveGameClicked(MouseEvent event) {
+        if (event.getClickCount() == 2) {
             String game = activeGames.getSelectionModel().getSelectedItem().toString();
             System.out.println("game selected: " + game);
         }
     }
 
     @FXML
-    public void onAllGameClicked(MouseEvent event)
-    {
-        if (event.getClickCount() == 2)
-        {
+    public void onAllGameClicked(MouseEvent event) {
+        if (event.getClickCount() == 2) {
             String game = games.getSelectionModel().getSelectedItem().toString();
             System.out.println("game selected: " + game);
         }
@@ -160,7 +154,6 @@ public class ServerDisplay implements Initializable, ServiceListener {
     public void display(ActionEvent event) {
 
     }
-
 
     @Override
     public void onDataChanged(Packet packet) {
@@ -204,12 +197,25 @@ public class ServerDisplay implements Initializable, ServiceListener {
                         Game newClosedGame = (Game) packet.getData();
                         System.out.println("<--- New Closed Game: " + newClosedGame.getId() + " --->");
                         activeGamesList.remove(newClosedGame);
-                        allGamesList.add(newClosedGame);
+                        GameInformation information = new GameInformation();
+                        information.setId(newClosedGame.getId());
+                        information.setPlayer1Username(newClosedGame.getPlayer1Username());
+                        information.setPlayer2Username(newClosedGame.getPlayer2Username());
+                        information.setStartTime(newClosedGame.getStartTime());
+                        information.setEndTime(newClosedGame.getEndTime());
+                        information.setWinningPlayerId(newClosedGame.getWinningPlayerId());
+                        information.setStartingPlayerId(newClosedGame.getStartingPlayerId());
+                        information.setSpectators(newClosedGame.getSpectators());
+                        allGamesList.add(information);
 
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         });
+    }
+
+    public void notifyAccountsServer(Packet packet) {
+        serviceListener.onDataChanged(packet);
     }
 }
