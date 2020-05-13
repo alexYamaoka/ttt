@@ -262,7 +262,7 @@ public class ServerDisplay implements Initializable, ServiceListener {
                         case Packet.SIGN_OUT:
                             UserInformation newSignedOutUser = (UserInformation) packet.getData();
                             System.out.println("<--- New Signed Out User: " + newSignedOutUser.getUsername() + " --->");
-                            onlinePlayersList.remove(newSignedOutUser);
+                            onlinePlayersList.removeAll(newSignedOutUser);
                             break;
 
                         case Packet.ACTIVE_GAME:

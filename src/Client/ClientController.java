@@ -41,15 +41,6 @@ public class ClientController {
 
     public ClientController(Stage stage) {
         this.stage = stage;
-        stage.setOnCloseRequest(windowEvent -> {
-            Packet packet = new Packet(Packet.SIGN_OUT, accountClient.getUserInformation(), "SIGN-OUT");
-            accountClient.addRequestToServer(packet);
-            gameClient.addRequestToServer(packet);
-            this.stop();
-            stage.close();
-            Platform.exit();
-            System.exit(0);
-        });
         accountClient = new Client("localhost", 8000, new UserInformation("NA", "NA", "Anonymous", "NA", "NA"), this);
         initialize();
         setUpClientToUI();
@@ -109,6 +100,15 @@ public class ClientController {
     }
 
     public void run() {
+        stage.setOnCloseRequest(windowEvent -> {
+            Packet packet = new Packet(Packet.SIGN_OUT, accountClient.getUserInformation(), "SIGN-OUT");
+            accountClient.addRequestToServer(packet);
+            gameClient.addRequestToServer(packet);
+            this.stop();
+            stage.close();
+            Platform.exit();
+            System.exit(0);
+        });
         accountClient.execute();
     }
 
