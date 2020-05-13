@@ -140,7 +140,7 @@ public class GameHistoryController implements Initializable, GameHistoryListener
 
         if (event.getSource() == backButton) {
             stage = (Stage) backButton.getScene().getWindow();
-            root = clientController.getGameHistoryPane();
+            root = clientController.getMainMenuPain();
         }
         stage.setScene(root.getScene());
         stage.show();

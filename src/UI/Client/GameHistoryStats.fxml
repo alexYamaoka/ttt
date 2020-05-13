@@ -4,6 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<?import java.net.URL?>
 <AnchorPane prefHeight="680.0" prefWidth="1025.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496)radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.Client.GameHistoryStatsController">
    <children>
       <Label fx:id="gameID" text="Game ID: " textFill="WHITE" />
@@ -41,15 +42,18 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="zZ" layoutX="510.0" layoutY="120.0" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" textAlignment="CENTER" />
-      <Label fx:id="zO" layoutX="660.0" layoutY="120.0" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" textAlignment="CENTER" />
-      <Label fx:id="zT" layoutX="810.0" layoutY="120.0" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" textAlignment="CENTER" />
-      <Label fx:id="oZ" layoutX="510.0" layoutY="270.0" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" textAlignment="CENTER" />
-      <Label fx:id="oO" layoutX="660.0" layoutY="270.0" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" textAlignment="CENTER" />
-      <Label fx:id="oT" layoutX="810.0" layoutY="270.0" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" textAlignment="CENTER" />
-      <Label fx:id="tZ" layoutX="510.0" layoutY="420.0" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" textAlignment="CENTER" />
-      <Label fx:id="tO" layoutX="660.0" layoutY="420.0" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" textAlignment="CENTER" />
-      <Label fx:id="tT" layoutX="810.0" layoutY="420.0" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" textAlignment="CENTER" />
+      <Label fx:id="zZ" id="gameLabel" layoutX="510.0" layoutY="120.0" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" textAlignment="CENTER" />
+      <Label fx:id="zO" id="gameLabel" layoutX="660.0" layoutY="120.0" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" textAlignment="CENTER" />
+      <Label fx:id="zT" id="gameLabel" layoutX="810.0" layoutY="120.0" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" textAlignment="CENTER" />
+      <Label fx:id="oZ" id="gameLabel" layoutX="510.0" layoutY="270.0" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" textAlignment="CENTER" />
+      <Label fx:id="oO" id="gameLabel" layoutX="660.0" layoutY="270.0" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" textAlignment="CENTER" />
+      <Label fx:id="oT" id="gameLabel" layoutX="810.0" layoutY="270.0" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" textAlignment="CENTER" />
+      <Label fx:id="tZ" id="gameLabel" layoutX="510.0" layoutY="420.0" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" textAlignment="CENTER" />
+      <Label fx:id="tO" id="gameLabel" layoutX="660.0" layoutY="420.0" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" textAlignment="CENTER" />
+      <Label fx:id="tT" id="gameLabel" layoutX="810.0" layoutY="420.0" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" textAlignment="CENTER" />
       <Button fx:id="backButton" alignment="CENTER_RIGHT" layoutX="20.0" layoutY="630.0" mnemonicParsing="false" onAction="#backButtonClicked" prefHeight="10.0" prefWidth="60.0" style="-fx-background-color: white;" styleClass="backButton" stylesheets="@backButton.css" text="Back" />
    </children>
+   <stylesheets>
+      <URL value="@gameHistoryStats.css"/>
+   </stylesheets>
 </AnchorPane>
