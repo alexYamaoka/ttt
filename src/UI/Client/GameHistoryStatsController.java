@@ -37,9 +37,6 @@ public class GameHistoryStatsController implements Initializable {
         this.winningPlayer.setText(winningPlayer.getText() + " " + information.getWinningPlayerId());
 
         for(Move move : moves) {
-            System.out.println("Starting Player Id: " + information.getStartingPlayerId());
-            System.out.println("Move player Id: " + move.getPlayerId());
-
             if (move.getPlayerId().equals(information.getStartingPlayerId())) {
                 move.setToken("X");
             } else {
