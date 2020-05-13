@@ -21,6 +21,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+import java.awt.event.MouseEvent;
 import java.lang.reflect.GenericArrayType;
 import java.net.URL;
 import java.util.ArrayList;
@@ -65,6 +66,7 @@ public class GameHistoryController implements Initializable, GameHistoryListener
         clientController.getAccountClient().addRequestToServer(packet);
     }
 
+    
 
     public void getServerInfo(String message){
         Platform.runLater(()->{
