@@ -94,8 +94,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
             gameInformation.setStartTime(rs.getTimestamp("StartTime"));
             allGameInfo.add(gameInformation);
         }
-
-
+        
         return allGameInfo;
     }
 
