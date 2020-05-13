@@ -261,6 +261,14 @@ public class Game extends BaseModel implements Serializable {
         return tttBoard;
     }
 
+    public void setStartingPlayerId(String startingPlayerId) {
+        this.startingPlayerId = startingPlayerId;
+    }
+
+    public String getStartingPlayerId() {
+        return startingPlayerId;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if(obj instanceof Game) {
