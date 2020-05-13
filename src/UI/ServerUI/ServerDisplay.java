@@ -10,7 +10,9 @@ import Shared.GameInformation;
 import Shared.UserInformation;
 import ObserverPatterns.ServiceListener;
 import Shared.Packet;
+import com.mysql.cj.conf.StringProperty;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -101,9 +103,13 @@ public class ServerDisplay implements Initializable, ServiceListener {
     private void initializeATable() {
         accounts.setItems(allPlayersList);
         username_A.setCellValueFactory(new PropertyValueFactory<>("username"));
+        username_A.setCellFactory(TextFieldTableCell.forTableColumn());
         password_A.setCellValueFactory(new PropertyValueFactory<>("password"));
+        password_A.setCellFactory(TextFieldTableCell.forTableColumn());
         firstName_A.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        firstName_A.setCellFactory(TextFieldTableCell.forTableColumn());
         lastName_A.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        lastName_A.setCellFactory(TextFieldTableCell.forTableColumn());
         deleted_A.setCellValueFactory(new PropertyValueFactory<>("isDeleted"));
         editableACols();
         try {
@@ -217,5 +223,52 @@ public class ServerDisplay implements Initializable, ServiceListener {
 
     public void notifyAccountsServer(Packet packet) {
         serviceListener.onDataChanged(packet);
+    }
+
+    private class TextFieldCellFactory implements Callback<TableColumn<UserInformation, String>, TableCell<UserInformation, String>> {
+
+        @Override
+        public TableCell<UserInformation, String> call(TableColumn<UserInformation, String> userInformationStringTableColumn) {
+            TextFieldCell textFieldCell = new TextFieldCell();
+            return textFieldCell;
+        }
+
+        public class TextFieldCell extends TableCell<UserInformation, String> {
+            private TextField textField;
+            private SimpleStringProperty boundToCurrently = null;
+
+            public TextFieldCell() {
+                String strCss;
+                strCss = "-fx-padding: 0";
+                this.setStyle(strCss);
+
+                textField = new TextField();
+                this.setGraphic(textField);
+            }
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if(!empty) {
+                    this.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+                    ObservableValue<String> ov = getTableColumn().getCellObservableValue(getIndex());
+                    SimpleStringProperty sp = (SimpleStringProperty) ov;
+
+                    if(this.boundToCurrently == null) {
+                        this.boundToCurrently = sp;
+                        this.textField.textProperty().bindBidirectional(sp);
+                    } else {
+                        if(this.boundToCurrently != sp) {
+                            this.textField.textProperty().unbindBidirectional(this.boundToCurrently);
+                            this.boundToCurrently = sp;
+                            this.textField.textProperty().bindBidirectional(this.boundToCurrently);
+                        }
+                    }
+                } else {
+                    this.setContentDisplay(ContentDisplay.TEXT_ONLY);
+                }
+            }
+
+        }
     }
 }
