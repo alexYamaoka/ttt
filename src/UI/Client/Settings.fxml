@@ -2,56 +2,84 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="580.0" prefWidth="600.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496)radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.Client.SettingsController">
+<AnchorPane prefHeight="680.0" prefWidth="1025.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496)radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.Client.SettingsController">
     <children>
-        <SplitPane fx:id="splitPane" dividerPositions="0.2736842105263158" layoutX="17.0" layoutY="82.0" prefHeight="481.0" prefWidth="572.0" style="-fx-border-color: #000000#000000; -fx-border-insets: 0,0; -fx-padding: 0; -fx-split-pane-divider: 0;">
-            <items>
-                <AnchorPane fx:id="split1" minHeight="0.0" minWidth="0.0" prefHeight="496.0" prefWidth="154.0" style="-fx-background-color: #132639#132639; -fx-border-color: #000000#000000;">
-                    <children>
-                        <Button fx:id="btn_UserDetails" layoutX="19.0" layoutY="154.0" mnemonicParsing="false" onAction="#UserDetailButton" prefHeight="27.0" prefWidth="118.0" text="User Details" />
-                        <Button fx:id="btn_MainMenu" layoutX="20.0" layoutY="193.0" mnemonicParsing="false" onAction="#MainMenu" prefHeight="27.0" prefWidth="118.0" text="MainMenu" textAlignment="CENTER" />
-                        <Button fx:id="DeactivateAccount" layoutX="19.0" layoutY="233.0" mnemonicParsing="false" onAction="#DeactivateAccount" prefHeight="27.0" prefWidth="118.0" text="Deactive Account" />
-                    </children>
-                </AnchorPane>
-                <AnchorPane fx:id="split2" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: radial-gradient(radius 200%,#132639,#1d9496)radial-gradient(radius 200%,#132639,#1d9496); -fx-border-color: #000000#000000;">
-                    <children>
-                        <AnchorPane fx:id="Pane1" prefHeight="481.0" prefWidth="410.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496)radial-gradient(radius 200%,#204060,#1d9496) radial-gradient(radius 200%,#204060,#1d9496)radial-gradient(radius 200%,#204060,#1d9496); -fx-border-color: #000000#000000;">
-                            <children>
-                                <Button fx:id="SaveButton" layoutX="112.0" layoutY="425.0" mnemonicParsing="false" onAction="#userDetailsSaved" prefHeight="42.0" prefWidth="167.0" style="-fx-background-color: #132639#132639; -fx-text-fill: #9fbfdf#9fbfdf;" text="Save" />
-                                <Label layoutX="125.0" layoutY="14.0" prefHeight="29.0" prefWidth="129.0" style="-fx-text-fill: #9fbfdf#9fbfdf;" text="User Details" textAlignment="CENTER">
-                                    <font>
-                                        <Font size="24.0" />
-                                    </font>
-                                </Label>
-                                <TextField fx:id="firstName" layoutX="115.0" layoutY="173.0" promptText="FirstName" style="-fx-background-color: #204060#204060; -fx-prompt-text-fill: #9fbfdf#9fbfdf;" />
-                                <TextField fx:id="lastName" layoutX="115.0" layoutY="214.0" promptText="LastName" style="-fx-background-color: #204060#204060; -fx-prompt-text-fill: #9fbfdf#9fbfdf;" />
-                                <ImageView fitHeight="102.0" fitWidth="94.0" layoutX="143.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../../Resources/Icons/pngguru.com-6.png" />
-                                    </image>
-                                </ImageView>
-                                <TextField fx:id="userName" layoutX="115.0" layoutY="137.0" promptText="UserName" style="-fx-prompt-text-fill: #9fbfdf#9fbfdf; -fx-background-color: #204060#204060;" />
-                        <TextField fx:id="btnOldpass" layoutX="115.0" layoutY="284.0" promptText="Old Password" style="-fx-background-color: #204060; -fx-prompt-text-fill: #9fbfdf;" />
-                        <TextField fx:id="btnNewpass" layoutX="115.0" layoutY="327.0" promptText="New Password" style="-fx-background-color: #204060; -fx-prompt-text-fill: #9fbfdf;" />
-                        <TextField fx:id="btnConfirmPass" layoutX="115.0" layoutY="373.0" promptText="Confirm Password" style="-fx-background-color: #204060; -fx-prompt-text-fill: #9fbfdf;" />
-                              <Label id="updateError" fx:id="errorLable" layoutX="41.0" layoutY="252.0" prefHeight="17.0" prefWidth="293.0" textAlignment="CENTER" />
-                            </children>
-                        </AnchorPane>
-                    </children>
-                </AnchorPane>
-            </items>
-        </SplitPane>
-        <Label alignment="CENTER" layoutX="14.0" layoutY="21.0" prefHeight="42.0" prefWidth="186.0" style="-fx-text-fill: #9fbfdf#9fbfdf;" text="Account Settings" textAlignment="CENTER">
-            <font>
-                <Font size="24.0" />
-            </font>
-        </Label>
+              <Label layoutX="342.5" layoutY="100.0" prefWidth="340.0" text="Account Information" textAlignment="CENTER" textFill="WHITE">
+                  <font>
+                      <Font size="40.0" />
+                  </font>
+              </Label>
+      <Label layoutX="60.0" layoutY="200.0" prefHeight="40.0" text="Name: " textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+              <TextField fx:id="firstName" layoutX="160.0" layoutY="200.0" prefWidth="150.0" promptText="First Name" style="-fx-background-color: invisible; -fx-prompt-text-fill: white;">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+              <TextField fx:id="lastName" layoutX="320.0" layoutY="200.0" prefWidth="150.0" promptText="Last Name" style="-fx-background-color: invisible; -fx-prompt-text-fill: white;">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <Label layoutX="60.0" layoutY="270.0" prefHeight="40.0" text="Username: " textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+              <TextField fx:id="username" layoutX="160.0" layoutY="270.0" promptText="Username" style="-fx-prompt-text-fill: white; -fx-background-color: invisible;">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </TextField>
+      <Label layoutX="60.0" layoutY="340.0" prefHeight="40.0" text="Password: " textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <PasswordField fx:id="password" editable="false" layoutX="160.0" layoutY="340.0" text="password">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </PasswordField>
+      <Button fx:id="confirmChangeButton" layoutX="450.0" layoutY="275.0" mnemonicParsing="false" onAction="#confirmChangeButtonClicked" style="-fx-background-color: white;" text="Confirm change" visible="false">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+            <Button fx:id="promptChangePasswordButton" alignment="TOP_CENTER" layoutX="293.0" layoutY="380.0" mnemonicParsing="false" onAction="#promptChangePasswordButtonClicked" prefHeight="27.0" style="-fx-background-color: invisible;" text="change password?" textFill="WHITE" />
+              <Button fx:id="confirmChangePasswordButton" layoutX="625.0" layoutY="410.0" mnemonicParsing="false" onAction="#confirmChangePasswordButtonClicked" prefHeight="42.0" prefWidth="200.0" style="-fx-background-color: #132639#132639;" text="Change password" textFill="WHITE" visible="false">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <PasswordField fx:id="currentPasswordField" layoutX="600.0" layoutY="200.0" promptText="Current password" visible="false">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </PasswordField>
+      <PasswordField fx:id="newPasswordField" layoutX="600.0" layoutY="270.0" promptText="New password" visible="false">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </PasswordField>
+      <PasswordField fx:id="confirmNewPasswordField" layoutX="600.0" layoutY="340.0" promptText="Confirm new password" visible="false">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </PasswordField>
+            <Button fx:id="backButton" layoutX="20.0" layoutY="630.0" mnemonicParsing="false" onAction="#backButtonClicked" prefHeight="10.0" prefWidth="60.0" style="-fx-background-color: white;" styleClass="backButton" stylesheets="@backButton.css" text="Back" textAlignment="CENTER" />
+            <Button fx:id="deactivateAccountButton" layoutX="890.0" layoutY="630.0" mnemonicParsing="false" onAction="#deactivateAccountButtonClicked" prefHeight="10.0" prefWidth="115.0" style="-fx-background-color: white;" text="Deactive Account" />
+      <Label fx:id="usernameErrorLabel" layoutX="172.0" layoutY="310.0" text="Username already taken" textFill="RED" visible="false" />
+      <Label fx:id="currentPasswordErrorLabel" layoutX="600.0" layoutY="240.0" textFill="RED" />
+      <Label fx:id="newPasswordErrorLabel" layoutX="600.0" layoutY="310.0" textFill="RED" />
+      <Label fx:id="confirmNewPasswordErrorLabel" layoutX="600.0" layoutY="380.0" textFill="RED" />
     </children>
 </AnchorPane>
