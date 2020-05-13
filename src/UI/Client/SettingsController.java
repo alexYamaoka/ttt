@@ -41,6 +41,10 @@ public class SettingsController implements Initializable, UpdateUserinformationL
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
+
+    public void updateInfo() {
         Platform.runLater(() -> {
             if (clientController.getAccountClient().getUserInformation().getIsDeleted() == 1) {
                 deactivateAccountButton.setText("Activate Account");
@@ -48,14 +52,11 @@ public class SettingsController implements Initializable, UpdateUserinformationL
                 deactivateAccountButton.setText("Deactivate Account");
             }
         });
-    }
-
-    public void updateInfo() {
         UserInformation information = clientController.getAccountClient().getUserInformation();
         firstName.setPromptText(information.getFirstName());
         lastName.setPromptText(information.getLastName());
         username.setPromptText(information.getUsername());
-//        btnOldpass.setPromptText(information.getPassword());
+        password.setPromptText(information.getPassword());
     }
 
     public void DeactivateAccount(ActionEvent event) {

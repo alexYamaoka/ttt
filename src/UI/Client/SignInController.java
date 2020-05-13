@@ -160,52 +160,48 @@ public class SignInController implements Initializable, SignInResultListener {
 
     @Override
     public void updateSignInResult(String message) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                if (!message.equalsIgnoreCase("FAIL")) {
-                    String[] str = message.trim().split("\\s+");
-                    String id = str[0];
-                    String firstName = str[1];
-                    String lastName = str[2];
-                    String username = str[3];
-                    String email = str[4];
-                    String password = str[5];
-                    String isDeleted = str[6];
-                    UserInformation userInformation = new UserInformation(firstName, lastName, username, email, password);
-                    userInformation.setId(id);
-                    userInformation.setIsDeleted(Integer.parseInt(isDeleted));
-                    controller.getAccountClient().setUserInformation(userInformation);
-                    Stage stage = (Stage) btn_LogIn.getScene().getWindow();
-                    Parent root = controller.getMainMenuPain();
-                    Scene scene = new Scene(root);
-                    stage.setScene(scene);
-                    stage.show();
-                    controller.getOptions().updateInfo();
+        Platform.runLater(() -> {
+            if (!message.equalsIgnoreCase("FAIL")) {
+                String[] str = message.trim().split("\\s+");
+                String id = str[0];
+                String firstName = str[1];
+                String lastName = str[2];
+                String username = str[3];
+                String email = str[4];
+                String password = str[5];
+                String isDeleted = str[6];
+                UserInformation userInformation = new UserInformation(firstName, lastName, username, email, password);
+                userInformation.setId(id);
+                userInformation.setIsDeleted(Integer.parseInt(isDeleted));
+                controller.getAccountClient().setUserInformation(userInformation);
+                Stage stage = (Stage) btn_LogIn.getScene().getWindow();
+                Parent root = controller.getMainMenuPain();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+                controller.getOptions().updateInfo();
 
 
-
-//                    if(userInformation.getIsDeleted() == 1) {
-//                        controller.getOptions().DeactivateAccount.setText("Activate Account");
-//                    }else{
-//                        controller.getOptions().DeactivateAccount.setText("Deactivate Account");
-//                    }
-
-                    Client client = new Client("localhost", 8080, userInformation, controller);
-                    controller.setGameClient(client);
-                    client.execute();
-
-                    // requests for the list of available games on the server to display it into the listview for user's UI
-                    Packet requestingListOfGames = new Packet(Packet.GET_GAMES, userInformation, "requesting list of games");
-                    client.addRequestToServer(requestingListOfGames);
-
-
-                    // requests for the list of online players
-                    Packet requestingListOfOnlinePlayers = new Packet(Packet.GET_ONLINE_PLAYERS, client.getUserInformation(), client.getUserInformation());
-                    controller.getAccountClient().addRequestToServer(requestingListOfOnlinePlayers);
+                if (userInformation.getIsDeleted() == 1) {
+                    controller.getOptions().deactivateAccountButton.setText("Activate Account");
                 } else {
-                    logInError.setText("The username or password provided is incorrect.");
+                    controller.getOptions().deactivateAccountButton.setText("Deactivate Account");
                 }
+
+                Client client = new Client("localhost", 8080, userInformation, controller);
+                controller.setGameClient(client);
+                client.execute();
+
+                // requests for the list of available games on the server to display it into the listview for user's UI
+                Packet requestingListOfGames = new Packet(Packet.GET_GAMES, userInformation, "requesting list of games");
+                client.addRequestToServer(requestingListOfGames);
+
+
+                // requests for the list of online players
+                Packet requestingListOfOnlinePlayers = new Packet(Packet.GET_ONLINE_PLAYERS, client.getUserInformation(), client.getUserInformation());
+                controller.getAccountClient().addRequestToServer(requestingListOfOnlinePlayers);
+            } else {
+                logInError.setText("The username or password provided is incorrect.");
             }
         });
     }

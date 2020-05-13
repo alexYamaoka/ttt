@@ -121,10 +121,11 @@ public class ClientController {
         // stop read message bus
         readMessageBus.stop();
         // stop account client
-        accountClient.stop();
+        if(accountClient != null)
+            accountClient.stop();
         //stop game client
-        gameClient.stop();
-
+        if(gameClient != null)
+            gameClient.stop();
     }
 
     public Client getAccountClient() {
