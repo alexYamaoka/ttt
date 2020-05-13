@@ -56,6 +56,27 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
     }
 
 
+    public List<UserInformation> AllUserInfo() throws SQLException {
+
+        String sql = "SELECT * FROM user";
+        UserStatement = myConn.prepareStatement(sql);
+        ResultSet rs = UserStatement.executeQuery(sql);
+        List<UserInformation> items = new ArrayList<>();
+        while(rs.next()){
+            UserInformation u = new UserInformation();
+            u.setId(rs.getString("id"));
+            u.setUsername(rs.getString("username"));
+            u.setPassword(rs.getString("password"));
+            u.setFirstName(rs.getString("FirstName"));
+            u.setLastName(rs.getString("LastName"));
+            u.setIsDeleted(rs.getInt("isDeleted"));
+            items.add(u);
+        }
+
+
+        return items;
+    }
+
 
     public List<GameInformation> getAllGamesInfo() throws SQLException{
 
@@ -71,6 +92,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
             gameInformation.setPlayer1Username(rs.getString("Player1Id"));
             gameInformation.setPlayer2Username(rs.getString("Player2Id"));
             gameInformation.setStartTime(rs.getTimestamp("StartTime"));
+            allGameInfo.add(gameInformation);
         }
 
 
@@ -213,6 +235,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
 
         return row != 0;
     }
+
 
     @Override
     public boolean insertGame(BaseModel obj) throws SQLException {
