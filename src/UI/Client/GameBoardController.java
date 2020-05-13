@@ -143,7 +143,7 @@ public class GameBoardController implements Initializable, GameListener {
             gameStatus.setStyle("-fx-background-color: green");
             gameStatus.setText("You win!");
         } else if (message.equals("Tie!")) {
-            gameStatus.setStyle("-fx-background-color: blue");
+            gameStatus.setStyle("-fx-background-color: orange");
             gameStatus.setText(message);
         } else if (message.equals("invalid-move")) {
             gameStatus.setText(message);
