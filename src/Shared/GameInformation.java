@@ -3,14 +3,17 @@ package Shared;
 import java.sql.Timestamp;
 
 public class GameInformation {
+
     private String player1Username;
     private String player2Username;
     private String id;
-    private String gameStatus;
     private Timestamp startTime;
     private Timestamp endTime;
     private String startingPlayerId;
     private String winningPlayerId;
+
+    public GameInformation() {
+    }
 
     public String getPlayer1Username() {
         return player1Username;
@@ -36,13 +39,6 @@ public class GameInformation {
         this.id = id;
     }
 
-    public String getGameStatus() {
-        return gameStatus;
-    }
-
-    public void setGameStatus(String gameStatus) {
-        this.gameStatus = gameStatus;
-    }
 
     public Timestamp getStartTime() {
         return startTime;

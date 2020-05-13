@@ -56,16 +56,16 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
     }
 
 
-    public List<BaseModel> getPlayerGamesInfo(String PlayerId) throws SQLException {
+    public List<BaseModel> getPlayerGamesInfo(String PlayerId,String username) throws SQLException {
 
         StringBuilder query = new StringBuilder();
         List<BaseModel> items = new ArrayList<>();
-        //query.append("SELECT * FROM game WHERE id = ").append(PlayerId);
 
-        query.append("SELECT game.id , game.startTime , game.endTime , user.username , game.WinningPlayerId ");
-        query.append("FROM game , user as player1 , user as player2");
-        query.append("WHERE id = ").append(PlayerId).append("game.player1Id = Player1.Id AND game.Player2Id = player2.Id");
-
+        query.append("SELECT game.gameID, user.username, game.StartTime, game.EndTime, " +
+                "(SELECT user.username FROM user WHERE user.id = game.Player2Id) AS Name, " +
+                "(SELECT user.username FROM user WHERE user.id = game.WinningPlayerId) AS WinnerFROM game " +
+                "INNER JOIN user ON game.Player1Id = user.id WHERE game.Player1Id =" + PlayerId
+                + " AND user.username="+username+ " ORDER BY game.StartTime ");
 
         System.out.println("Print out " + query.toString());
         GameStatement = myConn.prepareStatement(query.toString());
@@ -94,7 +94,6 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
            list.add(StartingPlayer);
            list.add(Winner);
         }
-
 
          */
         return null;
