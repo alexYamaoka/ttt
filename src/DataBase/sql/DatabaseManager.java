@@ -56,6 +56,27 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
     }
 
 
+
+    public List<GameInformation> getAllGamesInfo() throws SQLException{
+
+        String sql = "SELECT * FROM game";
+
+        GameStatement = myConn.prepareStatement(sql);
+        ResultSet rs = GameStatement.executeQuery(sql);
+        List<GameInformation> allGameInfo = new ArrayList<>();
+
+        while (rs.next()){
+            GameInformation gameInformation = new GameInformation();
+            gameInformation.setId(rs.getString("gameID"));
+            gameInformation.setPlayer1Username(rs.getString("Player1Id"));
+            gameInformation.setPlayer2Username(rs.getString("Player2Id"));
+            gameInformation.setStartTime(rs.getTimestamp("StartTime"));
+        }
+
+
+        return allGameInfo;
+    }
+
     public List<GameInformation> getPlayerGamesInfo(String PlayerId,String username) throws SQLException {
 
         String sql =

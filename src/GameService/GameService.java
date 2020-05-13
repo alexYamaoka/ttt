@@ -29,7 +29,7 @@ public class GameService implements Runnable, Service {
     private HashMap<String, Game> ongoingGameRooms = new HashMap<>();
     private HashMap<String, GameThread> gameThreadList = new HashMap<>();
 
-    private GameService() {
+    public GameService() {
         start();
     }
 

@@ -44,35 +44,43 @@ public class GameBoardController implements Initializable, GameListener {
 
     public void playerMoved(int x, int y) {
         Move move = new Move(x, y, clientController.getAccountClient().getUserInformation(), gameId);
-        System.out.println("Player Moved: " + move.getGameId() + " " + move.getMove());
         Packet packet = new Packet(Packet.GAME_MOVE, clientController.getAccountClient().getUserInformation(), move);
         clientController.getGameClient().addRequestToServer(packet);
         resetTime();
     }
+
     public void playerMovedzZ(ActionEvent actionEvent) {
         playerMoved(0, 0);
     }
+
     public void playerMovedzO(ActionEvent actionEvent) {
         playerMoved(0, 1);
     }
+
     public void playerMovedzT(ActionEvent actionEvent) {
         playerMoved(0, 2);
     }
+
     public void playerMovedoZ(ActionEvent actionEvent) {
         playerMoved(1, 0);
     }
+
     public void playerMovedoO(ActionEvent actionEvent) {
         playerMoved(1, 1);
     }
+
     public void playerMovedoT(ActionEvent actionEvent) {
         playerMoved(1, 2);
     }
+
     public void playerMovedtZ(ActionEvent actionEvent) {
         playerMoved(2, 0);
     }
+
     public void playerMovedtO(ActionEvent actionEvent) {
         playerMoved(2, 1);
     }
+
     public void playerMovedtT(ActionEvent actionEvent) {
         playerMoved(2, 2);
     }
@@ -87,7 +95,7 @@ public class GameBoardController implements Initializable, GameListener {
         if (actionEvent.getSource() == quit) {
             Stage stage = null;
             Parent root = null;
-            Packet packet = new Packet(Packet.GAME_CLOSE, clientController.getAccountClient().getUserInformation() , gameId);
+            Packet packet = new Packet(Packet.GAME_CLOSE, clientController.getAccountClient().getUserInformation(), gameId);
             clientController.getGameClient().addRequestToServer(packet);
 
             stage = (Stage) quit.getScene().getWindow();
@@ -114,7 +122,6 @@ public class GameBoardController implements Initializable, GameListener {
     }
 
     public void resetTime() {
-        time.setText("00:30");
         countdownTime();
     }
 
@@ -124,75 +131,23 @@ public class GameBoardController implements Initializable, GameListener {
 
     @Override
     public void updateMove(Move move) {
-
-        System.out.println("update move has been called");
         Platform.runLater(() -> {
-            int row = move.getRow();
-            int col = move.getColumn();
-            UserInformation userInformation = move.getUserInformation();
-
-            // used players username to determine who is X and who is O.
-            if (player1Username.equals(userInformation.getUsername())) {
-                System.out.println("move was  mine");
-                if (row == 0 && col == 0)
-                    zZ.setText("X");
-                else if (row == 0 && col == 1)
-                    zO.setText("X");
-                else if (row == 0 && col == 2)
-                    zT.setText("X");
-                else if (row == 1 && col == 0)
-                    oZ.setText("X");
-                else if (row == 1 && col == 1)
-                    oO.setText("X");
-                else if (row == 1 && col == 2)
-                    oT.setText("X");
-                else if (row == 2 && col == 0)
-                    tZ.setText("X");
-                else if (row == 2 && col == 1)
-                    tO.setText("X");
-                else if (row == 2 && col == 2)
-                    tT.setText("X");
-
-            } else if (player2Username.equals(userInformation.getUsername())) {
-                System.out.println("move was oppenents");
-                if (row == 0 && col == 0)
-                    zZ.setText("O");
-                else if (row == 0 && col == 1)
-                    zO.setText("O");
-                else if (row == 0 && col == 2)
-                    zT.setText("O");
-                else if (row == 1 && col == 0)
-                    oZ.setText("O");
-                else if (row == 1 && col == 1)
-                    oO.setText("O");
-                else if (row == 1 && col == 2)
-                    oT.setText("O");
-                else if (row == 2 && col == 0)
-                    tZ.setText("O");
-                else if (row == 2 && col == 1)
-                    tO.setText("O");
-                else if (row == 2 && col == 2)
-                    tT.setText("O");
-            }
+            Pair pair = new Pair<>(move.getRow(), move.getColumn());
+            buttons.get(pair).setText(move.getToken());
         });
-
     }
 
     @Override
     public void updateStatus(String message) {
-        System.out.println("GAME STATUS:" + message);
-        if (clientController.getAccountClient().getUserInformation().getUsername().equals(message)){
+        if (clientController.getAccountClient().getUserInformation().getUsername().equals(message)) {
             gameStatus.setStyle("-fx-background-color: green");
             gameStatus.setText("You win!");
-        }
-        else if (message.equals("Tie!")){
+        } else if (message.equals("Tie!")) {
             gameStatus.setStyle("-fx-background-color: blue");
             gameStatus.setText(message);
-        }
-        else if (message.equals("invalid-move")){
+        } else if (message.equals("invalid-move")) {
             gameStatus.setText(message);
-        }
-        else{
+        } else {
             gameStatus.setStyle("-fx-background-color: red");
             gameStatus.setText("You lose!");
         }
@@ -205,14 +160,12 @@ public class GameBoardController implements Initializable, GameListener {
 
     @Override
     public void setPlayer1Username(String player1Username) {
-        System.out.println("setPlayer1Username: " + player1Username);
         this.player1Username = player1Username;
         player1Name.setText(player1Username);
     }
 
     @Override
     public void setPlayer2Username(String player2Username) {
-        System.out.println("setPlayer2Username: " + player2Username);
         this.player2Username = player2Username;
         player2Name.setText(player2Username);
     }
@@ -233,71 +186,28 @@ public class GameBoardController implements Initializable, GameListener {
     public void setGame(Game game) {
         this.game = game;
         this.gameId = game.getId();
-        System.out.println("Set Game: " + this.game + " " + this.game.getId());
 
-        Platform.runLater(new Runnable()
-        {
+        Platform.runLater(new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
                 TTTBoard board = game.getTttBoard();
-
-                System.out.println("current state of the board");
-                board.printBoard();
                 updateStateOfGame(board);
-
             }
         });
     }
 
-    private void updateStateOfGame(TTTBoard board)
-    {
-
-        if (board.getCharInCell(0,0) == 'X')
-           zZ.setText("X");
-        else if (board.getCharInCell(0,0) == 'O')
-           zZ.setText("O");
-
-        if (board.getCharInCell(0,1) == 'X')
-            zO.setText("X");
-        else if (board.getCharInCell(0,1) == 'O')
-            zO.setText("O");
-
-        if (board.getCharInCell(0,2) == 'X')
-            zT.setText("X");
-        else if (board.getCharInCell(0,2) == 'O')
-            zT.setText("O");
-
-        if (board.getCharInCell(1,0) == 'X')
-            oZ.setText("X");
-        else if (board.getCharInCell(1,0) == 'O')
-            oZ.setText("O");
-
-        if (board.getCharInCell(1,1) == 'X')
-            oO.setText("X");
-        else if (board.getCharInCell(1,1) == 'O')
-            oO.setText("O");
-
-        if (board.getCharInCell(1,2) == 'X')
-            oT.setText("X");
-        else if (board.getCharInCell(1,2) == 'O')
-            oT.setText("O");
-
-        if (board.getCharInCell(2,0) == 'X')
-            tZ.setText("X");
-        else if (board.getCharInCell(2,0) == 'O')
-            tZ.setText("O");
-
-        if (board.getCharInCell(2,0) == 'X')
-            tO.setText("X");
-        else if (board.getCharInCell(2,0) == 'O')
-            tO.setText("O");
-
-        if (board.getCharInCell(2,2) == 'X')
-            tT.setText("X");
-        else if (board.getCharInCell(2,2) == 'O')
-            tT.setText("O");
-
+    private void updateStateOfGame(TTTBoard board) {
+        if(board != null) {
+            char[][] b = board.getBoard();
+            for(int i = 0; i < 3; i++) {
+                for(int j = 0; j < 3; j++) {
+                    if(b[i][j] != '_') {
+                        Pair pair = new Pair<>(i, j);
+                        buttons.get(pair).setText(String.valueOf(b[i][j]));
+                    }
+                }
+            }
+        }
     }
 
     private void playWinAnimation() {

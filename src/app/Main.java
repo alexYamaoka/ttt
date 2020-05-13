@@ -20,6 +20,7 @@ public class Main extends Application
 
     private AccountService accountService = AccountService.getInstance();
     private GameService gameService = GameService.getInstance();
+
     private ServerDisplay serverDisplayController;
 
     public static void main(String[] args) {
