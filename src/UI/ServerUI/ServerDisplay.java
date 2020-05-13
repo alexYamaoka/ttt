@@ -86,6 +86,7 @@ public class ServerDisplay implements Initializable, ServiceListener {
     }
 
     private void initializeGTable() {
+        //ds.getAllGamesInfo()
         games.setItems(allGamesList);
         gameID_G.setCellValueFactory(new PropertyValueFactory<>("id"));
         player1_G.setCellValueFactory(new PropertyValueFactory<>("player1Username"));

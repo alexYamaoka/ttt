@@ -12,6 +12,7 @@ public class UserInformation extends BaseModel implements Serializable {
     private String password;
     private int isDeleted;
 
+
     public UserInformation() {
 
     }
