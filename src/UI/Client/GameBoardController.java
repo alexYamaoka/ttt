@@ -132,7 +132,7 @@ public class GameBoardController implements Initializable, GameListener {
             UserInformation userInformation = move.getUserInformation();
 
             // used players username to determine who is X and who is O.
-            if (player1Username.equals(userInformation.getUserName())) {
+            if (player1Username.equals(userInformation.getUsername())) {
                 System.out.println("move was  mine");
                 if (row == 0 && col == 0)
                     zZ.setText("X");
@@ -153,7 +153,7 @@ public class GameBoardController implements Initializable, GameListener {
                 else if (row == 2 && col == 2)
                     tT.setText("X");
 
-            } else if (player2Username.equals(userInformation.getUserName())) {
+            } else if (player2Username.equals(userInformation.getUsername())) {
                 System.out.println("move was oppenents");
                 if (row == 0 && col == 0)
                     zZ.setText("O");
@@ -181,7 +181,7 @@ public class GameBoardController implements Initializable, GameListener {
     @Override
     public void updateStatus(String message) {
         System.out.println("GAME STATUS:" + message);
-        if (clientController.getAccountClient().getUserInformation().getUserName().equals(message)){
+        if (clientController.getAccountClient().getUserInformation().getUsername().equals(message)){
             gameStatus.setStyle("-fx-background-color: green");
             gameStatus.setText("You win!");
         }

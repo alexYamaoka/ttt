@@ -43,14 +43,14 @@ class UserInformationTest
     void getUserName_returns_Correct()
     {
         UserInformation userInformation = new UserInformation("firstName", "lastName", "username", "email", "password");
-        assertEquals("username", userInformation.getUserName());
+        assertEquals("username", userInformation.getUsername());
     }
 
     @Test
     void setUserName_assigns_Correct()
     {
         UserInformation userInformation = new UserInformation();
-        userInformation.setUserName("username");
-        assertEquals("username", userInformation.getUserName());
+        userInformation.setUsername("username");
+        assertEquals("username", userInformation.getUsername());
     }
 }

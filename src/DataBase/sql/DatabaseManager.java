@@ -171,7 +171,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         while (rs.next()) {
             UserInformation u = new UserInformation();
             u.setId(rs.getString(1));
-            u.setUserName(rs.getString(2));
+            u.setUsername(rs.getString(2));
             u.setFirstName(rs.getString(3));
             u.setLastName(rs.getString(4));
             items.add(u);
@@ -266,14 +266,14 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         if (obj instanceof UserInformation) {
             UserInformation userObj = (UserInformation) obj;
             UUIDGenerator newID = new UUIDGenerator();
-            System.out.println("Name " + userObj.getUserName());
+            System.out.println("Name " + userObj.getUsername());
             query.append("user ");
             query.append("(id, username, password, FirstName, LastName, isDeleted)");
             query.append(" values (?,?,?,?,?,?)");
             UserStatement = myConn.prepareStatement(query.toString());
             System.out.println(query.toString());
             UserStatement.setString(1, newID.getNewId());
-            UserStatement.setString(2, userObj.getUserName());
+            UserStatement.setString(2, userObj.getUsername());
             UserStatement.setString(3, userObj.getPassword());
             UserStatement.setString(4, userObj.getFirstName());
             UserStatement.setString(5, userObj.getLastName());
@@ -312,7 +312,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
             if (obj.getCanonicalName().equalsIgnoreCase("Shared.UserInformation")) {
                 UserInformation u = new UserInformation();
                 u.setId(rs.getString(1));
-                u.setUserName(rs.getString(2));
+                u.setUsername(rs.getString(2));
                 u.setPassword(rs.getString(3));
                 u.setFirstName(rs.getString(4));
                 u.setLastName(rs.getString(5));
