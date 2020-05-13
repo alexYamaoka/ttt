@@ -181,6 +181,64 @@ public class GameBoardController implements Initializable, GameListener {
     public void setGame(Game game) {
         this.game = game;
         this.gameId = game.getId();
+
+        Platform.runLater(new Runnable()
+        {
+            @Override
+            public void run() {
+                TTTBoard board = game.getTttBoard();
+                updateStateOfGame(board);
+            }
+        });
+    }
+
+    private void updateStateOfGame(TTTBoard board)
+    {
+
+        if (board.getCharInCell(0,0) == 'X')
+           zZ.setText("X");
+        else if (board.getCharInCell(0,0) == 'O')
+           zZ.setText("O");
+
+        if (board.getCharInCell(0,1) == 'X')
+            zO.setText("X");
+        else if (board.getCharInCell(0,1) == 'O')
+            zO.setText("O");
+
+        if (board.getCharInCell(0,2) == 'X')
+            zT.setText("X");
+        else if (board.getCharInCell(0,2) == 'O')
+            zT.setText("O");
+
+        if (board.getCharInCell(1,0) == 'X')
+            oZ.setText("X");
+        else if (board.getCharInCell(1,0) == 'O')
+            oZ.setText("O");
+
+        if (board.getCharInCell(1,1) == 'X')
+            oO.setText("X");
+        else if (board.getCharInCell(1,1) == 'O')
+            oO.setText("O");
+
+        if (board.getCharInCell(1,2) == 'X')
+            oT.setText("X");
+        else if (board.getCharInCell(1,2) == 'O')
+            oT.setText("O");
+
+        if (board.getCharInCell(2,0) == 'X')
+            tZ.setText("X");
+        else if (board.getCharInCell(2,0) == 'O')
+            tZ.setText("O");
+
+        if (board.getCharInCell(2,0) == 'X')
+            tO.setText("X");
+        else if (board.getCharInCell(2,0) == 'O')
+            tO.setText("O");
+
+        if (board.getCharInCell(2,2) == 'X')
+            tT.setText("X");
+        else if (board.getCharInCell(2,2) == 'O')
+            tT.setText("O");
     }
 
     private void playWinAnimation() {

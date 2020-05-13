@@ -21,13 +21,12 @@ import java.util.List;
 public class Game extends BaseModel implements Serializable {
 
     private transient ArrayList<ClientConnection> GameObservers = new ArrayList<>();
-    private transient TTTBoard tttBoard;
     private transient ClientConnection player1;
     private transient ClientConnection player2;
     private transient UserInformation player1Info;
     private transient UserInformation player2Info;
     private transient DataSource ds = DatabaseManager.getInstance();
-
+    private  TTTBoard tttBoard;
     private String player1Username;
     private String player2Username;
     private String id;

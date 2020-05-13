@@ -1,6 +1,9 @@
 package Models;
 
-public class TTTBoard {
+import java.io.Serializable;
+
+public class TTTBoard implements Serializable
+{
     private final char X = 'X';
     private final char O = 'O';
     private final char emptyCell = '_';
