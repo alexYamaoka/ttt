@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="580.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.Client.GameHistoryController">
+<AnchorPane prefHeight="680.0" prefWidth="1025.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.Client.GameHistoryController">
     <children>
-        <TableView fx:id="gameHistoryTable" prefHeight="580.0" prefWidth="600.0"
-                   style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496)radial-gradient(radius 200%,#204060,#1d9496);">
+        <TableView fx:id="gameHistoryTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1025.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496)radial-gradient(radius 200%,#204060,#1d9496);">
             <columns>
-                <TableColumn fx:id="gameID" minWidth="120.0" prefWidth="75.0" text="Game ID"/>
-                <TableColumn fx:id="opponent" editable="false" minWidth="120.0" prefWidth="75.0" text="Opponent"/>
-                <TableColumn fx:id="startTime" minWidth="120.0" prefWidth="75.0" text="Start Time"/>
-                <TableColumn fx:id="endTime" minWidth="120.0" prefWidth="75.0" text="End Time"/>
-                <TableColumn fx:id="results" editable="false" minWidth="120.0" prefWidth="75.0" text="Result"/>
+                <TableColumn fx:id="gameID" editable="false" minWidth="205.0" prefWidth="75.0" text="Game ID" />
+                <TableColumn fx:id="opponent" editable="false" minWidth="205.0" prefWidth="75.0" text="Opponent" />
+                <TableColumn fx:id="startTime" editable="false" minWidth="205.0" prefWidth="75.0" text="Start Time" />
+                <TableColumn fx:id="endTime" editable="false" minWidth="205.0" prefWidth="75.0" text="End Time" />
+                <TableColumn fx:id="results" editable="false" minWidth="205.0" prefWidth="75.0" text="Result" />
             </columns>
         </TableView>
+      <Button fx:id="backButton" alignment="CENTER_RIGHT" layoutX="20.0" layoutY="630.0" mnemonicParsing="false" onAction="#backButtonClicked" prefHeight="10.0" prefWidth="60.0" style="-fx-background-color: white;" styleClass="backButton" stylesheets="@backButton.css" text="Back" />
     </children>
 </AnchorPane>

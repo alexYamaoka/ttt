@@ -13,20 +13,20 @@
             <AnchorPane prefHeight="717.0" prefWidth="952.0">
                <children>
                   <TableView fx:id="activeGames" editable="true" prefHeight="717.0" prefWidth="952.0">
-                     <columns>
-                        <TableColumn fx:id="gameID_AG" prefWidth="238.0" text="Game ID" />
-                        <TableColumn fx:id="player1_AG" prefWidth="238.0" text="Player 1" />
+                    <columns>
+                      <TableColumn fx:id="gameID_AG" prefWidth="238.0" text="Game ID" />
+                      <TableColumn fx:id="player1_AG" prefWidth="238.0" text="Player 1" />
                         <TableColumn fx:id="player2_AG" prefWidth="238.0" text="Player 2" />
                         <TableColumn fx:id="startTime_AG" prefWidth="238.0" text="Start Time" />
-                     </columns>
+                    </columns>
                   </TableView>
                </children>
             </AnchorPane>
          </content>
       </Tab>
       <Tab text="Active Players">
-         <content>
-            <AnchorPane prefHeight="717.0" prefWidth="952.0">
+        <content>
+          <AnchorPane prefHeight="717.0" prefWidth="952.0">
                <children>
                   <TableView fx:id="activePlayers" editable="true" prefHeight="717.0" prefWidth="952.0">
                      <columns>
@@ -36,11 +36,11 @@
                   </TableView>
                </children>
             </AnchorPane>
-         </content>
+        </content>
       </Tab>
       <Tab text="Games">
-         <content>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="717.0" prefWidth="952.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="717.0" prefWidth="952.0">
                <children>
                   <TableView fx:id="games" editable="true" prefHeight="717.0" prefWidth="952.0">
                      <columns>
@@ -55,11 +55,11 @@
                   </TableView>
                </children>
             </AnchorPane>
-         </content>
+        </content>
       </Tab>
       <Tab text="Accounts">
-         <content>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="717.0" prefWidth="952.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="717.0" prefWidth="952.0">
                <children>
                   <TableView fx:id="accounts" editable="true" prefHeight="717.0" prefWidth="952.0">
                      <columns>
@@ -72,7 +72,7 @@
                   </TableView>
                </children>
             </AnchorPane>
-         </content>
+        </content>
       </Tab>
    </tabs>
 </TabPane>

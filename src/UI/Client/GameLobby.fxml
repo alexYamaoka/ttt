@@ -23,7 +23,7 @@
         </Label>
         <TableView fx:id="activeGames" editable="true" layoutX="112.5" layoutY="160.0" prefHeight="400.0" prefWidth="800.0">
             <placeholder>
-                <Label text="No Games Are Being Played"/>
+                <Label text="No Games Are Being Played" />
             </placeholder>
             <columns>
                 <TableColumn fx:id="player1Column" editable="false" prefWidth="200.0" text="Player 1" />
@@ -32,8 +32,8 @@
                 <TableColumn fx:id="actionColumn" editable="false" prefWidth="200.0" text="Action" />
             </columns>
         </TableView>
-        <Button fx:id="returnToMainMenuButton" layoutX="112.5" layoutY="590.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#returnToMainMenuButtonClicked" prefWidth="140.0" text="Return to main menu" />
-        <Button fx:id="newGameAgainstComputerButton" layoutX="772.5" layoutY="590.0" mnemonicParsing="false" onAction="#onPlayAgainstComputerButtonClicked" prefWidth="140.0" text="Play against computer" />
-        <Button fx:id="newGameButton" layoutX="617.5" layoutY="590.0" mnemonicParsing="false" onAction="#onCreateGameButtonClicked" prefWidth="140.0" text="Create new game" />
+        <Button fx:id="returnToMainMenuButton" layoutX="112.5" layoutY="590.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#returnToMainMenuButtonClicked" prefWidth="140.0" style="-fx-background-color: white;" text="Return to main menu" />
+        <Button fx:id="newGameAgainstComputerButton" layoutX="772.5" layoutY="590.0" mnemonicParsing="false" onAction="#onPlayAgainstComputerButtonClicked" prefWidth="140.0" style="-fx-background-color: white;" text="Play against computer" />
+        <Button fx:id="newGameButton" layoutX="617.5" layoutY="590.0" mnemonicParsing="false" onAction="#onCreateGameButtonClicked" prefWidth="140.0" style="-fx-background-color: white;" text="Create new game" />
     </children>
 </AnchorPane>

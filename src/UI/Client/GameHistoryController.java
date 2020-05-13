@@ -10,11 +10,15 @@ import Shared.Packet;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -26,6 +30,8 @@ public class GameHistoryController implements Initializable, GameHistoryListener
     private TableView gameHistoryTable;
     @FXML
     private TableColumn<GameInformation, String> gameID, opponent, startTime, endTime, results;
+    @FXML
+    private Button backButton;
 
     private ClientController clientController;
     private DataSource ds = DatabaseManager.getInstance();
@@ -81,8 +87,20 @@ public class GameHistoryController implements Initializable, GameHistoryListener
             data.addAll(list);
         });
     }
-  
+
     public void updateGameHistory(GameInformation gameInformation) {
 
+    }
+
+    public void backButtonClicked(ActionEvent event) {
+        Stage stage = null;
+        Parent root = null;
+
+        if(event.getSource() == backButton) {
+            stage = (Stage) backButton.getScene().getWindow();
+            root = clientController.getGameHistoryPane();
+        }
+        stage.setScene(root.getScene());
+        stage.show();
     }
 }

@@ -23,7 +23,7 @@ public class ClientController {
     private SignInController signInController;
     private MainMenuController mainMenuController;
     private UI.Client.SignUpController signUpController;
-    private UI.Client.Options options;
+    private SettingsController options;
     private GameLobbyController gameLobby;
     private GameHistoryController gameHistoryController;
 
@@ -65,7 +65,7 @@ public class ClientController {
             signUpController.setClientController(this);
             signUpController.setSignInController(signInController);
 
-            loader = new FXMLLoader(getClass().getResource("../UI/Client/Options.fxml"));
+            loader = new FXMLLoader(getClass().getResource("../UI/Client/Settings.fxml"));
             optionsPane = loader.load();
             options = loader.getController();
             options.setClientController(this);
@@ -171,7 +171,7 @@ public class ClientController {
         return signUpController;
     }
 
-    public Options getOptions() {
+    public SettingsController getOptions() {
         return options;
     }
 
