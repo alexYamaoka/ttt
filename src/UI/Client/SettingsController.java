@@ -64,14 +64,19 @@ public class SettingsController implements Initializable, UpdateUserinformationL
     private TextField userName;
     @FXML
     private Label updateError;
-    @FXML
-    private TextField oldPassword, newPassword, confirmPassword;
+
+    //@FXML
+    //private TextField oldPassword, newPassword, confirmPassword;
 
     private ClientController controller;
 
-
+    @FXML
     public TextField btnOldpass;
+
+    @FXML
     public TextField btnNewpass;
+
+    @FXML
     public TextField btnConfirmPass;
 
 
@@ -106,11 +111,11 @@ public class SettingsController implements Initializable, UpdateUserinformationL
     }
 
     public void updateInfo() {
-
         UserInformation information = controller.getAccountClient().getUserInformation();
         firstName.setPromptText(information.getFirstName());
         lastName.setPromptText(information.getLastName());
         userName.setPromptText(information.getUsername());
+        btnOldpass.setPromptText(information.getPassword());
     }
 
     public void DeactivateAccount(ActionEvent event){
@@ -133,23 +138,102 @@ public class SettingsController implements Initializable, UpdateUserinformationL
         String username = this.userName.getPromptText();
         String firstName = this.firstName.getPromptText();
         String lastName = this.lastName.getPromptText();
-        String oldPassword = this.btnOldpass.getText();
+        String oldPassword = this.btnOldpass.getPromptText();
+
         String newPassword = this.btnNewpass.getText();
         String confirmPassword = this.btnConfirmPass.getText();
-        user.add(firstName.toString());
-        user.add(lastName.toString());
-        user.add(username.toString());
-        user.add(id.toString());
-        user.add(confirmPassword.toString());
+//        user.add(firstName.toString());
+//        user.add(lastName.toString());
+//        user.add(username.toString());
+//        user.add(id.toString());
+//        user.add(oldPassword.toString());
 
-/*
-            if(!this.userName.getText().equals(this.userName.getPromptText())){
-                username = this.userName.getText();
-            }else{
-                username = this.userName.getPromptText();
+
+        if(!this.userName.getText().equals(this.userName.getPromptText())) {
+            username = this.userName.getText();
+        }
+        else{
+            username = this.userName.getPromptText();
+        }
+        user.add(username);
+        System.out.println("username: " + username);
+
+
+        if(!this.firstName.getText().equals(this.firstName.getPromptText())){
+                firstName = this.firstName.getText();
+        }else{
+            firstName = this.firstName.getPromptText();
+        }
+        user.add(firstName);
+        System.out.println("first name: " + firstName);
+
+        if(!this.lastName.getText().equals(this.lastName.getPromptText())){
+                lastName = this.lastName.getText();
+        }
+        else{
+            lastName = this.lastName.getPromptText();
+        }
+        user.add(lastName);
+        System.out.println("last name: " + lastName);
+
+        if(!this.btnOldpass.getPromptText().equals(controller.getAccountClient().getUserInformation().getPassword())){
+
+            oldPassword = this.btnOldpass.getText();
+        }
+        else{
+            oldPassword = controller.getAccountClient().getUserInformation().getPassword();
+        }
+        user.add(oldPassword);
+        System.out.println("old password: " + oldPassword);
+
+
+        if(!this.btnNewpass.getText().equals(this.btnNewpass.getPromptText())){
+            newPassword = this.btnNewpass.getText();
+        }
+        else{
+            newPassword = controller.getAccountClient().getUserInformation().getPassword();
+        }
+        user.add(newPassword);
+        System.out.println("new password: " + newPassword);
+
+        if(!this.btnConfirmPass.getText().equals(this.btnConfirmPass.getPromptText())){
+            confirmPassword = this.btnConfirmPass.getText();
+        }
+        else{
+            confirmPassword = controller.getAccountClient().getUserInformation().getPassword();
+        }
+        user.add(confirmPassword);
+        System.out.println("confirm password: " + confirmPassword);
+
+
+        // List<String>
+        // username, firstname, lastname, id, password
+
+
+        String data = String.join(" ", user);
+        System.out.println(user);
+
+        System.out.println("password check");
+        System.out.println("old password: " + oldPassword);
+        System.out.println("controller.getAccount: " + controller.getAccountClient().getUserInformation().getPassword());
+
+        if (oldPassword.equalsIgnoreCase(controller.getAccountClient().getUserInformation().getPassword())) {
+
+            if (newPassword.equals(confirmPassword)) {
+                Packet packet = new Packet(Packet.UPDATE_USER, controller.getAccountClient().getUserInformation(), data);
+                controller.getAccountClient().addRequestToServer(packet);
             }
-                user.add(username);
+            else {
+                errorLable.setTextFill(Color.RED);
+                errorLable.setText("New passwords do not match!");
+            }
+        }
+        else {
+            errorLable.setTextFill(Color.RED);
+            errorLable.setText("You did not enter the correct old password!");
+        }
 
+    }
             if(!this.firstName.getText().equals(this.firstName.getPromptText())){
                     firstName = this.firstName.getText();
                 }else{

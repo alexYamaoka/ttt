@@ -1,5 +1,6 @@
 package UI.ServerUI;
 
+import AccountService.AccountService;
 import Client.ClientController;
 import DataBase.sql.DataSource;
 import DataBase.sql.DatabaseManager;
@@ -22,6 +23,8 @@ import javafx.scene.input.MouseEvent;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.HashSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -55,6 +58,7 @@ public class ServerDisplay implements Initializable, ServiceListener {
     public static GameService instance = null;
 
 
+    private ServiceListener serviceListener = AccountService.getInstance();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -216,5 +220,10 @@ public class ServerDisplay implements Initializable, ServiceListener {
                 e.printStackTrace();
             }
         });
+    }
+  
+    public void notifyAccountsServer(Packet packet)
+    {
+        serviceListener.onDataChanged(packet);
     }
 }

@@ -38,6 +38,8 @@ public class Main extends Application
         accountService.addServiceListener(serverDisplayController);
         gameService.addServiceListener(serverDisplayController);
 
+        // serverDisplayController.addListener(accountService);
+        // serverDisplayController.addListener)gameService)
 
         Scene scene = new Scene(root, 1000, 750);
         stage.setTitle("EndFrame Server");
