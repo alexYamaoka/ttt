@@ -37,7 +37,9 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class ServerDisplay implements Initializable, ServiceListener {
 
     @FXML
-    private TableView<Game> activeGames, games;
+    private TableView<Game> activeGames;
+    @FXML
+    private TableView<GameInformation> games;
     @FXML
     private TableColumn<Game, String> gameID_AG, player1_AG, player2_AG, gameID_G, player1_G, player2_G, startTime_G, endTime_G, result_G, spectators_G;
     @FXML
@@ -49,13 +51,13 @@ public class ServerDisplay implements Initializable, ServiceListener {
 
     private ClientController clientController;
 
-    private DataSource ds = DatabaseManager.getInstance();
+    private DatabaseManager ds = DatabaseManager.getInstance();
 
     private BlockingQueue<Packet> packetsReceived = new LinkedBlockingQueue<>();
 
 
     private ObservableList<Game> activeGamesList = FXCollections.observableArrayList();
-    private ObservableList<Game> allGamesList = FXCollections.observableArrayList();
+    private ObservableList<GameInformation> allGamesList = FXCollections.observableArrayList();
     private ObservableList<UserInformation> onlinePlayersList = FXCollections.observableArrayList();
     private ObservableList<UserInformation> allPlayersList = FXCollections.observableArrayList();
     public static GameService instance = null;
@@ -93,8 +95,13 @@ public class ServerDisplay implements Initializable, ServiceListener {
         player2_G.setCellValueFactory(new PropertyValueFactory<>("player2Username"));
         startTime_G.setCellValueFactory(new PropertyValueFactory<>("startTime"));
         endTime_G.setCellValueFactory(new PropertyValueFactory<>("endTime"));
-        result_G.setCellValueFactory(new PropertyValueFactory<>("result"));
+        result_G.setCellValueFactory(new PropertyValueFactory<>("winningPlayerId"));
         spectators_G.setCellValueFactory(new PropertyValueFactory<>("spectators"));
+        try {
+            allGamesList.addAll(ds.getAllGamesInfo());
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     private void initializeATable() {
@@ -105,6 +112,11 @@ public class ServerDisplay implements Initializable, ServiceListener {
         lastName_A.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         deleted_A.setCellValueFactory(new PropertyValueFactory<>("isDeleted"));
         editableACols();
+        try {
+            allPlayersList.addAll(ds.AllUserInfo());
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     private void editableACols() {
@@ -214,7 +226,15 @@ public class ServerDisplay implements Initializable, ServiceListener {
                         Game newClosedGame = (Game) packet.getData();
                         System.out.println("<--- New Closed Game: " + newClosedGame.getId() + " --->");
                         activeGamesList.remove(newClosedGame);
-                        allGamesList.add(newClosedGame);
+                        GameInformation information = new GameInformation();
+                        information.setId(newClosedGame.getId());
+                        information.setPlayer1Username(newClosedGame.getPlayer1Username());
+                        information.setPlayer2Username(newClosedGame.getPlayer2Username());
+                        information.setStartTime(newClosedGame.getStartTime());
+                        information.setEndTime(newClosedGame.getEndTime());
+                        information.setWinningPlayerId(newClosedGame.getWinningPlayerId());
+                        information.setStartingPlayerId(newClosedGame.getStartingPlayerId());
+                        allGamesList.add(information);
 
                 }
             } catch (InterruptedException e) {
