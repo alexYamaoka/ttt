@@ -37,10 +37,11 @@ public class Game extends BaseModel implements Serializable {
     private String startingPlayerId;
     private String winningPlayerId;
     private String nextMoveId;
-
     private String result = "not available";
     private List<String> spectators = new ArrayList<>();
 
+    public Game() {
+    }
 
     public Game(ClientConnection player1) {
         UUIDGenerator gameId = new UUIDGenerator();
