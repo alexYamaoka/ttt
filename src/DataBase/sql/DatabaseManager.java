@@ -128,7 +128,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
     public List<GameInformation> getPlayerGamesInfo(String PlayerId,String username) throws SQLException {
 
         String sql =
-                "SELECT game.gameID, user.username, game.StartTime, game.EndTime," + "(SELECT user.username FROM user WHERE user.id = game.Player2Id) AS Name, "
+                "SELECT game.gameID, user.username, game.StartTime, game.EndTime, game.player1Id," + "(SELECT user.username FROM user WHERE user.id = game.Player2Id) AS Name, "
                 +" (SELECT user.username FROM user WHERE user.id = game.WinningPlayerId ) AS Winner "
                 +"FROM game "
                 +"INNER JOIN user ON game.Player1Id = user.id "
@@ -150,6 +150,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
             gameInformation.setEndTime(rs.getTimestamp("game.EndTime"));
             gameInformation.setPlayer2Username(rs.getString("Name"));
             gameInformation.setWinningPlayerId(rs.getString("Winner"));
+            gameInformation.setStartingPlayerId(rs.getString("game.player1Id"));
             gameList.add(gameInformation);
         }
 
