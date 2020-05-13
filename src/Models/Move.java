@@ -14,6 +14,13 @@ public class Move extends BaseModel {
     private UserInformation userInformation;
     private Timestamp moveTime;
     private String gameId;
+    private String PlayerId;
+
+    public void setMoveTime(Timestamp moveTime) {
+        this.moveTime = moveTime;
+    }
+
+    public Move(){};
 
     public Move(int row, int column, UserInformation userInformation, String gameId) {
         this.row = row;
@@ -23,12 +30,32 @@ public class Move extends BaseModel {
         moveTime = new Timestamp(System.currentTimeMillis());
     }
 
+    public String getPlayerId() {
+        return PlayerId;
+    }
+
+    public void setPlayerId(String playerId) {
+        PlayerId = playerId;
+    }
+
+    public void setGameId(String gameId) {
+        this.gameId = gameId;
+    }
+
     private String createDateAndTime() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
         return dateFormat.format(date);
     }
 
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public void setColumn(int column) {
+        this.column = column;
+    }
 
     public int getRow() {
         return row;

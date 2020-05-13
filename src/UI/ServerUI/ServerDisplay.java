@@ -26,10 +26,6 @@ import javafx.scene.input.MouseEvent;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.HashSet;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -88,7 +84,6 @@ public class ServerDisplay implements Initializable, ServiceListener {
     }
 
     private void initializeGTable() {
-        //ds.getAllGamesInfo()
         games.setItems(allGamesList);
         gameID_G.setCellValueFactory(new PropertyValueFactory<>("id"));
         player1_G.setCellValueFactory(new PropertyValueFactory<>("player1Username"));
@@ -105,6 +100,7 @@ public class ServerDisplay implements Initializable, ServiceListener {
     }
 
     private void initializeATable() {
+
         accounts.setItems(allPlayersList);
         username_A.setCellValueFactory(new PropertyValueFactory<>("username"));
         password_A.setCellValueFactory(new PropertyValueFactory<>("password"));
@@ -246,6 +242,6 @@ public class ServerDisplay implements Initializable, ServiceListener {
   
     public void notifyAccountsServer(Packet packet)
     {
-        serviceListener.onDataChanged(packet);
+        serviceListener.onDataChanged(packet);  // goes to accountservice on data changed
     }
 }
