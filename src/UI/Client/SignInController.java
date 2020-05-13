@@ -185,11 +185,11 @@ public class SignInController implements Initializable, SignInResultListener {
 
 
 
-                    if(userInformation.getIsDeleted() == 1){
-                        controller.getOptions().DeactivateAccount.setText("Activate Account");
-                    }else{
-                        controller.getOptions().DeactivateAccount.setText("Deactivate Account");
-                    }
+//                    if(userInformation.getIsDeleted() == 1) {
+//                        controller.getOptions().DeactivateAccount.setText("Activate Account");
+//                    }else{
+//                        controller.getOptions().DeactivateAccount.setText("Deactivate Account");
+//                    }
 
                     Client client = new Client("localhost", 8080, userInformation, controller);
                     controller.setGameClient(client);
