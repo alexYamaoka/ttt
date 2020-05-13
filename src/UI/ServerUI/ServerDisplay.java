@@ -234,6 +234,7 @@ public class ServerDisplay implements Initializable, ServiceListener {
                         information.setEndTime(newClosedGame.getEndTime());
                         information.setWinningPlayerId(newClosedGame.getWinningPlayerId());
                         information.setStartingPlayerId(newClosedGame.getStartingPlayerId());
+                        information.setSpectators(newClosedGame.getSpectators());
                         allGamesList.add(information);
 
                 }
