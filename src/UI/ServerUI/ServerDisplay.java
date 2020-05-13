@@ -25,10 +25,6 @@ import javafx.scene.input.MouseEvent;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.HashSet;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -36,7 +32,9 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class ServerDisplay implements Initializable, ServiceListener {
 
     @FXML
-    private TableView<Game> activeGames, games;
+    private TableView<Game> activeGames;
+    @FXML
+    private TableView<Game> games;
     @FXML
     private TableColumn<Game, String> gameID_AG, player1_AG, player2_AG, gameID_G, player1_G, player2_G, startTime_G, endTime_G, result_G, spectators_G;
     @FXML
@@ -85,18 +83,20 @@ public class ServerDisplay implements Initializable, ServiceListener {
     }
 
     private void initializeGTable() {
-        //ds.getAllGamesInfo()
-        games.setItems(allGamesList);
-        gameID_G.setCellValueFactory(new PropertyValueFactory<>("id"));
-        player1_G.setCellValueFactory(new PropertyValueFactory<>("player1Username"));
-        player2_G.setCellValueFactory(new PropertyValueFactory<>("player2Username"));
-        startTime_G.setCellValueFactory(new PropertyValueFactory<>("startTime"));
-        endTime_G.setCellValueFactory(new PropertyValueFactory<>("endTime"));
-        result_G.setCellValueFactory(new PropertyValueFactory<>("result"));
-        spectators_G.setCellValueFactory(new PropertyValueFactory<>("spectators"));
+
+                games.setItems(allGamesList);
+                gameID_G.setCellValueFactory(new PropertyValueFactory<>("id"));
+                player1_G.setCellValueFactory(new PropertyValueFactory<>("player1Username"));
+                player2_G.setCellValueFactory(new PropertyValueFactory<>("player2Username"));
+                startTime_G.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+                endTime_G.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+                result_G.setCellValueFactory(new PropertyValueFactory<>("result"));
+                spectators_G.setCellValueFactory(new PropertyValueFactory<>("spectators"));
+
     }
 
     private void initializeATable() {
+
         accounts.setItems(allPlayersList);
         username_A.setCellValueFactory(new PropertyValueFactory<>("username"));
         password_A.setCellValueFactory(new PropertyValueFactory<>("password"));
@@ -227,6 +227,6 @@ public class ServerDisplay implements Initializable, ServiceListener {
   
     public void notifyAccountsServer(Packet packet)
     {
-        serviceListener.onDataChanged(packet);
+        serviceListener.onDataChanged(packet);  // goes to accountservice on data changed
     }
 }
