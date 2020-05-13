@@ -1,28 +1,29 @@
 package UI.ServerUI;
 
+import Client.ClientController;
 import DataBase.sql.DataSource;
 import DataBase.sql.DatabaseManager;
+import GameService.GameService;
 import Models.Game;
+import Shared.GameInformation;
 import Shared.UserInformation;
 import ObserverPatterns.ServiceListener;
 import Shared.Packet;
-import Shared.UserInformation;
-import app.Main;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -42,7 +43,10 @@ public class ServerDisplay implements Initializable, ServiceListener {
     @FXML
     private ListView allAccounts = new ListView();
 
+    private ClientController clientController;
+
     private DataSource ds = DatabaseManager.getInstance();
+
     private BlockingQueue<Packet> packetsReceived = new LinkedBlockingQueue<>();
 
 
@@ -50,6 +54,8 @@ public class ServerDisplay implements Initializable, ServiceListener {
     private ObservableList<Game> allGamesList = FXCollections.observableArrayList();
     private ObservableList<UserInformation> onlinePlayersList = FXCollections.observableArrayList();
     private ObservableList<UserInformation> allPlayersList = FXCollections.observableArrayList();
+    public static GameService instance = null;
+
 
 
     @Override
@@ -217,17 +223,26 @@ public class ServerDisplay implements Initializable, ServiceListener {
 //        }
 //    }
 //
-//    @FXML
-//    public void onAllGameClicked(MouseEvent event)
-//    {
-//        if (event.getClickCount() == 2)
-//        {
-//            String game = games.getSelectionModel().getSelectedItem().toString();
-//            System.out.println("game selected: " + game);
-//        }
-//    }
-//
-//    public void display(ActionEvent event) {
+    @FXML
+    public void onAllGameClicked(MouseEvent event){
+
+        if (event.getClickCount() == 2)
+        {
+            List<GameInformation> gameInformation = new ArrayList<>();
+            try {
+                gameInformation = ds.getAllGamesInfo();
+                allGamesList.add((Game) gameInformation);
+
+                System.out.println("GameInformation  " + gameInformation.toString());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            String game = games.getSelectionModel().getSelectedItem().toString();
+            System.out.println("game selected: " + game);
+        }
+    }
+
+//        public void display(ActionEvent event) {
 //
 //    }
 

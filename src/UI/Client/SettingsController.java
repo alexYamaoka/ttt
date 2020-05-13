@@ -185,7 +185,6 @@ public class SettingsController implements Initializable, UpdateUserinformationL
                                     user.add(confirmPassword);
 
 */
-
                         String data = String.join(" ", user);
                         System.out.println(user);
                         if (oldPassword.equalsIgnoreCase(controller.getAccountClient().getUserInformation().getPassword())) {
