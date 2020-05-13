@@ -4,7 +4,6 @@ import Client.ClientController;
 import DataBase.sql.DataSource;
 import DataBase.sql.DatabaseManager;
 import Models.Game;
-import ObserverPatterns.HistoryListener;
 import ObserverPatterns.GameHistoryListener;
 import Shared.GameInformation;
 import Shared.Packet;
@@ -13,17 +12,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 
-import java.io.Serializable;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -50,17 +44,6 @@ public class GameHistoryController implements Initializable, GameHistoryListener
         startTime.setCellValueFactory(new PropertyValueFactory<>("startTime"));
         endTime.setCellValueFactory(new PropertyValueFactory<>("endTime"));
         results.setCellValueFactory(new PropertyValueFactory<>("results"));
-    }
-
-    public void getListOfGames(HashSet<Game> listOfGames) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-
-                gameHistoryTable.getItems().clear();
-                loadGames(listOfGames);
-            }
-        });
     }
 
     public void GetGameinfo() {
