@@ -10,7 +10,9 @@ import Shared.GameInformation;
 import Shared.UserInformation;
 import ObserverPatterns.ServiceListener;
 import Shared.Packet;
+import com.mysql.cj.conf.StringProperty;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,10 +23,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.control.cell.TextFieldTreeTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
+import javafx.util.converter.IntegerStringConverter;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -101,10 +105,15 @@ public class ServerDisplay implements Initializable, ServiceListener {
     private void initializeATable() {
         accounts.setItems(allPlayersList);
         username_A.setCellValueFactory(new PropertyValueFactory<>("username"));
+        username_A.setCellFactory(TextFieldTableCell.forTableColumn());
         password_A.setCellValueFactory(new PropertyValueFactory<>("password"));
+        password_A.setCellFactory(TextFieldTableCell.forTableColumn());
         firstName_A.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        firstName_A.setCellFactory(TextFieldTableCell.forTableColumn());
         lastName_A.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        lastName_A.setCellFactory(TextFieldTableCell.forTableColumn());
         deleted_A.setCellValueFactory(new PropertyValueFactory<>("isDeleted"));
+        deleted_A.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         editableACols();
         try {
             allPlayersList.addAll(ds.AllUserInfo());
