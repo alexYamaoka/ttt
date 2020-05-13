@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<TabPane side="LEFT" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496)radial-gradient(radius 200%,#204060,#1d9496);" tabClosingPolicy="UNAVAILABLE" tabMinWidth="100.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.ServerUI.ServerDisplay">
+<TabPane side="LEFT" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496)radial-gradient(radius 200%,#204060,#1d9496);" tabClosingPolicy="UNAVAILABLE" tabMinWidth="100.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.ServerUI.ServerDisplay">
    <tabs>
       <Tab closable="false" text="Active Games">
          <content>
@@ -67,7 +64,7 @@
                         <TableColumn fx:id="password_A" minWidth="190.4" prefWidth="75.0" text="Password" />
                         <TableColumn fx:id="firstName_A" minWidth="190.4" prefWidth="75.0" text="First Name" />
                         <TableColumn fx:id="lastName_A" minWidth="190.4" prefWidth="75.0" text="Last Name" />
-                        <TableColumn fx:id="status_A" minWidth="190.4" prefWidth="75.0" text="Status" />
+                        <TableColumn fx:id="deleted_A" minWidth="190.4" prefWidth="75.0" text="Deleted" />
                      </columns>
                   </TableView>
                </children>
