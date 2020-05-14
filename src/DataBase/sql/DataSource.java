@@ -18,7 +18,11 @@ public interface DataSource {
     boolean insertMove(Move obj, String gameId) throws SQLException;
 
     boolean insert(BaseModel obj) throws SQLException;
-
+    boolean updateServerUIUserName(UserInformation obj) throws SQLException;
+    boolean updateServerUIPassword(UserInformation obj) throws SQLException;
+    boolean updateServerUIFirstName(UserInformation obj) throws SQLException;
+    boolean updateServerUILastName(UserInformation obj) throws SQLException;
+    boolean updateServerUIIsDeleted(UserInformation obj) throws SQLException;
     List<GameInformation> getAllGamesInfo() throws SQLException;
 
     boolean delete(String Id) throws SQLException;

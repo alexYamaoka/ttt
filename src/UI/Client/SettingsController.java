@@ -99,7 +99,6 @@ public class SettingsController implements Initializable, UpdateUserinformationL
                 stage.show();
             }
 
-
         });
     }
 
