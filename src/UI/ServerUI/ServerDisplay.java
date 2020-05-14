@@ -111,7 +111,7 @@ public class ServerDisplay implements Initializable, ServiceListener {
             UserInformation information = event.getTableView().getItems().get(event.getTablePosition().getRow());
             information.setUsername(event.getNewValue());
 
-            if(information.getUsername().isBlank()){
+            if(event.getNewValue().isBlank()){
                
                 System.out.println("Enter UserName");
             }else {
