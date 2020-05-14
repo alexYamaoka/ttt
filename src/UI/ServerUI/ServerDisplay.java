@@ -110,7 +110,20 @@ public class ServerDisplay implements Initializable, ServiceListener {
         username_A.setOnEditCommit(event -> {
             UserInformation information = event.getTableView().getItems().get(event.getTablePosition().getRow());
             information.setUsername(event.getNewValue());
-            // update database from here
+
+            if(information.getUsername().isBlank()){
+               
+                System.out.println("Enter UserName");
+            }else {
+                try {
+                    if(ds.updateServerUIUserName(information)){
+                        System.out.println("SUCCESS");
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
         });
 
         password_A.setCellValueFactory(new PropertyValueFactory<>("password"));
@@ -118,7 +131,19 @@ public class ServerDisplay implements Initializable, ServiceListener {
         password_A.setOnEditCommit(event -> {
             UserInformation information = event.getTableView().getItems().get(event.getTablePosition().getRow());
             information.setPassword(event.getNewValue());
-            // update database from here
+
+            if(information.getPassword().isBlank()){
+                System.out.println("Enter password");
+            }else{
+                try {
+                    if(ds.updateServerUIPassword(information)) {
+                        System.out.println("SUCCESS");
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
         });
 
         firstName_A.setCellValueFactory(new PropertyValueFactory<>("firstName"));
@@ -126,7 +151,17 @@ public class ServerDisplay implements Initializable, ServiceListener {
         firstName_A.setOnEditCommit(event -> {
             UserInformation information = event.getTableView().getItems().get(event.getTablePosition().getRow());
             information.setFirstName(event.getNewValue());
-            // update database from here
+            if(information.getFirstName().isBlank()){
+                System.out.println("Enter FirstName");
+            }else{
+                try {
+                    if(ds.updateServerUIFirstName(information)){
+                        System.out.println("SUCESS");
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         });
 
         lastName_A.setCellValueFactory(new PropertyValueFactory<>("lastName"));
@@ -134,7 +169,18 @@ public class ServerDisplay implements Initializable, ServiceListener {
         lastName_A.setOnEditCommit(event -> {
             UserInformation information = event.getTableView().getItems().get(event.getTablePosition().getRow());
             information.setLastName(event.getNewValue());
-            // update database from here
+            if(information.getLastName().isBlank()){
+                System.out.println("Enter a LastName");
+            }else{
+                try {
+                    if(ds.updateServerUILastName(information)){
+                        System.out.println("SUCESS");
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
         });
 
         deleted_A.setCellValueFactory(new PropertyValueFactory<>("isDeleted"));
@@ -142,7 +188,16 @@ public class ServerDisplay implements Initializable, ServiceListener {
         deleted_A.setOnEditCommit(event -> {
             UserInformation information = event.getTableView().getItems().get(event.getTablePosition().getRow());
             information.setIsDeleted(event.getNewValue());
-            // update database here
+            if(information.getIsDeleted() > 1){
+                System.out.println("Incorrect Input 0 = Active  | 1 = Deactivate");
+            }else{
+                try {
+                    ds.updateServerUIIsDeleted(information);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
         });
 
         try {

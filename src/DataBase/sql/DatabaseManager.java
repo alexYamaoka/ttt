@@ -55,6 +55,76 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
         }
     }
 
+    @Override
+    public boolean updateServerUIUserName(UserInformation obj) throws SQLException {
+        System.out.println(obj.toString());
+
+        String sql = "UPDATE user " + "SET username = '" + obj.getUsername() +"' WHERE id = '" + obj.getId() + "'";
+        int row = 0;
+        UserStatement = myConn.prepareStatement(sql);
+        System.out.println(sql);
+        row = UserStatement.executeUpdate();
+        System.out.println(String.format("Rows affected %d",row));
+
+        return row > 0;
+    }
+
+    @Override
+    public boolean updateServerUIPassword(UserInformation obj) throws SQLException {
+        System.out.println(obj.toString());
+
+        String sql = "UPDATE user " + "SET password = '" + obj.getPassword() +"' WHERE id = '" + obj.getId() + "'";
+        int row = 0;
+        UserStatement = myConn.prepareStatement(sql);
+        System.out.println(sql);
+        row = UserStatement.executeUpdate();
+        System.out.println(String.format("Rows affected %d",row));
+
+        return row > 0;
+    }
+
+    @Override
+    public boolean updateServerUIFirstName(UserInformation obj) throws SQLException {
+        System.out.println(obj.toString());
+
+        String sql = "UPDATE user " + "SET FirstName = '" + obj.getFirstName() +"' WHERE id = '" + obj.getId() + "'";
+        int row = 0;
+        UserStatement = myConn.prepareStatement(sql);
+        System.out.println(sql);
+        row = UserStatement.executeUpdate();
+        System.out.println(String.format("Rows affected %d",row));
+
+        return row > 0;
+    }
+
+    @Override
+    public boolean updateServerUILastName(UserInformation obj) throws SQLException {
+        System.out.println(obj.toString());
+
+        String sql = "UPDATE user " + "SET LastName = '" + obj.getLastName() +"' WHERE id = '" + obj.getId() + "'";
+        int row = 0;
+        UserStatement = myConn.prepareStatement(sql);
+        System.out.println(sql);
+        row = UserStatement.executeUpdate();
+        System.out.println(String.format("Rows affected %d",row));
+
+        return row > 0;
+    }
+
+    @Override
+    public boolean updateServerUIIsDeleted(UserInformation obj) throws SQLException {
+        System.out.println(obj.toString());
+
+        String sql = "UPDATE user " + "SET isDeleted = '" + obj.getIsDeleted() +"' WHERE id = '" + obj.getId() + "'";
+        int row = 0;
+        UserStatement = myConn.prepareStatement(sql);
+        System.out.println(sql);
+        row = UserStatement.executeUpdate();
+        System.out.println(String.format("Rows affected %d",row));
+
+        return row > 0;
+    }
+
 
     public List<Move> Moves (String gameId) throws SQLException {
         String sql =
