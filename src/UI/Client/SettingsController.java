@@ -109,79 +109,66 @@ public class SettingsController implements Initializable, UpdateUserinformationL
         String username = this.username.getPromptText();
         String firstName = this.firstName.getPromptText();
         String lastName = this.lastName.getPromptText();
-        String oldPassword = this.currentPasswordField.getText();
+        String oldPassword = this.password.getPromptText();
         String newPassword = this.newPasswordField.getText();
         String confirmPassword = this.confirmNewPasswordField.getText();
-        user.add(firstName);
-        user.add(lastName);
-        user.add(username);
-        user.add(id);
-        user.add(confirmPassword);
+//        user.add(firstName);
+//        user.add(lastName);
+//        user.add(username);
+//        user.add(id);
+//        user.add(confirmPassword);
 
-        if (!this.username.getText().equals(this.username.getPromptText())) {
+        if (!username.equals(this.username.getPromptText())) {
             username = this.username.getText();
         } else {
-            username = this.username.getPromptText();
+            username = clientController.getAccountClient().getUserInformation().getUsername();
         }
         user.add(username);
 
-        if (!this.firstName.getText().equals(this.firstName.getPromptText())) {
+        if (!firstName.equals(this.firstName.getPromptText())) {
             firstName = this.firstName.getText();
         } else {
-            firstName = this.firstName.getPromptText();
+            firstName = clientController.getAccountClient().getUserInformation().getFirstName();
         }
         user.add(firstName);
         System.out.println("first name: " + firstName);
 
-        if (!this.lastName.getText().equals(this.lastName.getPromptText())) {
+        if (!lastName.equals(this.lastName.getPromptText())) {
             lastName = this.lastName.getText();
         } else {
-            lastName = this.lastName.getPromptText();
+            lastName = clientController.getAccountClient().getUserInformation().getLastName();
         }
         user.add(lastName);
         System.out.println("last name: " + lastName);
 
-        if (!this.password.getPromptText().equals(clientController.getAccountClient().getUserInformation().getPassword())) {
+        user.add(clientController.getAccountClient().getUserInformation().getId());
 
-            oldPassword = this.password.getText();
-        } else {
-            oldPassword = clientController.getAccountClient().getUserInformation().getPassword();
+
+        if (this.newPasswordField.getText().equals(this.newPasswordField.getPromptText()) &&
+             this.confirmChangePasswordButton.getText().equals(this.confirmNewPasswordField.getPromptText()))
+        {
+            user.add(clientController.getAccountClient().getUserInformation().getPassword());
+            System.out.println("keeping old password");
         }
-        user.add(oldPassword);
-        System.out.println("old password: " + oldPassword);
+        else
+        {
+            if (this.newPasswordField.getText().equals(this.confirmNewPasswordField.getText()))
+            {
+                user.add(this.confirmNewPasswordField.getText());
+                System.out.println("updating password");
 
-
-        if (!this.newPasswordField.getText().equals(this.newPasswordField.getPromptText())) {
-            newPassword = this.newPasswordField.getText();
-        } else {
-            newPassword = clientController.getAccountClient().getUserInformation().getPassword();
-        }
-        user.add(newPassword);
-        System.out.println("new password: " + newPassword);
-
-        if (!this.confirmChangePasswordButton.getText().equals(this.confirmNewPasswordField.getPromptText())) {
-            confirmPassword = this.confirmNewPasswordField.getText();
-        } else {
-            confirmPassword = clientController.getAccountClient().getUserInformation().getPassword();
-        }
-        user.add(confirmPassword);
-        System.out.println("confirm password: " + confirmPassword);
-
-        String data = String.join(" ", user);
-        System.out.println(user);
-        if (oldPassword.equalsIgnoreCase(clientController.getAccountClient().getUserInformation().getPassword())) {
-            if (newPassword.equals(confirmPassword)) {
-
+                String data = String.join(" ", user);
+                System.out.println(user);
                 Packet packet = new Packet(Packet.UPDATE_USER, clientController.getAccountClient().getUserInformation(), data);
                 clientController.getAccountClient().addRequestToServer(packet);
-            } else {
+            }
+            else
+            {
                 confirmNewPasswordField.setStyle("-fx-border-color: red;");
                 confirmNewPasswordErrorLabel.setText("New passwords do not match");
             }
-        } else {
-            currentPasswordField.setStyle("-fx-border-color: red;");
-            currentPasswordErrorLabel.setText("Incorrect password");
         }
+
     }
 
     @Override
