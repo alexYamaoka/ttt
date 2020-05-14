@@ -222,39 +222,36 @@ public class SignUpController implements Initializable, SignUpResultListener {
     }
 
     @Override
-    public void updateSignInResult(String message) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                if (!message.contains("FAIL")) {
-                    // The middle anchorpane of the borderpane
-                    AnchorPane middleAnchorPane = signInController.getMiddleAnchorPane();
+    public void updateSignUpResult(String message) {
+        Platform.runLater(() -> {
+            if (!message.contains("FAIL")) {
+                // The middle anchorpane of the borderpane
+                AnchorPane middleAnchorPane = signInController.getMiddleAnchorPane();
 
-                    // The stackpane of the anchorpane
-                    Pane root = signInController.getSignInPane();
-                    Scene scene = btn_SignIn.getScene();
+                // The stackpane of the anchorpane
+                Pane root = signInController.getSignInPane();
+                Scene scene = btn_SignIn.getScene();
 
-                    Pane root1 = parentContainerSignUp;
+                Pane root1 = parentContainerSignUp;
 
-                    root.translateXProperty().set(scene.getWidth() * -0.5);
-                    root1.translateXProperty().set(0);
+                root.translateXProperty().set(scene.getWidth() * -0.5);
+                root1.translateXProperty().set(0);
 
-                    middleAnchorPane.getChildren().add(root);
+                middleAnchorPane.getChildren().add(root);
 
-                    Timeline timeline = new Timeline();
-                    KeyValue keyValue = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
-                    KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.3), keyValue);
-                    KeyValue keyValue1 = new KeyValue(root1.translateXProperty(), 300, Interpolator.EASE_IN);
-                    KeyFrame keyFrame1 = new KeyFrame(Duration.seconds(0.3), keyValue1);
-                    timeline.getKeyFrames().add(keyFrame);
-                    timeline.getKeyFrames().add(keyFrame1);
-                    timeline.setOnFinished(event1 -> {
-                        middleAnchorPane.getChildren().remove(parentContainerSignUp);
-                    });
-                    timeline.play();
-                } else {
-                    registrationError.setText("Username is already taken!");
-                }
+                Timeline timeline = new Timeline();
+                KeyValue keyValue = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
+                KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.3), keyValue);
+                KeyValue keyValue1 = new KeyValue(root1.translateXProperty(), 300, Interpolator.EASE_IN);
+                KeyFrame keyFrame1 = new KeyFrame(Duration.seconds(0.3), keyValue1);
+                timeline.getKeyFrames().add(keyFrame);
+                timeline.getKeyFrames().add(keyFrame1);
+                timeline.setOnFinished(event1 -> {
+                    middleAnchorPane.getChildren().remove(parentContainerSignUp);
+                });
+                timeline.play();
+            } else {
+                registrationError.setText("Username is already taken!");
             }
         });
     }
