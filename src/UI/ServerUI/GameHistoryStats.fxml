@@ -5,7 +5,7 @@
 <?import javafx.scene.text.*?>
 
 <?import java.net.URL?>
-<AnchorPane prefHeight="680.0" prefWidth="1025.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496)radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.Client.GameHistoryStatsController">
+<AnchorPane prefHeight="680.0" prefWidth="1025.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496)radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.ServerUI.GameHistoryStatsController">
    <children>
       <Label fx:id="gameID" text="Game ID: " textFill="WHITE" />
       <HBox layoutX="75.0" layoutY="120.0" prefHeight="80.0" prefWidth="360.0" style="-fx-background-color: #23374D#23374D #23374D#23374D;">

@@ -139,18 +139,43 @@ public class GameBoardController implements Initializable, GameListener {
 
     @Override
     public void updateStatus(String message) {
-        if (clientController.getAccountClient().getUserInformation().getUsername().equals(message)) {
-            gameStatus.setStyle("-fx-background-color: green");
-            gameStatus.setText("You win!");
-        } else if (message.equals("Tie!")) {
-            gameStatus.setStyle("-fx-background-color: orange");
-            gameStatus.setText(message);
-        } else if (message.equals("invalid-move")) {
-            gameStatus.setText(message);
-        } else {
-            gameStatus.setStyle("-fx-background-color: red");
-            gameStatus.setText("You lose!");
+
+        if (! clientController.getAccountClient().getUserInformation().getUsername().equals(game.getPlayer1Username()) &&
+                !clientController.getAccountClient().getUserInformation().getUsername().equals(game.getPlayer2Username()))
+        {
+            if (message.equals("Tie!"))
+            {
+                gameStatus.setStyle("-fx-background-color: orange");
+                gameStatus.setText(message);
+            }
+            else if (message.equals("invalid-move"))
+            {
+                gameStatus.setStyle("-fx-background-color: green");
+                gameStatus.setText(message);
+            }
+            else
+            {
+                gameStatus.setStyle("-fx-background-color: green");
+                gameStatus.setText(message + " Wins!");
+            }
         }
+        else
+        {
+            if (clientController.getAccountClient().getUserInformation().getUsername().equals(message)) {
+                gameStatus.setStyle("-fx-background-color: green");
+                gameStatus.setText("You win!");
+            } else if (message.equals("Tie!")) {
+                gameStatus.setStyle("-fx-background-color: orange");
+                gameStatus.setText(message);
+            } else if (message.equals("invalid-move")) {
+                gameStatus.setStyle("-fx-background-color: green");
+                gameStatus.setText(message);
+            } else {
+                gameStatus.setStyle("-fx-background-color: red");
+                gameStatus.setText("You lose!");
+            }
+        }
+
 
         FadeTransition ft = new FadeTransition(Duration.millis(3000), gameStatus);
         ft.setFromValue(1.0);

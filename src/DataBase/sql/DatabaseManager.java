@@ -126,7 +126,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
     }
 
 
-    public List<Move> Moves (String gameId) throws SQLException {
+    public List<Move> moves (String gameId) throws SQLException {
         String sql =
                 "SELECT * FROM moves WHERE GameId = '"+gameId+"'";
 
@@ -141,7 +141,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
             Move m = new Move();
             m.setId(rs.getString("id"));
             m.setGameId(rs.getString("GameId"));
-            m.setPlayerId("PlayerId");
+            m.setPlayerId(rs.getString("PlayerId"));
             m.setRow(rs.getInt("X_coord"));
             m.setColumn(rs.getInt("Y_Coord"));
             m.setMoveTime(rs.getTimestamp("Time"));
@@ -189,6 +189,9 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
             gameInformation.setPlayer1Username(rs.getString("Player1Id"));
             gameInformation.setPlayer2Username(rs.getString("Player2Id"));
             gameInformation.setStartTime(rs.getTimestamp("StartTime"));
+            gameInformation.setEndTime(rs.getTimestamp("EndTime"));
+            gameInformation.setWinningPlayerId(rs.getString("WinningPlayerId"));
+            gameInformation.setStartingPlayerId(rs.getString("Player1Id"));
             allGameInfo.add(gameInformation);
         }
         
@@ -198,7 +201,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
     public List<GameInformation> getPlayerGamesInfo(String PlayerId,String username) throws SQLException {
 
         String sql =
-                "SELECT game.gameID, user.username, game.StartTime, game.EndTime," + "(SELECT user.username FROM user WHERE user.id = game.Player2Id) AS Name, "
+                "SELECT game.gameID, user.username, game.StartTime, game.EndTime, game.player1Id," + "(SELECT user.username FROM user WHERE user.id = game.Player2Id) AS Name, "
                 +" (SELECT user.username FROM user WHERE user.id = game.WinningPlayerId ) AS Winner "
                 +"FROM game "
                 +"INNER JOIN user ON game.Player1Id = user.id "
@@ -220,6 +223,7 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
             gameInformation.setEndTime(rs.getTimestamp("game.EndTime"));
             gameInformation.setPlayer2Username(rs.getString("Name"));
             gameInformation.setWinningPlayerId(rs.getString("Winner"));
+            gameInformation.setStartingPlayerId(rs.getString("game.player1Id"));
             gameList.add(gameInformation);
         }
 
