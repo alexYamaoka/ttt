@@ -1,7 +1,6 @@
 package UI.Client;
 
 import Client.ClientController;
-import Client.Main;
 import ObserverPatterns.UpdateUserinformationListener;
 import Shared.Packet;
 import Shared.UserInformation;
@@ -10,16 +9,18 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.io.Serializable;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class SettingsController implements Initializable, UpdateUserinformationListener {
 
@@ -105,26 +106,21 @@ public class SettingsController implements Initializable, UpdateUserinformationL
     public void userDetailsSaved(ActionEvent event) {
         List<String> user = new ArrayList<>();
         String id = clientController.getAccountClient().getUserInformation().getId();
-        String username = this.username.getPromptText();
-        String firstName = this.firstName.getPromptText();
-        String lastName = this.lastName.getPromptText();
-        String oldPassword = this.password.getPromptText();
+        String username = this.username.getText();
+        String firstName = this.firstName.getText();
+        String lastName = this.lastName.getText();
+        String oldPassword = this.password.getText();
         String newPassword = this.newPasswordField.getText();
         String confirmPassword = this.confirmNewPasswordField.getText();
-//        user.add(firstName);
-//        user.add(lastName);
-//        user.add(username);
-//        user.add(id);
-//        user.add(confirmPassword);
 
-        if (!username.equals(this.username.getPromptText())) {
+        if (!username.isBlank() && !username.equals(this.username.getPromptText())) {
             username = this.username.getText();
         } else {
             username = clientController.getAccountClient().getUserInformation().getUsername();
         }
         user.add(username);
 
-        if (!firstName.equals(this.firstName.getPromptText())) {
+        if (!firstName.isBlank() && !firstName.equals(this.firstName.getPromptText())) {
             firstName = this.firstName.getText();
         } else {
             firstName = clientController.getAccountClient().getUserInformation().getFirstName();
@@ -132,41 +128,35 @@ public class SettingsController implements Initializable, UpdateUserinformationL
         user.add(firstName);
         System.out.println("first name: " + firstName);
 
-        if (!lastName.equals(this.lastName.getPromptText())) {
+        if (!lastName.isBlank() && !lastName.equals(this.lastName.getPromptText())) {
             lastName = this.lastName.getText();
         } else {
             lastName = clientController.getAccountClient().getUserInformation().getLastName();
         }
         user.add(lastName);
         System.out.println("last name: " + lastName);
-
         user.add(clientController.getAccountClient().getUserInformation().getId());
 
 
-        if (this.newPasswordField.getText().equals(this.newPasswordField.getPromptText()) &&
-             this.confirmChangePasswordButton.getText().equals(this.confirmNewPasswordField.getPromptText()))
-        {
+        // keep old password if new password is blank or the same
+        if (newPassword.isBlank() && newPassword.equals(newPasswordField.getText())) {
             user.add(clientController.getAccountClient().getUserInformation().getPassword());
             System.out.println("keeping old password");
-        }
-        else
-        {
-            if (this.newPasswordField.getText().equals(this.confirmNewPasswordField.getText()))
-            {
-                user.add(this.confirmNewPasswordField.getText());
+        } else {
+            if (newPassword.equals(confirmPassword) && !newPassword.isBlank() && !confirmPassword.isBlank()) {
+                user.add(confirmPassword);
                 System.out.println("updating password");
-
-                String data = String.join(" ", user);
-                System.out.println(user);
-                Packet packet = new Packet(Packet.UPDATE_USER, clientController.getAccountClient().getUserInformation(), data);
-                clientController.getAccountClient().addRequestToServer(packet);
-            }
-            else
-            {
+            } else {
                 confirmNewPasswordField.setStyle("-fx-border-color: red;");
                 confirmNewPasswordErrorLabel.setText("New passwords do not match");
             }
         }
+
+        // send out packet
+        String data = String.join(" ", user);
+        System.out.println(user);
+        Packet packet = new Packet(Packet.UPDATE_USER, clientController.getAccountClient().getUserInformation(), data);
+        clientController.getAccountClient().addRequestToServer(packet);
 
     }
 
@@ -188,11 +178,11 @@ public class SettingsController implements Initializable, UpdateUserinformationL
                     userInformation.setId(id);
                     clientController.getAccountClient().setUserInformation(userInformation);
                     updateInfo();
-                    usernameErrorLabel.setTextFill(Color.LIMEGREEN);
-                    usernameErrorLabel.setText("Information Has Been Updated!");
+                    confirmNewPasswordErrorLabel.setTextFill(Color.LIMEGREEN);
+                    confirmNewPasswordErrorLabel.setText("Information Has Been Updated!");
                 } else {
-                    usernameErrorLabel.setTextFill(Color.RED);
-                    usernameErrorLabel.setText("Username has already been taken!");
+                    confirmNewPasswordErrorLabel.setTextFill(Color.RED);
+                    confirmNewPasswordErrorLabel.setText("Username has already been taken!");
                 }
             }
         });
