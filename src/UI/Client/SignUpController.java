@@ -3,7 +3,6 @@ package UI.Client;
 import Client.ClientController;
 import ObserverPatterns.SignUpResultListener;
 import Shared.Packet;
-import Shared.UserInformation;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -11,9 +10,7 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -25,7 +22,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -51,35 +47,6 @@ public class SignUpController implements Initializable, SignUpResultListener {
     private UI.Client.SignInController signInController;
 
     @FXML
-    public void OnEnterKeyPressed(KeyEvent keyEvent) {
-        if (keyEvent.getCode().equals(KeyCode.ENTER)) {
-            String firstName = txtF_FirstName.getText().trim();
-            String lastName = txtF_LastName.getText().trim();
-            String username = txtF_Username.getText().trim();
-            String password = txtF_Password.getText().trim();
-            String confirmPassword = txtF_ConfirmPassword.getText().trim();
-
-            if (!checkPasswords(password, confirmPassword) && checkField(firstName, lastName, username, password, confirmPassword)) {
-                // notify user that text fields need to be fixed
-
-                System.out.println("Fields were not entered correctly");
-
-
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-
-                    }
-                });
-            } else {
-                System.out.println("Registering new user");
-                registerNewUser(firstName, lastName, username, password);
-            }
-        }
-    }
-
-
-    @FXML
     public void onSignUpButtonClicked(ActionEvent event) throws IOException {
         String first_Name = txtF_FirstName.getText().trim();
         String last_Name = txtF_LastName.getText().trim();
@@ -87,20 +54,16 @@ public class SignUpController implements Initializable, SignUpResultListener {
         String password = txtF_Password.getText().trim();
         String confirm_Password = txtF_ConfirmPassword.getText().trim();
 
+        System.out.println(txtF_Password.getText().trim());
+        System.out.println(txtF_ConfirmPassword.getText().trim());
 
-        if (checkField(first_Name, last_Name, username, password, confirm_Password) && checkPasswords(password, confirm_Password)) {
-            // notify user that text fields need to be fixed
 
+        if (!checkField(first_Name, last_Name, username, password, confirm_Password)) {
             System.out.println("Fields were not entered correctly");
-
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-
-                }
-            });
-
-        } else {
+        } else if (!checkPasswords(password, confirm_Password)) {
+            System.out.println("Fields were not entered correctly");
+        }
+        else {
             System.out.println("Registering new user");
             registerNewUser(first_Name, last_Name, username, password);
         }
@@ -166,7 +129,6 @@ public class SignUpController implements Initializable, SignUpResultListener {
         } else {
             txtF_FirstName.setStyle("");
             firstNameError.setText("");
-            value_entered = false;
         }
         if (lastName.isBlank()) {
             txtF_LastName.setStyle("-fx-border-color: red;");
@@ -175,7 +137,6 @@ public class SignUpController implements Initializable, SignUpResultListener {
         } else {
             txtF_LastName.setStyle("");
             passwordError.setText("");
-            value_entered = false;
         }
         if (username.isBlank()) {
             txtF_Username.setStyle("-fx-border-color: red;");
@@ -184,7 +145,6 @@ public class SignUpController implements Initializable, SignUpResultListener {
         } else {
             txtF_Username.setStyle("");
             usernameError.setText("");
-            value_entered = false;
         }
         if (password.isBlank()) {
             txtF_Password.setStyle("-fx-border-color: red;");
@@ -193,7 +153,6 @@ public class SignUpController implements Initializable, SignUpResultListener {
         } else {
             txtF_Password.setStyle("");
             passwordError.setText("");
-            value_entered = false;
         }
         if (confirmPassword.isBlank()) {
             txtF_ConfirmPassword.setStyle("-fx-border-color: red;");
@@ -202,9 +161,7 @@ public class SignUpController implements Initializable, SignUpResultListener {
         } else {
             txtF_ConfirmPassword.setStyle("");
             confirmPasswordError.setText("");
-            value_entered = false;
         }
-
         return value_entered;
     }
 
