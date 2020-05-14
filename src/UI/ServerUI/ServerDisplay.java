@@ -112,7 +112,7 @@ public class ServerDisplay implements Initializable, ServiceListener {
             information.setUsername(event.getNewValue());
 
             if(event.getNewValue().isBlank()){
-               
+
                 System.out.println("Enter UserName");
             }else {
                 try {
@@ -132,7 +132,7 @@ public class ServerDisplay implements Initializable, ServiceListener {
             UserInformation information = event.getTableView().getItems().get(event.getTablePosition().getRow());
             information.setPassword(event.getNewValue());
 
-            if(information.getPassword().isBlank()){
+            if(event.getNewValue().isBlank()){
                 System.out.println("Enter password");
             }else{
                 try {
@@ -151,7 +151,7 @@ public class ServerDisplay implements Initializable, ServiceListener {
         firstName_A.setOnEditCommit(event -> {
             UserInformation information = event.getTableView().getItems().get(event.getTablePosition().getRow());
             information.setFirstName(event.getNewValue());
-            if(information.getFirstName().isBlank()){
+            if(event.getNewValue().isBlank()){
                 System.out.println("Enter FirstName");
             }else{
                 try {
@@ -169,7 +169,7 @@ public class ServerDisplay implements Initializable, ServiceListener {
         lastName_A.setOnEditCommit(event -> {
             UserInformation information = event.getTableView().getItems().get(event.getTablePosition().getRow());
             information.setLastName(event.getNewValue());
-            if(information.getLastName().isBlank()){
+            if(event.getNewValue().isBlank()){
                 System.out.println("Enter a LastName");
             }else{
                 try {
@@ -188,7 +188,7 @@ public class ServerDisplay implements Initializable, ServiceListener {
         deleted_A.setOnEditCommit(event -> {
             UserInformation information = event.getTableView().getItems().get(event.getTablePosition().getRow());
             information.setIsDeleted(event.getNewValue());
-            if(information.getIsDeleted() > 1){
+            if(event.getNewValue() > 1 || event.getNewValue() < 0){
                 System.out.println("Incorrect Input 0 = Active  | 1 = Deactivate");
             }else{
                 try {
