@@ -1,38 +1,38 @@
 package UI.ServerUI;
 
 import AccountService.AccountService;
-import Client.ClientController;
-import DataBase.sql.DataSource;
 import DataBase.sql.DatabaseManager;
 import GameService.GameService;
 import Models.Game;
-import Shared.GameInformation;
-import Shared.UserInformation;
+import Models.Move;
 import ObserverPatterns.ServiceListener;
+import Shared.GameInformation;
 import Shared.Packet;
-import com.mysql.cj.conf.StringProperty;
+import Shared.UserInformation;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.control.cell.TextFieldTreeTableCell;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.util.Callback;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -55,7 +55,6 @@ public class ServerDisplay implements Initializable, ServiceListener {
     @FXML
     private TableColumn<UserInformation, Integer> deleted_A;
 
-    private ClientController clientController;
     private DatabaseManager ds = DatabaseManager.getInstance();
     private BlockingQueue<Packet> packetsReceived = new LinkedBlockingQueue<>();
     private ObservableList<Game> activeGamesList = FXCollections.observableArrayList();
@@ -63,6 +62,7 @@ public class ServerDisplay implements Initializable, ServiceListener {
     private ObservableList<UserInformation> onlinePlayersList = FXCollections.observableArrayList();
     private ObservableList<UserInformation> allPlayersList = FXCollections.observableArrayList();
     private ServiceListener serviceListener = AccountService.getInstance();
+    private Parent display;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -95,11 +95,46 @@ public class ServerDisplay implements Initializable, ServiceListener {
         endTime_G.setCellValueFactory(new PropertyValueFactory<>("endTime"));
         result_G.setCellValueFactory(new PropertyValueFactory<>("winningPlayerId"));
         spectators_G.setCellValueFactory(new PropertyValueFactory<>("spectators"));
+        games.setRowFactory(tv -> {
+            TableRow<GameInformation> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if(event.getClickCount() == 2 && (!row.isEmpty())) {
+                    GameInformation information = row.getItem();
+                    List<Move> moves = null;
+                    try {
+                        moves = ds.moves(information.getId());
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+                    loadGameStats(information, moves);
+                }
+            });
+            return row;
+        });
         try {
             allGamesList.addAll(ds.getAllGamesInfo());
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+    }
+
+    private void loadGameStats(GameInformation information, List<Move> moves) {
+        Platform.runLater(() -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("GameHistoryStats.fxml"));
+                Parent root = loader.load();
+                GameHistoryStatsController controller = loader.getController();
+                controller.setServerDisplay(this);
+                controller.importGameInformation(information, moves);
+
+                Stage stage = null;
+                stage = (Stage) games.getScene().getWindow();
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
     }
 
     private void initializeATable() {
@@ -207,43 +242,6 @@ public class ServerDisplay implements Initializable, ServiceListener {
         }
     }
 
-    @FXML
-    public void onOnlinePlayerClicked(MouseEvent event) {
-        if (event.getClickCount() == 2) {
-            String username = activePlayers.getSelectionModel().getSelectedItem().toString();
-            System.out.println("username selected: " + username);
-        }
-    }
-
-    @FXML
-    public void onAccountClicked(MouseEvent event) {
-        if (event.getClickCount() == 2) {
-            String username = activePlayers.getSelectionModel().getSelectedItem().toString();
-            System.out.println("username selected: " + username);
-
-        }
-    }
-
-    @FXML
-    public void onActiveGameClicked(MouseEvent event) {
-        if (event.getClickCount() == 2) {
-            String game = activeGames.getSelectionModel().getSelectedItem().toString();
-            System.out.println("game selected: " + game);
-        }
-    }
-
-    @FXML
-    public void onAllGameClicked(MouseEvent event) {
-        if (event.getClickCount() == 2) {
-            String game = games.getSelectionModel().getSelectedItem().toString();
-            System.out.println("game selected: " + game);
-        }
-    }
-
-    public void display(ActionEvent event) {
-
-    }
-
     @Override
     public void onDataChanged(Packet packet) {
         packetsReceived.add(packet);
@@ -306,5 +304,13 @@ public class ServerDisplay implements Initializable, ServiceListener {
 
     public void notifyAccountsServer(Packet packet) {
         serviceListener.onDataChanged(packet);
+    }
+
+    public void setDisplay(Parent pane) {
+        this.display = pane;
+    }
+
+    public Parent getDisplay() {
+        return display;
     }
 }

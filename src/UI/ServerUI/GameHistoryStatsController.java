@@ -1,4 +1,4 @@
-package UI.Client;
+package UI.ServerUI;
 
 import Client.ClientController;
 import Models.Move;
@@ -26,7 +26,7 @@ public class GameHistoryStatsController implements Initializable {
 
     private HashMap<Pair<Integer, Integer>, Label> labels = new HashMap<>();
 
-    private ClientController clientController;
+    private ServerDisplay serverDisplay;
 
     public void importGameInformation(GameInformation information, List<Move> moves){
         this.gameID.setText(information.getId());
@@ -53,14 +53,14 @@ public class GameHistoryStatsController implements Initializable {
 
         if(event.getSource() == backButton) {
             stage = (Stage) backButton.getScene().getWindow();
-            root = clientController.getGameHistoryPane();
+            root = serverDisplay.getDisplay();
         }
         stage.setScene(root.getScene());
         stage.show();
     }
 
-    public void setClientController(ClientController clientController) {
-        this.clientController = clientController;
+    public void setServerDisplay(ServerDisplay serverDisplay) {
+        this.serverDisplay = serverDisplay;
     }
 
     @Override
