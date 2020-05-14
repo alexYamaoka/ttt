@@ -178,11 +178,11 @@ public class SettingsController implements Initializable, UpdateUserinformationL
                     userInformation.setId(id);
                     clientController.getAccountClient().setUserInformation(userInformation);
                     updateInfo();
-                    usernameErrorLabel.setTextFill(Color.LIMEGREEN);
-                    usernameErrorLabel.setText("Information Has Been Updated!");
+                    confirmNewPasswordErrorLabel.setTextFill(Color.LIMEGREEN);
+                    confirmNewPasswordErrorLabel.setText("Information Has Been Updated!");
                 } else {
-                    usernameErrorLabel.setTextFill(Color.RED);
-                    usernameErrorLabel.setText("Username has already been taken!");
+                    confirmNewPasswordErrorLabel.setTextFill(Color.RED);
+                    confirmNewPasswordErrorLabel.setText("Username has already been taken!");
                 }
             }
         });
