@@ -199,6 +199,14 @@ public class SettingsController implements Initializable, UpdateUserinformationL
     }
 
     public void MainMenu(ActionEvent event) {
+        Stage stage = null;
+        Parent root = null;
 
+        if (event.getSource() == backButton) {
+            stage = (Stage) backButton.getScene().getWindow();
+            root = clientController.getMainMenuPain();
+        }
+        stage.setScene(root.getScene());
+        stage.show();
     }
 }

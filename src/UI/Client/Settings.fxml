@@ -16,7 +16,7 @@
             <items>
                 <AnchorPane fx:id="split1" minHeight="0.0" minWidth="0.0" prefHeight="496.0" prefWidth="154.0" style="-fx-background-color: #132639#132639; -fx-border-color: #000000#000000;">
                     <children>
-                        <Button fx:id="backButton" layoutX="5.0" layoutY="193.0" mnemonicParsing="false" onAction="#MainMenu" prefHeight="27.0" prefWidth="142.0" style="-fx-background-color: #1d9496#1d9496;" text="MainMenu" textAlignment="CENTER" />
+                        <Button fx:id="backButton" onMouseClicked="#MainMenu" layoutX="5.0" layoutY="193.0" mnemonicParsing="false" onAction="#MainMenu" prefHeight="27.0" prefWidth="142.0" style="-fx-background-color: #1d9496#1d9496;" text="MainMenu" textAlignment="CENTER" />
                         <Button fx:id="deactivateAccountButton" layoutX="6.0" layoutY="233.0" mnemonicParsing="false" onAction="#DeactivateAccount" prefHeight="27.0" prefWidth="142.0" style="-fx-background-color: #1d9496#1d9496;" text="Deactive Account" />
                     </children>
                 </AnchorPane>
