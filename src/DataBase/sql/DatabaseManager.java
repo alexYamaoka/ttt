@@ -119,6 +119,9 @@ public class DatabaseManager implements DataSource {  // subscribing to sign in 
             gameInformation.setPlayer1Username(rs.getString("Player1Id"));
             gameInformation.setPlayer2Username(rs.getString("Player2Id"));
             gameInformation.setStartTime(rs.getTimestamp("StartTime"));
+            gameInformation.setEndTime(rs.getTimestamp("EndTime"));
+            gameInformation.setWinningPlayerId(rs.getString("WinningPlayerId"));
+            gameInformation.setStartingPlayerId(rs.getString("Player1Id"));
             allGameInfo.add(gameInformation);
         }
         

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<?import java.net.URL?>
+<AnchorPane prefHeight="680.0" prefWidth="1025.0" style="-fx-background-color: radial-gradient(radius 200%,#204060,#1d9496)radial-gradient(radius 200%,#204060,#1d9496);" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.ServerUI.GameHistoryStatsController">
+   <children>
+      <Label fx:id="gameID" text="Game ID: " textFill="WHITE" />
+      <HBox layoutX="75.0" layoutY="120.0" prefHeight="80.0" prefWidth="360.0" style="-fx-background-color: #23374D#23374D #23374D#23374D;">
+         <children>
+            <Label fx:id="player1Name" alignment="CENTER" prefHeight="80.0" prefWidth="120.0" text="Player 1" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="120.0" prefHeight="80.0" prefWidth="120.0" text="vs" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="player2Name" alignment="CENTER" layoutX="240.0" prefHeight="80.0" prefWidth="120.0" text="Player 2" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <Label fx:id="startTime" alignment="CENTER" layoutX="75.0" layoutY="240.0" prefHeight="80.0" prefWidth="360.0" text="Start Time: " textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="endTime" alignment="CENTER" layoutX="75.0" layoutY="320.0" prefHeight="80.0" prefWidth="360.0" text="End Time: " textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="winningPlayer" alignment="CENTER" layoutX="75.0" layoutY="400.0" prefHeight="80.0" prefWidth="360.0" text="Winning Player:" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="zZ" id="gameLabel" layoutX="510.0" layoutY="120.0" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" textAlignment="CENTER" />
+      <Label fx:id="zO" id="gameLabel" layoutX="660.0" layoutY="120.0" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" textAlignment="CENTER" />
+      <Label fx:id="zT" id="gameLabel" layoutX="810.0" layoutY="120.0" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" textAlignment="CENTER" />
+      <Label fx:id="oZ" id="gameLabel" layoutX="510.0" layoutY="270.0" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" textAlignment="CENTER" />
+      <Label fx:id="oO" id="gameLabel" layoutX="660.0" layoutY="270.0" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" textAlignment="CENTER" />
+      <Label fx:id="oT" id="gameLabel" layoutX="810.0" layoutY="270.0" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" textAlignment="CENTER" />
+      <Label fx:id="tZ" id="gameLabel" layoutX="510.0" layoutY="420.0" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" textAlignment="CENTER" />
+      <Label fx:id="tO" id="gameLabel" layoutX="660.0" layoutY="420.0" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" textAlignment="CENTER" />
+      <Label fx:id="tT" id="gameLabel" layoutX="810.0" layoutY="420.0" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white;" textAlignment="CENTER" />
+      <Button fx:id="backButton" alignment="CENTER_RIGHT" layoutX="20.0" layoutY="630.0" mnemonicParsing="false" onAction="#backButtonClicked" prefHeight="10.0" prefWidth="60.0" style="-fx-background-color: white;" styleClass="backButton" stylesheets="@backButton.css" text="Back" />
+   </children>
+   <stylesheets>
+      <URL value="@gameHistoryStats.css"/>
+   </stylesheets>
+</AnchorPane>

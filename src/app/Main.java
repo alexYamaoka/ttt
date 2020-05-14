@@ -38,6 +38,8 @@ public class Main extends Application
         accountService.addServiceListener(serverDisplayController);
         gameService.addServiceListener(serverDisplayController);
 
+        serverDisplayController.setDisplay(root);
+
         // serverDisplayController.addListener(accountService);
         // serverDisplayController.addListener)gameService)
 
