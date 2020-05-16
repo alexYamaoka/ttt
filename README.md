@@ -1,5 +1,5 @@
 # EndFrame Tic Tac Toe Client/Server Desktop Application
-- Semester long group project (team of 4) using Java and JavaFX.
+- Semester long group project (team of 4) using Java and JavaFX (January 2020 - Present).
 - Presented deliverables at the end of each sprint using agile approach.
 
 
