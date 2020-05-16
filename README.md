@@ -12,6 +12,19 @@
 - MySQL and JDBC
 
 
+### Features
+- server side UI displays: all accounts, online players, active games, and all games.
+- registering new accouts.
+- login authentication.
+- vs computer.
+- vs Player.
+- edit account information.
+- spectating other player's games.
+- history of all games played.
+
+
+
+
 
 ## Server Side Display
 ![Server side display](gifs/serverDisplay.gif)
