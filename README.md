@@ -8,7 +8,7 @@
 - microservice architecture for the different servers hosting the program.
 - sockets and network programming. 
 - multithreading.
-- minimax algorithm to find the next optimal move for playing against the computer. 
+- minimax algorithm to find the next optimal move for playing against the computer; worst case scenario is a tie. 
 - MySQL and JDBC
 
 
