@@ -14,7 +14,7 @@
 
 ### Features
 - server side UI displays: all accounts, online players, active games, and all games.
-- registering new accouts.
+- register new accouts.
 - login authentication.
 - vs computer.
 - vs Player.
