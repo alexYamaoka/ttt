@@ -53,13 +53,11 @@ public class ReadMessageBus implements Runnable {
                 if (response != null) {
                     switch (response.getRequest()) {
                         case Packet.REGISTER_CLIENT:
-                            signUpResultListener.updateSignInResult(response.getData().toString());
+                            signUpResultListener.updateSignUpResult(response.getData().toString());
                             break;
 
                         case Packet.SIGN_IN:
                             signInResultListener.updateSignInResult(response.getData().toString());
-                            System.out.println("sign in is deleted? " + ((UserInformation)response.getData()).getIsDeleted() );
-
                             break;
 
                         case Packet.SIGN_OUT:

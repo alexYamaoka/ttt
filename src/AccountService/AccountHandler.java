@@ -9,12 +9,9 @@ import Shared.Packet;
 import Shared.UserInformation;
 import app.Server;
 
-import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -131,15 +128,16 @@ public class AccountHandler implements Runnable {
                 String UpdatePassword = str3[4];
 
                 try {
-                    if (ds.update(UpdateFirstName,UpdateLastName,UpdateUserName,Id,UpdatePassword))
-                    {
-                        Packet packet1 = new Packet(Packet.UPDATE_USER,userInformation,new UserInformation(UpdateFirstName,UpdateLastName,UpdateUserName,null,UpdatePassword));
+                    if (ds.update(UpdateFirstName, UpdateLastName, UpdateUserName, Id, UpdatePassword)) {
+                        UserInformation newInformation = new UserInformation(UpdateFirstName, UpdateLastName, UpdateUserName, null, UpdatePassword);
+                        newInformation.setId(Id);
+                        Packet packet1 = new Packet(Packet.UPDATE_USER, userInformation, newInformation);
                         clientConnection.sendPacketToClient(packet1);
-                   }
+                    }
 
                 } catch (SQLException ex) {
                     stop();
-               }
+                }
                 break;
 
             case Packet.DELETE_ACCOUNT:
@@ -159,15 +157,15 @@ public class AccountHandler implements Runnable {
 
             case Packet.ACTIVATE_ACCOUNT:
                 String ActivateAccountString = data.toString();
-                String [] str5 = ActivateAccountString.trim().split("\\s+");
+                String[] str5 = ActivateAccountString.trim().split("\\s+");
                 String ActivateAccountID = str5[0];
                 Packet ActivateAccountPacket;
-                try{
-                    if(ds.Activate(ActivateAccountID)) {
-                        ActivateAccountPacket = new Packet(Packet.ACTIVATE_ACCOUNT,userInformation, "SUCCESS");
+                try {
+                    if (ds.Activate(ActivateAccountID)) {
+                        ActivateAccountPacket = new Packet(Packet.ACTIVATE_ACCOUNT, userInformation, "SUCCESS");
                         clientConnection.sendPacketToClient(ActivateAccountPacket);
                     }
-                }catch (SQLException e){
+                } catch (SQLException e) {
                     stop();
                 }
                 break;
@@ -179,20 +177,20 @@ public class AccountHandler implements Runnable {
 
             case Packet.GAME_HISTORY_INFO:
                 String GameInfoString = data.toString();
-                String [] str6 = GameInfoString.trim().split("\\s+");
-                System.out.println( "GameInfoServer String "+ data.toString());
+                String[] str6 = GameInfoString.trim().split("\\s+");
+                System.out.println("GameInfoServer String " + data.toString());
                 String id = str6[0];
                 String username = str6[1];
 
                 try {
                     List<GameInformation> gameInformation = new ArrayList<>();
-                    gameInformation = ds.getPlayerGamesInfo(id,username);
+                    gameInformation = ds.getPlayerGamesInfo(id, username);
 
 
-                    if(gameInformation.isEmpty()){
+                    if (gameInformation.isEmpty()) {
                         stop();
-                    }else{
-                        Packet info = new Packet(Packet.GAME_HISTORY_INFO, userInformation, (Serializable)gameInformation);
+                    } else {
+                        Packet info = new Packet(Packet.GAME_HISTORY_INFO, userInformation, (Serializable) gameInformation);
                         clientConnection.sendPacketToClient(info);
                         System.out.println("Packet sent successfully ");
                     }
