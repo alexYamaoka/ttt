@@ -121,9 +121,9 @@ public class AccountHandler implements Runnable {
                 String UpdateString = data.toString();
                 System.out.println("DataToString  = " + data.toString()); // This comes in fine
                 String[] str3 = UpdateString.trim().split("\\s+");
-                String UpdateFirstName = str3[0];
-                String UpdateLastName = str3[1];
-                String UpdateUserName = str3[2];
+                String UpdateUserName = str3[0];
+                String UpdateFirstName = str3[1];
+                String UpdateLastName = str3[2];
                 String Id = str3[3];
                 String UpdatePassword = str3[4];
 

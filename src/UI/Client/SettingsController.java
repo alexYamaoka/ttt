@@ -115,25 +115,31 @@ public class SettingsController implements Initializable, UpdateUserinformationL
 
         if (!username.isBlank() && !username.equals(this.username.getPromptText())) {
             username = this.username.getText();
+            user.add(username);
         } else {
             username = clientController.getAccountClient().getUserInformation().getUsername();
+            user.add(username);
         }
-        user.add(username);
+
 
         if (!firstName.isBlank() && !firstName.equals(this.firstName.getPromptText())) {
             firstName = this.firstName.getText();
+            user.add(firstName);
         } else {
             firstName = clientController.getAccountClient().getUserInformation().getFirstName();
+            user.add(firstName);
         }
-        user.add(firstName);
+
         System.out.println("first name: " + firstName);
 
         if (!lastName.isBlank() && !lastName.equals(this.lastName.getPromptText())) {
             lastName = this.lastName.getText();
+            user.add(lastName);
         } else {
             lastName = clientController.getAccountClient().getUserInformation().getLastName();
+            user.add(lastName);
         }
-        user.add(lastName);
+
         System.out.println("last name: " + lastName);
         user.add(clientController.getAccountClient().getUserInformation().getId());
 
@@ -142,21 +148,25 @@ public class SettingsController implements Initializable, UpdateUserinformationL
         if (newPassword.isBlank() && newPassword.equals(newPasswordField.getText())) {
             user.add(clientController.getAccountClient().getUserInformation().getPassword());
             System.out.println("keeping old password");
+            String data = String.join(" ", user);
+            System.out.println(user);
+            Packet packet = new Packet(Packet.UPDATE_USER, clientController.getAccountClient().getUserInformation(), data);
+            clientController.getAccountClient().addRequestToServer(packet);
         } else {
             if (newPassword.equals(confirmPassword) && !newPassword.isBlank() && !confirmPassword.isBlank()) {
                 user.add(confirmPassword);
                 System.out.println("updating password");
+                String data = String.join(" ", user);
+                Packet packet = new Packet(Packet.UPDATE_USER, clientController.getAccountClient().getUserInformation(), data);
+                clientController.getAccountClient().addRequestToServer(packet);
             } else {
-                confirmNewPasswordField.setStyle("-fx-border-color: red;");
+                //confirmNewPasswordField.setStyle("-fx-border-color: red;");
                 confirmNewPasswordErrorLabel.setText("New passwords do not match");
             }
         }
 
         // send out packet
-        String data = String.join(" ", user);
-        System.out.println(user);
-        Packet packet = new Packet(Packet.UPDATE_USER, clientController.getAccountClient().getUserInformation(), data);
-        clientController.getAccountClient().addRequestToServer(packet);
+
 
     }
 
